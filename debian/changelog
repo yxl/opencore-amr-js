@@ -1,3 +1,9 @@
+opencore-amr (0.2) UNRELEASED; urgency=low
+
+  * Bump version to prepare for new upload. Keep it as Debian native package for now.
+
+ -- Andres Mejia <mcitadel@gmail.com>  Wed, 13 May 2009 19:49:36 -0400
+
 opencore-amr (0.1) unstable; urgency=low
 
   * Initial Release.
