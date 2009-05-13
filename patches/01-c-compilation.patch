@@ -1,0 +1,45 @@
+diff --git a/codecs_v2/audio/gsm_amr/amr_wb/dec/include/pvamrwbdecoder_api.h b/codecs_v2/audio/gsm_amr/amr_wb/dec/include/pvamrwbdecoder_api.h
+index 0ba8663..3b8578d 100644
+--- a/codecs_v2/audio/gsm_amr/amr_wb/dec/include/pvamrwbdecoder_api.h
++++ b/codecs_v2/audio/gsm_amr/amr_wb/dec/include/pvamrwbdecoder_api.h
+@@ -108,7 +108,7 @@ extern "C"
+ #define NUM_OF_MODES  10
+ 
+ 
+-    const int16 AMR_WB_COMPRESSED[NUM_OF_MODES] =
++    static const int16 AMR_WB_COMPRESSED[NUM_OF_MODES] =
+     {
+         NBBITS_7k,
+         NBBITS_9k,
+diff --git a/codecs_v2/audio/gsm_amr/amr_wb/dec/src/oversamp_12k8_to_16k.cpp b/codecs_v2/audio/gsm_amr/amr_wb/dec/src/oversamp_12k8_to_16k.cpp
+index 43aaef7..6f01ba5 100644
+--- a/codecs_v2/audio/gsm_amr/amr_wb/dec/src/oversamp_12k8_to_16k.cpp
++++ b/codecs_v2/audio/gsm_amr/amr_wb/dec/src/oversamp_12k8_to_16k.cpp
+@@ -337,6 +337,6 @@ int16 AmrWbInterpol(                      /* return result of interpolation */
+ 
+     L_sum = shl_int32(L_sum, 2);               /* saturation can occur here */
+ 
+-    return ((int16(L_sum >> 16)));
++    return ((int16)(L_sum >> 16));
+ }
+ 
+diff --git a/codecs_v2/audio/gsm_amr/common/dec/include/pvgsmamrdecoderinterface.h b/codecs_v2/audio/gsm_amr/common/dec/include/pvgsmamrdecoderinterface.h
+index 59a2f73..a21f2ef 100644
+--- a/codecs_v2/audio/gsm_amr/common/dec/include/pvgsmamrdecoderinterface.h
++++ b/codecs_v2/audio/gsm_amr/common/dec/include/pvgsmamrdecoderinterface.h
+@@ -181,6 +181,7 @@ typedef struct tPVAmrDecoderExternal
+ 
+ } tPVAmrDecoderExternal;
+ 
++#ifdef __cplusplus
+ // CDecoder_AMRInterface
+ class CDecoder_AMRInterface
+ {
+@@ -195,6 +196,7 @@ class CDecoder_AMRInterface
+         OSCL_IMPORT_REF virtual void StopL() = 0;
+         OSCL_IMPORT_REF virtual void TerminateDecoderL() = 0;
+ };
++#endif
+ 
+ 
+ 

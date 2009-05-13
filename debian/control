@@ -1,0 +1,39 @@
+Source: opencore-amr
+Priority: extra
+Maintainer: Martin Storsjo <martin@martin.st>
+Build-Depends: debhelper (>= 7)
+Standards-Version: 3.8.1
+Section: libs
+Homepage: <insert the upstream URL, if relevant>
+
+Package: libopencore-amr-nb-dev
+Section: libdevel
+Architecture: any
+Depends: libopencore-amr-nb (= ${binary:Version})
+Conflicts: libamrnb-dev
+Description: <insert up to 60 chars description>
+ <insert long description, indented with spaces>
+
+Package: libopencore-amr-nb
+Section: libs
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Conflicts: libamrnb3
+Description: <insert up to 60 chars description>
+ <insert long description, indented with spaces>
+
+Package: libopencore-amr-wb-dev
+Section: libdevel
+Architecture: any
+Depends: libopencore-amr-wb (= ${binary:Version})
+Conflicts: libamrwb-dev
+Description: <insert up to 60 chars description>
+ <insert long description, indented with spaces>
+
+Package: libopencore-amr-wb
+Section: libs
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Conflicts: libamrwb3
+Description: <insert up to 60 chars description>
+ <insert long description, indented with spaces>

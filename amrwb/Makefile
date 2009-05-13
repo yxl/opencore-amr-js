@@ -1,0 +1,58 @@
+# Just set OC_BASE to the opencore root, or set AMR_BASE directly to
+# a detached gsm_amr directory
+OC_BASE = ../opencore
+AMR_BASE = $(OC_BASE)/codecs_v2/audio/gsm_amr
+
+# To compile as C instead of C++, define BUILD_AS_C
+ifneq (, $(BUILD_AS_C))
+    CXX = $(CC)
+    CXXFLAGS += -x c -std=c99 -D__inline="static inline"
+endif
+
+ifeq (, $(PREFIX))
+    PREFIX = /usr/local
+endif
+
+DEC_DIR = $(AMR_BASE)/amr_wb/dec
+DEC_SRC_DIR = $(DEC_DIR)/src
+OSCL = ../oscl
+
+CPPFLAGS = -I$(OSCL) -I$(DEC_SRC_DIR) -I$(DEC_DIR)/include -I$(AMR_BASE)/common/dec/include
+
+# Find all the source files
+# Exclude only decoder_amr_wb.cpp, not dtx_decoder_amr_wb.cpp
+DEC_SRC := $(shell cd $(DEC_SRC_DIR) && echo *.cpp | sed 's/ decoder_amr_wb.cpp//')
+
+DEC_OBJS := $(DEC_SRC:.cpp=.o)
+DEC_OBJS := $(patsubst %,$(DEC_SRC_DIR)/%, $(DEC_OBJS))
+
+OBJS = wrapper.o $(DEC_OBJS)
+
+ifeq ($(shell uname), Darwin)
+    SHLIB_EXT = dylib
+    SHLIB_FLAGS = -dynamiclib
+else
+    SHLIB_EXT = so
+    SHLIB_FLAGS = -shared
+endif
+SHLIB = libamrwb.$(SHLIB_EXT)
+
+all: libamrwb.a $(SHLIB)
+
+$(SHLIB): $(OBJS)
+	$(CXX) $(SHLIB_FLAGS) -o $@ $+ $(LDFLAGS)
+
+libamrwb.a: $(OBJS)
+	ar rcs $@ $+
+
+install: libamrwb.a $(SHLIB)
+	install -d $(DESTDIR)$(PREFIX)/lib
+	install libamrwb.a $(DESTDIR)$(PREFIX)/lib
+	install $(SHLIB) $(DESTDIR)$(PREFIX)/lib
+	install -d $(DESTDIR)$(PREFIX)/include/amrwb
+	install dec_if.h $(DESTDIR)$(PREFIX)/include/amrwb
+	install if_rom.h $(DESTDIR)$(PREFIX)/include/amrwb
+
+clean:
+	rm -f libamrwb.a *.o $(OBJS)
+
