@@ -1,0 +1,41 @@
+v=0
+o=- 3440279905 2098834555 IN IP4 63.241.31.174
+s=Untitled
+e=support@localhost
+c=IN IP4 63.241.31.174
+t=0 0
+a=creation_date:20020619T212557.860Z
+a=range:npt=0-37.440
+a=X-wmfversion:1.2
+a=X-allowrecord
+a=control:rtsp://pvserveroha.pv.com:554/public/Interop/3GPP/pv2/pv-amr-475_mpeg4-20.3gp?ud=pvns_user_defined_string
+a=content_version:3.0
+a=video_only_allowed:true
+a=etag:3560F3940CF94D22B93E1C151B6386DF
+m=video 0 RTP/AVP 96
+b=TIAS:20250
+b=AS:23
+b=RR:575
+b=RS:575
+a=control:rtsp://pvserveroha.pv.com:554/public/Interop/3GPP/pv2/pv-amr-475_mpeg4-20.3gp/trackID=3?ud=pvns_user_defined_string
+a=maxprate:4.0
+a=rtpmap:96 MP4V-ES/1000
+a=range:npt=0-37.600
+a=fmtp:96 profile-level-id=8;config=000001b008000001b5090000010000000120008440fa282c2090a31f;framesize=176-144;decode_buf=9510
+a=framerate:2.5
+a=I_frame_interval:10
+a=X-allowrecord
+a=content_version:3.0
+m=audio 0 RTP/AVP 97
+b=TIAS:4750
+b=AS:10
+b=RR:250
+b=RS:250
+a=control:rtsp://pvserveroha.pv.com:554/public/Interop/3GPP/pv2/pv-amr-475_mpeg4-20.3gp/trackID=4?ud=pvns_user_defined_string
+a=maxprate:10.0
+a=rtpmap:97 AMR/8000
+a=range:npt=0-37.440
+a=fmtp:97 mode-set=0;octet-align=1;decode_buf=32
+a=maxptime:200
+a=X-allowrecord
+a=content_version:4.0

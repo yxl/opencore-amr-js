@@ -1,0 +1,4 @@
+symbols
+sdpparser_plugins_menu          'Menu for configuring SDPParser' 
+sdp_default				  'Default Configuration - Includes RealMedia Support'	
+sdp_opencore                    'Open Core Configuration' 

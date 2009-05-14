@@ -1,0 +1,52 @@
+# streaming
+source "symbols.cml"
+
+derive pvrtspinterface_m_mk from rtsp_support==y                          ? "/modules/linux_rtsp/core/build/make" : ""
+derive pvrtspreginterface_m_mk from rtsp_support==y                    ? "/modules/linux_rtsp/node_registry/build/make" : ""
+derive pvasfstreaminginterface_m_mk from asf_streaming_support==y          ? "/modules/linux_asf/asf_streaming/core/build/make" : ""
+derive pvasfstreamingreginterface_m_mk from asf_streaming_support==y    ? "/modules/linux_asf/asf_streaming/node_registry/build/make" : ""
+derive pvdownloadinterface_m_mk from download_support==y                  ? "/modules/linux_download/core/build/make" : ""
+derive pvdownloadreginterface_m_mk from download_support==y            ? "/modules/linux_download/node_registry/build/make" : ""
+
+derive pvprotocolenginefasttrackdownloadinterface_m_mk from fasttrack_download_support==y  ? "/modules/linux_download/protocol_engine_plugins/fasttrack_download/core/build/make" : ""
+derive pvprotocolenginefasttrackdownloadpluginreginterface_m_mk from fasttrack_download_support==y  ? "/modules/linux_download/protocol_engine_plugins/fasttrack_download/registry/build/make" : ""
+
+derive pvprotocolenginewmhttpstreaminginterface_m_mk from asf_streaming_support==y  ? "/modules/linux_asf/asf_streaming/protocol_engine_plugin/core/build/make" : ""
+derive pvprotocolenginewmhttpstreamingpluginreginterface_m_mk from asf_streaming_support==y  ? "/modules/linux_asf/asf_streaming/protocol_engine_plugin/registry/build/make" : ""
+
+
+derive pvmp4interface_m_mk from mp4local_support==y                       ? "/modules/linux_mp4/core/build/make" : ""
+derive pvmp4reginterface_m_mk from mp4local_support==y                 ? "/modules/linux_mp4/node_registry/build/make" : ""
+derive pvasflocalpbinterface_m_mk from asflocal_support==y                ? "/modules/linux_asf/asf_localpb/core/build/make" : ""
+derive pvasflocalpbreginterface_m_mk from asflocal_support==y          ? "/modules/linux_asf/asf_localpb/node_registry/build/make" : ""
+derive pvjanusplugininterface_m_mk from janus_support==y               ? "/modules/cpm_janus/build/make" : ""
+derive pvwmdrmdevinterface_m_mk from wmdrmdev_support==y               ? "/modules/wmdrmpd_dev/build/make" : ""
+derive pvwmdrmplatinterface_m_mk from wmdrmplat_support==y             ? "/modules/wmdrmpd_plat/build/make" : ""
+derive pvwmdrmsysclkinterface_m_mk from wmdrmsysclk_support==y         ? "/modules/wmdrmpd_sysclk/build/make" : ""
+
+derive pvrtspinterface_m_lib from rtsp_support==y                         ? "-lpvrtspinterface" : ""
+derive pvrtspreginterface_m_lib from rtsp_support==y                   ? "-lpvrtspreginterface" : ""
+derive pvasfstreaminginterface_m_lib from asf_streaming_support==y         ? "-lpvasfstreaminginterface" : ""
+derive pvasfstreamingreginterface_m_lib from asf_streaming_support==y   ? "-lpvasfstreamingreginterface" : ""
+derive pvdownloadinterface_m_lib from download_support==y                 ? "-lpvdownloadinterface" : ""
+derive pvdownloadreginterface_m_lib from download_support==y           ? "-lpvdownloadreginterface" : ""
+
+derive pvprotocolenginefasttrackdownloadinterface_m_lib from fasttrack_download_support==y ? "-lpvprotocolenginefasttrackdownloadinterface" : ""
+derive pvprotocolenginefasttrackdownloadpluginreginterface_m_lib from fasttrack_download_support==y ? "-lpvprotocolenginefasttrackdownloadpluginreginterface" : ""
+
+derive pvprotocolenginewmhttpstreaminginterface_m_lib from asf_streaming_support==y ? "-lpvprotocolenginewmhttpstreaminginterface" : ""
+derive pvprotocolenginewmhttpstreamingpluginreginterface_m_lib from asf_streaming_support==y ? "-lpvprotocolenginewmhttpstreamingpluginreginterface" : ""
+
+derive pvmp4interface_m_lib from mp4local_support==y                      ? "-lpvmp4interface" : ""
+derive pvmp4reginterface_m_lib from mp4local_support==y                ? "-lpvmp4reginterface" : ""
+derive pvasflocalpbinterface_m_lib from asflocal_support==y               ? "-lpvasflocalpbinterface" : ""
+derive pvasflocalpbreginterface_m_lib from asflocal_support==y         ? "-lpvasflocalpbreginterface" : ""
+derive pvjanusplugininterface_m_lib from janus_support==y              ? "-lpvjanusplugininterface" : ""
+derive pvwmdrmdevinterface_m_lib from wmdrmdev_support==y              ? "-lpvwmdrmdevinterface" : ""
+derive pvwmdrmplatinterface_m_lib from wmdrmplat_support==y            ? "-lpvwmdrmplatinterface" : ""
+derive pvwmdrmsysclkinterface_m_lib from wmdrmsysclk_support==y        ? "-lpvwmdrmsysclkinterface" : ""
+
+derive LIBDIR_tools_v2_shared from pvrtspinterface_m_mk.pvrtspreginterface_m_mk.pvasfstreaminginterface_m_mk.pvasfstreamingreginterface_m_mk.pvdownloadinterface_m_mk.pvdownloadreginterface_m_mk.pvmp4interface_m_mk.pvmp4reginterface_m_mk.pvasflocalpbinterface_m_mk.pvasflocalpbreginterface_m_mk.pvjanusplugininterface_m_mk.pvwmdrmdevinterface_m_mk.pvwmdrmplatinterface_m_mk.pvwmdrmsysclkinterface_m_mk
+
+derive LIBS_tools_v2_shared from pvrtspinterface_m_lib.pvrtspreginterface_m_lib.pvasfstreaminginterface_m_lib.pvasfstreamingreginterface_m_lib.pvdownloadinterface_m_lib.pvdownloadreginterface_m_lib.pvmp4interface_m_lib.pvmp4reginterface_m_lib.pvasflocalpbinterface_m_lib.pvasflocalpbreginterface_m_lib.pvjanusplugininterface_m_lib.pvwmdrmdevinterface_m_lib.pvwmdrmplatinterface_m_lib.pvwmdrmsysclkinterface_m_lib
+

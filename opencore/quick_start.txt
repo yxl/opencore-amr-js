@@ -1,0 +1,61 @@
+Q. How to build OpenCORE outside of Android?
+A. As part of the OpenCORE release, PacketVideo also provides it's internal
+build system that can be used to build OpenCORE outside of Android with the
+native linux toolchain. 
+
+The following are the steps involved:
+  NOTE 1: Assume <opencore> is the directory where you have downloaded the
+  OpenCORE codebase
+  NOTE 2: The setup scripts are meant to be used in with the bash shell.
+    cd <opencore>/build_config/opencore_dynamic
+    source setup.sh <opencore>
+    make -j
+
+This will build all the required libraries in
+    <opencore>/build_config/opencore_dynamic/build/installed_lib/linux
+and the executables in 
+    <opencore>/build_config/opencore_dynamic/build/bin/linux.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Q. How to run the pvplayer engine unit tests?
+A. On Android emulator/device:
+    adb push <opencore>/engines/player/test/data/ /sdcard
+    adb shell "cd /sdcard; pvplayer_engine_test <test_args> <source_args>"
+
+On host PC:
+    cd <opencore>/build_config/opencore_dynamic
+    make run_pe_test TEST_ARGS="<test_args>"
+
+To see a list of valid <test_args>:
+        make run_pe_test TEST_ARGS="-help"
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Q. How to run the pv2way engine unit tests?
+A. On Android emulator/device:
+    adb push <opencore>/extlibs/opencore/engines/2way/test/test_data/ /sdcard
+    adb shell "cd /sdcard; pv2way_omx_engine_test <test_args>"
+
+On host PC:
+    cd <opencore>/build_config/opencore_dynamic
+    make run_2way_test TEST_ARGS="<test_args>"
+
+To see a list of valid <test_args>:
+        make run_pe_test TEST_ARGS="-help"
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Q. How to run the pvauthor engine unit tests?
+A.  On Android emulator/device:
+    adb push <opencore>/engines/author/test/test_input/ /sdcard
+    adb shell "cd /sdcard;test_pvauthorengine <test_args>"
+
+On host PC:
+    cd <opencore>/build_config/opencore_dynamic
+    make run_ae_test TEST_ARGS="<test_args>"
+
+To see a list of valid <test_args>:
+        make run_pe_test TEST_ARGS="-help"
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

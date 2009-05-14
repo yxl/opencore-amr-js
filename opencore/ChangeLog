@@ -1,0 +1,242 @@
+===============================================================================
+2009-03-10  OpenCORE 2.02
+
+********
+   There is minor version number nomenclature change where the 
+   minor version is now two digits.  So the previous releases 
+   in the new nomenclature are 2.00 (2.0) and 2.01 (2.1).  The 
+   new release is 2.02, which is a minor version increment beyond
+   the previous release.
+********
+	
+New Features
+- AMR-WB support added to the OMX encoder node so that it can utilize 
+  an OMX AMR-WB encoder component if it is part of the OMX core. 
+- Buffer allocator mechanism allowing the Media I/O components to 
+  supply buffers to the OMX decoders.  This method is especially useful
+  as an alternative way to allocate video buffers.  Details can be 
+  found in the new document "Guide to Supplying Decoder Buffers from 
+  the MIO Component" in the file mio_decoder_buffer_allocation_guide.pdf
+  in the top-level doc directory.
+
+Improvements
+- Resolution of Valgrind and static analysis warnings in player and author
+- Improvements in support for .mov files in MP4 FF Parser(relaxed some checks).
+- Modified OMX encoder node to allow setting the AMR bitrate 
+  based on an extension interface value.
+- Fix inconsistencies in OSCL find method related to inclusion of the 
+  directory name with the filename.
+- Improvement in PVMFInfoErrorHandlingComplete in the player datapath
+- Refactor of the Protocol Engine node to support a plugin architecture.  
+  This improves extensibility of the module for new features in the future.
+- Introduce QueryInterfaceSync in PVMFNodeInterface and "all" metadata key
+- AMR NB and WB have conflicting meaning for frame_type and mode elements
+- Change the default settings related to caching for Oscl_File when 
+  using PVFile within the fileformat parsers.
+- Replace test.mp4 with interop clip
+- Update of tests for support for progressive download of AMR
+- OMX Khronos header files (Omx_Core.h, Omx_Component.h) capitalization 
+  changed to match that from the Khronos (previously they were all lowercase).
+- Updated MIO Developer's Guide in the top-level doc directory.
+
+Bugs Fixed
+- Memory leak when running GCF TC212 (2way-related)
+- MediaClockConverter divided by zero caused by timescale 0
+- MP4 composer node destructor memory corruption fixed.
+- Fix for intermittent crash in player engine TC 105
+- OMX dec node did not reset all the internal state during 
+  Reset processing.  
+
+===============================================================================
+2009-02-26  OpenCORE 2.1 (2.01)
+
+New Features
+* OpenMAX Codec-related:
+  - Introduced the OMXConfigParser API to help in determining
+    which OpenMAX components can support the input bitstream.
+    It is used to narrow the list of candidate OpenMAX components
+    to be used for playback.  See the OpenMAX Core Integration Guide
+    document in the doc directory for more information.
+  - Added OMX AAC encoder support in the OMX encoder.
+  - Modified to use separate component roles for AMR-NB and AMR-WB as
+    described in the OpenMAX IL spec version 1.1.2.
+  - Added support for a new buffer format for H.264/AVC decode and
+    encode to allow passing multiple NALs in a single buffer.  
+    The format uses OMX_OTHER_EXTRADATA structure defined in 
+    section 4.2.33 of the OpenMAX IL spec version 1.1.2 to pass 
+    NAL lengths.  See the OpenMAX Core Integration Guide document 
+    in the doc directory for more information.
+* Author-related:
+  - Added support for authoring files with AAC audio.
+  - Added support for authoring AMR-WB audio to MP4/3GP files and
+    IETF storage format.
+  - Added support for writing to an open file descriptor as an option
+    instead of simply providing a filename.  The file descriptor
+    option is useful for cases where another process needs to open 
+    the file because of permissions.
+* Added large file support in OSCL (i.e., 64-bit file size/offset
+    support) to handle files greater than 2 GiB on filesystems that 
+  support it.
+* Added rotation support in the 32-bit color-conversion class.
+
+Improvements
+* Removed dynamically loaded modules from the prelink map to avoid
+  clutter and to make both the prelink map and loadable modules 
+  easier to manage.  There may be an issue if a single instance of 
+  a process tries to load libraries not in the prelink map more than 
+  256 times
+  (See http://code.google.com/p/android/issues/detail?id=2042).
+* Update to the MP3 Decoder to fix security issue (oCERT_2009-002,
+  CVE-2009-0475)
+* Renamed the OSCL config directory linux_nj to android to match the
+  platform name.  Replaced all references of nj with android in the 
+  codebase.
+* General security improvements found from static analysis in the
+  following areas:
+  - Buffer and type overruns and underruns
+  - Null pointer references
+* Refactored the jitter buffer node into a more modular architecture
+  for better support of different streaming use-cases and protocols.
+* Fixed an issue in the MP3 decoder when decoding for very of long
+  durations (over 2 GiB of data).
+* General improvements found during 3GPP packet-switched streaming
+  interoperability testing.
+* General improvements and resolution of issues found from module
+  level and engine (player, author, 2-way) level unit testing.
+
+New APIs / Behaviors
+* Added support in the player engine to cancel a single pending
+  command using the CancelCommand API.  See the player engine API 
+  document for details.
+* Renumbered the author test cases to avoid issues with
+  preprocessor conditionals changing the test numbers based on 
+  settings.  Now the test numbers shouldn't change.
+* In the case of 3rd party OMX components that support multiple roles,
+  returns an error if the component cannot set the role parameter
+* OMX components need to explicitly set nPortIndex parameter for
+  all appropriate parameters
+* Added fix for buffering percentage notification in streaming
+  scenario (see https://review.source.android.com/Gerrit#change,8699)
+* Updated omx shared library build configuration to separate component
+  registration from component build
+* Added methods in baselibs to serialize and deserialize the UTF-16,
+  UTF-16LE, UTF-16BE strings
+* Removed the iUseCPMPluginRegistry flag from the source data that was
+  previously used to enable the content policy manager.  
+  Since the CPM pluginsare dynamically loaded, the flag is not 
+  needed and was removed.  See the playerdriver.cpp for details
+  of the change. 
+
+===============================================================================
+2009-01-26  OpenCORE 2.0 (2.00)
+
+New Features
+- Consolidation of the clock logic into a common clock object
+  (PVMFMediaClock).  More details will be provided in a 
+  Tech note at a later time.
+- Refactor MP4 Composer library
+- omx component refactoring (Introducing base omx component class)
+- OMX Encoder Support
+- Check URIs for illegal characters and run escaping algorithm if any
+  are found.
+- Support for 3GPP AssetInfo Metadata in Author SDK
+- MP3 Dynamic TOC Construction
+- Modify MPEG4/H.263 node/library to support arbitrary Decoder
+  Configuration Information (DCI)
+- backward playback support for MP4
+- Refactoring Colorconversion from mpeg4 encoder and adding support
+  for YUV420SemiPlanar
+- Refactor streaming manager node into feature specifc plugins
+- Thread Safe Player Engine APIs and Thread Safe queue
+- Adding capability to turn off AC prediction and change
+  IntraDCVlcThreshold for MPEG4 encoder library
+- Dynamically populate recognizer registry
+- add 2way support for OpenCORE
+- Combine OMX audio dec node and Video Dec node
+- OMX MasterCore
+- Apply new RGB to YUV color conversion libraries to OMX encoder
+  components
+- Use loadable modules in CPM
+- Adding support for YUV420Semiplanar to avc encoder, m4v encoder and
+  author
+- introduce dynamic loading of individual omx components
+
+Improvements
+- Removal of all compiler warnings reported by Android compiler
+  Exception: unit test app code
+- Module-level unit test fixes
+- Various Valgrind errors and fixes
+- Various Codesonar warnings and fixes
+- various security audit and fixes
+- various memory leak fixes
+- various crash, hang fixes for specific test content or test cases
+- Re-work Oscl Scheduler semaphore & lock
+- Author Engine Error Handling Robustness
+- Player Engine Error Handling Robustness
+- Add capability of assembling partial frames and inserting NAL start
+  codes to OMX node
+- The media I/O component configuration process needs to be improved.
+- Fundamental change in behavior of repositioning during 3GPP
+  streaming
+- Improvements to the PV FrameMetadataUtility [FMU]
+- mp3 parser - duration calculation by walking file in background
+- IOT merges from 2-way team
+- Longevity issues with live streaming
+- Local Playback MP3 file does not display attached art work
+- Issues with Oscl Leave, Panic, and Assert
+- Modify allocators to not leave in case of an alloc failure, but
+  instead have them return OsclErrNoMemory
+- Conversion of strcmp and strstr usage to strncmp for non null
+  terminated Strings
+- Change Oscl memory auditing from TLS-based to Singleton-based
+- Buffer status report in a periodical manner to improve the app
+  awareness about how engine is running in low bandwidth for PDL/PS
+- AVC Encoder Improved Rate Control
+- State Transition: Remove implicit ThreadLogoff() from Nodes
+- Include aac recognizer for Android
+- Audit MP4 parser against new iTunes spec
+- Replace PVMFSMSharedBufferAllocWithReSize allocator with
+  OsclMemPoolResizableAllocator
+- Player Engine registry re-work
+
+New KVPs / APIs / API behaviors
+- Change Download Manager Stop Command to Stop Download
+- Add a KVP to configure jitter buffer inactivity run time from the
+  app
+- OSCL Critical Error Handling
+- Adding kvp in SM node to set rtsp_timeout timer in rtsp engine node
+- Get rid of "getTrackOTIType" API in parser lib and switch mp4 parser
+  node to use "getTrackMIMEType".
+- Adding capability to turn off AC prediction and change
+  IntraDCVlcThreshold for MPEG4 encoder library
+- Deprecate PVMFCPMPluginLocalSyncAccessInterface
+- Introduce new API in Engine to Release MetaData Values
+- Use of PVMF format types in player registries
+- Introduce new kvp key to set jitter buffer size
+- Add a new meta data key to Mp3ParserNode to support channel mode
+  retrieval
+- Support for taking in video bitrate and other params from a config
+  file, for uncompressed AVI test cases.
+- Deprecate TLS-based memory audit
+- Use KVP "nodedataqueuing_timeout" instead of compile time tuneable
+  "SYNC_POINT_DIFF_THRESHOLD"
+- Please apply "mode=" for "x-pvmf/net/user-agent;valtype=char*" key.
+- Change libpv*.so to libopencore_*.so
+- Singleton and lock/unlock mechanism needed for OMX master core
+  globals
+- In case of 3rd party OMX components that support multiple roles -
+  input dec format and output enc format needs to be specified
+- OMX Core plugin code (for 3rd party omx cores integration)
+
+Known Issues
+- Had to temporarily remove the doc directory because of conflicts
+  with Gerrit and PDF files. These will be uploaded again now that
+  Gerrit is updated.
+- Additional documentation will be released as soon as possible.
+- The OpenMAX encoder node is configuring the OpenMAX component with
+  the wrong format for AMR. It is using
+  OMX_AUDIO_AMRFrameFormatRTPPayload when it should be
+  OMX_AUDIO_AMRFrameFormatFSF.
+- The OpenMAX encoder node is not handling Reset correctly in all
+  cases. 
+

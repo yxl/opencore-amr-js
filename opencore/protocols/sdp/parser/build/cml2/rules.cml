@@ -1,0 +1,16 @@
+# sdpparser
+source "symbols.cml"
+
+menu sdpparser_plugins_menu	#sdpparser
+	sdp_default?
+	sdp_opencore?
+require sdp_default==y implies sdp_opencore==n 
+require sdp_opencore==y implies sdp_default==n 
+
+#Derive Parser configuration
+derive sdp_parser_mksegment_default from sdp_default==y or sdp_default==m			? "sdp_default.mk" : ""
+derive sdp_parser_mksegment_opencore from sdp_opencore==y or sdp_opencore==m			? "sdp_opencore.mk":""
+
+#Here, we combine the list of all the symbols for possible makefiles.
+derive pvsdpparser_plugins from sdp_parser_mksegment_default.sdp_parser_mksegment_opencore
+
