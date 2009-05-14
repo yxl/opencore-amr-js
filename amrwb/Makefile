@@ -54,5 +54,5 @@ install: libamrwb.a $(SHLIB)
 	install if_rom.h $(DESTDIR)$(PREFIX)/include/amrwb
 
 clean:
-	rm -f libamrwb.a *.o $(OBJS)
+	rm -f $(SHLIB) libamrwb.a *.o $(OBJS)
 
