@@ -22,6 +22,8 @@ major=2
 # awk '{if (match($$0,/[0-9]+\.[0-9]+\.[0-9]+$$/)) print substr($$0,RSTART)}'`
 #major=`ls src/.libs/lib*.so.* | \
 # awk '{if (match($$0,/\.so\.[0-9]+$$/)) print substr($$0,RSTART+4)}'`
+CXXFLAGS = -Wall -g $(DEB_CXXFLAGS)
+$(info CXXFLAGS = $(CXXFLAGS))
 
 configure: configure-stamp
 configure-stamp:
