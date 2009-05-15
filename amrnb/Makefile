@@ -42,19 +42,29 @@ COMMON_OBJS := $(patsubst %,$(COMMON_SRC_DIR)/%, $(COMMON_OBJS))
 
 OBJS = wrapper.o $(DEC_OBJS) $(ENC_OBJS) $(COMMON_OBJS)
 
+#Versioning
+MAJOR = 4
+MINOR = 0
+REVISION = 0
+
 ifeq ($(shell uname), Darwin)
     SHLIB_EXT = dylib
     SHLIB_FLAGS = -dynamiclib
 else
-    SHLIB_EXT = so
+    SHLIB_EXT = so.$(MAJOR).$(MINOR).$(REVISION)
     SHLIB_FLAGS = -shared
+    SONAME = libamrnb.so.$(MAJOR)
 endif
 SHLIB = libamrnb.$(SHLIB_EXT)
 
 all: libamrnb.a $(SHLIB)
 
 $(SHLIB): $(OBJS)
+ifeq ($(shell uname), Darwin)
 	$(CXX) $(SHLIB_FLAGS) -o $@ $+ $(LDFLAGS)
+else
+	$(CXX) $(SHLIB_FLAGS) -o $@ $+ -Wl,-soname,$(SONAME) $(LDFLAGS)
+endif
 
 libamrnb.a: $(OBJS)
 	ar rcs $@ $+
@@ -63,6 +73,10 @@ install: libamrnb.a $(SHLIB)
 	install -d $(DESTDIR)$(PREFIX)/lib
 	install libamrnb.a $(DESTDIR)$(PREFIX)/lib
 	install $(SHLIB) $(DESTDIR)$(PREFIX)/lib
+ifneq ($(shell uname), Darwin)
+	ln -s $(SHLIB) $(DESTDIR)$(PREFIX)/lib/$(SONAME)
+	ln -s $(SONAME) $(DESTDIR)$(PREFIX)/lib/libamrnb.so
+endif
 	install -d $(DESTDIR)$(PREFIX)/include/amrnb
 	install interf_dec.h $(DESTDIR)$(PREFIX)/include/amrnb
 	install interf_enc.h $(DESTDIR)$(PREFIX)/include/amrnb

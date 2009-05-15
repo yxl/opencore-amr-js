@@ -1,2 +1,3 @@
 usr/include/amrnb/*
 usr/lib/libamrnb.a
+usr/lib/libamrnb.so
