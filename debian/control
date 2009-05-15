@@ -34,6 +34,7 @@ Description: Adaptive Multi Rate speech codec - shared library
 Package: libopencore-amr-nb-dbg
 Architecture: any
 Section: debug
+Priority: extra
 Depends: libopencore-amr-nb (= ${binary:Version}), ${misc:Depends}
 Description: Adaptive Multi Rate speech codec - debugging symbols
  This library contains an implementation of the 3GPP TS 26.073 specification for
@@ -66,6 +67,7 @@ Description: Adaptive Multi-Rate - Wideband speech codec - shared library
 Package: libopencore-amr-wb-dbg
 Architecture: any
 Section: debug
+Priority: extra
 Depends: libopencore-amr-wb (= ${binary:Version}), ${misc:Depends}
 Description: Adaptive Multi-Rate - Wideband speech codec - debugging symbols
  This library contains an implementation of the 3GPP TS 26.173 specification for
