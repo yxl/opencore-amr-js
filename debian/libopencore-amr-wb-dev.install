@@ -1,2 +1,3 @@
 usr/include/amrwb/*
 usr/lib/libamrwb.a
+usr/lib/libamrwb.so

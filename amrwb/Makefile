@@ -28,19 +28,29 @@ DEC_OBJS := $(patsubst %,$(DEC_SRC_DIR)/%, $(DEC_OBJS))
 
 OBJS = wrapper.o $(DEC_OBJS)
 
+#Versioning
+MAJOR = 4
+MINOR = 0
+REVISION = 0
+
 ifeq ($(shell uname), Darwin)
     SHLIB_EXT = dylib
     SHLIB_FLAGS = -dynamiclib
 else
-    SHLIB_EXT = so
+    SHLIB_EXT = so.$(MAJOR).$(MINOR).$(REVISION)
     SHLIB_FLAGS = -shared
+    SONAME = libamrwb.so.$(MAJOR)
 endif
 SHLIB = libamrwb.$(SHLIB_EXT)
 
 all: libamrwb.a $(SHLIB)
 
 $(SHLIB): $(OBJS)
+ifeq ($(shell uname), Darwin)
 	$(CXX) $(SHLIB_FLAGS) -o $@ $+ $(LDFLAGS)
+else
+	$(CXX) $(SHLIB_FLAGS) -o $@ $+ -Wl,-soname,$(SONAME) $(LDFLAGS)
+endif
 
 libamrwb.a: $(OBJS)
 	ar rcs $@ $+
@@ -49,6 +59,10 @@ install: libamrwb.a $(SHLIB)
 	install -d $(DESTDIR)$(PREFIX)/lib
 	install libamrwb.a $(DESTDIR)$(PREFIX)/lib
 	install $(SHLIB) $(DESTDIR)$(PREFIX)/lib
+ifneq ($(shell uname), Darwin)
+	ln -s $(SHLIB) $(DESTDIR)$(PREFIX)/lib/$(SONAME)
+	ln -s $(SONAME) $(DESTDIR)$(PREFIX)/lib/libamrwb.so
+endif
 	install -d $(DESTDIR)$(PREFIX)/include/amrwb
 	install dec_if.h $(DESTDIR)$(PREFIX)/include/amrwb
 	install if_rom.h $(DESTDIR)$(PREFIX)/include/amrwb
