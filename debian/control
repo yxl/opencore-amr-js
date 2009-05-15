@@ -1,39 +1,53 @@
 Source: opencore-amr
-Priority: extra
-Maintainer: Martin Storsjo <martin@martin.st>
+Section: libs
+Priority: optional
+Maintainer: Debian multimedia packages maintainers <pkg-multimedia-maintainers@lists.alioth.debian.org>
+Uploaders: Martin Storsjö <martin@martin.st>,
+           Andres Mejia <mcitadel@gmail.com>
+DM-Upload-Allowed: yes
 Build-Depends: debhelper (>= 7)
 Standards-Version: 3.8.1
-Section: libs
-Homepage: <insert the upstream URL, if relevant>
+Vcs-Git: git://git.debian.org/git/pkg-multimedia/opencore-amr.git
+Vcs-Browser: http://git.debian.org/?p=pkg-multimedia/opencore-amr.git;a=summary
 
 Package: libopencore-amr-nb-dev
-Section: libdevel
 Architecture: any
-Depends: libopencore-amr-nb (= ${binary:Version})
-Conflicts: libamrnb-dev
-Description: <insert up to 60 chars description>
- <insert long description, indented with spaces>
+Section: libdevel
+Depends: libopencore-amr-nb (= ${binary:Version}), ${misc:Depends}
+Description: Adaptive Multi Rate speech codec - development files
+ This library contains an implementation of the 3GPP TS 26.073 specification for
+ the Adaptive Multi Rate (AMR) speech codec. The implementation is derived from
+ the OpenCORE framework, part of the Google Android project.
+ .
+ This package contains the files necessary for development.
 
 Package: libopencore-amr-nb
-Section: libs
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
-Conflicts: libamrnb3
-Description: <insert up to 60 chars description>
- <insert long description, indented with spaces>
+Description: Adaptive Multi Rate speech codec - shared library
+ This library contains an implementation of the 3GPP TS 26.073 specification for
+ the Adaptive Multi Rate (AMR) speech codec. The implementation is derived from
+ the OpenCORE framework, part of the Google Android project.
+ .
+ This package contains the encoder/decoder shared library.
 
 Package: libopencore-amr-wb-dev
-Section: libdevel
 Architecture: any
-Depends: libopencore-amr-wb (= ${binary:Version})
-Conflicts: libamrwb-dev
-Description: <insert up to 60 chars description>
- <insert long description, indented with spaces>
+Section: libdevel
+Depends: libopencore-amr-wb (= ${binary:Version}), ${misc:Depends}
+Description: Adaptive Multi-Rate - Wideband speech codec - development files
+ This library contains an implementation of the 3GPP TS 26.173 specification for
+ the Adaptive Multi-Rate - Wideband (AMR-WB) speech decoder. The implementation
+ is derived from the OpenCORE framework, part of the Google Android project.
+ .
+ This package contains the files necessary for development.
 
 Package: libopencore-amr-wb
-Section: libs
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
-Conflicts: libamrwb3
-Description: <insert up to 60 chars description>
- <insert long description, indented with spaces>
+Description: Adaptive Multi-Rate - Wideband speech codec - shared library
+ This library contains an implementation of the 3GPP TS 26.173 specification for
+ the Adaptive Multi-Rate - Wideband (AMR-WB) speech decoder. The implementation
+ is derived from the OpenCORE framework, part of the Google Android project.
+ .
+ This package contains the decoder shared library.
