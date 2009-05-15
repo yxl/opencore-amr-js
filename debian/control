@@ -31,6 +31,17 @@ Description: Adaptive Multi Rate speech codec - shared library
  .
  This package contains the encoder/decoder shared library.
 
+Package: libopencore-amr-nb-dbg
+Architecture: any
+Section: debug
+Depends: libopencore-amr-nb (= ${binary:Version}), ${misc:Depends}
+Description: Adaptive Multi Rate speech codec - debugging symbols
+ This library contains an implementation of the 3GPP TS 26.073 specification for
+ the Adaptive Multi Rate (AMR) speech codec. The implementation is derived from
+ the OpenCORE framework, part of the Google Android project.
+ .
+ This package contains the debugging symbols for the shared library.
+
 Package: libopencore-amr-wb-dev
 Architecture: any
 Section: libdevel
@@ -51,3 +62,14 @@ Description: Adaptive Multi-Rate - Wideband speech codec - shared library
  is derived from the OpenCORE framework, part of the Google Android project.
  .
  This package contains the decoder shared library.
+
+Package: libopencore-amr-wb-dbg
+Architecture: any
+Section: debug
+Depends: libopencore-amr-wb (= ${binary:Version}), ${misc:Depends}
+Description: Adaptive Multi-Rate - Wideband speech codec - debugging symbols
+ This library contains an implementation of the 3GPP TS 26.173 specification for
+ the Adaptive Multi-Rate - Wideband (AMR-WB) speech decoder. The implementation
+ is derived from the OpenCORE framework, part of the Google Android project.
+ .
+ This package contains the debugging symbols for the shared library.
