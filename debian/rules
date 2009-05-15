@@ -1,6 +1,6 @@
 #!/usr/bin/make -f
 
-CXXFLAGS = -Wall -g $(DEB_CXXFLAGS)
+CXXFLAGS = -Wall -g -fPIC -DPIC $(DEB_CXXFLAGS)
 $(info CXXFLAGS = $(CXXFLAGS))
 
 %:
