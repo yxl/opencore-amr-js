@@ -6,17 +6,8 @@ $(info CXXFLAGS = $(CXXFLAGS))
 %:
 	dh $@
 
-override_dh_auto_clean:
-	$(MAKE) -C amrnb clean
-	$(MAKE) -C amrwb clean
-
-override_dh_auto_build:
-	$(MAKE) -C amrnb BUILD_AS_C=1
-	$(MAKE) -C amrwb BUILD_AS_C=1
-
 override_dh_auto_install:
-	$(MAKE) -C amrnb install DESTDIR=$(CURDIR)/debian/tmp PREFIX=/usr
-	$(MAKE) -C amrwb install DESTDIR=$(CURDIR)/debian/tmp PREFIX=/usr
+	$(MAKE) install DESTDIR=$(CURDIR)/debian/tmp PREFIX=/usr
 
 override_dh_strip:
 	dh_strip -plibopencore-amr-nb --dbg-package=libopencore-amr-nb-dbg
