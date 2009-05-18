@@ -86,7 +86,7 @@ extern "C"
     ; LOCAL VARIABLE DEFINITIONS
     ; [Variable declaration - defined here and used outside this module]
     ----------------------------------------------------------------------------*/
-    extern const Word16 startPos[2*4*2] = {0, 2, 0, 3,
+    const Word16 startPos[2*4*2] = {0, 2, 0, 3,
                                                0, 2, 0, 3,
                                                1, 3, 2, 4,
                                                1, 4, 1, 4
