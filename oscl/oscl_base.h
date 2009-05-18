@@ -32,6 +32,6 @@ typedef uint64_t uint64;
 
 #define OSCL_IMPORT_REF
 #define OSCL_EXPORT_REF
-#define OSCL_UNUSED_ARG
+#define OSCL_UNUSED_ARG (void)
 
 #endif
