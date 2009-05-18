@@ -534,7 +534,7 @@ Word16 check_lsp(tonStabState *st, /* i/o : State struct            */
     Word16 *p_lsp   = &lsp[3];
     Word16 *p_lsp_1 = &lsp[4];
 
-    OSCL_UNUSED_ARG(pOverflow);
+    (void)(pOverflow);
     /* Check for a resonance:                             */
     /* Find minimum distance between lsp[i] and lsp[i+1]  */
 
@@ -789,7 +789,7 @@ void update_gp_clipping(tonStabState *st, /* i/o : State struct            */
                         Flag   *pOverflow
                        )
 {
-    OSCL_UNUSED_ARG(pOverflow);
+    (void)(pOverflow);
     for (int i = 0; i < N_FRAME - 1; i++)
     {
         st->gp[i] = st->gp[i+1];

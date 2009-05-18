@@ -251,7 +251,7 @@ static Word16 Chebps(Word16 x,
     Word32 L_temp;
     Word16 *p_f = &f[1];
 
-    OSCL_UNUSED_ARG(pOverflow);
+    (void)(pOverflow);
 
     /* L_temp = 1.0 */
 

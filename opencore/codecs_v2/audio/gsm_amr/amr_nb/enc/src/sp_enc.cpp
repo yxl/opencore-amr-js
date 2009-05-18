@@ -217,7 +217,7 @@ Word16 GSMInitEncode(void **state_data,
 {
     Speech_Encode_FrameState* s;
 
-    OSCL_UNUSED_ARG(id);
+    (void)(id);
 
     if (state_data == NULL)
     {
