@@ -16,8 +16,8 @@
  * -------------------------------------------------------------------
  */
 
-#ifndef __OSCL_MEM_H
-#define __OSCL_MEM_H
+#ifndef OSCL_MEM_H
+#define OSCL_MEM_H
 
 #ifdef __cplusplus
 extern "C" {

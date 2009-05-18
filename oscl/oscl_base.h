@@ -16,8 +16,8 @@
  * -------------------------------------------------------------------
  */
 
-#ifndef __OSCL_BASE_H
-#define __OSCL_BASE_H
+#ifndef OSCL_BASE_H
+#define OSCL_BASE_H
 
 #include <stdint.h>
 

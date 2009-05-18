@@ -16,8 +16,8 @@
  * -------------------------------------------------------------------
  */
 
-#ifndef __INTERF_ENC_H
-#define __INTERF_ENC_H
+#ifndef OPENCORE_AMRNB_INTERF_ENC_H
+#define OPENCORE_AMRNB_INTERF_ENC_H
 
 #ifdef __cplusplus
 extern "C" {
