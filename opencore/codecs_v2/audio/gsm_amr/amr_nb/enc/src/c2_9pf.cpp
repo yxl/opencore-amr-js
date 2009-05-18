@@ -612,7 +612,7 @@ extern "C"
         Word32 L_temp;
         Word16 *p_codvec = &codvec[0];
 
-        OSCL_UNUSED_ARG(pOverflow);
+        (void)(pOverflow);
 
         psk = -1;
         alpk = 1;
