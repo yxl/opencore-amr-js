@@ -163,7 +163,7 @@ void L_Extract(Word32 L_var,
 
     Word32  temp;
 
-    OSCL_UNUSED_ARG(pOverflow);
+    (void)(pOverflow);
 
     temp = (L_var >> 16);
 
