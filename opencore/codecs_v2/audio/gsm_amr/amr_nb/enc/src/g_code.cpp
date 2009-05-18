@@ -241,7 +241,7 @@ Word16 G_code(          /* o     : Gain of innovation code         */
     Word16 temp;
     Word32 temp2;
 
-    OSCL_UNUSED_ARG(pOverflow);
+    (void)(pOverflow);
 
     /* Compute scalar product <X[],Y[]> */
     s = 0;

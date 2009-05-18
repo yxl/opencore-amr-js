@@ -207,7 +207,7 @@ Word16 Interpol_3or6(   /* o : interpolated value                        */
     Word32 s;
     Word16 temp1;
 
-    OSCL_UNUSED_ARG(pOverflow);
+    (void)(pOverflow);
 
     if (flag3 != 0)
     {
