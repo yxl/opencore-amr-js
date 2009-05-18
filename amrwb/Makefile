@@ -29,8 +29,8 @@ DEC_OBJS := $(patsubst %,$(DEC_SRC_DIR)/%, $(DEC_OBJS))
 OBJS = wrapper.o $(DEC_OBJS)
 
 #Versioning
-MAJOR = 4
-MINOR = 0
+MAJOR = 0
+MINOR = 1
 REVISION = 0
 
 ifeq ($(shell uname), Darwin)
@@ -39,11 +39,11 @@ ifeq ($(shell uname), Darwin)
 else
     SHLIB_EXT = so.$(MAJOR).$(MINOR).$(REVISION)
     SHLIB_FLAGS = -shared
-    SONAME = libamrwb.so.$(MAJOR)
+    SONAME = libopencore-amrwb.so.$(MAJOR)
 endif
-SHLIB = libamrwb.$(SHLIB_EXT)
+SHLIB = libopencore-amrwb.$(SHLIB_EXT)
 
-all: libamrwb.a $(SHLIB)
+all: libopencore-amrwb.a $(SHLIB)
 
 $(SHLIB): $(OBJS)
 ifeq ($(shell uname), Darwin)
@@ -52,21 +52,21 @@ else
 	$(CXX) $(SHLIB_FLAGS) -o $@ $+ -Wl,-soname,$(SONAME) $(LDFLAGS)
 endif
 
-libamrwb.a: $(OBJS)
+libopencore-amrwb.a: $(OBJS)
 	ar rcs $@ $+
 
-install: libamrwb.a $(SHLIB)
+install: libopencore-amrwb.a $(SHLIB)
 	install -d $(DESTDIR)$(PREFIX)/lib
-	install libamrwb.a $(DESTDIR)$(PREFIX)/lib
+	install libopencore-amrwb.a $(DESTDIR)$(PREFIX)/lib
 	install $(SHLIB) $(DESTDIR)$(PREFIX)/lib
 ifneq ($(shell uname), Darwin)
 	ln -s $(SHLIB) $(DESTDIR)$(PREFIX)/lib/$(SONAME)
-	ln -s $(SONAME) $(DESTDIR)$(PREFIX)/lib/libamrwb.so
+	ln -s $(SONAME) $(DESTDIR)$(PREFIX)/lib/libopencore-amrwb.so
 endif
-	install -d $(DESTDIR)$(PREFIX)/include/amrwb
-	install dec_if.h $(DESTDIR)$(PREFIX)/include/amrwb
-	install if_rom.h $(DESTDIR)$(PREFIX)/include/amrwb
+	install -d $(DESTDIR)$(PREFIX)/include/opencore-amrwb
+	install dec_if.h $(DESTDIR)$(PREFIX)/include/opencore-amrwb
+	install if_rom.h $(DESTDIR)$(PREFIX)/include/opencore-amrwb
 
 clean:
-	rm -f $(SHLIB) libamrwb.a *.o $(OBJS)
+	rm -f $(SHLIB) libopencore-amrwb.a *.o $(OBJS)
 
