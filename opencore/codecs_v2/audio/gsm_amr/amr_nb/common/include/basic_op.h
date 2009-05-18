@@ -276,7 +276,7 @@ extern "C"
     {
         Word16 var_out = 0;
 
-        OSCL_UNUSED_ARG(pOverflow);
+        (void)(pOverflow);
 
         if (var2 < 0)
         {
@@ -328,7 +328,7 @@ extern "C"
     {
         Word32 L_var_out = 0;
 
-        OSCL_UNUSED_ARG(pOverflow);
+        (void)(pOverflow);
 
         if (var2 > 0)
         {
@@ -381,7 +381,7 @@ extern "C"
     {
         Word32 L_var_out = 0;
 
-        OSCL_UNUSED_ARG(pOverflow);
+        (void)(pOverflow);
 
         if (var2 > 0)
         {

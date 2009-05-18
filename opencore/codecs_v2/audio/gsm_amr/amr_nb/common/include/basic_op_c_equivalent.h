@@ -328,7 +328,7 @@ extern "C"
         Word32 L_sum;
         Word32 product32;
 
-        OSCL_UNUSED_ARG(pOverflow);
+        (void)(pOverflow);
         L_product = (Word32) L_var1_hi * L_var2_hi;
 
         if (L_product != (Word32) 0x40000000L)
