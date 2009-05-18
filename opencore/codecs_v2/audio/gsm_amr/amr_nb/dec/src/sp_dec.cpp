@@ -245,7 +245,7 @@ Word16 GSMInitDecode(void **state_data,
                      Word8 * id)
 {
     Speech_Decode_FrameState* s;
-    (void)(id);
+    OSCL_UNUSED_ARG(id);
 
     if (state_data == NULL)
     {

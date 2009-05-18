@@ -228,7 +228,7 @@ Word32 Inv_sqrt(        /* (o) : output value   */
     Word16 a;
     Word16 tmp;
     Word32 L_y;
-    (void)(pOverflow);
+    OSCL_UNUSED_ARG(pOverflow);
 
     if (L_x <= (Word32) 0)
     {

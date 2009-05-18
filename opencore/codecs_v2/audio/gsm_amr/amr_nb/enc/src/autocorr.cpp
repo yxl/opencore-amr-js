@@ -333,7 +333,7 @@ Word16 Autocorr(
      *  Windowing of the signal
      */
 
-    (void)(pOverflow);
+    OSCL_UNUSED_ARG(pOverflow);
 
     sum = 0L;
     j = 0;

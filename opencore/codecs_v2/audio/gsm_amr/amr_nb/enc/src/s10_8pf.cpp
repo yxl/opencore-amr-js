@@ -585,7 +585,7 @@ void search_10and8i40(
 
     Word16  index[10];
 
-    (void)(pOverflow);
+    OSCL_UNUSED_ARG(pOverflow);
 
     if (nbPulse == 10)
     {

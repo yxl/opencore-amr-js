@@ -196,7 +196,7 @@ void Lsf_wt(
     Word16 *p_lsf   = &lsf[0];
     Word16 *p_lsf_2 = &lsf[1];
 
-    (void)(pOverflow);
+    OSCL_UNUSED_ARG(pOverflow);
 
     /* wf[0] = lsf[1] - 0  */
     *(p_wf++) = *(p_lsf_2++);

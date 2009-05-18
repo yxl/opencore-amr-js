@@ -727,7 +727,7 @@ static void getRange(
 {
 
     Word16 temp;
-    (void)(pOverflow);
+    OSCL_UNUSED_ARG(pOverflow);
 
     temp = *t0_min;
     temp = T0 - delta_low;

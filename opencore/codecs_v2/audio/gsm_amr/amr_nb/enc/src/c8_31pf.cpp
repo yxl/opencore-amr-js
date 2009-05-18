@@ -446,7 +446,7 @@ static Word16 compress10(
 
     Word32 tempWord32;
 
-    (void)(pOverflow);
+    OSCL_UNUSED_ARG(pOverflow);
 
     ia = pos_indxA >> 1;
 

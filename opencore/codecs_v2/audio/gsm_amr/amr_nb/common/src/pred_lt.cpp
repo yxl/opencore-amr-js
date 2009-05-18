@@ -276,7 +276,7 @@ void Pred_lt_3or6(
 
     Word32 s1;
     Word32 s2;
-    (void)(pOverflow);
+    OSCL_UNUSED_ARG(pOverflow);
 
     pX0 = &(exc[-T0]);
 

@@ -419,7 +419,7 @@ extern "C"
         Word32 alp0;
         Word32 alp1;
 
-        (void)(pOverflow);
+        OSCL_UNUSED_ARG(pOverflow);
 
         /* Default value */
         psk = -1;

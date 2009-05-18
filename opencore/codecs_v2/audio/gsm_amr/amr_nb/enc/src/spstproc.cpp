@@ -200,7 +200,7 @@ void subframePostProc(
     Word16 *p_exc;
     Word16 *p_code;
 
-    (void)(pOverflow);
+    OSCL_UNUSED_ARG(pOverflow);
 
     if (mode != MR122)
     {

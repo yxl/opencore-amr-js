@@ -180,7 +180,7 @@ void Reorder_lsf(
     Word16 i;
     Word16 lsf_min;
     Word16 *p_lsf = &lsf[0];
-    (void)(pOverflow);
+    OSCL_UNUSED_ARG(pOverflow);
 
     lsf_min = min_dist;
     for (i = 0; i < n; i++)

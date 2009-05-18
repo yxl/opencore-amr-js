@@ -260,7 +260,7 @@ static void Get_lsp_pol(
     Word16 hi;
     Word16 lo;
     Word32 t0;
-    (void)(pOverflow);
+    OSCL_UNUSED_ARG(pOverflow);
 
     /* f[0] = 1.0;             */
     *f++ = (Word32) 0x01000000;
