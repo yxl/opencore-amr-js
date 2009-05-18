@@ -413,7 +413,7 @@ static void build_code(
     Word16 *p_y;
     Word16 *p_codvec;
 
-    OSCL_UNUSED_ARG(pOverflow);
+    (void)(pOverflow);
 
     oscl_memset(cod, 0, L_CODE*sizeof(*cod));
     oscl_memset(indx, 0xFF, NB_TRACK*sizeof(*indx));
