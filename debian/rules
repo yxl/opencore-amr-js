@@ -10,5 +10,5 @@ override_dh_auto_install:
 	$(MAKE) install DESTDIR=$(CURDIR)/debian/tmp PREFIX=/usr
 
 override_dh_strip:
-	dh_strip -plibopencore-amr-nb --dbg-package=libopencore-amr-nb-dbg
-	dh_strip -plibopencore-amr-wb --dbg-package=libopencore-amr-wb-dbg
+	dh_strip -plibopencore-amrnb0 --dbg-package=libopencore-amrnb0-dbg
+	dh_strip -plibopencore-amrwb0 --dbg-package=libopencore-amrwb0-dbg

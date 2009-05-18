@@ -10,10 +10,10 @@ Standards-Version: 3.8.1
 Vcs-Git: git://git.debian.org/git/pkg-multimedia/opencore-amr.git
 Vcs-Browser: http://git.debian.org/?p=pkg-multimedia/opencore-amr.git;a=summary
 
-Package: libopencore-amr-nb-dev
+Package: libopencore-amrnb-dev
 Architecture: any
 Section: libdevel
-Depends: libopencore-amr-nb (= ${binary:Version}), ${misc:Depends}
+Depends: libopencore-amrnb0 (= ${binary:Version}), ${misc:Depends}
 Description: Adaptive Multi Rate speech codec - development files
  This library contains an implementation of the 3GPP TS 26.073 specification for
  the Adaptive Multi Rate (AMR) speech codec. The implementation is derived from
@@ -21,7 +21,7 @@ Description: Adaptive Multi Rate speech codec - development files
  .
  This package contains the files necessary for development.
 
-Package: libopencore-amr-nb
+Package: libopencore-amrnb0
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: Adaptive Multi Rate speech codec - shared library
@@ -31,11 +31,11 @@ Description: Adaptive Multi Rate speech codec - shared library
  .
  This package contains the encoder/decoder shared library.
 
-Package: libopencore-amr-nb-dbg
+Package: libopencore-amrnb0-dbg
 Architecture: any
 Section: debug
 Priority: extra
-Depends: libopencore-amr-nb (= ${binary:Version}), ${misc:Depends}
+Depends: libopencore-amrnb0 (= ${binary:Version}), ${misc:Depends}
 Description: Adaptive Multi Rate speech codec - debugging symbols
  This library contains an implementation of the 3GPP TS 26.073 specification for
  the Adaptive Multi Rate (AMR) speech codec. The implementation is derived from
@@ -43,10 +43,10 @@ Description: Adaptive Multi Rate speech codec - debugging symbols
  .
  This package contains the debugging symbols for the shared library.
 
-Package: libopencore-amr-wb-dev
+Package: libopencore-amrwb-dev
 Architecture: any
 Section: libdevel
-Depends: libopencore-amr-wb (= ${binary:Version}), ${misc:Depends}
+Depends: libopencore-amrwb0 (= ${binary:Version}), ${misc:Depends}
 Description: Adaptive Multi-Rate - Wideband speech codec - development files
  This library contains an implementation of the 3GPP TS 26.173 specification for
  the Adaptive Multi-Rate - Wideband (AMR-WB) speech decoder. The implementation
@@ -54,7 +54,7 @@ Description: Adaptive Multi-Rate - Wideband speech codec - development files
  .
  This package contains the files necessary for development.
 
-Package: libopencore-amr-wb
+Package: libopencore-amrwb0
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: Adaptive Multi-Rate - Wideband speech codec - shared library
@@ -64,11 +64,11 @@ Description: Adaptive Multi-Rate - Wideband speech codec - shared library
  .
  This package contains the decoder shared library.
 
-Package: libopencore-amr-wb-dbg
+Package: libopencore-amrwb0-dbg
 Architecture: any
 Section: debug
 Priority: extra
-Depends: libopencore-amr-wb (= ${binary:Version}), ${misc:Depends}
+Depends: libopencore-amrwb0 (= ${binary:Version}), ${misc:Depends}
 Description: Adaptive Multi-Rate - Wideband speech codec - debugging symbols
  This library contains an implementation of the 3GPP TS 26.173 specification for
  the Adaptive Multi-Rate - Wideband (AMR-WB) speech decoder. The implementation
