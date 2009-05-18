@@ -296,7 +296,7 @@ static Word16 Vq_subvec4( /* o: quantization index,            Q0  */
     Word16 wf1_2;
     Word16 wf1_3;
 
-    OSCL_UNUSED_ARG(pOverflow);
+    (void)(pOverflow);
 
     dist_min = MAX_32;
     p_dico = dico;
@@ -624,7 +624,7 @@ static Word16 Vq_subvec3( /* o: quantization index,            Q0  */
     Word16 wf1_1;
     Word16 wf1_2;
 
-    OSCL_UNUSED_ARG(pOverflow);
+    (void)(pOverflow);
 
     dist_min = MAX_32;
     p_dico = dico;

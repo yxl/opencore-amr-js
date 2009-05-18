@@ -169,7 +169,7 @@ void Log2(
 {
     Word16 exp;
     Word32 result;
-    OSCL_UNUSED_ARG(pOverflow);
+    (void)(pOverflow);
 
     exp = norm_l(L_x);
     result = L_x << exp;

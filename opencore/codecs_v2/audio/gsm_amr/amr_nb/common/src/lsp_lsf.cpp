@@ -356,7 +356,7 @@ void Lsp_lsf(
     Word32 L_tmp;
     Word16 *p_lsp = &lsp[m-1];
     Word16 *p_lsf = &lsf[m-1];
-    OSCL_UNUSED_ARG(pOverflow);
+    (void)(pOverflow);
 
     ind = 63;                        /* begin at end of table -1 */
 
