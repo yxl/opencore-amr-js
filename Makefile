@@ -8,5 +8,5 @@ clean:
 	$(MAKE) -C amrwb clean
 
 install:
-	$(MAKE) -C amrnb install
-	$(MAKE) -C amrwb install
+	$(MAKE) -C amrnb install BUILD_AS_C=1
+	$(MAKE) -C amrwb install BUILD_AS_C=1
