@@ -6,7 +6,7 @@ AMR_BASE = $(OC_BASE)/codecs_v2/audio/gsm_amr
 # To compile as C instead of C++, define BUILD_AS_C
 ifneq (, $(BUILD_AS_C))
     CXX = $(CC)
-    CXXFLAGS += -x c -std=c99 -D__inline="static inline"
+    CXXFLAGS += -x c -std=c99
 endif
 
 ifeq (, $(PREFIX))
