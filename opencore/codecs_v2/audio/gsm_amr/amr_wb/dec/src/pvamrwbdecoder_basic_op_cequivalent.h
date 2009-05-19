@@ -85,7 +85,7 @@ extern "C"
                    range : 0xffff 8000 <= var_out <= 0x0000 7fff.
 
      ----------------------------------------------------------------------------*/
-    __inline int16 add_int16(int16 var1, int16 var2)
+    static inline int16 add_int16(int16 var1, int16 var2)
     {
         int32 L_sum;
 
@@ -124,7 +124,7 @@ extern "C"
                    range : 0xffff 8000 <= var_out <= 0x0000 7fff.
 
      ----------------------------------------------------------------------------*/
-    __inline int16 sub_int16(int16 var1, int16 var2)
+    static inline int16 sub_int16(int16 var1, int16 var2)
     {
         int32 L_diff;
 
@@ -162,7 +162,7 @@ extern "C"
 
      ----------------------------------------------------------------------------*/
 
-    __inline int16 mult_int16(int16 var1, int16 var2)
+    static inline int16 mult_int16(int16 var1, int16 var2)
     {
         int32 L_product;
 
@@ -202,7 +202,7 @@ extern "C"
      ----------------------------------------------------------------------------*/
 
 
-    __inline  int32 add_int32(int32 L_var1, int32 L_var2)
+    static inline  int32 add_int32(int32 L_var1, int32 L_var2)
     {
         int32 L_var_out;
 
@@ -246,7 +246,7 @@ extern "C"
      ----------------------------------------------------------------------------*/
 
 
-    __inline  int32 sub_int32(int32 L_var1, int32 L_var2)
+    static inline  int32 sub_int32(int32 L_var1, int32 L_var2)
     {
         int32 L_var_out;
 
@@ -293,7 +293,7 @@ extern "C"
      ----------------------------------------------------------------------------*/
 
 
-    __inline  int32 mac_16by16_to_int32(int32 L_var3, int16 var1, int16 var2)
+    static inline  int32 mac_16by16_to_int32(int32 L_var3, int16 var1, int16 var2)
     {
         int32 L_var_out;
         int32 L_mul;
@@ -352,7 +352,7 @@ extern "C"
 
      ----------------------------------------------------------------------------*/
 
-    __inline  int32 msu_16by16_from_int32(int32 L_var3, int16 var1, int16 var2)
+    static inline  int32 msu_16by16_from_int32(int32 L_var3, int16 var1, int16 var2)
     {
         int32 L_var_out;
         int32 L_mul;
@@ -407,7 +407,7 @@ extern "C"
      ----------------------------------------------------------------------------*/
 
 
-    __inline  int32 mul_16by16_to_int32(int16 var1, int16 var2)
+    static inline  int32 mul_16by16_to_int32(int16 var1, int16 var2)
     {
         int32 L_mul;
 
@@ -445,7 +445,7 @@ extern "C"
                    range : 0xffff 8000 <= var_out <= 0x0000 7fff.
 
      ----------------------------------------------------------------------------*/
-    __inline int16 amr_wb_round(int32 L_var1)
+    static inline int16 amr_wb_round(int32 L_var1)
     {
         if (L_var1 != MAX_32)
         {
@@ -473,7 +473,7 @@ extern "C"
                    range : 0xffff 8000 <= var_out <= 0x0000 7fff.
 
      ----------------------------------------------------------------------------*/
-    __inline int16 amr_wb_shl1_round(int32 L_var1)
+    static inline int16 amr_wb_shl1_round(int32 L_var1)
     {
         int16 var_out;
 
@@ -506,12 +506,12 @@ extern "C"
          ----------------------------------------------------------------------------*/
 
 
-    __inline int32 mul_32by16(int16 hi, int16 lo, int16 n)
+    static inline int32 mul_32by16(int16 hi, int16 lo, int16 n)
     {
         return (((((int32)hi*n)) + ((((int32)lo*n) >> 15))) << 1);
     }
 
-    __inline  int32 fxp_mac_16by16(int16 var1,  int16 var2, int32 L_add)
+    static inline  int32 fxp_mac_16by16(int16 var1,  int16 var2, int32 L_add)
     {
 
         L_add += (int32)var1 * var2;
@@ -519,14 +519,14 @@ extern "C"
         return L_add;
     }
 
-    __inline  int32 fxp_mul_16by16(int16 var1, const int16 var2)
+    static inline  int32 fxp_mul_16by16(int16 var1, const int16 var2)
     {
         int32 L_mul = (int32)var1 * var2;
 
         return L_mul;
     }
 
-    __inline  int32 fxp_mul32_by_16b(int32 L_var1, const int32 L_var2)
+    static inline  int32 fxp_mul32_by_16b(int32 L_var1, const int32 L_var2)
     {
 
         int32 L_mul = (int32)(((int64)L_var1 * (L_var2 << 16)) >> 32);

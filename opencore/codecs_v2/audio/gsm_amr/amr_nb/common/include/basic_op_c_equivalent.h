@@ -196,7 +196,7 @@ extern "C"
      Returns:
         result = 32-bit result of L_var3 + (var1 * var2)(Word32)
     */
-    __inline Word32 L_mac(Word32 L_var3, Word16 var1, Word16 var2, Flag *pOverflow)
+    static inline Word32 L_mac(Word32 L_var3, Word16 var1, Word16 var2, Flag *pOverflow)
     {
         Word32 result;
         Word32 L_sum;
@@ -318,7 +318,7 @@ extern "C"
      Returns:
         L_product = 32-bit product of L_var1 and L_var2 (Word32)
     */
-    __inline Word32 Mpy_32(Word16 L_var1_hi,
+    static inline Word32 Mpy_32(Word16 L_var1_hi,
                            Word16 L_var1_lo,
                            Word16 L_var2_hi,
                            Word16 L_var2_lo,
@@ -392,7 +392,7 @@ extern "C"
         product = 32-bit product of the 32-bit L_var1 and 16-bit var1 (Word32)
     */
 
-    __inline Word32 Mpy_32_16(Word16 L_var1_hi,
+    static inline Word32 Mpy_32_16(Word16 L_var1_hi,
                               Word16 L_var1_lo,
                               Word16 var2,
                               Flag *pOverflow)
