@@ -60,8 +60,8 @@ install: libopencore-amrwb.a $(SHLIB)
 	install -m 644 libopencore-amrwb.a $(DESTDIR)$(PREFIX)/lib
 	install $(SHLIB) $(DESTDIR)$(PREFIX)/lib
 ifneq ($(shell uname), Darwin)
-	ln -s $(SHLIB) $(DESTDIR)$(PREFIX)/lib/$(SONAME)
-	ln -s $(SONAME) $(DESTDIR)$(PREFIX)/lib/libopencore-amrwb.so
+	ln -sf $(SHLIB) $(DESTDIR)$(PREFIX)/lib/$(SONAME)
+	ln -sf $(SONAME) $(DESTDIR)$(PREFIX)/lib/libopencore-amrwb.so
 endif
 	install -d $(DESTDIR)$(PREFIX)/include/opencore-amrwb
 	install -m 644 dec_if.h $(DESTDIR)$(PREFIX)/include/opencore-amrwb

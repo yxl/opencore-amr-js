@@ -74,8 +74,8 @@ install: libopencore-amrnb.a $(SHLIB)
 	install -m 644 libopencore-amrnb.a $(DESTDIR)$(PREFIX)/lib
 	install $(SHLIB) $(DESTDIR)$(PREFIX)/lib
 ifneq ($(shell uname), Darwin)
-	ln -s $(SHLIB) $(DESTDIR)$(PREFIX)/lib/$(SONAME)
-	ln -s $(SONAME) $(DESTDIR)$(PREFIX)/lib/libopencore-amrnb.so
+	ln -sf $(SHLIB) $(DESTDIR)$(PREFIX)/lib/$(SONAME)
+	ln -sf $(SONAME) $(DESTDIR)$(PREFIX)/lib/libopencore-amrnb.so
 endif
 	install -d $(DESTDIR)$(PREFIX)/include/opencore-amrnb
 	install -m 644 interf_dec.h $(DESTDIR)$(PREFIX)/include/opencore-amrnb
