@@ -45,7 +45,7 @@ OBJS = wrapper.o $(DEC_OBJS) $(ENC_OBJS) $(COMMON_OBJS)
 #Versioning
 MAJOR = 0
 MINOR = 1
-REVISION = 0
+REVISION = 1
 
 ifeq ($(shell uname), Darwin)
     SHLIB_EXT = dylib
