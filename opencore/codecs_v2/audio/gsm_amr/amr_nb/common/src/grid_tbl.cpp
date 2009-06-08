@@ -52,6 +52,7 @@ terms listed above has been obtained from the copyright holder.
 ; INCLUDES
 ----------------------------------------------------------------------------*/
 #include "typedef.h"
+#include "az_lsp.h"
 
 /*--------------------------------------------------------------------------*/
 #ifdef __cplusplus

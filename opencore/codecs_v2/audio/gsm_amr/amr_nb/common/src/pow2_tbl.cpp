@@ -42,6 +42,7 @@ terms listed above has been obtained from the copyright holder.
 ; INCLUDES
 ----------------------------------------------------------------------------*/
 #include "typedef.h"
+#include "pow2.h"
 
 /*--------------------------------------------------------------------------*/
 #ifdef __cplusplus

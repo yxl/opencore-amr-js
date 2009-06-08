@@ -45,6 +45,7 @@ terms listed above has been obtained from the copyright holder.
 ; INCLUDES
 ----------------------------------------------------------------------------*/
 #include "typedef.h"
+#include "sqrt_l.h"
 
 /*--------------------------------------------------------------------------*/
 #ifdef __cplusplus
