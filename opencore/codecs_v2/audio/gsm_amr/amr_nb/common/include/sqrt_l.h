@@ -66,7 +66,7 @@ extern "C"
     ; EXTERNAL VARIABLES REFERENCES
     ; Declare variables used in this module but defined elsewhere
     ----------------------------------------------------------------------------*/
-    extern Word16 sqrt_l_tbl[];
+    extern const Word16 sqrt_l_tbl[];
 
     /*----------------------------------------------------------------------------
     ; SIMPLE TYPEDEF'S
