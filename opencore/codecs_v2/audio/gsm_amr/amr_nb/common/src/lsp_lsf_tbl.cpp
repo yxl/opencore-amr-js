@@ -77,6 +77,7 @@ extern "C"
     ; [Variable declaration - defined here and used outside this module]
     ----------------------------------------------------------------------------*/
 
+    extern const Word16 table[];
     const Word16 table[65] =
     {
         32767, 32729, 32610, 32413, 32138, 31786, 31357, 30853,
@@ -94,6 +95,7 @@ extern "C"
 
     /* slope used to compute y = acos(x) */
 
+    extern const Word16 slope[];
     const Word16 slope[64] =
     {
         -26887, -8812, -5323, -3813, -2979, -2444, -2081, -1811,
