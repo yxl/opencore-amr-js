@@ -31,18 +31,7 @@ terms listed above has been obtained from the copyright holder.
 
 
 
- Filename: /audio/gsm_amr/c/src/include/post_pro.h
-
-     Date: 02/04/2002
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description:  Replaced "int" and/or "char" with OSCL defined types.
-
- Description: Moved _cplusplus #ifdef after Include section.
-
- Description:
+ Filename: post_pro.h
 
 ------------------------------------------------------------------------------
  INCLUDE DESCRIPTION

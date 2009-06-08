@@ -33,13 +33,6 @@ terms listed above has been obtained from the copyright holder.
 
  Pathname: ./cpp/include/pv_amr_wb_type_defs.h
 
-     Date: 12/12/2006
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
-
- Description:
 ------------------------------------------------------------------------------
  INCLUDE DESCRIPTION
 

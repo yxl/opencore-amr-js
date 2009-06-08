@@ -33,14 +33,6 @@ terms listed above has been obtained from the copyright holder.
 
  Filename: median5.cpp
 
-     Date: 05/08/2007
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
-
- Description:
-
 ------------------------------------------------------------------------------
  INPUT AND OUTPUT DEFINITIONS
 

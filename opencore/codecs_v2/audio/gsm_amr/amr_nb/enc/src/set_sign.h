@@ -31,21 +31,7 @@ terms listed above has been obtained from the copyright holder.
 
 
 
- Filename: /audio/gsm_amr/c/include/set_sign.h
-
-     Date: 08/11/2000
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
-
- Description: Changed function prototype for set_sign12k2(); pointer to
-                overflow flag is passed in as a parameter.
-
- Description: Moved _cplusplus #ifdef after Include section.
-
- Description:
-
+ Filename: set_sign.h
 
 ------------------------------------------------------------------------------
  INCLUDE DESCRIPTION
@@ -56,13 +42,13 @@ terms listed above has been obtained from the copyright holder.
 ------------------------------------------------------------------------------
 */
 
-#ifndef	SET_SIGN_H
-#define	SET_SIGN_H "@(#)$Id $"
+#ifndef SET_SIGN_H
+#define SET_SIGN_H "@(#)$Id $"
 
 /*----------------------------------------------------------------------------
 ; INCLUDES
 ----------------------------------------------------------------------------*/
-#include	"basicop_malloc.h"
+#include    "basicop_malloc.h"
 
 /*--------------------------------------------------------------------------*/
 #ifdef __cplusplus
@@ -102,9 +88,9 @@ extern "C"
     ; Function Prototype declaration
     ----------------------------------------------------------------------------*/
     void set_sign(Word16 dn[],   /* i/o : correlation between target and h[]    */
-                  Word16 sign[], /* o   : sign of dn[]                          */
-                  Word16 dn2[],  /* o   : maximum of correlation in each track. */
-                  Word16 n       /* i   : # of maximum correlations in dn2[]    */
+    Word16 sign[], /* o   : sign of dn[]                          */
+    Word16 dn2[],  /* o   : maximum of correlation in each track. */
+    Word16 n       /* i   : # of maximum correlations in dn2[]    */
                  );
 
     void set_sign12k2(

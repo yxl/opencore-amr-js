@@ -31,19 +31,7 @@ terms listed above has been obtained from the copyright holder.
 
 
 
- Filename: /audio/gsm_amr/c/include/qgain795.h
-
-     Date: 02/05/2002
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Placed header file in the proper template format.  Added
- parameter pOverflow for the basic math ops.
-
- Description: Moved _cplusplus #ifdef after Include section.
-
- Description:
+ Filename: qgain795.h
 
 ------------------------------------------------------------------------------
  INCLUDE DESCRIPTION
@@ -65,6 +53,7 @@ terms listed above has been obtained from the copyright holder.
 ----------------------------------------------------------------------------*/
 #include "typedef.h"
 #include "g_adapt.h"
+#include "get_const_tbls.h"
 
 /*--------------------------------------------------------------------------*/
 #ifdef __cplusplus
@@ -128,6 +117,7 @@ extern "C"
         /*      (for other MA predictor update)    */
         Word16 **anap,            /* o  : Index of quantization              */
         /*      (first gain pitch, then code pitch)*/
+        CommonAmrTbls* common_amr_tbls, /* i : ptr to struct of table ptrs   */
         Flag   *pOverflow         /* o  : overflow indicator                 */
     );
 

@@ -28,26 +28,7 @@ terms listed above has been obtained from the copyright holder.
 ****************************************************************************************/
 /*
 
- Filename: /audio/gsm_amr/c/include/add.h
-
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
-
- Description: Created separate header file for add function.
-
- Description: Changed function prototype; pointer to  overflow flag is passed
-			  in as a parameter.
-
- Description: Updated copyright section.
-			  Changed "overflow" to "pOverflow" in the function prototype.
-
- Description: Moved _cplusplus #ifdef after Include section.
-
- Who: 							Date:
- Description:
-
+ Filename: add.h
 
 ------------------------------------------------------------------------------
  INCLUDE DESCRIPTION
@@ -58,13 +39,13 @@ terms listed above has been obtained from the copyright holder.
 ------------------------------------------------------------------------------
 */
 
-#ifndef	ADD_H
-#define	ADD_H
+#ifndef ADD_H
+#define ADD_H
 
 /*----------------------------------------------------------------------------
 ; INCLUDES
 ----------------------------------------------------------------------------*/
-#include	"basicop_malloc.h"
+#include    "basicop_malloc.h"
 
 /*--------------------------------------------------------------------------*/
 #ifdef __cplusplus
@@ -103,7 +84,7 @@ extern "C"
     ; GLOBAL FUNCTION DEFINITIONS
     ; Function Prototype declaration
     ----------------------------------------------------------------------------*/
-    Word16 add(Word16 var1, Word16 var2, Flag *pOverflow);
+    OSCL_IMPORT_REF Word16 add_16(Word16 var1, Word16 var2, Flag *pOverflow);
 
     /*----------------------------------------------------------------------------
     ; END

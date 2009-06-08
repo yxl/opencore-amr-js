@@ -29,7 +29,7 @@ terms listed above has been obtained from the copyright holder.
 /*
 ------------------------------------------------------------------------------
 
- Pathname: ./audio/gsm-amr/c/src/if2_to_ets.c
+ Filename: if2_to_ets.cpp
  Funtions: if2_to_ets
 
 */
@@ -40,7 +40,6 @@ terms listed above has been obtained from the copyright holder.
 #include "frame_type_3gpp.h"
 #include "if2_to_ets.h"
 #include "typedef.h"
-#include "bitreorder_tab.h"
 /*----------------------------------------------------------------------------
 ; MACROS
 ; Define module specific macros here
@@ -115,22 +114,6 @@ AMR Speech Codec Frame Structure", 3GPP TS 26.101 version 4.1.0 Release 4, June 
 
 
 ------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
-
-------------------------------------------------------------------------------
  CAUTION [optional]
  [State any special notes, constraints or cautions for users of this function]
 
@@ -140,12 +123,16 @@ AMR Speech Codec Frame Structure", 3GPP TS 26.101 version 4.1.0 Release 4, June 
 void if2_to_ets(
     enum Frame_Type_3GPP frame_type_3gpp,
     UWord8   *if2_input_ptr,
-    Word16   *ets_output_ptr)
+    Word16   *ets_output_ptr,
+    CommonAmrTbls* common_amr_tbls)
 {
 
     Word16 i;
     Word16 j;
     Word16 x = 0;
+    const Word16* numCompressedBytes_ptr = common_amr_tbls->numCompressedBytes_ptr;
+    const Word16* numOfBits_ptr = common_amr_tbls->numOfBits_ptr;
+    const Word16* const* reorderBits_ptr = common_amr_tbls->reorderBits_ptr;
 
     /*
      * The following section of code accesses bits in the IF2 method of
@@ -157,34 +144,34 @@ void if2_to_ets(
 
     if (frame_type_3gpp < AMR_SID)
     {
-        for (j = 4;j < 8;j++)
+        for (j = 4; j < 8; j++)
         {
-            ets_output_ptr[reorderBits[frame_type_3gpp][x++]] =
+            ets_output_ptr[reorderBits_ptr[frame_type_3gpp][x++]] =
                 (if2_input_ptr[0] >> j) & 0x01;
         }
-        for (i = 1; i < numCompressedBytes[frame_type_3gpp]; i++)
+        for (i = 1; i < numCompressedBytes_ptr[frame_type_3gpp]; i++)
         {
-            for (j = 0;j < 8;j++)
+            for (j = 0; j < 8; j++)
             {
-                if (x >= numOfBits[frame_type_3gpp])
+                if (x >= numOfBits_ptr[frame_type_3gpp])
                 {
                     break;
                 }
-                ets_output_ptr[reorderBits[frame_type_3gpp][x++]] =
+                ets_output_ptr[reorderBits_ptr[frame_type_3gpp][x++]] =
                     (if2_input_ptr[i] >> j) & 0x01;
             }
         }
     }
     else
     {
-        for (j = 4;j < 8;j++)
+        for (j = 4; j < 8; j++)
         {
             ets_output_ptr[x++] =
                 (if2_input_ptr[0] >> j) & 0x01;
         }
-        for (i = 1; i < numCompressedBytes[frame_type_3gpp]; i++)
+        for (i = 1; i < numCompressedBytes_ptr[frame_type_3gpp]; i++)
         {
-            for (j = 0;j < 8;j++)
+            for (j = 0; j < 8; j++)
             {
                 ets_output_ptr[x++] =
                     (if2_input_ptr[i] >> j) & 0x01;

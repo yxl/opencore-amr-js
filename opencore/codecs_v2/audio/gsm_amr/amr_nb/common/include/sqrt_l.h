@@ -28,23 +28,7 @@ terms listed above has been obtained from the copyright holder.
 ****************************************************************************************/
 /*
 
- Filename: /audio/gsm_amr/c/include/sqrt_l.h
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
-
- Description: Updated function prototype declaration to reflect new interface.
-              A pointer to overflow flag is passed into the function. Updated
-              template.
-
- Description: Added extern declaration for sqrt_l_tbl[]
-
- Description: Moved _cplusplus #ifdef before function prototype.
-
- Who:                           Date:
- Description:
-
+ Filename: sqrt_l.h
 
 ------------------------------------------------------------------------------
  INCLUDE DESCRIPTION
@@ -101,7 +85,7 @@ extern "C"
     ; Function Prototype declaration
     ----------------------------------------------------------------------------*/
 
-    Word32 sqrt_l_exp(      /* o : output value,                          Q31 */
+    OSCL_IMPORT_REF Word32 sqrt_l_exp(      /* o : output value,          Q31 */
         Word32 L_x,         /* i : input value,                           Q31 */
         Word16 *pExp,       /* o : right shift to be applied to result,   Q1  */
         Flag   *pOverflow   /* i : pointer to overflow flag */

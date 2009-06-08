@@ -31,18 +31,7 @@ terms listed above has been obtained from the copyright holder.
 
 
 
- Filename: /audio/gsm_amr/c/include/d4_17pf.h
-
-     Date: 01/29/2002
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Placed header file in the proper template format.
-
- Description: Moved _cplusplus #ifdef after Include section.
-
- Description:
+ Filename: d4_17pf.h
 
 ------------------------------------------------------------------------------
  INCLUDE DESCRIPTION
@@ -105,6 +94,7 @@ extern "C"
     void decode_4i40_17bits(
         Word16 sign,   /* i : signs of 4 pulses.                       */
         Word16 index,  /* i : Positions of the 4 pulses.               */
+        const Word16* dgray_ptr, /* i : Pointer to read-only table         */
         Word16 cod[]   /* o : algebraic (fixed) codebook excitation    */
     );
 

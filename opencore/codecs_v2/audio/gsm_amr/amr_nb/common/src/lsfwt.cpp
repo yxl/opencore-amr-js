@@ -27,26 +27,8 @@ Permission to distribute, modify and use this file under the standard license
 terms listed above has been obtained from the copyright holder.
 ****************************************************************************************/
 /*
- Pathname: ./audio/gsm-amr/c/src/lsfwt.c
+ Filename: lsfwt.cpp
  Functions: Lsf_wt
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Updated to accept new parameter, Flag *pOverflow.  Placed
- file in the proper PV Software template.
-
- Description:
-              1. Eliminated unused include files.
-              2. Replaced array addressing by pointers
-              3. Eliminated math operations that unnecessary checked for
-                 saturation, by evaluating the operands
-              4. Unrolled loops to speed up processing, use decrement loops
-
- Description:  Replaced "int" and/or "char" with OSCL defined types.
-
- Who:                       Date:
- Description:
 
  ------------------------------------------------------------------------------
  INPUT AND OUTPUT DEFINITIONS
@@ -111,28 +93,6 @@ Compute LSF weighting factors
  PSEUDO-CODE
 
 
-
-------------------------------------------------------------------------------
- RESOURCES USED
-   When the code is written for a specific target processor the
-     the resources used should be documented below.
-
- STACK USAGE: [stack count for this module] + [variable to represent
-          stack usage for each subroutine called]
-
-     where: [stack usage variable] = stack usage for [subroutine
-         name] (see [filename].ext)
-
- DATA MEMORY USED: x words
-
- PROGRAM MEMORY USED: x words
-
- CLOCK CYCLES: [cycle count equation for this module] + [variable
-           used to represent cycle count for each subroutine
-           called]
-
-     where: [cycle count variable] = cycle count for [subroutine
-        name] (see [filename].ext)
 
 ------------------------------------------------------------------------------
 */

@@ -28,17 +28,7 @@ terms listed above has been obtained from the copyright holder.
 ****************************************************************************************/
 /*
 
- Filename: /audio/gsm_amr/c/src/pow2.c
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Updated template. Changed function interface to pass in a
-              pointer to overflow flag into the function instead of using a
-              global flag. Removed inclusion of "pow2.tab"
-
- Who:                           Date:
- Description:
+ Filename: pow2.cpp
 
 ------------------------------------------------------------------------------
 */
@@ -147,22 +137,6 @@ Word32 Pow2 (           // (o)  : result       (range: 0<=val<=0x7fffffff)
 }
 
 ------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
-
-------------------------------------------------------------------------------
  CAUTION [optional]
  [State any special notes, constraints or cautions for users of this function]
 
@@ -173,7 +147,7 @@ Word32 Pow2 (           // (o)  : result       (range: 0<=val<=0x7fffffff)
 ; FUNCTION CODE
 ----------------------------------------------------------------------------*/
 
-Word32 Pow2(            /* (o)  : result       (range: 0<=val<=0x7fffffff) */
+OSCL_EXPORT_REF Word32 Pow2(            /* (o)  : result       (range: 0<=val<=0x7fffffff) */
     Word16 exponent,    /* (i)  : Integer part.      (range: 0<=val<=30)   */
     Word16 fraction,    /* (i)  : Fractional part.  (range: 0.0<=val<1.0)  */
     Flag *pOverflow
@@ -189,13 +163,13 @@ Word32 Pow2(            /* (o)  : result       (range: 0<=val<=0x7fffffff) */
     i = ((Word16)(L_x >> 16)) & 31;             /* ensure index i is bounded */
     a = (Word16)((L_x >> 1) & 0x7fff);
 
-    L_x = L_deposit_h(pow2_tbl[i]);             /* pow2_tbl[i] << 16       */
+    L_x = ((Word32) pow2_tbl[i] << 16);             /* pow2_tbl[i] << 16       */
 
     /* pow2_tbl[i] - pow2_tbl[i+1] */
-    tmp = sub(pow2_tbl[i], pow2_tbl[i + 1], pOverflow);
+    tmp = pow2_tbl[i] - pow2_tbl[i + 1];
     L_x = L_msu(L_x, tmp, a, pOverflow);        /* L_x -= tmp*a*2        */
 
-    exp = sub(30, exponent, pOverflow);
+    exp = 30 - exponent;
     L_x = L_shr_r(L_x, exp, pOverflow);
 
     return (L_x);

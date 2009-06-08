@@ -31,17 +31,7 @@ terms listed above has been obtained from the copyright holder.
 
 
 
- Pathname: ./audio/gsm-amr/c/src/ex_ctrl.c
- Funtions: ex_ctrl
-
-     Date: 02/08/2002
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description:  Replaced "int" and/or "char" with OSCL defined types.
-
- Description:
+ Filename: ex_ctrl.cpp
 
 ------------------------------------------------------------------------------
 */
@@ -52,7 +42,6 @@ terms listed above has been obtained from the copyright holder.
 #include "ex_ctrl.h"
 #include "typedef.h"
 #include "cnst.h"
-#include "copy.h"
 #include "set_zero.h"
 #include "gmed_n.h"
 #include "sqrt_l.h"
@@ -127,22 +116,6 @@ terms listed above has been obtained from the copyright holder.
 
 
 ------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
-
-------------------------------------------------------------------------------
  CAUTION [optional]
  [State any special notes, constraints or cautions for users of this function]
 
@@ -164,8 +137,7 @@ Word16 Ex_ctrl(Word16 excitation[],    /*i/o: Current subframe excitation   */
     /* get target level */
     avgEnergy = gmed_n(exEnergyHist, 9);
 
-    prevEnergy = shr(add(exEnergyHist[7], exEnergyHist[8], pOverflow) , 1, pOverflow);
-
+    prevEnergy = (exEnergyHist[7] + exEnergyHist[8]) >> 1;
     if (exEnergyHist[8] < prevEnergy)
     {
         prevEnergy = exEnergyHist[8];
@@ -198,7 +170,7 @@ Word16 Ex_ctrl(Word16 excitation[],    /*i/o: Current subframe excitation   */
         {
             t0 = 32767; /* saturate  */
         }
-        scaleFactor = extract_l(t0);
+        scaleFactor = (Word16)(t0);
 
         /* test if scaleFactor > 3.0 */
         if (carefulFlag != 0 && (scaleFactor > 3072))
@@ -211,7 +183,7 @@ Word16 Ex_ctrl(Word16 excitation[],    /*i/o: Current subframe excitation   */
         {
             t0 = L_mult(scaleFactor, excitation[i], pOverflow);
             t0 = L_shr(t0, 11, pOverflow);
-            excitation[i] = extract_l(t0);
+            excitation[i] = (Word16)(t0);
         }
     }
 

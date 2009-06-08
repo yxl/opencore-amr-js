@@ -28,13 +28,7 @@ terms listed above has been obtained from the copyright holder.
 ****************************************************************************************/
 /*
 
- Pathname: .audio/gsm-amr/c/include/q_plsf_5_tbl.h
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Who:                        Date:
- Description:
+ Filename: q_plsf_5_tbl.h
 
 ------------------------------------------------------------------------------
  INCLUDE DESCRIPTION

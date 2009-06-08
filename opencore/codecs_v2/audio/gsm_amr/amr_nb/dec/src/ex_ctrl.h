@@ -31,16 +31,7 @@ terms listed above has been obtained from the copyright holder.
 
 
 
- Filename: /audio/gsm_amr/c/include/ex_ctrl.h
-
-     Date: 02/08/2002
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Moved _cplusplus #ifdef after Include section.
-
- Description:
+ Filename: ex_ctrl.h
 
 ------------------------------------------------------------------------------
  INCLUDE DESCRIPTION
@@ -106,12 +97,12 @@ extern "C"
      *  Returns     : background noise decision; 0 = bgn, 1 = no bgn
      */
     Word16 Ex_ctrl(Word16 excitation[],    /*i/o: Current subframe excitation   */
-                   Word16 excEnergy,      /* i : Exc. Energy, sqrt(totEx*totEx)*/
-                   Word16 exEnergyHist[], /* i : History of subframe energies  */
-                   Word16 voicedHangover, /* i : # of fr. after last voiced fr.*/
-                   Word16 prevBFI,        /* i : Set i previous BFI            */
-                   Word16 carefulFlag,    /* i : Restrict dymamic in scaling   */
-                   Flag   *pOverflow
+    Word16 excEnergy,      /* i : Exc. Energy, sqrt(totEx*totEx)*/
+    Word16 exEnergyHist[], /* i : History of subframe energies  */
+    Word16 voicedHangover, /* i : # of fr. after last voiced fr.*/
+    Word16 prevBFI,        /* i : Set i previous BFI            */
+    Word16 carefulFlag,    /* i : Restrict dymamic in scaling   */
+    Flag   *pOverflow
                   );
 
     /*----------------------------------------------------------------------------

@@ -31,20 +31,7 @@ terms listed above has been obtained from the copyright holder.
 
 
 
- Pathname: ./audio/gsm-amr/c/include/cor_h_x2.h
-
-     Date: 11/07/2001
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Created separate header file for cor_h_x2.
-
- Description: Added pOverflow for EPOC modifications
-
- Description: Moved _cplusplus #ifdef after Include section.
-
- Description:
+ Filename: cor_h_x2.h
 
 ------------------------------------------------------------------------------
  INCLUDE DESCRIPTION

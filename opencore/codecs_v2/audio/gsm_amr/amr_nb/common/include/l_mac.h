@@ -27,24 +27,7 @@ Permission to distribute, modify and use this file under the standard license
 terms listed above has been obtained from the copyright holder.
 ****************************************************************************************/
 /*
- Filename: /audio/gsm_amr/c/include/l_mac.h
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Created separate header file for L_mac function.
-
- Description: Updated function prototype declaration to reflect new interface.
-              A pointer to overflow flag is passed into the function. Updated
-              template.
-
- Description: Moved _cplusplus #ifdef after Include section.
-
- Description: 1. Updated the function to include ARM and Linux-ARM assembly
-                 instructions.
-              2. Added OSCL_UNUSED_ARG(pOverflow) to remove compiler warnings.
-
- Description:
+ Filename: l_mac.h
 
 ------------------------------------------------------------------------------
  INCLUDE DESCRIPTION

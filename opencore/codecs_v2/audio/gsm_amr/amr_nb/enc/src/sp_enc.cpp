@@ -31,30 +31,12 @@ terms listed above has been obtained from the copyright holder.
 
 
 
- Pathname: ./audio/gsm-amr/c/src/sp_enc.c
+ Filename: sp_enc.cpp
  Funtions: GSMInitEncode
            Speech_Encode_Frame_reset
            GSMEncodeFrameExit
            Speech_Encode_Frame_First
            GSMEncodeFrame
-
-     Date: 02/07/2002
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Cleaned up INCLUDES. removed inclusion of basic_op.h and count.h.
-
-
- Description: Revert back to Speech_Encode_Frame_reset() and
-              Speech_Encode_Frame_First
-
- Description:  Replaced OSCL mem type functions and eliminated include
-               files that now are chosen by OSCL definitions
-
- Description:  Replaced "int" and/or "char" with OSCL defined types.
-
- Description:
 
 ------------------------------------------------------------------------------
  MODULE DESCRIPTION
@@ -189,22 +171,6 @@ int Speech_Encode_Frame_init (void **state_data,
 
 
 ------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
-
-------------------------------------------------------------------------------
  CAUTION [optional]
  [State any special notes, constraints or cautions for users of this function]
 
@@ -315,22 +281,6 @@ int Speech_Encode_Frame_reset (void *state_data)
 }
 
 ------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
-
-------------------------------------------------------------------------------
  CAUTION [optional]
  [State any special notes, constraints or cautions for users of this function]
 
@@ -422,22 +372,6 @@ void Speech_Encode_Frame_exit (void **state_data)
 
   return;
 }
-
-------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
 
 ------------------------------------------------------------------------------
  CAUTION [optional]
@@ -539,22 +473,6 @@ int Speech_Encode_Frame_First (
   return 0;
 }
 
-
-------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
 
 ------------------------------------------------------------------------------
  CAUTION [optional]
@@ -689,22 +607,6 @@ int Speech_Encode_Frame (
 }
 
 ------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
-
-------------------------------------------------------------------------------
  CAUTION [optional]
  [State any special notes, constraints or cautions for users of this function]
 
@@ -747,7 +649,7 @@ void GSMEncodeFrame(
     cod_amr(st->cod_amr_state, mode, new_speech, prm, usedMode, syn);
 
     /* Parameters to serial bits */
-    Prm2bits(*usedMode, prm, &serial[0]);
+    Prm2bits(*usedMode, prm, &serial[0], &(st->cod_amr_state->common_amr_tbls));
 
     return;
 }

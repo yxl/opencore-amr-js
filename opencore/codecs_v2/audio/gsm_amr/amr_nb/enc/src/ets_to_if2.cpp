@@ -29,7 +29,7 @@ terms listed above has been obtained from the copyright holder.
 /*
 ------------------------------------------------------------------------------
 
- Pathname: ./audio/gsm-amr/c/src/ets_to_if2.c
+ Filename: ets_to_if2.cpp
  Funtions: ets_to_if2
 
 */
@@ -40,7 +40,6 @@ terms listed above has been obtained from the copyright holder.
 #include "frame_type_3gpp.h"
 #include "ets_to_if2.h"
 #include "typedef.h"
-#include "bitreorder_tab.h"
 
 /*----------------------------------------------------------------------------
 ; MACROS
@@ -114,22 +113,6 @@ AMR Speech Codec Frame Structure", 3GPP TS 26.101 version 4.1.0 Release 4, June 
 
 
 ------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
-
-------------------------------------------------------------------------------
  CAUTION [optional]
  [State any special notes, constraints or cautions for users of this function]
 
@@ -139,7 +122,8 @@ AMR Speech Codec Frame Structure", 3GPP TS 26.101 version 4.1.0 Release 4, June 
 void ets_to_if2(
     enum Frame_Type_3GPP frame_type_3gpp,
     Word16 *ets_input_ptr,
-    UWord8 *if2_output_ptr)
+    UWord8 *if2_output_ptr,
+    CommonAmrTbls* common_amr_tbls)
 {
     Word16  i;
     Word16  k;
@@ -147,37 +131,39 @@ void ets_to_if2(
     Word16 *ptr_temp;
     Word16  bits_left;
     UWord8  accum;
+    const Word16* const* reorderBits_ptr = common_amr_tbls->reorderBits_ptr;
+    const Word16* numOfBits_ptr = common_amr_tbls->numOfBits_ptr;
 
     if (frame_type_3gpp < AMR_SID)
     {
         if2_output_ptr[j++] = (UWord8)(frame_type_3gpp) |
-                              (ets_input_ptr[reorderBits[frame_type_3gpp][0]] << 4) |
-                              (ets_input_ptr[reorderBits[frame_type_3gpp][1]] << 5) |
-                              (ets_input_ptr[reorderBits[frame_type_3gpp][2]] << 6) |
-                              (ets_input_ptr[reorderBits[frame_type_3gpp][3]] << 7);
+                              (ets_input_ptr[reorderBits_ptr[frame_type_3gpp][0]] << 4) |
+                              (ets_input_ptr[reorderBits_ptr[frame_type_3gpp][1]] << 5) |
+                              (ets_input_ptr[reorderBits_ptr[frame_type_3gpp][2]] << 6) |
+                              (ets_input_ptr[reorderBits_ptr[frame_type_3gpp][3]] << 7);
 
-        for (i = 4; i < numOfBits[frame_type_3gpp] - 7;)
+        for (i = 4; i < numOfBits_ptr[frame_type_3gpp] - 7;)
         {
             if2_output_ptr[j]  =
-                (UWord8) ets_input_ptr[reorderBits[frame_type_3gpp][i++]];
+                (UWord8) ets_input_ptr[reorderBits_ptr[frame_type_3gpp][i++]];
             if2_output_ptr[j] |=
-                (UWord8) ets_input_ptr[reorderBits[frame_type_3gpp][i++]] << 1;
+                (UWord8) ets_input_ptr[reorderBits_ptr[frame_type_3gpp][i++]] << 1;
             if2_output_ptr[j] |=
-                (UWord8) ets_input_ptr[reorderBits[frame_type_3gpp][i++]] << 2;
+                (UWord8) ets_input_ptr[reorderBits_ptr[frame_type_3gpp][i++]] << 2;
             if2_output_ptr[j] |=
-                (UWord8) ets_input_ptr[reorderBits[frame_type_3gpp][i++]] << 3;
+                (UWord8) ets_input_ptr[reorderBits_ptr[frame_type_3gpp][i++]] << 3;
             if2_output_ptr[j] |=
-                (UWord8) ets_input_ptr[reorderBits[frame_type_3gpp][i++]] << 4;
+                (UWord8) ets_input_ptr[reorderBits_ptr[frame_type_3gpp][i++]] << 4;
             if2_output_ptr[j] |=
-                (UWord8) ets_input_ptr[reorderBits[frame_type_3gpp][i++]] << 5;
+                (UWord8) ets_input_ptr[reorderBits_ptr[frame_type_3gpp][i++]] << 5;
             if2_output_ptr[j] |=
-                (UWord8) ets_input_ptr[reorderBits[frame_type_3gpp][i++]] << 6;
+                (UWord8) ets_input_ptr[reorderBits_ptr[frame_type_3gpp][i++]] << 6;
             if2_output_ptr[j++] |=
-                (UWord8) ets_input_ptr[reorderBits[frame_type_3gpp][i++]] << 7;
+                (UWord8) ets_input_ptr[reorderBits_ptr[frame_type_3gpp][i++]] << 7;
         }
 
-        bits_left = 4 + numOfBits[frame_type_3gpp] -
-                    ((4 + numOfBits[frame_type_3gpp]) & 0xFFF8);
+        bits_left = 4 + numOfBits_ptr[frame_type_3gpp] -
+                    ((4 + numOfBits_ptr[frame_type_3gpp]) & 0xFFF8);
 
         if (bits_left != 0)
         {
@@ -186,7 +172,7 @@ void ets_to_if2(
             for (k = 0; k < bits_left; k++)
             {
                 if2_output_ptr[j] |=
-                    (UWord8) ets_input_ptr[reorderBits[frame_type_3gpp][i++]] << k;
+                    (UWord8) ets_input_ptr[reorderBits_ptr[frame_type_3gpp][i++]] << k;
             }
         }
     }
@@ -201,7 +187,7 @@ void ets_to_if2(
                                   (ets_input_ptr[2] << 6) | (ets_input_ptr[3] << 7);
             ptr_temp = &ets_input_ptr[4];
 
-            bits_left = ((4 + numOfBits[frame_type_3gpp]) & 0xFFF8);
+            bits_left = ((4 + numOfBits_ptr[frame_type_3gpp]) & 0xFFF8);
 
             for (i = (bits_left - 7) >> 3; i > 0; i--)
             {
@@ -217,7 +203,7 @@ void ets_to_if2(
                 if2_output_ptr[j++] = accum;
             }
 
-            bits_left = 4 + numOfBits[frame_type_3gpp] - bits_left;
+            bits_left = 4 + numOfBits_ptr[frame_type_3gpp] - bits_left;
 
             if (bits_left != 0)
             {

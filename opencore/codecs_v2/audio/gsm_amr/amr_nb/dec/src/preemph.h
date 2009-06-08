@@ -29,23 +29,7 @@ terms listed above has been obtained from the copyright holder.
 /*
 ------------------------------------------------------------------------------
 
-
-
- Filename: /audio/gsm_amr/c/include/preemph.h
-
-     Date: 02/05/2002
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Placed header file in the proper template format.  Added
- parameter pOverflow for the basic math ops.
-
- Description:  Replaced "int" and/or "char" with OSCL defined types.
-
- Description: Moved _cplusplus #ifdef after Include section.
-
- Description:
+ Filename: preemph.h
 
 ------------------------------------------------------------------------------
  INCLUDE DESCRIPTION

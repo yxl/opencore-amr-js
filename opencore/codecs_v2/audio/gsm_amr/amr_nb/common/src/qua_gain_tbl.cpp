@@ -28,20 +28,7 @@ terms listed above has been obtained from the copyright holder.
 ****************************************************************************************/
 /*
 
- Filename: /audio/gsm_amr/c/src/qua_gain_tbl.c
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Created this file from the reference, qua_gain.tab
-
- Description: Added #ifdef __cplusplus and removed "extern" from table
-              definition.
-
- Description: Put "extern" back.
-
- Who:                               Date:
- Description:
+ Filename: qua_gain_tbl.cpp
 
 ------------------------------------------------------------------------------
  MODULE DESCRIPTION
@@ -96,7 +83,7 @@ extern "C"
 
     /* table used in 'high' rates: MR67 MR74 */
 
-    const Word16 table_gain_highrates[VQ_SIZE_HIGHRATES*4] =
+    extern const Word16 table_gain_highrates[VQ_SIZE_HIGHRATES*4] =
     {
 
         /*
@@ -240,7 +227,7 @@ extern "C"
 
     /* table used in 'low' rates: MR475, MR515, MR59 */
 
-    const Word16 table_gain_lowrates[VQ_SIZE_LOWRATES*4] =
+    extern const Word16 table_gain_lowrates[VQ_SIZE_LOWRATES*4] =
     {
         /*g_pit,    g_fac,  qua_ener_MR122, qua_ener */
         10813,    28753,            2879,    17333,
@@ -321,13 +308,13 @@ extern "C"
  INPUT AND OUTPUT DEFINITIONS
 
  Inputs:
-	None
+    None
 
  Outputs:
-	None
+    None
 
  Returns:
-	None
+    None
 
  Global Variables Used:
     None
@@ -354,22 +341,6 @@ extern "C"
 ------------------------------------------------------------------------------
  PSEUDO-CODE
 
-
-------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
 
 ------------------------------------------------------------------------------
  CAUTION [optional]

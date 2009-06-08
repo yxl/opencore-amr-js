@@ -31,16 +31,7 @@ terms listed above has been obtained from the copyright holder.
 
 
 
- Filename: /audio/gsm_amr/c/src/hp_max.c
-
-     Date: 02/01/2002
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description:  Replaced "int" and/or "char" with OSCL defined types.
-
- Description:
+ Filename: hp_max.cpp
 
 ------------------------------------------------------------------------------
 */
@@ -51,6 +42,7 @@ terms listed above has been obtained from the copyright holder.
 #include    "hp_max.h"
 #include    "basic_op.h"
 #include    "cnst.h"
+#include    "l_abs.h"
 
 /*----------------------------------------------------------------------------
 ; MACROS
@@ -209,22 +201,6 @@ Word16 hp_max (
 
 
 ------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
-
-------------------------------------------------------------------------------
  CAUTION [optional]
  [State any special notes, constraints or cautions for users of this function]
 
@@ -298,7 +274,7 @@ Word16 hp_max(
         t016 =  extract_h(L_shl(t0, shift2));   */
 
     t016 = norm_l(max);
-    shift1 = sub(t016, 1, pOverflow);
+    shift1 = t016 - 1;
 
     L_temp = L_shl(max, shift1, pOverflow);
     max16  = (Word16)(L_temp >> 16);
@@ -316,7 +292,7 @@ Word16 hp_max(
         cor_max = 0;
     }
 
-    shift = sub(shift1, shift2, pOverflow);
+    shift = shift1 - shift2;
 
     if (shift >= 0)
     {

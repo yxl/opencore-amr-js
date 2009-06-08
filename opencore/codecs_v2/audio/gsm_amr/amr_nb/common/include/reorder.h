@@ -27,15 +27,7 @@ Permission to distribute, modify and use this file under the standard license
 terms listed above has been obtained from the copyright holder.
 ****************************************************************************************/
 /*
- Filename: /audio/gsm_amr/c/include/reorder.h
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Moved _cplusplus #ifdef after Include section.
-
- Who:                           Date:
- Description:
+ Filename: reorder.h
 
 ------------------------------------------------------------------------------
  INCLUDE DESCRIPTION
@@ -91,7 +83,7 @@ extern "C"
     ; GLOBAL FUNCTION DEFINITIONS
     ; Function Prototype declaration
     ----------------------------------------------------------------------------*/
-    void Reorder_lsf(
+    OSCL_IMPORT_REF void Reorder_lsf(
         Word16 *lsf,       /* (i/o)  : vector of LSFs   (range: 0<=val<=0.5)    */
         Word16 min_dist,   /* (i)    : minimum required distance                */
         Word16 n,          /* (i)    : LPC order                                */

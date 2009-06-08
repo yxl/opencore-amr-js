@@ -31,28 +31,10 @@ terms listed above has been obtained from the copyright holder.
 
 
 
- Pathname: ./audio/gsm-amr/c/src/d8_31pf.c
- Functions:
-
-
-     Date: 01/28/2002
+ Filename: d8_31pf.cpp
 
 ------------------------------------------------------------------------------
- REVISION HISTORY
 
- Description: Modified to pass overflow flag through to basic math function.
- The flag is passed back to the calling function by pointer reference.
-
- Description: Per review comments...
- (1) Removed include of "count.h" and "basic_op.h"
- (2) Added includes of mult.h, shl.h, shr.h, add.h, sub.h, negate.h,
-     L_mult.h, and L_shr.h
-
- Description:  Replaced "int" and/or "char" with OSCL defined types.
-
- Description:
-
-------------------------------------------------------------------------------
  MODULE DESCRIPTION
 */
 
@@ -136,22 +118,6 @@ terms listed above has been obtained from the copyright holder.
 ------------------------------------------------------------------------------
  PSEUDO-CODE
 
-
-------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
 
 ------------------------------------------------------------------------------
  CAUTION [optional]
@@ -256,11 +222,7 @@ static void decompress10(
             1,
             pOverflow);
 
-    pos_indx[index3] =
-        add(
-            ib,
-            ic,
-            pOverflow);
+    pos_indx[index3] = add_16(ib, ic, pOverflow);
 
     return;
 }
@@ -315,22 +277,6 @@ static void decompress10(
 ------------------------------------------------------------------------------
  PSEUDO-CODE
 
-
-------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
 
 ------------------------------------------------------------------------------
  CAUTION [optional]
@@ -469,7 +415,7 @@ static void decompress_code(
     ia = LSBs & 0x1;
 
     pos_indx[3] =
-        add(
+        add_16(
             ib,
             ia,
             pOverflow);
@@ -531,22 +477,6 @@ static void decompress_code(
 ------------------------------------------------------------------------------
  PSEUDO-CODE
 
-
-------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
 
 ------------------------------------------------------------------------------
  CAUTION [optional]

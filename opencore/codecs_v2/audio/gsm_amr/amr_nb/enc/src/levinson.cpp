@@ -31,7 +31,7 @@ terms listed above has been obtained from the copyright holder.
 
 
 
- Pathname: ./audio/gsm-amr/c/src/levinson.c
+ Filename: levinson.cpp
  Funtions: Levinson_init
            Levinson_reset
            Levinson_exit
@@ -53,6 +53,7 @@ terms listed above has been obtained from the copyright holder.
 #include "levinson.h"
 #include "basicop_malloc.h"
 #include "basic_op.h"
+#include "l_abs.h"
 #include "div_32.h"
 #include "cnst.h"
 #include "oscl_mem.h"
@@ -142,22 +143,6 @@ int Levinson_init (LevinsonState **state)
 
   return 0;
 }
-
-------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
 
 ------------------------------------------------------------------------------
  CAUTION [optional]
@@ -252,22 +237,6 @@ int Levinson_reset (LevinsonState *state)
 }
 
 ------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
-
-------------------------------------------------------------------------------
  CAUTION [optional]
  [State any special notes, constraints or cautions for users of this function]
 
@@ -346,22 +315,6 @@ void Levinson_exit (LevinsonState **state)
 
   return;
 }
-
-------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
 
 ------------------------------------------------------------------------------
  CAUTION [optional]
@@ -603,22 +556,6 @@ int Levinson (
 
     return 0;
 }
-
-------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
 
 ------------------------------------------------------------------------------
  CAUTION [optional]

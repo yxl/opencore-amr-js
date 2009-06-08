@@ -31,28 +31,12 @@ terms listed above has been obtained from the copyright holder.
 
 
 
- Pathname: ./audio/gsm-amr/c/src/p_ol_wgh.c
- Funtions: p_ol_wgh_init
+ Filename: p_ol_wgh.cpp
+ Functions: p_ol_wgh_init
            p_ol_wgh_reset
            p_ol_wgh_exit
            Lag_max
            Pitch_ol_wgh
-
-     Date: 02/05/2002
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: t0 was not being declared as Word32.
-
- Description:  Replaced OSCL mem type functions and eliminated include
-               files that now are chosen by OSCL definitions
-
- Description:  Replaced "int" and/or "char" with OSCL defined types.
-
- Description: Changed round function name to pv_round to avoid conflict with
-              round function in C standard library.
-
- Description:
 
 ------------------------------------------------------------------------------
  MODULE DESCRIPTION
@@ -163,22 +147,6 @@ int p_ol_wgh_init (pitchOLWghtState **state)
 }
 
 ------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
-
-------------------------------------------------------------------------------
  CAUTION [optional]
  [State any special notes, constraints or cautions for users of this function]
 
@@ -270,22 +238,6 @@ int p_ol_wgh_reset (pitchOLWghtState *st)
 }
 
 ------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
-
-------------------------------------------------------------------------------
  CAUTION [optional]
  [State any special notes, constraints or cautions for users of this function]
 
@@ -363,22 +315,6 @@ void p_ol_wgh_exit (pitchOLWghtState **state)
 
     return;
 }
-
-------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
 
 ------------------------------------------------------------------------------
  CAUTION [optional]
@@ -543,22 +479,6 @@ static Word16 Lag_max ( // o : lag found
 
     return (p_max);
 }
-
-------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
 
 ------------------------------------------------------------------------------
  CAUTION [optional]
@@ -834,22 +754,6 @@ Word16 Pitch_ol_wgh (     // o   : open loop pitch lag
 }
 
 ------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
-
-------------------------------------------------------------------------------
  CAUTION [optional]
  [State any special notes, constraints or cautions for users of this function]
 
@@ -949,7 +853,7 @@ Word16 Pitch_ol_wgh(      /* o   : open loop pitch lag                          
     {
         st->old_T0_med = p_max1;
         /* = ada_w = ada_w * 0.9 */
-        st->ada_w = mult(st->ada_w, 29491, pOverflow);
+        st->ada_w = (Word16)((Word32)(st->ada_w * 29491) >> 15);
     }
 
     if (sub(st->ada_w, 9830, pOverflow) < 0)  /* ada_w - 0.3 */

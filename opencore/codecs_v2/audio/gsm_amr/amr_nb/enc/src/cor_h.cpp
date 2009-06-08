@@ -31,70 +31,7 @@ terms listed above has been obtained from the copyright holder.
 
 
 
- Pathname: ./audio/gsm-amr/c/src/cor_h.c
-
-     Date: 06/12/2000
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Updated template used to PV coding template. First attempt at
-          optimizing C code.
-
- Description: Used MAX_16 and MIN_16 when checking the result of Inv_sqrt.
-          Synced up to the new template.
-
- Description: Added setting of Overflow flag in inlined code.
-
- Description: Took out cor_h_x function and put it in its own file. Sync'ed
-          up with the single_func_template.c template. Delete version
-          ID variable.
-
- Description: Synchronized file with UTMS version 3.2.0. Updated coding
-              template. Removed unnecessary include files.
-
- Description: Fixed portion of the code that builds the rr[] matrix. There
-              was an error in the original inlining of code that caused
-              the code to be not bit-exact with UMTS version 3.2.0.
-
- Description: Added calls to L_add() and mult() in the code to handle overflow
-              scenario. Moved cor_h.h after cnst.h in the Include section.
-              Doing this allows the unit test to build using the cnst.h in the
-              /test/include directory. Fixed initialization of the accumulator
-              in the first calculation of the sum of squares.
-
- Description: Made the following changes per comments from Phase 2/3 review:
-              1. Used #define value instead of hard-coded numbers in the code.
-              2. Fixed typecasting issue with TI C compiler.
-              3. Removed typecasting of 0x00008000L in the call to L_add.
-
- Description: Changed pOverflow from a global variable into a function
- parameter.
-
- Description:
-            1. Added pointer to avoid adding offsets in every pass
-            2. Eliminate variables defined as registers
-            3. Removed extra check for overflow by doing scaling right
-               after overflow is detected.
-            4. Eliminated calls to basic operations (like extract) not
-               needed because of the nature of the number (all bounded)
-            5. Eliminated duplicate loop accessing same data
-            6. Simplified matrix addressing by use of pointers
-
- Description:
-              1. Eliminated unused include files.
-              2. Access twice the number of points when delaing with matrices
-                 and in the process only 3 pointers (instead of 4) are needed
-              3. Replaced array addressing (array sign[]) by pointers
-
- Description: Changed round function name to pv_round to avoid conflict with
-              round function in C standard library.
-
- Description: Using inlines from fxp_arithmetic.h .
-
- Description: Replacing fxp_arithmetic.h with basic_op.h.
-
- Description:
+ Filename: cor_h.cpp
 
 ------------------------------------------------------------------------------
 */
@@ -242,22 +179,6 @@ void cor_h (
 }
 
 ---------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
-
-------------------------------------------------------------------------------
  CAUTION [optional]
  [State any special notes, constraints or cautions for users of this function]
 

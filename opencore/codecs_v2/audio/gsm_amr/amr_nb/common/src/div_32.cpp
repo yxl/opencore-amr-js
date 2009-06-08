@@ -28,28 +28,7 @@ terms listed above has been obtained from the copyright holder.
 ****************************************************************************************/
 /*
 
- Filename: /audio/gsm_amr/c/src/div_32.c
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Updated template. Changed function interface to pass in a
-              pointer to overflow flag into the function instead of using a
-              global flag. Removed inclusion of unwanted header files. Changed
-              the name of input and output variables for clarity.
-
- Description:
-              1. Eliminated unused include files.
-              2. Replaced l_extract functionality, code size and speed
-                 do not justify calling this function
-              3. Eliminated sub() function call, replace by (-), this knowing
-                 that the result will not saturate.
-
- Description:  Added casting to eliminate warnings
-
- Who:                           Date:
- Description:
-
+ Filename: div_32.cpp
 
 ------------------------------------------------------------------------------
 */
@@ -138,22 +117,6 @@ terms listed above has been obtained from the copyright holder.
 ------------------------------------------------------------------------------
  PSEUDO-CODE
 
-
-------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
 
 ------------------------------------------------------------------------------
  CAUTION [optional]

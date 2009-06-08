@@ -29,7 +29,7 @@ terms listed above has been obtained from the copyright holder.
 /*
 ------------------------------------------------------------------------------
 
- Pathname: ./audio/gsm-amr/c/src/bgnscd.c
+ Filename: bgnscd.cpp
  Functions:
            Bgn_scd_reset
            Bgn_scd
@@ -50,7 +50,6 @@ terms listed above has been obtained from the copyright holder.
 #include    "typedef.h"
 #include    "basic_op.h"
 #include    "cnst.h"
-#include    "copy.h"
 #include    "gmed_n.h"
 #include    "sqrt_l.h"
 #include    "oscl_mem.h"
@@ -136,22 +135,6 @@ Word16 Bgn_scd_reset (Bgn_scdState *state)
 
    return 0;
 }
-
-------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
 
 ------------------------------------------------------------------------------
  CAUTION [optional]
@@ -371,22 +354,6 @@ Word16 Bgn_scd (Bgn_scdState *st,      // i : State variables for bgn SCD
 
    return inbgNoise;
 }
-
-------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
 
 ------------------------------------------------------------------------------
  CAUTION [optional]

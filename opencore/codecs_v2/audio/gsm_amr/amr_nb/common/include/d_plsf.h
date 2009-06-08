@@ -28,20 +28,7 @@ terms listed above has been obtained from the copyright holder.
 ****************************************************************************************/
 /*
 
- Filename: /audio/gsm_amr/c/include/d_plsf.h
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Placed header file in the proper template format.  Added
- parameter pOverflow for the basic math ops.
-
- Description:  Replaced "int" and/or "char" with OSCL defined types.
-
- Description: Moved _cplusplus #ifdef after Include section.
-
- Who:                       Date:
- Description:
+ Filename: d_plsf.h
 
 ------------------------------------------------------------------------------
  INCLUDE DESCRIPTION
@@ -64,6 +51,7 @@ terms listed above has been obtained from the copyright holder.
 #include "typedef.h"
 #include "cnst.h"
 #include "mode.h"
+#include "get_const_tbls.h"
 
 /*--------------------------------------------------------------------------*/
 #ifdef __cplusplus
@@ -117,7 +105,7 @@ extern "C"
     *
     **************************************************************************
     */
-    Word16 D_plsf_reset(D_plsfState *st);
+    Word16 D_plsf_reset(D_plsfState *st, const Word16* mean_lsf_5_ptr);
 
     /*
     **************************************************************************
@@ -151,6 +139,7 @@ extern "C"
         Word16 bfi,       /* i  : bad frame indicator (set to 1 if a bad
                               frame is received)                         */
         Word16 *indice,   /* i  : quantization indices of 5 submatrices, Q0  */
+        CommonAmrTbls* common_amr_tbls, /* i : structure containing ptrs to read-only tables */
         Word16 *lsp1_q,   /* o  : quantized 1st LSP vector (M)           Q15 */
         Word16 *lsp2_q,   /* o  : quantized 2nd LSP vector (M)           Q15 */
         Flag  *pOverflow  /* o : Flag set when overflow occurs               */
@@ -172,6 +161,7 @@ extern "C"
         Word16 bfi,       /* i  : bad frame indicator (set to 1 if a         */
         /*      bad frame is received)                     */
         Word16 * indice,  /* i  : quantization indices of 3 submatrices, Q0  */
+        CommonAmrTbls* common_amr_tbls, /* i : structure containing ptrs to read-only tables */
         Word16 * lsp1_q,  /* o  : quantized 1st LSP vector,              Q15 */
         Flag  *pOverflow  /* o : Flag set when overflow occurs               */
     );
@@ -185,7 +175,8 @@ extern "C"
      *
      *************************************************************************/
     void Init_D_plsf_3(D_plsfState *st,  /* i/o: State struct                */
-                       Word16 index      /* i  : past_rq_init[] index [0, 7] */
+                       Word16 index,     /* i  : past_rq_init[] index [0, 7] */
+                       const Word16* past_rq_init_ptr /* ptr to read-only table */
                       );
 
     /*----------------------------------------------------------------------------

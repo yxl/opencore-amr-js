@@ -27,41 +27,7 @@ Permission to distribute, modify and use this file under the standard license
 terms listed above has been obtained from the copyright holder.
 ****************************************************************************************/
 /*
- Pathname: ./audio/gsm-amr/c/src/inv_sqrt.c
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Put file into template.
-
- Description: Synchronized file with UMTS version 3.2.0. Updated coding
-              template. Removed unnecessary include files.
-
- Description: Replaced basic_op.h with the header files of the math functions
-              used in the file.
-
- Description: Made the following changes per comments from Phase 2/3 review:
-              1. Defined one local variable per line.
-              2. Used "&=", ">>=", and "+=" in the code.
-
- Description: Updated template. Changed function interface to pass in a
-              pointer to overflow flag into the function instead of using a
-              global flag.
-
- Description: Removed inclusion of inv_sqrt.tab file. Changed array name
-              from "table" to "inv_sqrt_tbl"
-
- Description: Removed math operations that were not needed as functions,
-             this because the numbers themselves will not saturate the
-             operators, so there is not need to check for saturation.
-
- Description: Updated copyrigth year, according to code review comments.
-
- Description:  Replaced "int" and/or "char" with defined types.
-               Added proper casting (Word32) to some left shifting operations
-
- Who:                           Date:
- Description:
+ Filename: inv_sqrt.cpp
 
 ------------------------------------------------------------------------------
 */
@@ -196,29 +162,13 @@ Word32 Inv_sqrt (       // (o) : output value
 }
 
 ------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
-
-------------------------------------------------------------------------------
  CAUTION [optional]
  [State any special notes, constraints or cautions for users of this function]
 
 ------------------------------------------------------------------------------
 */
 
-Word32 Inv_sqrt(        /* (o) : output value   */
+OSCL_EXPORT_REF Word32 Inv_sqrt(        /* (o) : output value   */
     Word32 L_x,         /* (i) : input value    */
     Flag   * pOverflow  /* (i) : pointer to overflow flag */
 )

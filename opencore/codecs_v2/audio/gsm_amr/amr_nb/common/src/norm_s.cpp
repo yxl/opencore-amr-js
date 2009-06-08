@@ -28,24 +28,7 @@ terms listed above has been obtained from the copyright holder.
 ****************************************************************************************/
 /*
 
- Pathname: ./gsm-amr/c/src/norm_s.c
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Created separate file for the norm_s function. Sync'ed up
-          with the current template and fixed tabs.
-
- Description: Updated input/output definition and module description to
-          be the same as the equivalent assembly file (norm_s.asm).
-
- Description: Updated definition of var1 to be the same as that in the
-          assembly file (norm_s.asm).
-
- Description: Removed conditional code that updates WMOPS counter
-
- Who:                       Date:
- Description:
+ Filename: norm_s.cpp
 
 ------------------------------------------------------------------------------
  INPUT AND OUTPUT DEFINITIONS
@@ -128,28 +111,6 @@ Word16 norm_s (Word16 var1)
 }
 
 ------------------------------------------------------------------------------
- RESOURCES USED
-   When the code is written for a specific target processor the
-     the resources used should be documented below.
-
- STACK USAGE: [stack count for this module] + [variable to represent
-          stack usage for each subroutine called]
-
-     where: [stack usage variable] = stack usage for [subroutine
-         name] (see [filename].ext)
-
- DATA MEMORY USED: x words
-
- PROGRAM MEMORY USED: x words
-
- CLOCK CYCLES: [cycle count equation for this module] + [variable
-           used to represent cycle count for each subroutine
-           called]
-
-     where: [cycle count variable] = cycle count for [subroutine
-        name] (see [filename].ext)
-
-------------------------------------------------------------------------------
 */
 
 
@@ -194,7 +155,7 @@ Word16 norm_s (Word16 var1)
 ----------------------------------------------------------------------------*/
 #if !( defined(PV_ARM_V5) || defined(PV_ARM_GCC_V5) )
 
-Word16 norm_s(register Word16 var1)
+OSCL_EXPORT_REF Word16 norm_s(register Word16 var1)
 {
     /*----------------------------------------------------------------------------
     ; Define all local variables

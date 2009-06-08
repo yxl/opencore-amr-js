@@ -31,48 +31,12 @@ terms listed above has been obtained from the copyright holder.
 
 
 
- Pathname: ./audio/gsm-amr/c/src/c2_9pf.c
- Funtions: code_2i40_9bits
+ Filename: c2_9pf.cpp
+ Functions: code_2i40_9bits
            search_2i40
            Test_search_2i40
            build_code
            Test_build_code
-
-     Date: 05/26/2000
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Changed template used to PV coding template. First attempt at
-          optimizing C code.
-
- Description: Updated file per comments gathered from Phase 2/3 review.
-
- Description: Added setting of Overflow flag in inlined code.
-
- Description: Synchronized file with UMTS version 3.2.0. Updated coding
-              template.
-
- Description: Replaced basic_op.h with the header files of the math functions
-              used by the file.
-
- Description: Made the following changes per comments from Phase 2/3 review:
-              1. Defined one local variable per line.
-
- Description: Passed in pOverflow flag for EPOC compatibility.
-
- Description: Optimized search_2i40() to reduce clock cycle usage.
-
- Description: Removed unnecessary include files and #defines.
-
- Description: Changed function name to pv_round to avoid conflict with
-              round function in C standard library.
-
- Description:  Replaced "int" and/or "char" with OSCL defined types.
-
- Description: Added #ifdef __cplusplus around extern'ed table.
-
- Description:
 
 ------------------------------------------------------------------------------
  MODULE DESCRIPTION
@@ -121,6 +85,7 @@ extern "C"
         Word16 subNr,       /* i : subframe number                               */
         Word16 dn[],        /* i : correlation between target and h[]            */
         Word16 rr[][L_CODE],/* i : matrix of autocorrelation                     */
+        const Word16* startPos_ptr, /* i: ptr to read only table                 */
         Word16 codvec[],    /* o : algebraic codebook vector                     */
         Flag   * pOverflow  /* o : Flag set when overflow occurs                 */
     );
@@ -156,7 +121,6 @@ extern "C"
     ; EXTERNAL GLOBAL STORE/BUFFER/POINTER REFERENCES
     ; Declare variables used in this module but defined elsewhere
     ----------------------------------------------------------------------------*/
-    extern const Word16 startPos[];
 
     /*
     ------------------------------------------------------------------------------
@@ -277,22 +241,6 @@ extern "C"
     }
 
     ------------------------------------------------------------------------------
-     RESOURCES USED [optional]
-
-     When the code is written for a specific target processor the
-     the resources used should be documented below.
-
-     HEAP MEMORY USED: x bytes
-
-     STACK MEMORY USED: x bytes
-
-     CLOCK CYCLES: (cycle count equation for this function) + (variable
-                    used to represent cycle count for each subroutine
-                    called)
-         where: (cycle count variable) = cycle count for [subroutine
-                                         name]
-
-    ------------------------------------------------------------------------------
      CAUTION [optional]
      [State any special notes, constraints or cautions for users of this function]
 
@@ -309,6 +257,7 @@ extern "C"
         Word16 code[],      /* o : Innovative codebook                      */
         Word16 y[],         /* o : filtered fixed codebook excitation       */
         Word16 * sign,      /* o : Signs of 2 pulses                        */
+        const Word16* startPos_ptr, /* ptr to read-only table              */
         Flag   * pOverflow  /* o : Flag set when overflow occurs            */
     )
     {
@@ -349,7 +298,7 @@ extern "C"
                         pOverflow);
 
                 *(h + i) =
-                    add(
+                    add_16(
                         *(h + i),
                         temp,
                         pOverflow);
@@ -381,6 +330,7 @@ extern "C"
             subNr,
             dn,
             rr,
+            startPos_ptr,
             codvec,
             pOverflow);
 
@@ -411,7 +361,7 @@ extern "C"
                         pOverflow);
 
                 *(code + i) =
-                    add(
+                    add_16(
                         *(code + i),
                         temp,
                         pOverflow);
@@ -562,22 +512,6 @@ extern "C"
     }
 
     ------------------------------------------------------------------------------
-     RESOURCES USED [optional]
-
-     When the code is written for a specific target processor the
-     the resources used should be documented below.
-
-     HEAP MEMORY USED: x bytes
-
-     STACK MEMORY USED: x bytes
-
-     CLOCK CYCLES: (cycle count equation for this function) + (variable
-                    used to represent cycle count for each subroutine
-                    called)
-         where: (cycle count variable) = cycle count for [subroutine
-                                         name]
-
-    ------------------------------------------------------------------------------
      CAUTION [optional]
      [State any special notes, constraints or cautions for users of this function]
 
@@ -588,6 +522,7 @@ extern "C"
         Word16 subNr,        /* i : subframe number                    */
         Word16 dn[],         /* i : correlation between target and h[] */
         Word16 rr[][L_CODE], /* i : matrix of autocorrelation          */
+        const Word16* startPos_ptr, /* i: ptr to read only table       */
         Word16 codvec[],     /* o : algebraic codebook vector          */
         Flag   * pOverflow   /* o : Flag set when overflow occurs      */
     )
@@ -631,8 +566,8 @@ extern "C"
             /* fix starting position */
 
             i = (subNr << 1) + (track1 << 3);
-            *ipos = *(startPos + i);
-            *(ipos + 1) = *(startPos + i + 1);
+            *ipos = *(startPos_ptr + i);
+            *(ipos + 1) = *(startPos_ptr + i + 1);
 
 
             /*----------------------------------------------------------*
@@ -779,22 +714,6 @@ extern "C"
        RETURNING(nothing)
 
     ------------------------------------------------------------------------------
-     RESOURCES USED [optional]
-
-     When the code is written for a specific target processor the
-     the resources used should be documented below.
-
-     HEAP MEMORY USED: x bytes
-
-     STACK MEMORY USED: x bytes
-
-     CLOCK CYCLES: (cycle count equation for this function) + (variable
-                    used to represent cycle count for each subroutine
-                    called)
-         where: (cycle count variable) = cycle count for [subroutine
-                                         name]
-
-    ------------------------------------------------------------------------------
      CAUTION [optional]
      [State any special notes, constraints or cautions for users of this function]
 
@@ -805,6 +724,7 @@ extern "C"
         Word16 subNr,        /* i : subframe number                    */
         Word16 dn[],         /* i : correlation between target and h[] */
         Word16 rr[][L_CODE], /* i : matrix of autocorrelation          */
+        const Word16* startPos_ptr, /* i : ptr to read-only table      */
         Word16 codvec[],     /* o : algebraic codebook vector          */
         Flag   * pOverflow   /* o : Flag set when overflow occurs      */
     )
@@ -821,6 +741,7 @@ extern "C"
             subNr,
             dn,
             rr,
+            startPos_ptr,
             codvec,
             pOverflow);
 
@@ -957,22 +878,6 @@ extern "C"
 
         return indx;
     }
-
-    ------------------------------------------------------------------------------
-     RESOURCES USED [optional]
-
-     When the code is written for a specific target processor the
-     the resources used should be documented below.
-
-     HEAP MEMORY USED: x bytes
-
-     STACK MEMORY USED: x bytes
-
-     CLOCK CYCLES: (cycle count equation for this function) + (variable
-                    used to represent cycle count for each subroutine
-                    called)
-         where: (cycle count variable) = cycle count for [subroutine
-                                         name]
 
     ------------------------------------------------------------------------------
      CAUTION [optional]
@@ -1151,22 +1056,6 @@ extern "C"
                sign = sign )
        MODIFYING(nothing)
        RETURNING(indx)
-
-    ------------------------------------------------------------------------------
-     RESOURCES USED [optional]
-
-     When the code is written for a specific target processor the
-     the resources used should be documented below.
-
-     HEAP MEMORY USED: x bytes
-
-     STACK MEMORY USED: x bytes
-
-     CLOCK CYCLES: (cycle count equation for this function) + (variable
-                    used to represent cycle count for each subroutine
-                    called)
-         where: (cycle count variable) = cycle count for [subroutine
-                                         name]
 
     ------------------------------------------------------------------------------
      CAUTION [optional]

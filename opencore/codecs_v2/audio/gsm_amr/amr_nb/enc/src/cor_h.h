@@ -29,16 +29,16 @@ terms listed above has been obtained from the copyright holder.
 /*----------------------------------------------------------------------------
 ; CONTINUE ONLY IF NOT ALREADY DEFINED
 ----------------------------------------------------------------------------*/
-#ifndef	COR_H_H
-#define	COR_H_H
+#ifndef COR_H_H
+#define COR_H_H
 
 /*----------------------------------------------------------------------------
 ; INCLUDES
 ----------------------------------------------------------------------------*/
 #include "typedef.h"
 
-#include "cor_h_x.h"				/* Used by legacy files */
-#include "cor_h_x2.h"				/* Used by legacy files */
+#include "cor_h_x.h"                /* Used by legacy files */
+#include "cor_h_x2.h"               /* Used by legacy files */
 
 /*--------------------------------------------------------------------------*/
 #ifdef __cplusplus

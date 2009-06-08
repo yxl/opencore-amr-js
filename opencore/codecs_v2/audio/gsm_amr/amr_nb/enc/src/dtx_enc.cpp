@@ -31,74 +31,13 @@ terms listed above has been obtained from the copyright holder.
 
 
 
- Pathname: ./audio/gsm-amr/c/src/dtx_enc.c
- Funtions: dtx_enc_init
+ Filename: dtx_enc.cpp
+ Functions: dtx_enc_init
            dtx_enc_reset
            dtx_enc_exit
            dtx_enc
            dtx_buffer
            tx_dtx_handler
-
-     Date: 06/08/2000
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Updated template used to PV coding template. First attempt at
-          optimizing C code.
-
- Description: Updated file per comments gathered from Phase 2/3 review.
-          Synched up with new template (Inputs/Outputs section). Deleted
-          lines leftover from original code prior to the code section of
-          dtx_enc_exit function. Deleted confusing comment in the log_en
-          calculation in dtx_enc function. Restructured IF statement in
-          the calculation of the sum of squares of speech signals in
-          dtx_buffer.
-
- Description: Added setting of Overflow flag in inlined code.
-
- Description: Synchronized file with UTMS version 3.2.0. Updated coding
-              template. Removed unnecessary include files.
-
- Description: Made the following changes per comments from Phase 2/3 review:
-              1. Modified FOR loops to count down.
-              2. Fixed typecasting issue with TI C compiler.
-              3. Fixed comment in dtx_enc pseudo-code.
-              4. Added dtx_enc code comment pertaining to possible assembly
-                 implementation.
-
- Description: Added calls to add() in tx_dtx_handler. Updated copyright year.
-
- Description: Pass in pointer to overflow flag to all functions requiring this
-              flag. This is to make the library EPOC compatible.
-
- Description:  For dtx_enc_reset() only
-              1. Replaced copy() with memcpy.
-              2. Eliminated include file copy.h
-              3. Eliminated printf statement
-              For dtx_buffer()
-              1. Replaced copy() with memcpy.
-              2. Eliminated math operations that unnecessary checked for
-                 saturation, in some cases this by shifting before adding and
-                 in other cases by evaluating the operands
-              3. Unrolled loop to speed up execution
-
- Description:  For dtx_buffer()
-              1. Modified scaling and added check for saturation. Previous
-                 scaling was correct but altered precision, this cause bit
-                 exactness test failure.
-
- Description:  For dtx_buffer()
-              1. Modified scaling and saturation checks. Previous
-                 scaling was correct but altered precision, this cause bit
-                 exactness test failure for dtx vad2.
-
- Description:  Replaced OSCL mem type functions and eliminated include
-               files that now are chosen by OSCL definitions
-
- Description:  Replaced "int" and/or "char" with OSCL defined types.
-
- Description:
 
 ------------------------------------------------------------------------------
  MODULE DESCRIPTION
@@ -212,29 +151,13 @@ int dtx_enc_init (dtx_encState **st)
 }
 
 ------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
-
-------------------------------------------------------------------------------
  CAUTION [optional]
  [State any special notes, constraints or cautions for users of this function]
 
 ------------------------------------------------------------------------------
 */
 
-Word16 dtx_enc_init(dtx_encState **st)
+Word16 dtx_enc_init(dtx_encState **st, const Word16* lsp_init_data_ptr)
 {
     dtx_encState* s;
 
@@ -251,7 +174,7 @@ Word16 dtx_enc_init(dtx_encState **st)
         return(-1);
     }
 
-    dtx_enc_reset(s);
+    dtx_enc_reset(s, lsp_init_data_ptr);
     *st = s;
 
     return(0);
@@ -333,29 +256,13 @@ int dtx_enc_reset (dtx_encState *st)
 }
 
 ------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
-
-------------------------------------------------------------------------------
  CAUTION [optional]
  [State any special notes, constraints or cautions for users of this function]
 
 ------------------------------------------------------------------------------
 */
 
-Word16 dtx_enc_reset(dtx_encState *st)
+Word16 dtx_enc_reset(dtx_encState *st, const Word16* lsp_init_data_ptr)
 {
     Word16 i;
 
@@ -374,7 +281,7 @@ Word16 dtx_enc_reset(dtx_encState *st)
     /* Init lsp_hist[] */
     for (i = 0; i < DTX_HIST_SIZE; i++)
     {
-        oscl_memcpy(&st->lsp_hist[i * M], lsp_init_data, M*sizeof(Word16));
+        oscl_memcpy(&st->lsp_hist[i * M], lsp_init_data_ptr, M*sizeof(Word16));
     }
 
     /* Reset energy history */
@@ -438,22 +345,6 @@ void dtx_enc_exit (dtx_encState **st)
 
    return;
 }
-
-------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
 
 ------------------------------------------------------------------------------
  CAUTION [optional]
@@ -639,22 +530,6 @@ int dtx_enc(dtx_encState *st,        // i/o : State struct
 }
 
 ------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
-
-------------------------------------------------------------------------------
  CAUTION [optional]
  [State any special notes, constraints or cautions for users of this function]
 
@@ -701,7 +576,7 @@ void dtx_enc(dtx_encState *st,        /* i/o : State struct                  */
             {
                 temp = st->log_en_hist[i] >> 2;
             }
-            log_en = add(log_en, temp, pOverflow);
+            log_en = add_16(log_en, temp, pOverflow);
 
             for (j = M - 1; j >= 0; j--)
             {
@@ -735,9 +610,9 @@ void dtx_enc(dtx_encState *st,        /* i/o : State struct                  */
 
         /*  quantize logarithmic energy to 6 bits */
         /* +2.5 in Q10 */
-        st->log_en_index = add(log_en, 2560, pOverflow);
+        st->log_en_index = log_en + 2560;
         /* add 0.5/4 in Q10 */
-        st->log_en_index = add(st->log_en_index, 128, pOverflow);
+        st->log_en_index += 128;
         if (st->log_en_index < 0)
         {
             st->log_en_index = ~((~st->log_en_index) >> 8);
@@ -912,22 +787,6 @@ int dtx_buffer(dtx_encState *st,   // i/o : State struct
 }
 
 ------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
-
-------------------------------------------------------------------------------
  CAUTION [optional]
  [State any special notes, constraints or cautions for users of this function]
 
@@ -1092,22 +951,6 @@ Word16 tx_dtx_handler(dtx_encState *st,      // i/o : State struct
 }
 
 ------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
-
-------------------------------------------------------------------------------
  CAUTION [optional]
  [State any special notes, constraints or cautions for users of this function]
 
@@ -1124,7 +967,7 @@ Word16 tx_dtx_handler(dtx_encState *st,      /* i/o : State struct           */
     Word16 count;
 
     /* this state machine is in synch with the GSMEFR txDtx machine */
-    st->decAnaElapsedCount = add(st->decAnaElapsedCount, 1, pOverflow);
+    st->decAnaElapsedCount = add_16(st->decAnaElapsedCount, 1, pOverflow);
 
     compute_new_sid_possible = 0;
 
@@ -1146,8 +989,8 @@ Word16 tx_dtx_handler(dtx_encState *st,      /* i/o : State struct           */
 
             /* decAnaElapsedCount + dtxHangoverCount < */
             /* DTX_ELAPSED_FRAMES_THRESH               */
-            count = add(st->decAnaElapsedCount, st->dtxHangoverCount,
-                        pOverflow);
+            count = add_16(st->decAnaElapsedCount, st->dtxHangoverCount,
+                           pOverflow);
             if (count < DTX_ELAPSED_FRAMES_THRESH)
             {
                 *usedMode = MRDTX;

@@ -31,27 +31,7 @@ terms listed above has been obtained from the copyright holder.
 
 
 
- Pathname: ./audio/gsm-amr/c/src/qua_gain.c
- Functions:
-
-     Date: 02/05/2002
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Updated template used to PV coding template.
- Changed to accept the pOverflow flag for EPOC compatibility.
-
- Description: Changed include files to lowercase.
-
- Description:  Replaced OSCL mem type functions and eliminated include
-               files that now are chosen by OSCL definitions
-
- Description:  Replaced "int" and/or "char" with OSCL defined types.
-
- Description: Added #ifdef __cplusplus around extern'ed table.
-
- Description:
+ Filename: qua_gain.cpp
 
 ------------------------------------------------------------------------------
  MODULE DESCRIPTION
@@ -103,8 +83,6 @@ extern "C"
     ; EXTERNAL GLOBAL STORE/BUFFER/POINTER REFERENCES
     ; Declare variables used in this module but defined elsewhere
     ----------------------------------------------------------------------------*/
-    extern const Word16 table_gain_lowrates[];
-    extern const Word16 table_gain_highrates[];
 
     /*--------------------------------------------------------------------------*/
 #ifdef __cplusplus
@@ -166,22 +144,6 @@ extern "C"
 
 
 ------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
-
-------------------------------------------------------------------------------
  CAUTION [optional]
  [State any special notes, constraints or cautions for users of this function]
 
@@ -205,6 +167,7 @@ Qua_gain(                   /* o  : index of quantization.                 */
     /*      (for MR122 MA predictor update)        */
     Word16 *qua_ener,       /* o  : quantized energy error,            Q10 */
     /*      (for other MA predictor update)        */
+    CommonAmrTbls* common_amr_tbls, /* i : ptr to struct of tables ptrs    */
     Flag   *pOverflow       /* o  : overflow indicator                     */
 )
 {
@@ -233,12 +196,12 @@ Qua_gain(                   /* o  : index of quantization.                 */
     if (mode == MR102 || mode == MR74 || mode == MR67)
     {
         table_len = VQ_SIZE_HIGHRATES;
-        table_gain = table_gain_highrates;
+        table_gain = common_amr_tbls->table_gain_highrates_ptr;
     }
     else
     {
         table_len = VQ_SIZE_LOWRATES;
-        table_gain = table_gain_lowrates;
+        table_gain = common_amr_tbls->table_gain_lowrates_ptr;
     }
 
     /*-------------------------------------------------------------------*
@@ -268,20 +231,20 @@ Qua_gain(                   /* o  : index of quantization.                 */
      */
 
     /* determine the scaling exponent for g_code: ec = ec0 - 11 */
-    exp_code = sub(exp_gcode0, 11, pOverflow);
+    exp_code = exp_gcode0 - 11;
 
     /* calculate exp_max[i] = s[i]-1 */
-    exp_max[0] = sub(exp_coeff[0], 13, pOverflow);
-    exp_max[1] = sub(exp_coeff[1], 14, pOverflow);
+    exp_max[0] = exp_coeff[0] - 13;
+    exp_max[1] = exp_coeff[1] - 14;
 
     temp = shl(exp_code, 1, pOverflow);
-    temp = add(15, temp, pOverflow);
-    exp_max[2] = add(exp_coeff[2], temp, pOverflow);
+    temp += 15;
+    exp_max[2] = add_16(exp_coeff[2], temp, pOverflow);
 
-    exp_max[3] = add(exp_coeff[3], exp_code, pOverflow);
+    exp_max[3] = add_16(exp_coeff[3], exp_code, pOverflow);
 
-    temp = add(1, exp_code, pOverflow);
-    exp_max[4] = add(exp_coeff[4], temp, pOverflow);
+    temp = exp_code + 1;
+    exp_max[4] = add_16(exp_coeff[4], temp, pOverflow);
 
 
     /*-------------------------------------------------------------------*
@@ -307,12 +270,12 @@ Qua_gain(                   /* o  : index of quantization.                 */
         }
     }
 
-    e_max = add(e_max, 1, pOverflow);      /* To avoid overflow */
+    e_max++;
 
     for (i = 0; i < 5; i++)
     {
-        j = sub(e_max, exp_max[i], pOverflow);
-        L_tmp = L_deposit_h(frac_coeff[i]);
+        j = e_max - exp_max[i];
+        L_tmp = ((Word32)frac_coeff[i] << 16);
         L_tmp = L_shr(L_tmp, j, pOverflow);
         L_Extract(L_tmp, &coeff[i], &coeff_lo[i], pOverflow);
     }
@@ -391,10 +354,10 @@ Qua_gain(                   /* o  : index of quantization.                 */
      *------------------------------------------------------------------*/
 
     L_tmp = L_mult(g_code, gcode0, pOverflow);
-    temp  = sub(10, exp_gcode0, pOverflow);
+    temp  = 10 - exp_gcode0;
     L_tmp = L_shr(L_tmp, temp, pOverflow);
 
-    *gain_cod = extract_h(L_tmp);
+    *gain_cod = (Word16)(L_tmp >> 16);
 
     return index;
 }

@@ -31,45 +31,7 @@ terms listed above has been obtained from the copyright holder.
 
 
 
- Pathname: ./audio/gsm-amr/c/src/g_pitch.c
-
-     Date: 06/12/2000
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description:  Placed into template and began to optimize.
-
- Description: Synchronized file with UMTS version 3.2.0. Updated coding
-              template. Removed unnecessary include files.
-
- Description: Replaced basic_op.h and oper_32b.h with the header files of the
-              math functions used in the file. Fixed typecasting issue with
-              TI compiler.
-
- Description: Passing in pointer to overflow flag for EPOC compatibility. .
-
- Description:
-              1. Eliminated unused include files.
-              2. Replaced array addressing by pointers
-              3. Eliminated math operations that unnecessary checked for
-                 saturation, in some cases this by shifting before adding and
-                 in other cases by evaluating the operands
-              4. Unrolled loops to speed up processing
-
- Description:  Replaced OSCL mem type functions and eliminated include
-               files that now are chosen by OSCL definitions
-
- Description:  Replaced "int" and/or "char" with OSCL defined types.
-
- Description: Changed round function name to pv_round to avoid conflict with
-              round function in C standard library.
-
- Description: Using inlines from fxp_arithmetic.h .
-
- Description: Replacing fxp_arithmetic.h with basic_op.h.
-
- Description:
+ Filename: g_pitch.cpp
 
 ------------------------------------------------------------------------------
 */
@@ -271,22 +233,6 @@ Word16 G_pitch     (    // o : Gain of pitch lag saturated to 1.2
 
     return (gain);
 }
-
-------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
 
 ------------------------------------------------------------------------------
  CAUTION [optional]

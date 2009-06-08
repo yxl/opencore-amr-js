@@ -28,23 +28,7 @@ terms listed above has been obtained from the copyright holder.
 ****************************************************************************************/
 /*
 
- Filename: /audio/gsm_amr/c/include/log2.h
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Updated template used to PV coding template. Deleted function
-          prototype for Log2_norm and put it in its own header file.
-          Added log2_norm.h in Include section for legacy files.
-
- Description: Updated function prototype declaration to reflect new interface.
-              A pointer to overflow flag is passed into the function. Updated
-              template.
-
- Description: Moved _cplusplus #ifdef after Include section..
-
- Who:                       Date:
- Description:
+ Filename: log2.h
 
 ------------------------------------------------------------------------------
  INCLUDE DESCRIPTION
@@ -103,7 +87,7 @@ extern "C"
     ; GLOBAL FUNCTION DEFINITIONS
     ; Function Prototype declaration
     ----------------------------------------------------------------------------*/
-    void Log2(
+    OSCL_IMPORT_REF void Log2(
         Word32 L_x,         /* (i) : input value                                */
         Word16 *pExponent,  /* (o) : Integer part of Log2.   (range: 0<=val<=30)*/
         Word16 *pFraction,  /* (o) : Fractional part of Log2. (range: 0<=val<1) */

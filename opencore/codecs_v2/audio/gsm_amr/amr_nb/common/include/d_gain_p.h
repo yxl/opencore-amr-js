@@ -70,7 +70,8 @@ extern "C"
     */
     Word16 d_gain_pitch(       /* return value: gain (Q14)                */
         enum Mode mode,        /* i : AMR mode                            */
-        Word16 index           /* i   : index of quantization             */
+        Word16 index,          /* i   : index of quantization             */
+        const Word16* qua_gain_pitch_ptr /* i : pointer to read-only tables   */
     );
 
 #ifdef __cplusplus

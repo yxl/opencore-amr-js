@@ -28,26 +28,13 @@ terms listed above has been obtained from the copyright holder.
 ****************************************************************************************/
 /*
 
- Pathname: ./gsm-amr/c/include/extract_h.h
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Created separate header file for extract_h function.
-
- Description: Updated template to make it build in Symbian. Updated copyright
-              year.
-
- Description: Moved _cplusplus #ifdef after Include section.
-
- Who:						Date:
- Description:
+ Filename: div_32.h
 
 ------------------------------------------------------------------------------
  INCLUDE DESCRIPTION
 
  This file contains all the constant definitions and prototype definitions
- needed by the extract_h function.
+ needed by the Div_32 function.
 
 ------------------------------------------------------------------------------
 */
@@ -55,13 +42,14 @@ terms listed above has been obtained from the copyright holder.
 /*----------------------------------------------------------------------------
 ; CONTINUE ONLY IF NOT ALREADY DEFINED
 ----------------------------------------------------------------------------*/
-#ifndef	EXTRACT_H_H
-#define	EXTRACT_H_H
+#ifndef DIV_32_H
+#define DIV_32_H
 
 /*----------------------------------------------------------------------------
 ; INCLUDES
 ----------------------------------------------------------------------------*/
-#include	"basicop_malloc.h"
+
+#include        "basicop_malloc.h"
 
 /*--------------------------------------------------------------------------*/
 #ifdef __cplusplus
@@ -100,7 +88,10 @@ extern "C"
     ; GLOBAL FUNCTION DEFINITIONS
     ; Function Prototype declaration
     ----------------------------------------------------------------------------*/
-    Word16 extract_h(Word32 L_var1);
+    Word32 Div_32(Word32 L_num,
+    Word16 L_denom_hi,
+    Word16 L_denom_lo,
+    Flag   *pOverflow) ;
 
     /*----------------------------------------------------------------------------
     ; END
@@ -109,6 +100,4 @@ extern "C"
 }
 #endif
 
-#endif
-
-
+#endif /* _DIV_32_H_ */

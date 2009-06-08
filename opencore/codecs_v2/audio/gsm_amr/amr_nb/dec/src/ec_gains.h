@@ -29,20 +29,7 @@ terms listed above has been obtained from the copyright holder.
 /*
 ------------------------------------------------------------------------------
 
-
-
- Filename: /audio/gsm_amr/c/src/include/ec_gains.h
-
-     Date: 01/28/2002
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description:  Replaced "int" and/or "char" with OSCL defined types.
-
- Description: Moved _cplusplus #ifdef after Include section.
-
- Description:
+ Filename: ec_gains.h
 
 ------------------------------------------------------------------------------
  INCLUDE DESCRIPTION

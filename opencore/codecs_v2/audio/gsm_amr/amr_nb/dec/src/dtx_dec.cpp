@@ -31,7 +31,7 @@ terms listed above has been obtained from the copyright holder.
 
 
 
- Pathname: ./audio/gsm-amr/c/src/dtx_dec.c
+ Filename: dtx_dec.cpp
  Functions:
            dtx_dec_reset
            dtx_dec
@@ -53,7 +53,6 @@ terms listed above has been obtained from the copyright holder.
 #include "dtx_dec.h"
 #include "typedef.h"
 #include "basic_op.h"
-#include "copy.h"
 #include "set_zero.h"
 #include "mode.h"
 #include "log2.h"
@@ -64,7 +63,6 @@ terms listed above has been obtained from the copyright holder.
 #include "syn_filt.h"
 #include "lsp_lsf.h"
 #include "reorder.h"
-#include "lsp_tab.h"
 #include "oscl_mem.h"
 
 /*----------------------------------------------------------------------------
@@ -221,22 +219,6 @@ int dtx_dec_reset (dtx_decState *st)
 }
 
 ------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
-
-------------------------------------------------------------------------------
  CAUTION [optional]
  [State any special notes, constraints or cautions for users of this function]
 
@@ -304,7 +286,7 @@ Word16 dtx_dec_reset(dtx_decState *st)
 
     for (i = 1; i < DTX_HIST_SIZE; i++)
     {
-        Copy(&st->lsf_hist[0], &st->lsf_hist[M*i], M);
+        oscl_memmove((void *)&st->lsf_hist[M*i], &st->lsf_hist[0], M*sizeof(st->lsf_hist[0]));
     }
     oscl_memset(st->lsf_hist_mean, 0, sizeof(Word16)*M*DTX_HIST_SIZE);
 
@@ -814,22 +796,6 @@ int dtx_dec(
 
 
 ------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
-
-------------------------------------------------------------------------------
  CAUTION [optional]
  [State any special notes, constraints or cautions for users of this function]
 
@@ -845,6 +811,7 @@ void dtx_dec(
     enum DTXStateType new_state,     /* i   : new DTX state                   */
     enum Mode mode,                  /* i   : AMR mode                        */
     Word16 parm[],                   /* i   : Vector of synthesis parameters  */
+    CommonAmrTbls* common_amr_tbls,  /* i   : Ptr to struct of table ptrs     */
     Word16 synth[],                  /* o   : synthesised speech              */
     Word16 A_t[],                    /* o   : decoded LP filter in 4 subframes*/
     Flag   *pOverflow
@@ -908,7 +875,7 @@ void dtx_dec(
         {
             ptr = 0;
         }
-        Copy(&st->lsf_hist[st->lsf_hist_ptr], &st->lsf_hist[ptr], M);
+        oscl_memmove((void *)&st->lsf_hist[ptr], &st->lsf_hist[st->lsf_hist_ptr], M*sizeof(*st->lsf_hist));
 
         ptr = st->log_en_hist_ptr + 1;
 
@@ -938,11 +905,11 @@ void dtx_dec(
             {
                 temp = st->log_en_hist[i] >> 3;
             }
-            st->log_en = add(st->log_en, temp, pOverflow);
+            st->log_en = add_16(st->log_en, temp, pOverflow);
             for (j = M - 1; j >= 0; j--)
             {
                 L_lsf[j] = L_add(L_lsf[j],
-                                 L_deposit_l(st->lsf_hist[i * M + j]), pOverflow);
+                                 (Word32)(st->lsf_hist[i * M + j]), pOverflow);
             }
         }
 
@@ -965,7 +932,7 @@ void dtx_dec(
         st->log_en = sub(st->log_en, st->log_en_adjust, pOverflow);
 
         /* compute lsf variability vector */
-        Copy(st->lsf_hist, st->lsf_hist_mean, 80);
+        oscl_memmove((void *)st->lsf_hist_mean, st->lsf_hist, 80*sizeof(*st->lsf_hist));
 
         for (i = M - 1; i >= 0; i--)
         {
@@ -974,7 +941,7 @@ void dtx_dec(
             for (j = 8 - 1; j >= 0; j--)
             {
                 L_lsf_mean = L_add(L_lsf_mean,
-                                   L_deposit_l(st->lsf_hist_mean[i+j*M]), pOverflow);
+                                   (Word32)(st->lsf_hist_mean[i+j*M]), pOverflow);
             }
 
             if (L_lsf_mean < 0)
@@ -1034,7 +1001,7 @@ void dtx_dec(
     {
         /* Set old SID parameters, always shift */
         /* even if there is no new valid_data   */
-        Copy(st->lsp, st->lsp_old, M);
+        oscl_memmove((void *)st->lsp_old, st->lsp, M*sizeof(*st->lsp));
         st->old_log_en = st->log_en;
 
         if (st->valid_data != 0)   /* new data available (no CRC) */
@@ -1067,9 +1034,10 @@ void dtx_dec(
                 st->true_sid_period_inv = 1 << 14; /* 0.5 it Q15 */
             }
 
-            Init_D_plsf_3(lsfState, parm[0]);
-            D_plsf_3(lsfState, MRDTX, 0, &parm[1], st->lsp, pOverflow);
-            Set_zero(lsfState->past_r_q, M);   /* reset for next speech frame */
+            Init_D_plsf_3(lsfState, parm[0], common_amr_tbls->past_rq_init_ptr);
+            D_plsf_3(lsfState, MRDTX, 0, &parm[1], common_amr_tbls, st->lsp, pOverflow);
+            /* reset for next speech frame */
+            oscl_memset((void *)lsfState->past_r_q, 0, M*sizeof(*lsfState->past_r_q));
 
             log_en_index = parm[4];
             /* Q11 and divide by 4 */
@@ -1083,7 +1051,7 @@ void dtx_dec(
             }
 
             /* Subtract 2.5 in Q11 */
-            st->log_en = sub(st->log_en, (2560 * 2), pOverflow);
+            st->log_en -= (2560 * 2);
 
             /* Index 0 is reserved for silence */
             if (log_en_index == 0)
@@ -1097,7 +1065,7 @@ void dtx_dec(
             if ((st->data_updated == 0) ||
                     (st->dtxGlobalState == SPEECH))
             {
-                Copy(st->lsp, st->lsp_old, M);
+                oscl_memmove((void *)st->lsp_old, st->lsp, M*sizeof(*st->lsp));
                 st->old_log_en = st->log_en;
             }
         } /* endif valid_data */
@@ -1111,7 +1079,7 @@ void dtx_dec(
         {
             temp = st->log_en >> 1;
         }
-        ma_pred_init = sub(temp, 9000, pOverflow);
+        ma_pred_init = temp - 9000;
 
         if (ma_pred_init > 0)
         {
@@ -1128,7 +1096,8 @@ void dtx_dec(
         predState->past_qua_en[3] = ma_pred_init;
 
         /* past_qua_en for other modes than MR122 */
-        ma_pred_init = mult(5443, ma_pred_init, pOverflow);
+        ma_pred_init = ((Word32) ma_pred_init * 5443) >> 15;
+
         /* scale down by factor 20*log10(2) in Q15 */
         predState->past_qua_en_MR122[0] = ma_pred_init;
         predState->past_qua_en_MR122[1] = ma_pred_init;
@@ -1150,7 +1119,9 @@ void dtx_dec(
     }
     else
     {
-        temp = mult((Word16)((Word32)dtx_log_en_adjust[mode] << 5), 3277, pOverflow);
+        temp = (((Word32) dtx_log_en_adjust[mode] << 5) * 3277) >> 15;
+
+
     }
 
     if (temp < 0)
@@ -1161,10 +1132,11 @@ void dtx_dec(
     {
         temp >>= 5;
     }
-    st->log_en_adjust = add(mult(st->log_en_adjust, 29491, pOverflow), temp, pOverflow);
+    st->log_en_adjust = add_16(((Word32)st->log_en_adjust * 29491) >> 15, temp, pOverflow);
+
 
     /* Interpolate SID info */
-    int_fac = shl(add(1, st->since_last_sid, pOverflow), 10, pOverflow); /* Q10 */
+    int_fac = shl((st->since_last_sid + 1), 10, pOverflow); /* Q10 */
     int_fac = mult(int_fac, st->true_sid_period_inv, pOverflow); /* Q10 * Q15 -> Q10 */
 
     /* Maximize to 1.0 in Q10 */
@@ -1187,14 +1159,14 @@ void dtx_dec(
         lsp_int[i] = mult(int_fac, st->lsp[i], pOverflow);/* Q14 * Q15 -> Q14 */
     }
 
-    int_fac = sub(16384, int_fac, pOverflow); /* 1-k in Q14 */
+    int_fac = 16384 - int_fac; /* 1-k in Q14 */
 
     /* (Q14 * Q11 -> Q26) + Q26 -> Q26 */
     L_log_en_int = L_mac(L_log_en_int, int_fac, st->old_log_en, pOverflow);
     for (i = M - 1; i >= 0; i--)
     {
         /* Q14 + (Q14 * Q15 -> Q14) -> Q14 */
-        lsp_int[i] = add(lsp_int[i], mult(int_fac, st->lsp_old[i], pOverflow), pOverflow);
+        lsp_int[i] = add_16(lsp_int[i], mult(int_fac, st->lsp_old[i], pOverflow), pOverflow);
 
         L_temp = ((Word32) lsp_int[i]) << 1;    /* Q14 -> Q15 */
         if (L_temp != (Word32)((Word16) L_temp))
@@ -1206,9 +1178,9 @@ void dtx_dec(
     }
 
     /* compute the amount of lsf variability */
-    lsf_variab_factor = sub(st->log_pg_mean, 2457, pOverflow); /* -0.6 in Q12 */
+    lsf_variab_factor = st->log_pg_mean - 2457; /* -0.6 in Q12 */
     /* *0.3 Q12*Q15 -> Q12 */
-    lsf_variab_factor = sub(4096, mult(lsf_variab_factor, 9830, pOverflow), pOverflow);
+    lsf_variab_factor = 4096 - mult(lsf_variab_factor, 9830, pOverflow);
 
     /* limit to values between 0..1 in Q12 */
     if (lsf_variab_factor > 4095)
@@ -1231,13 +1203,13 @@ void dtx_dec(
     Lsp_lsf(lsp_int, lsf_int, M, pOverflow);
 
     /* apply lsf variability */
-    Copy(lsf_int, lsf_int_variab, M);
+    oscl_memmove((void *)lsf_int_variab, lsf_int, M*sizeof(*lsf_int));
     for (i = M - 1; i >= 0; i--)
     {
-        lsf_int_variab[i] = add(lsf_int_variab[i],
-                                mult(lsf_variab_factor,
-                                     st->lsf_hist_mean[i+lsf_variab_index*M], pOverflow)
-                                , pOverflow);
+        lsf_int_variab[i] = add_16(lsf_int_variab[i],
+                                   mult(lsf_variab_factor,
+                                        st->lsf_hist_mean[i+lsf_variab_index*M], pOverflow)
+                                   , pOverflow);
     }
 
     /* make sure that LSP's are ordered */
@@ -1245,7 +1217,7 @@ void dtx_dec(
     Reorder_lsf(lsf_int_variab, LSF_GAP, M, pOverflow);
 
     /* copy lsf to speech decoders lsf state */
-    Copy(lsf_int, lsfState->past_lsf_q, M);
+    oscl_memmove((void *)lsfState->past_lsf_q, lsf_int, M*sizeof(*lsf_int));
 
     /* convert to lsp */
     Lsf_lsp(lsf_int, lsp_int, M, pOverflow);
@@ -1261,10 +1233,10 @@ void dtx_dec(
     Lsp_Az(lsp_int_variab, acoeff_variab, pOverflow);
 
     /* For use in postfilter */
-    Copy(acoeff, &A_t[0],           M + 1);
-    Copy(acoeff, &A_t[M + 1],       M + 1);
-    Copy(acoeff, &A_t[2 * (M + 1)], M + 1);
-    Copy(acoeff, &A_t[3 * (M + 1)], M + 1);
+    oscl_memmove((void *)&A_t[0],          acoeff, (M + 1)*sizeof(*acoeff));
+    oscl_memmove((void *)&A_t[M + 1],      acoeff, (M + 1)*sizeof(*acoeff));
+    oscl_memmove((void *)&A_t[2 *(M + 1)], acoeff, (M + 1)*sizeof(*acoeff));
+    oscl_memmove((void *)&A_t[3 *(M + 1)], acoeff, (M + 1)*sizeof(*acoeff));
 
     /* Compute reflection coefficients Q15 */
     A_Refl(&acoeff[1], refl, pOverflow);
@@ -1287,14 +1259,14 @@ void dtx_dec(
     }
 
     /* compute logarithm of prediction gain */
-    Log2(L_deposit_l(pred_err), &log_pg_e, &log_pg_m, pOverflow);
+    Log2((Word32)(pred_err), &log_pg_e, &log_pg_m, pOverflow);
 
     /* convert exponent and mantissa to Word16 Q12 */
-    log_pg = shl(sub(log_pg_e, 15, pOverflow), 12, pOverflow); /* Q12 */
-    log_pg = shr(sub(0, add(log_pg, shr(log_pg_m, 15 - 12, pOverflow),
-                            pOverflow), pOverflow), 1, pOverflow);
-    st->log_pg_mean = add(mult(29491, st->log_pg_mean, pOverflow),
-                          mult(3277, log_pg, pOverflow), pOverflow);
+    log_pg = shl((log_pg_e - 15), 12, pOverflow); /* Q12 */
+    log_pg = shr(sub(0, add_16(log_pg, shr(log_pg_m, 15 - 12, pOverflow),
+                               pOverflow), pOverflow), 1, pOverflow);
+    st->log_pg_mean = add_16(mult(29491, st->log_pg_mean, pOverflow),
+                             mult(3277, log_pg, pOverflow), pOverflow);
 
     /* Compute interpolated log energy */
     L_log_en_int = L_shr(L_log_en_int, 10, pOverflow); /* Q26 -> Q16 */
@@ -1303,16 +1275,16 @@ void dtx_dec(
     L_log_en_int = L_add(L_log_en_int, 4 * 65536L, pOverflow);
 
     /* subtract prediction gain */
-    L_log_en_int = L_sub(L_log_en_int, L_shl(L_deposit_l(log_pg), 4, pOverflow), pOverflow);
+    L_log_en_int = L_sub(L_log_en_int, L_shl((Word32)(log_pg), 4, pOverflow), pOverflow);
 
     /* adjust level to speech coder mode */
     L_log_en_int = L_add(L_log_en_int,
-                         L_shl(L_deposit_l(st->log_en_adjust), 5, pOverflow), pOverflow);
+                         L_shl((Word32)(st->log_en_adjust), 5, pOverflow), pOverflow);
 
     log_en_int_e = (Word16)(L_log_en_int >> 16);
 
     log_en_int_m = (Word16)(L_shr(L_sub(L_log_en_int,
-                                        L_deposit_h(log_en_int_e), pOverflow), 1, pOverflow));
+                                        ((Word32)log_en_int_e << 16), pOverflow), 1, pOverflow));
     level = (Word16)(Pow2(log_en_int_e, log_en_int_m, pOverflow));  /* Q4 */
 
     for (i = 0; i < 4; i++)
@@ -1361,10 +1333,10 @@ void dtx_dec(
         st->true_sid_period_inv = div_s(1 << 10, temp);
 
         st->since_last_sid = 0;
-        Copy(st->lsp, st->lsp_old, M);
+        oscl_memmove((void *)st->lsp_old, st->lsp, M*sizeof(*st->lsp));
         st->old_log_en = st->log_en;
         /* subtract 1/8 in Q11 i.e -6/8 dB */
-        st->log_en = sub(st->log_en, 256, pOverflow);
+        st->log_en = st->log_en - 256;
     }
 
     /* reset interpolation length timer
@@ -1467,22 +1439,6 @@ void dtx_dec_activity_update(dtx_decState *st,
 }
 
 ------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
-
-------------------------------------------------------------------------------
  CAUTION [optional]
  [State any special notes, constraints or cautions for users of this function]
 
@@ -1499,8 +1455,8 @@ void dtx_dec_activity_update(dtx_decState *st,
     Word32 L_frame_en;
     Word32 L_temp;
     Word16 log_en_e;
-    Word16 log_en_m;
-    Word16 log_en;
+    Word16 log_en_m = 0;
+    Word16 log_en = 0;
 
     /* update lsp history */
     st->lsf_hist_ptr += M;
@@ -1509,7 +1465,7 @@ void dtx_dec_activity_update(dtx_decState *st,
     {
         st->lsf_hist_ptr = 0;
     }
-    Copy(lsf, &st->lsf_hist[st->lsf_hist_ptr], M);
+    oscl_memmove((void *)&st->lsf_hist[st->lsf_hist_ptr], lsf, M*sizeof(*lsf));
 
     /* compute log energy based on frame energy */
     L_frame_en = 0;     /* Q0 */
@@ -1546,10 +1502,10 @@ void dtx_dec_activity_update(dtx_decState *st,
     {
         log_en_m >>= 5;
     }
-    log_en = add(log_en_e, log_en_m, pOverflow);
+    log_en = log_en_e + log_en_m;
 
     /* divide with L_FRAME i.e subtract with log2(L_FRAME) = 7.32193 */
-    log_en = sub(log_en, 7497 + 1024, pOverflow);
+    log_en -= 7497 + 1024;
 
     /* insert into log energy buffer, no division by two as  *
     * log_en in decoder is Q11                              */
@@ -1778,22 +1734,6 @@ enum DTXStateType rx_dtx_handler(
 }
 
 ------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
-
-------------------------------------------------------------------------------
  CAUTION [optional]
  [State any special notes, constraints or cautions for users of this function]
 
@@ -1833,7 +1773,7 @@ enum DTXStateType rx_dtx_handler(
 
         /* evaluate if noise parameters are too old                     */
         /* since_last_sid is reset when CN parameters have been updated */
-        st->since_last_sid = add(st->since_last_sid, 1, pOverflow);
+        st->since_last_sid += 1;
 
         /* no update of sid parameters in DTX for a long while      */
         /* Due to the delayed update of  st->since_last_sid counter */
@@ -1865,7 +1805,7 @@ enum DTXStateType rx_dtx_handler(
 
     /* update the SPE-SPD DTX hangover synchronization */
     /* to know when SPE has added dtx hangover         */
-    st->decAnaElapsedCount = add(st->decAnaElapsedCount, 1, pOverflow);
+    st->decAnaElapsedCount = add_16(st->decAnaElapsedCount, 1, pOverflow);
     st->dtxHangoverAdded = 0;
 
     if ((frame_type == RX_SID_FIRST)  ||

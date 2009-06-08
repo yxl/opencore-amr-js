@@ -31,19 +31,7 @@ terms listed above has been obtained from the copyright holder.
 
 
 
- Filename: /audio/gsm_amr/c/src/l_extract.c
-
-     Date: 09/07/2000
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Updated template. Changed function interface to pass in a
-              pointer to overflow flag into the function instead of using a
-              global flag. Changed names of function parameters for clarity.
-              Removed inclusion of unwanted header files.
-
- Description:
+ Filename: l_extract.cpp
 
 ------------------------------------------------------------------------------
 */
@@ -82,8 +70,8 @@ terms listed above has been obtained from the copyright holder.
  INPUT AND OUTPUT DEFINITIONS
 
  Inputs:
-	L_var = 32 bit signed integer (Word32) whose value falls
-	       in the range : 0x8000 0000 <= L_32 <= 0x7fff ffff.
+    L_var = 32 bit signed integer (Word32) whose value falls
+           in the range : 0x8000 0000 <= L_32 <= 0x7fff ffff.
 
     pL_var_hi =  pointer to the most significant word of L_var (Word16).
 
@@ -94,8 +82,8 @@ terms listed above has been obtained from the copyright holder.
 
  Outputs:
     pOverflow -> 1 if the 32 bit add operation resulted in overflow
-	pL_var_hi -> MS word of L_32.
-	pL_var_lo -> LS word of L_32 shifted left by 1.
+    pL_var_hi -> MS word of L_32.
+    pL_var_lo -> LS word of L_32 shifted left by 1.
 
  Returns:
     None
@@ -128,22 +116,6 @@ terms listed above has been obtained from the copyright holder.
 ------------------------------------------------------------------------------
  PSEUDO-CODE
 
-
-------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
 
 ------------------------------------------------------------------------------
  CAUTION [optional]

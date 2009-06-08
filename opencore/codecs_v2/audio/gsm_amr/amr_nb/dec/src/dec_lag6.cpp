@@ -31,30 +31,8 @@ terms listed above has been obtained from the copyright holder.
 
 
 
- Pathname: ./audio/gsm-amr/c/src/dec_lag6.c
+ Filename: dec_lag6.cpp
  Functions: Dec_lag6
-
-     Date: 01/31/2002
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description:
- (1) Updated to accept new parameter, Flag *pOverflow.
- (2) Placed file in the proper PV Software template.
-
- Description:
- (1) Removed "count.h" and "basic_op.h" and replaced with individual include
-     files (add.h, sub.h, etc.)
-
- Description:
- (1) Removed optimization -- mult(i, 3, pOverflow) is NOT the same as adding
-     i to itself 3 times.  The reason is because the mult function does a
-     right shift by 15, which will obliterate smaller numbers.
-
- Description:  Replaced "int" and/or "char" with OSCL defined types.
-
- Description:
 
  ------------------------------------------------------------------------------
  INPUT AND OUTPUT DEFINITIONS
@@ -111,28 +89,6 @@ terms listed above has been obtained from the copyright holder.
  PSEUDO-CODE
 
 
-
-------------------------------------------------------------------------------
- RESOURCES USED
-   When the code is written for a specific target processor the
-     the resources used should be documented below.
-
- STACK USAGE: [stack count for this module] + [variable to represent
-          stack usage for each subroutine called]
-
-     where: [stack usage variable] = stack usage for [subroutine
-         name] (see [filename].ext)
-
- DATA MEMORY USED: x words
-
- PROGRAM MEMORY USED: x words
-
- CLOCK CYCLES: [cycle count equation for this module] + [variable
-           used to represent cycle count for each subroutine
-           called]
-
-     where: [cycle count variable] = cycle count for [subroutine
-        name] (see [filename].ext)
 
 ------------------------------------------------------------------------------
 */
@@ -196,7 +152,6 @@ void Dec_lag6(
     Word16 T0_min;
     Word16 T0_max;
     Word16 k;
-    Word16 w;
 
     if (i_subfr == 0)          /* if 1st or 3rd subframe */
     {
@@ -204,52 +159,29 @@ void Dec_lag6(
         {
             /* T0 = (index+5)/6 + 17 */
             i = index + 5;
-            i =
-                mult(
-                    i,
-                    5462,
-                    pOverflow);
+            i = ((Word32) i * 5462) >> 15;
 
-            i =
-                add(
-                    i,
-                    17,
-                    pOverflow);
+
+            i += 17;
 
             *T0 = i;
 
             /* i = 3* (*T0) */
 
-            i = add(i, i, pOverflow);
-            i = add(i, *T0, pOverflow);
+            i <<= 1;
+            i += *T0;
 
             /* *T0_frac = index - T0*6 + 105 */
 
-            i =
-                add(
-                    i,
-                    i,
-                    pOverflow);
+            i <<= 1;
 
-            i =
-                sub(
-                    index,
-                    i,
-                    pOverflow);
+            i = index - i;
 
-            *T0_frac =
-                add(
-                    i,
-                    105,
-                    pOverflow);
+            *T0_frac = i + 105;
         }
         else
         {
-            *T0 =
-                sub(
-                    index,
-                    368,
-                    pOverflow);
+            *T0 = index - 368;
 
             *T0_frac = 0;
         }
@@ -258,80 +190,40 @@ void Dec_lag6(
     {
         /* find T0_min and T0_max for 2nd (or 4th) subframe */
 
-        T0_min =
-            sub(
-                *T0,
-                5,
-                pOverflow);
+        T0_min = *T0 - 5;
 
         if (T0_min < pit_min)
         {
             T0_min = pit_min;
         }
 
-        T0_max =
-            add(
-                T0_min,
-                9,
-                pOverflow);
+        T0_max = T0_min + 9;
 
         if (T0_max > pit_max)
         {
             T0_max = pit_max;
 
-            T0_min =
-                sub(
-                    T0_max,
-                    9,
-                    pOverflow);
+            T0_min = T0_max - 9;
         }
 
         /* i = (index+5)/6 - 1 */
-        i =
-            add(
-                index,
-                5,
-                pOverflow);
+        i = index + 5;
 
-        i =
-            mult(
-                i,
-                5462,
-                pOverflow);
+        i = ((Word32) i * 5462) >> 15;
 
-        i =
-            sub(
-                i,
-                1,
-                pOverflow);
 
-        *T0 =
-            add(
-                i,
-                T0_min,
-                pOverflow);
+        i -= 1;
+
+        *T0 = i + T0_min;
 
         /* i = 3* (*T0) */
 
-        w = add(i, i, pOverflow);
-        i = add(i, w, pOverflow);
+        i = i + (i << 1);
 
-        i =
-            add(
-                i,
-                i,
-                pOverflow);
+        i <<= 1;
 
-        k =
-            sub(
-                index,
-                3,
-                pOverflow);
+        k = index - 3;
 
-        *T0_frac =
-            sub(
-                k,
-                i,
-                pOverflow);
+        *T0_frac = k - i;
     }
 }

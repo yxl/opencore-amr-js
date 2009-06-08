@@ -31,73 +31,7 @@ terms listed above has been obtained from the copyright holder.
 
 
 
- Pathname: ./audio/gsm-amr/c/src/autocorr.c
-
-     Date: 05/15/2000
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Put into template...starting optimization.
-
- Description: Removed call to mult_r routine.
-
- Description: Modified Input/Output Definitions section to comply with the
-          current template. Fixed tabs.
-
- Description: Updated Input/Output definitions by making them more
-          descriptive.
-
- Description: Synchronized file with UMTS version 3.2.0. Updated coding
-              template.
-
- Description: Made the following changes per comments from Phase 2/3 review:
-              1. Added full pathname of file.
-              2. Fixed typecasting issue with TI compiler.
-              3. Modified FOR loops to count down.
-              4. Added comment to the code.
-
- Description: Removed extern to global paramter (Flag Overflow) and replaced
- by passing in a pointer to Overflow.  Also, made several small changes to
- bring code more in line with PV Standards.
-
- Description:
-            1. Added pointer to avoid adding offsets in every pass
-            2. Break last loop in two nested loop to speed up processing
-            3. Removed extra check for overflow by doing scaling right
-               after overflow is detected.
-            4. Eliminated calls to basic operations (like extract) not
-               needed because of the nature of the number (all bounded)
-
- Description:
-              1. Fixed for:
-                overflow check was looking for positive number before a left
-                shift. When numbers were big enough, positive numbers after
-                shifted became negative, causing a 1/0 division).
-                Fixed so now it checks for numbers lesser than 0x40000000
-                before the left shift
-
- Description:
-              1.Modified check for saturation to match bit exact test.
-                Also, when saturation is reached, a faster loop is used
-                (with no energy accumulation) to speed up processing
-
-
- Description:
-              1.Added pointer initialization to for loop when saturation
-                is found. This because some compiler ( like Vcpp in release
-                mode) when optimizing code, may remove pointer information
-                once the loop is broken.
-
- Description:  Added casting to eliminate warnings
-
- Description:  Replaced "int" and/or "char" with OSCL defined types.
-
- Description: Using inlines from fxp_arithmetic.h.
-
- Description: Replacing fxp_arithmetic.h with basic_op.h.
-
- Description:
+ Filename: autocorr.cpp
 
 ----------------------------------------------------------------------------*/
 
@@ -275,22 +209,6 @@ Word16 Autocorr (
 
 
 ------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
-
-------------------------------------------------------------------------------
  CAUTION [optional]
  [State any special notes, constraints or cautions for users of this function]
 
@@ -340,7 +258,7 @@ Word16 Autocorr(
 
     for (i = L_WINDOW; i != 0; i--)
     {
-        temp = (amrnb_fxp_mac_16_by_16bb((Word32) * (p_x++), (Word32) * (p_wind++), 0x04000)) >> 15;
+        temp = (Word16)((amrnb_fxp_mac_16_by_16bb((Word32) * (p_x++), (Word32) * (p_wind++), 0x04000)) >> 15);
         *(p_y++) = temp;
 
         sum += ((Word32)temp * temp) << 1;
@@ -367,7 +285,7 @@ Word16 Autocorr(
 
         for (; i != 0; i--)
         {
-            temp = (amrnb_fxp_mac_16_by_16bb((Word32) * (p_x++), (Word32) * (p_wind++), 0x04000)) >> 15;
+            temp = (Word16)((amrnb_fxp_mac_16_by_16bb((Word32) * (p_x++), (Word32) * (p_wind++), 0x04000)) >> 15);
             *(p_y++) = temp;
         }
     }

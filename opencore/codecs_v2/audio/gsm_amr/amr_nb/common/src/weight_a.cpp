@@ -28,32 +28,7 @@ terms listed above has been obtained from the copyright holder.
 ****************************************************************************************/
 /*
 
- Pathname: ./audio/gsm-amr/c/src/weight_a.c
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Put file into template and first pass at optimization.
-
- Description: Made changes based on comments from the review meeting. Used
-    pointers instead of index addressing in the arrays.
-
- Description: Synchronized file with UMTS version 3.2.0. Updated coding
-              template. Removed unnecessary include files.
-
- Description: Fixed typecasting issue with TI C compiler.
-
- Description: Made the following changes per comments from Phase 2/3 review:
-              1. Modified FOR loop to count down.
-              2. Used address pre-increment instead of address offsets.
-
- Description:  Replaced "int" and/or "char" with OSCL defined types.
-
- Description: Changed round function name to pv_round to avoid conflict with
-              round function in C standard library.
-
- Who:                           Date:
- Description:
+ Filename: weight_a.cpp
 
 ------------------------------------------------------------------------------
 */
@@ -150,29 +125,13 @@ void Weight_Ai (
 }
 
 ------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
-
-------------------------------------------------------------------------------
  CAUTION [optional]
  [State any special notes, constraints or cautions for users of this function]
 
 ------------------------------------------------------------------------------
 */
 
-void Weight_Ai(
+OSCL_EXPORT_REF void Weight_Ai(
     Word16 a[],         /* (i)   : a[M+1]  LPC coefficients   (M=10)    */
     const Word16 fac[], /* (i)   : Spectral expansion factors.          */
     Word16 a_exp[]      /* (o)   : Spectral expanded LPC coefficients   */

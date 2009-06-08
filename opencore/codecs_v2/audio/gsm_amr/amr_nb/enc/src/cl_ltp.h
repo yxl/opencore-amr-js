@@ -31,21 +31,7 @@ terms listed above has been obtained from the copyright holder.
 
 
 
- Filename: /audio/gsm_amr/c/include/cl_ltp.h
-
-     Date: 02/05/2002
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Placed header file in the proper template format.  Added
- parameter pOverflow for the basic math ops.
-
- Description:  Replaced "int" and/or "char" with OSCL defined types.
-
- Description: Moved _cplusplus #ifdef after Include section.
-
- Description:
+ Filename: cl_ltp.h
 
 ------------------------------------------------------------------------------
  INCLUDE DESCRIPTION
@@ -149,6 +135,7 @@ extern "C"
         Word16 g_coeff[],    /* o   : Correlations between xn, y1, & y2         */
         Word16 **anap,       /* o   : Analysis parameters                       */
         Word16 *gp_limit,    /* o   : pitch gain limit                          */
+        const Word16* qua_gain_pitch_ptr, /* i : ptr to read-only table         */
         Flag   *pOverflow    /* o   : overflow indicator                        */
     );
 

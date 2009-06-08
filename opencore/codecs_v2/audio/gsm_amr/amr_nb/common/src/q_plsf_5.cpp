@@ -27,50 +27,7 @@ Permission to distribute, modify and use this file under the standard license
 terms listed above has been obtained from the copyright holder.
 ****************************************************************************************/
 /*
- Pathname: ./audio/gsm-amr/c/src/q_plsf_5.c
- Funtions:
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Placed code in the PV standard template format.
- Updated to accept new parameter, Flag *pOverflow.
-
- Description:
-              Eliminated unused include files.
-              For Vq_subvec()
-              1. Eliminated math operations that unnecessary checked for
-                 saturation (number are bounded to 2^12)
-              2. Eliminated access to (slow) memory by using axiliar variables
-              3. Because this routine is looking for the minimum distance,
-                 introduced 3 check conditions inside the loop, so when the
-                 partial distance is bigger than the minimun distance, the
-                 loop is not completed and process continue with next iteration
-              For Vq_subvec_s()
-              1. Eliminated math operations that unnecessary checked for
-                 saturation (number are bounded to 2^12)
-              2. Combined increasing and decreasing loops to avoid double
-                 accesses to the same table element
-              3. Eliminated access to (slow) memory by using axiliar variables
-              4. Because this routine is looking for the minimum distance,
-                 introduced 2 check conditions inside the loop, so when the
-                 partial distance is bigger than the minimun distance, the
-                 loop is not completed and process continue with next iteration
-              For Q_plsf_5()
-              1. Eliminated math operations that unnecessary checked for
-                 saturation (number are bounded to 2^12)
-              2. Replaced array addressing by pointers
-
- Description:  Replaced OSCL mem type functions and eliminated include
-               files that now are chosen by OSCL definitions
-
- Description:  Replaced "int" and/or "char" with OSCL defined types.
-
-
- Description: Added #ifdef __cplusplus around extern'ed table.
-
- Who:                           Date:
- Description:
+ Filename: q_plsf_5.cpp
 
 ------------------------------------------------------------------------------
  MODULE DESCRIPTION
@@ -177,22 +134,6 @@ extern "C"
 ------------------------------------------------------------------------------
  PSEUDO-CODE
 
-
-------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
 
 ------------------------------------------------------------------------------
  CAUTION [optional]
@@ -341,22 +282,6 @@ static Word16 Vq_subvec( /* o : quantization index,            Q0  */
 ------------------------------------------------------------------------------
  PSEUDO-CODE
 
-
-------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
 
 ------------------------------------------------------------------------------
  CAUTION [optional]
@@ -569,29 +494,13 @@ static Word16 Vq_subvec_s(  /* o : quantization index            Q0  */
 
 
 ------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
-
-------------------------------------------------------------------------------
  CAUTION [optional]
  [State any special notes, constraints or cautions for users of this function]
 
 ------------------------------------------------------------------------------
 */
 
-void Q_plsf_5(
+OSCL_EXPORT_REF void Q_plsf_5(
     Q_plsfState *st,
     Word16 *lsp1,      /* i : 1st LSP vector,                     Q15 */
     Word16 *lsp2,      /* i : 2nd LSP vector,                     Q15 */

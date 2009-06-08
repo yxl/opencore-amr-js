@@ -27,17 +27,7 @@ Permission to distribute, modify and use this file under the standard license
 terms listed above has been obtained from the copyright holder.
 ****************************************************************************************/
 /*
- Filename: /audio/gsm_amr/c/src/lsp_lsf_tbl.c
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Created this file from the reference, lsp_lsf.tab
-
- Description: Added #ifdef __cplusplus and removed "extern" from table
-              definition.
-
- Description: Put "extern" back.
+ Filename: lsp_lsf_tbl.cpp
 
 ------------------------------------------------------------------------------
  MODULE DESCRIPTION
@@ -77,7 +67,7 @@ extern "C"
     ; [Variable declaration - defined here and used outside this module]
     ----------------------------------------------------------------------------*/
 
-    const Word16 table[65] =
+    extern const Word16 table[65] =
     {
         32767, 32729, 32610, 32413, 32138, 31786, 31357, 30853,
         30274, 29622, 28899, 28106, 27246, 26320, 25330, 24279,
@@ -94,7 +84,7 @@ extern "C"
 
     /* slope used to compute y = acos(x) */
 
-    const Word16 slope[64] =
+    extern const Word16 slope[64] =
     {
         -26887, -8812, -5323, -3813, -2979, -2444, -2081, -1811,
         -1608, -1450, -1322, -1219, -1132, -1059, -998, -946,

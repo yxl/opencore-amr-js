@@ -28,18 +28,7 @@ terms listed above has been obtained from the copyright holder.
 ****************************************************************************************/
 /*
 
- Filename: /audio/gsm_amr/c/src/pow2_tbl.c
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Added #ifdef __cplusplus and removed "extern" from table
-              definition.
-
- Description: Put "extern" back.
-
- Who: 						Date:
- Description:
+ Filename: pow2_tbl.cpp
 
 ------------------------------------------------------------------------------
  MODULE DESCRIPTION
@@ -81,7 +70,7 @@ extern "C"
     ; [Variable declaration - defined here and used outside this module]
     ----------------------------------------------------------------------------*/
 
-    const Word16 pow2_tbl[33] =
+    extern const Word16 pow2_tbl[33] =
     {
         16384, 16743, 17109, 17484, 17867, 18258, 18658, 19066, 19484, 19911,
         20347, 20792, 21247, 21713, 22188, 22674, 23170, 23678, 24196, 24726,
@@ -101,13 +90,13 @@ extern "C"
  INPUT AND OUTPUT DEFINITIONS
 
  Inputs:
-	None
+    None
 
  Outputs:
-	None
+    None
 
  Returns:
-	None
+    None
 
  Global Variables Used:
     None
@@ -133,22 +122,6 @@ extern "C"
 ------------------------------------------------------------------------------
  PSEUDO-CODE
 
-
-------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
 
 ------------------------------------------------------------------------------
  CAUTION [optional]

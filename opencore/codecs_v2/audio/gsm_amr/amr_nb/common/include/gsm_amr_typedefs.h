@@ -28,14 +28,7 @@ terms listed above has been obtained from the copyright holder.
 ****************************************************************************************/
 /*
 
- Pathname: codecs/audio/gsm_amr/gsm_two_way/c/include/gsm_amr_typedefs.h
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
-
- Description: Removed unused defintions and corrected ifdef, that depended on
-              incorrect typedef
+ Filename: gsm_amr_typedefs.h
 
 ------------------------------------------------------------------------------
  INCLUDE DESCRIPTION

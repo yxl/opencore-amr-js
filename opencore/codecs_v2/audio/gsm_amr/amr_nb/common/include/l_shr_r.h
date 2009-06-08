@@ -28,21 +28,7 @@ terms listed above has been obtained from the copyright holder.
 ****************************************************************************************/
 /*
 
- Filename: /audio/gsm_amr/c/include/l_shr_r.h
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Created separate header file for L_shr_r function.
-
- Description: Updated function prototype declaration to reflect new interface.
-              A pointer to overflow flag is passed into the function. Updated
-              template.
-
- Description: Moved _cplusplus #ifdef after Include section.
-
- Who:						Date:
- Description:
+ Filename: l_shr_r.h
 
 ------------------------------------------------------------------------------
  INCLUDE DESCRIPTION
@@ -56,13 +42,13 @@ terms listed above has been obtained from the copyright holder.
 /*----------------------------------------------------------------------------
 ; CONTINUE ONLY IF NOT ALREADY DEFINED
 ----------------------------------------------------------------------------*/
-#ifndef	L_SHR_R_H
-#define	L_SHR_R_H
+#ifndef L_SHR_R_H
+#define L_SHR_R_H
 
 /*----------------------------------------------------------------------------
 ; INCLUDES
 ----------------------------------------------------------------------------*/
-#include	"basicop_malloc.h"
+#include    "basicop_malloc.h"
 
 /*--------------------------------------------------------------------------*/
 #ifdef __cplusplus
@@ -101,7 +87,7 @@ extern "C"
     ; GLOBAL FUNCTION DEFINITIONS
     ; Function Prototype declaration
     ----------------------------------------------------------------------------*/
-    Word32 L_shr_r(Word32 L_var1, Word16 var2, Flag *pOverflow);
+    OSCL_IMPORT_REF Word32 L_shr_r(Word32 L_var1, Word16 var2, Flag *pOverflow);
 
     /*----------------------------------------------------------------------------
     ; END

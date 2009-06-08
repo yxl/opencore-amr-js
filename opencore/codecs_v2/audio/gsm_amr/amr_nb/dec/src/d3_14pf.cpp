@@ -31,24 +31,8 @@ terms listed above has been obtained from the copyright holder.
 
 
 
- Pathname: ./audio/gsm-amr/c/src/d3_14pf.c
+ Filename: d3_14pf.cpp
  Functions: decode_3i40_14bits
-
-     Date: 01/28/2002
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Modified to place file in the correct template format. Eliminated
- use of special functions to perform simple mathematical operations.
-
- Description: Per review comments...
- (1) Removed include of "count.h" and "basic_op.h"
- (2) Updated the pathname to indicate the correct file.  (Line 39)
-
- Description:  Replaced "int" and/or "char" with OSCL defined types.
-
- Description:
 
 ------------------------------------------------------------------------------
  MODULE DESCRIPTION
@@ -129,22 +113,6 @@ terms listed above has been obtained from the copyright holder.
 ------------------------------------------------------------------------------
  PSEUDO-CODE
 
-
-------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
 
 ------------------------------------------------------------------------------
  CAUTION [optional]

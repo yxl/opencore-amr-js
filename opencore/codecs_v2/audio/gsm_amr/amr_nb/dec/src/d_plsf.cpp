@@ -31,28 +31,7 @@ terms listed above has been obtained from the copyright holder.
 
 
 
- Pathname: ./audio/gsm-amr/c/src/d_plsf.c
- Functions:
-
-
-     Date: 04/14/2000
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Removed the functions d_plsf_init and d_plsf_exit.
- The d_plsf related structure is no longer dynamically allocated.
-
- Description: Removed q_plsf_5.tab from Include section and added
-			  q_plsf_5_tbl.h to Include section. Changed "mean_lsf"
-              to "mean_lsf_5" in D_plsf_reset().
-
- Description:  Replaced OSCL mem type functions and eliminated include
-               files that now are chosen by OSCL definitions
-
- Description:  Replaced "int" and/or "char" with OSCL defined types.
-
- Description:
+ Filename: d_plsf.cpp
 
 ------------------------------------------------------------------------------
  MODULE DESCRIPTION
@@ -68,7 +47,7 @@ terms listed above has been obtained from the copyright holder.
 #include "typedef.h"
 #include "basic_op.h"
 #include "cnst.h"
-#include "copy.h"
+#include "oscl_mem.h"
 #include "d_plsf.h"
 #include "q_plsf_5_tbl.h"
 
@@ -162,29 +141,13 @@ int D_plsf_reset (D_plsfState *state)
   return 0;
 }
 ------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
-
-------------------------------------------------------------------------------
  CAUTION [optional]
  [State any special notes, constraints or cautions for users of this function]
 
 ------------------------------------------------------------------------------
 */
 
-Word16 D_plsf_reset(D_plsfState *state)
+Word16 D_plsf_reset(D_plsfState *state, const Word16* mean_lsf_5_ptr)
 {
     Word16 i;
 
@@ -200,7 +163,7 @@ Word16 D_plsf_reset(D_plsfState *state)
     }
 
     /* Past dequantized lsfs */
-    Copy(mean_lsf_5, &state->past_lsf_q[0], M);
+    oscl_memmove((void *)&state->past_lsf_q[0], mean_lsf_5_ptr, M*sizeof(*mean_lsf_5_ptr));
 
     return 0;
 

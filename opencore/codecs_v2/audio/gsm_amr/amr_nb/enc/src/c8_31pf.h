@@ -31,16 +31,7 @@ terms listed above has been obtained from the copyright holder.
 
 
 
- Filename: /audio/gsm_amr/c/include/c8_31pf.h
-
-     Date: 01/29/2002
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Moved _cplusplus #ifdef after Include section.
-
- Description:
+ Filename: c8_31pf.h
 
 ------------------------------------------------------------------------------
  INCLUDE DESCRIPTION

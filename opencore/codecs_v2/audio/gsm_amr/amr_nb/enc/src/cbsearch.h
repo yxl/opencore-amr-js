@@ -31,21 +31,7 @@ terms listed above has been obtained from the copyright holder.
 
 
 
- Filename: /audio/gsm_amr/c/include/dec_lag3.h
-
-     Date: 01/29/2002
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Placed header file in the proper template format.  Added
- parameter pOverflow for the basic math ops.
-
- Description:  Replaced "int" and/or "char" with OSCL defined types.
-
- Description: Moved _cplusplus #ifdef after Include section.
-
- Description:
+ Filename: cbsearch.h
 
 ------------------------------------------------------------------------------
  INCLUDE DESCRIPTION
@@ -68,6 +54,7 @@ terms listed above has been obtained from the copyright holder.
 ----------------------------------------------------------------------------*/
 #include "typedef.h"
 #include "mode.h"
+#include "get_const_tbls.h"
 
 /*--------------------------------------------------------------------------*/
 #ifdef __cplusplus
@@ -108,19 +95,20 @@ extern "C"
     ----------------------------------------------------------------------------*/
 
     void cbsearch(Word16 x[],     /* i : target vector, Q0                      */
-                  Word16 h[],     /* i : impulse response of weighted synthesis */
-                  /*     filter h[-L_subfr..-1] must be set to  */
-                  /*    zero. Q12                               */
-                  Word16 T0,      /* i : Pitch lag                              */
-                  Word16 pitch_sharp, /* i : Last quantized pitch gain, Q14     */
-                  Word16 gain_pit,/* i : Pitch gain, Q14                        */
-                  Word16 res2[],  /* i : Long term prediction residual, Q0      */
-                  Word16 code[],  /* o : Innovative codebook, Q13               */
-                  Word16 y[],     /* o : filtered fixed codebook excitation, Q12 */
-                  Word16 **anap,  /* o : Signs of the pulses                    */
-                  enum Mode mode, /* i : coder mode                             */
-                  Word16 subNr,   /* i : subframe number                        */
-                  Flag  *pOverflow  /* o : Flag set when overflow occurs        */
+    Word16 h[],     /* i : impulse response of weighted synthesis */
+    /*     filter h[-L_subfr..-1] must be set to  */
+    /*    zero. Q12                               */
+    Word16 T0,      /* i : Pitch lag                              */
+    Word16 pitch_sharp, /* i : Last quantized pitch gain, Q14     */
+    Word16 gain_pit,/* i : Pitch gain, Q14                        */
+    Word16 res2[],  /* i : Long term prediction residual, Q0      */
+    Word16 code[],  /* o : Innovative codebook, Q13               */
+    Word16 y[],     /* o : filtered fixed codebook excitation, Q12 */
+    Word16 **anap,  /* o : Signs of the pulses                    */
+    enum Mode mode, /* i : coder mode                             */
+    Word16 subNr,   /* i : subframe number                        */
+    CommonAmrTbls* common_amr_tbls, /* ptr to struct of tables    */
+    Flag  *pOverflow  /* o : Flag set when overflow occurs        */
                  );
 
     /*----------------------------------------------------------------------------

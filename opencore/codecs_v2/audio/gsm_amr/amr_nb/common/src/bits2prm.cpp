@@ -28,18 +28,7 @@ terms listed above has been obtained from the copyright holder.
 ****************************************************************************************/
 /*
 
- Filename: /audio/gsm_amr/c/src/bits2prm.c
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Fixed a typo in the include section. Optimized some lines of
-              code as per review comments.
-
- Description:  Replaced "int" and/or "char" with OSCL defined types.
-
- Who:                       Date:
- Description:
+ Filename: bits2prm.cpp
 
 ------------------------------------------------------------------------------
 */
@@ -134,22 +123,6 @@ static Word16 Bin2int ( // Reconstructed parameter
 }
 
 ------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
-
-------------------------------------------------------------------------------
  CAUTION [optional]
  [State any special notes, constraints or cautions for users of this function]
 
@@ -239,22 +212,6 @@ void Bits2prm (
 
    return;
 }
-
-------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
 
 ------------------------------------------------------------------------------
  CAUTION [optional]

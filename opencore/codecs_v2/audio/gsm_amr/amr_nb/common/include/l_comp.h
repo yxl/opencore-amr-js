@@ -28,20 +28,7 @@ terms listed above has been obtained from the copyright holder.
 ****************************************************************************************/
 /*
 
- Pathname: ./gsm-amr/c/include/l_comp.h
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Passing in pOverflow for EPOC changes.
-
- Description: Updated template to make it build in Symbian. Updated copyright
-              year.
-
- Description: Moved _cplusplus #ifdef after Include section.
-
- Who:                       Date:
- Description:
+ Filename: l_comp.h
 
 ------------------------------------------------------------------------------
  INCLUDE DESCRIPTION

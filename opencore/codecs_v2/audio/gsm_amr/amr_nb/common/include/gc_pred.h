@@ -28,17 +28,7 @@ terms listed above has been obtained from the copyright holder.
 ****************************************************************************************/
 /*
 
- Filename: /audio/gsm_amr/c/src/include/gc_pred.h
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description:  Replaced "int" and/or "char" with OSCL defined types.
-
- Description: Moved _cplusplus #ifdef after Include section.
-
- Who:                       Date:
- Description:
+ Filename: gc_pred.h
 
 ------------------------------------------------------------------------------
  INCLUDE DESCRIPTION
@@ -105,7 +95,7 @@ extern "C"
     ; [List function prototypes here]
     ----------------------------------------------------------------------------*/
 
-    Word16 gc_pred_reset(gc_predState *st);
+    OSCL_IMPORT_REF Word16 gc_pred_reset(gc_predState *st);
     /* reset of codebook gain MA predictor state (i.e. set state memory to zero)
        returns 0 on success
      */
@@ -125,7 +115,7 @@ extern "C"
      * PURPOSE: MA prediction of the innovation energy
      *          (in dB/(20*log10(2))) with mean  removed).
      */
-    void gc_pred(
+    OSCL_IMPORT_REF void gc_pred(
         gc_predState *st,   /* i/o: State struct                           */
         enum Mode mode,     /* i  : AMR mode                               */
         Word16 *code,       /* i  : innovative codebook vector (L_SUBFR)   */
@@ -143,7 +133,7 @@ extern "C"
      * FUNCTION:  gc_pred_update()
      * PURPOSE: update MA predictor with last quantized energy
      */
-    void gc_pred_update(
+    OSCL_IMPORT_REF void gc_pred_update(
         gc_predState *st,      /* i/o: State struct                     */
         Word16 qua_ener_MR122, /* i  : quantized energy for update, Q10 */
         /*      (log2(qua_err))                  */
@@ -156,7 +146,7 @@ extern "C"
      * PURPOSE: get average of MA predictor state values (with a lower limit)
      *          [used in error concealment]
      */
-    void gc_pred_average_limited(
+    OSCL_IMPORT_REF void gc_pred_average_limited(
         gc_predState *st,       /* i: State struct                    */
         Word16 *ener_avg_MR122, /* o: averaged quantized energy,  Q10 */
         /*    (log2(qua_err))                 */

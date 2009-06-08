@@ -28,19 +28,7 @@ terms listed above has been obtained from the copyright holder.
 ****************************************************************************************/
 /*
 
- Filename: /audio/gsm_amr/c/include/log2_norm.h
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Updated function prototype declaration to reflect new interface.
-              A pointer to overflow flag is passed into the function. Updated
-              template. Added extern declaration for pow2_tbl[]
-
- Description: Moved _cplusplus #ifdef after Include section.
-
- Who:						Date:
- Description:
+ Filename: pow2.h
 
 ------------------------------------------------------------------------------
  INCLUDE DESCRIPTION
@@ -53,13 +41,13 @@ terms listed above has been obtained from the copyright holder.
 /*----------------------------------------------------------------------------
 ; CONTINUE ONLY IF NOT ALREADY DEFINED
 ----------------------------------------------------------------------------*/
-#ifndef	POW2_H
-#define	POW2_H
+#ifndef POW2_H
+#define POW2_H
 
 /*----------------------------------------------------------------------------
 ; INCLUDES
 ----------------------------------------------------------------------------*/
-#include	"typedef.h"
+#include    "typedef.h"
 
 /*--------------------------------------------------------------------------*/
 #ifdef __cplusplus
@@ -99,7 +87,8 @@ extern "C"
     ; Function Prototype declaration
     ----------------------------------------------------------------------------*/
 
-    Word32 Pow2(            /* (o)  : result       (range: 0<=val<=0x7fffffff) */
+    OSCL_IMPORT_REF Word32 Pow2(
+        /* (o)  : result       (range: 0<=val<=0x7fffffff) */
         Word16 exponent,    /* (i)  : Integer part.      (range: 0<=val<=30)   */
         Word16 fraction,    /* (i)  : Fractional part.  (range: 0.0<=val<1.0)  */
         Flag *pOverflow     /* (i/o) : overflow flag                           */

@@ -31,33 +31,7 @@ terms listed above has been obtained from the copyright holder.
 
 
 
- Pathname: ./audio/gsm-amr/c/src/int_lsf.c
-
-     Date: 04/20/2000
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Put file into template and first pass at optimization.
-
- Description: Made changes based on comments from the review meeting. Used
-    pointers instead of index addressing in the arrays.
-
- Description: Added type definition to the input/output section. Fixed tabs.
-              Deleted pseudo-code.
-
- Description: Synchronized file with UMTS versin 3.2.0. Updated coding
-              template. Removed unnecessary include files.
-
- Description: Made the following changes per comments from Phase 2/3 review:
-              1. Modified FOR loops to count down.
-              2. Made some cosmetic changes in the Pseudo-code section.
-
- Description: Changed to pass in overflow flag pointer to the add() routine.
-
- Description:  Replaced "int" and/or "char" with OSCL defined types.
-
- Description:
+ Filename: int_lsf.cpp
 
 ------------------------------------------------------------------------------
 */
@@ -188,22 +162,6 @@ void Int_lsf(
 }
 
 ------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
-
-------------------------------------------------------------------------------
  CAUTION [optional]
  [State any special notes, constraints or cautions for users of this function]
 
@@ -242,9 +200,9 @@ void Int_lsf(
             {
                 temp2 = *(lsf_new + i) >> 2;
             }
-            *(lsf_out + i) = add((Word16)(*(lsf_old + i) - temp1),
-                                 (Word16)temp2,
-                                 pOverflow);
+            *(lsf_out + i) = add_16((Word16)(*(lsf_old + i) - temp1),
+                                    (Word16)temp2,
+                                    pOverflow);
         }
     }
 
@@ -268,10 +226,7 @@ void Int_lsf(
             {
                 temp2 = *(lsf_new + i) >> 1;
             }
-            *(lsf_out + i) = add(
-                                 temp1,
-                                 temp2,
-                                 pOverflow);
+            *(lsf_out + i) = temp1 + temp2;
         }
     }
 
@@ -295,9 +250,9 @@ void Int_lsf(
             {
                 temp2 = *(lsf_new + i) >> 2;
             }
-            *(lsf_out + i) = add((Word16)temp1,
-                                 (Word16)(*(lsf_new + i) - temp2),
-                                 pOverflow);
+            *(lsf_out + i) = add_16((Word16)temp1,
+                                    (Word16)(*(lsf_new + i) - temp2),
+                                    pOverflow);
 
         }
     }

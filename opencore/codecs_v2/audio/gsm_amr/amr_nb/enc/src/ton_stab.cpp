@@ -31,29 +31,7 @@ terms listed above has been obtained from the copyright holder.
 
 
 
- Pathname: ./audio/gsm-amr/c/src/ton_stab.c
- Funtions:
-
-     Date: 02/06/2002
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description:  For check_lsp()
-              1. Eliminated unused include files.
-              2. Replaced array addressing by pointers
-              3. Eliminated math operations that unnecessary checked for
-                 saturation this by evaluating the operands
-               For update_gp_clipping()
-              1. Replaced copy() with more efficient memcpy()
-              2. Replaced right shift function with right shift
-
- Description:  Replaced OSCL mem type functions and eliminated include
-               files that now are chosen by OSCL definitions
-
- Description:  Replaced "int" and/or "char" with OSCL defined types.
-
- Description:
+ Filename: ton_stab.cpp
 
 ------------------------------------------------------------------------------
 */
@@ -158,22 +136,6 @@ int ton_stab_init (tonStabState **state)
 
 
 ------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
-
-------------------------------------------------------------------------------
  CAUTION [optional]
  [State any special notes, constraints or cautions for users of this function]
 
@@ -263,22 +225,6 @@ int ton_stab_reset (tonStabState *st)
 }
 
 ------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
-
-------------------------------------------------------------------------------
  CAUTION [optional]
  [State any special notes, constraints or cautions for users of this function]
 
@@ -295,7 +241,9 @@ Word16 ton_stab_reset(tonStabState *st)
 
     /* initialize tone stabilizer state */
     st->count = 0;
-    Set_zero(st->gp, N_FRAME);    /* Init Gp_Clipping */
+    /* Init Gp_Clipping */
+    oscl_memset((void *)st->gp,  0, N_FRAME*sizeof(*st->gp));
+
 
     return 0;
 }
@@ -353,22 +301,6 @@ void ton_stab_exit (tonStabState **state)
 
     return;
 }
-
-------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
 
 ------------------------------------------------------------------------------
  CAUTION [optional]
@@ -497,22 +429,6 @@ Word16 check_lsp(tonStabState *st, // i/o : State struct
       return 0;
    }
 }
-
-------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
 
 ------------------------------------------------------------------------------
  CAUTION [optional]
@@ -664,22 +580,6 @@ Word16 check_gp_clipping(tonStabState *st, // i/o : State struct
 }
 
 ------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
-
-------------------------------------------------------------------------------
  CAUTION [optional]
  [State any special notes, constraints or cautions for users of this function]
 
@@ -697,7 +597,7 @@ Word16 check_gp_clipping(tonStabState *st, /* i/o : State struct            */
     sum = shr(g_pitch, 3, pOverflow);        /* Division by 8 */
     for (i = 0; i < N_FRAME; i++)
     {
-        sum = add(sum, st->gp[i], pOverflow);
+        sum = add_16(sum, st->gp[i], pOverflow);
     }
 
     if (sum > GP_CLIP)
@@ -760,22 +660,6 @@ void update_gp_clipping(tonStabState *st, // i/o : State struct
    Copy(&st->gp[1], &st->gp[0], N_FRAME-1);
    st->gp[N_FRAME-1] = shr(g_pitch, 3);
 }
-
-------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
 
 ------------------------------------------------------------------------------
  CAUTION [optional]

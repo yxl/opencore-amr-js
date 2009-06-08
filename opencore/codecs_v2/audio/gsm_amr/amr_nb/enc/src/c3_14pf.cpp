@@ -31,28 +31,7 @@ terms listed above has been obtained from the copyright holder.
 
 
 
- Pathname: ./audio/gsm-amr/c/src/c3_14pf.c
- Functions:
-
-     Date: 05/26/2000
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Modified to pass overflow flag through to basic math function.
- The flag is passed back to the calling function by pointer reference.
-
- Description: Optimized file to reduce clock cycle usage. Updated copyright
-              year. Removed unneccesary include files and added only the
-              include files for the math functions used. Removed unused
-              #defines.
-
- Description: Changed round function name to pv_round to avoid conflict with
-              round function in C standard library.
-
- Description:  Replaced "int" and/or "char" with OSCL defined types.
-
- Description:
+ Filename: c3_14pf.cpp
 
 ------------------------------------------------------------------------------
  MODULE DESCRIPTION
@@ -177,22 +156,6 @@ static Word16 build_code(
  PSEUDO-CODE
 
 ------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
-
-------------------------------------------------------------------------------
  CAUTION [optional]
  [State any special notes, constraints or cautions for users of this function]
 
@@ -235,7 +198,7 @@ Word16 code_3i40_14bits(
                     pOverflow);
 
             h[i] =
-                add(
+                add_16(
                     h[i],
                     tempWord,
                     pOverflow);
@@ -295,7 +258,7 @@ Word16 code_3i40_14bits(
                     pOverflow);
 
             code[i] =
-                add(
+                add_16(
                     code[i],
                     tempWord,
                     pOverflow);
@@ -347,22 +310,6 @@ Word16 code_3i40_14bits(
 
 ------------------------------------------------------------------------------
  PSEUDO-CODE
-
-------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
 
 ------------------------------------------------------------------------------
  CAUTION [optional]
@@ -640,22 +587,6 @@ static void search_3i40(
 
 ------------------------------------------------------------------------------
  PSEUDO-CODE
-
-------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
 
 ------------------------------------------------------------------------------
  CAUTION [optional]

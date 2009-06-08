@@ -31,26 +31,7 @@ terms listed above has been obtained from the copyright holder.
 
 
 
- Filename: /audio/gsm_amr/c/src/include/agc.h
-
-     Date: 12/07/2001
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Removed unneeded sections of the standard template.
-              Updated function prototype for agc() and agc2() to match new
-              interface
-
- Description: Changed paramter name from "overflow" to "pOverflow" for
-              functions agc() and agc2()
-
- Description:  Replaced "int" and/or "char" with OSCL defined types.
-
-
- Description: Moved _cplusplus #ifdef after Include section.
-
- Description:
+ Filename: agc.h
 
 ------------------------------------------------------------------------------
  INCLUDE DESCRIPTION
@@ -138,7 +119,7 @@ extern "C"
         Word16 *sig_out,   /* i/o : postfilter output signal, (l_trm) */
         Word16 agc_fac,    /* i   : AGC factor                        */
         Word16 l_trm,      /* i   : subframe size                     */
-        Flag *pOverflow    /* i   : overflow flag					  */
+        Flag *pOverflow    /* i   : overflow flag                     */
     );
 
     /*----------------------------------------------------------------------------
@@ -151,7 +132,7 @@ extern "C"
         Word16 *sig_in,    /* i   : postfilter input signal   */
         Word16 *sig_out,   /* i/o : postfilter output signal  */
         Word16 l_trm,      /* i   : subframe size             */
-        Flag *pOverflow    /* i   : overflow flag			  */
+        Flag *pOverflow    /* i   : overflow flag             */
     );
 
 #ifdef __cplusplus

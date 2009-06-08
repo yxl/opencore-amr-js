@@ -31,55 +31,11 @@ terms listed above has been obtained from the copyright holder.
 
 
 
- Pathname: ./audio/gsm-amr/c/src/sp_dec.c
+ Filename: sp_dec.cpp
  Functions: GSMInitDecode
             Speech_Decode_Frame_reset
             GSMDecodeFrameExit
             GSMFrameDecode
-
-     Date: 08/03/2001
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Add PV coding template. Filled out template sections and
-              reformatted code to follow C coding standard. Removed code that
-              handles SID in GSMFrameDecode.
-
- Description: Made the following changes per comments from Phase 2/3 review:
-              1. Updated to more recent PV C coding template.
-              2. Took out all the tabs in the file and replaced with spaces.
-              3. Deleted bit_offset from input list of GSMFrameDecode.
-
- Description: Changing several variables passed into these functions of type
-              Speech_Decode_FrameState to type void.
-
- Description: Cleaning up brackets and line spacing for statements with
-              brackets as per a review comments.
-
- Description: Synchronized file with UMTS version 3.2.0. Removed unnecessary
-              include files.
-
- Description: Removed all references to malloc/free, except for the top-level
- malloc in GSMInitDecode, and corresponding free in GSMDecodeFrameExit.
-
- Also, modified function calls throughout to reflect the fact that the members
- of the structure Decoder_amrState are no longer pointers to be set via
- malloc, but full-blown structures.  (Changes of the type D_plsfState *lsfState
- to D_plsfState lsfState)
-
- Description: Created overflow and pass the variable into the decoder.
-
- Description: Changed inititlaization of the pointer to overflow flag. Removed
-              code related to MOPS counter.
-
- Description:  Replaced OSCL mem type functions and eliminated include
-               files that now are chosen by OSCL definitions
-
- Description:  Replaced "int" and/or "char" with defined types.
-               Added proper casting (Word32) to some left shifting operations
-
- Description:
 
 ------------------------------------------------------------------------------
  MODULE DESCRIPTION
@@ -98,10 +54,10 @@ terms listed above has been obtained from the copyright holder.
 #include "cnst.h"
 #include "dec_amr.h"
 #include "pstfilt.h"
-#include "bits2prm.h"
 #include "mode.h"
 #include "post_pro.h"
 #include "oscl_mem.h"
+#include "bitno_tab.h"
 
 
 /*----------------------------------------------------------------------------
@@ -124,6 +80,190 @@ terms listed above has been obtained from the copyright holder.
 ; LOCAL VARIABLE DEFINITIONS
 ; Variable declaration - defined here and used outside this module
 ----------------------------------------------------------------------------*/
+
+/*
+------------------------------------------------------------------------------
+ FUNCTION NAME: Bin2int
+------------------------------------------------------------------------------
+ INPUT AND OUTPUT DEFINITIONS
+
+ Inputs:
+    no_of_bits = number of bits associated with value
+    bitstream = pointer to buffer where bits are read
+
+ Outputs:
+    None
+
+ Returns:
+    None
+
+ Global Variables Used:
+    None
+
+ Local Variables Needed:
+    None
+
+------------------------------------------------------------------------------
+ FUNCTION DESCRIPTION
+
+  Function    : Bin2int
+  Purpose     : Read "no_of_bits" bits from the array bitstream[]
+                and convert to integer.
+
+------------------------------------------------------------------------------
+ REQUIREMENTS
+
+ None
+
+------------------------------------------------------------------------------
+ REFERENCES
+
+ bits2prm.c, UMTS GSM AMR speech codec, R99 - Version 3.2.0, March 2, 2001
+
+------------------------------------------------------------------------------
+ PSEUDO-CODE
+
+static Word16 Bin2int ( // Reconstructed parameter
+    Word16 no_of_bits,  // input : number of bits associated with value
+    Word16 *bitstream   // output: address where bits are written
+)
+{
+    Word16 value, i, bit;
+
+    value = 0;
+    for (i = 0; i < no_of_bits; i++)
+    {
+        value = shl (value, 1);
+        bit = *bitstream++;
+        if (sub (bit, BIT_1) == 0)
+            value = add (value, 1);
+    }
+    return (value);
+}
+
+------------------------------------------------------------------------------
+ CAUTION [optional]
+ [State any special notes, constraints or cautions for users of this function]
+
+------------------------------------------------------------------------------
+*/
+
+/*----------------------------------------------------------------------------
+; FUNCTION CODE
+----------------------------------------------------------------------------*/
+static Word16 Bin2int(  /* Reconstructed parameter                      */
+    Word16 no_of_bits,  /* input : number of bits associated with value */
+    Word16 *bitstream   /* input: address where bits are read from      */
+)
+{
+    Word16 value;
+    Word16 i;
+    Word16 single_bit;
+
+    value = 0;
+    for (i = 0; i < no_of_bits; i++)
+    {
+        value <<= 1;
+        single_bit = *(bitstream++);
+        value |= single_bit;
+    }
+    return (value);
+}
+
+
+/*
+------------------------------------------------------------------------------
+ FUNCTION NAME: bits2prm
+------------------------------------------------------------------------------
+ INPUT AND OUTPUT DEFINITIONS
+
+ Inputs:
+    mode = AMR mode of type enum Mode
+    bits[] = pointer to serial bits of type Word16
+    prm[] = pointer to analysis parameters of type Word16
+
+ Outputs:
+    None
+
+ Returns:
+    None
+
+ Global Variables Used:
+    None
+
+ Local Variables Needed:
+    None
+
+------------------------------------------------------------------------------
+ FUNCTION DESCRIPTION
+
+  Function    : Bits2prm
+  Purpose     : Retrieves the vector of encoder parameters from
+                the received serial bits in a frame.
+
+------------------------------------------------------------------------------
+ REQUIREMENTS
+
+ None
+
+------------------------------------------------------------------------------
+ REFERENCES
+
+ bits2prm.c, UMTS GSM AMR speech codec, R99 - Version 3.2.0, March 2, 2001
+
+------------------------------------------------------------------------------
+ PSEUDO-CODE
+
+void Bits2prm (
+    enum Mode mode,     // i : AMR mode
+    Word16 bits[],      // i : serial bits       (size <= MAX_SERIAL_SIZE)
+    Word16 prm[]        // o : analysis parameters  (size <= MAX_PRM_SIZE)
+)
+{
+    Word16 i;
+
+    for (i = 0; i < prmno[mode]; i++)
+    {
+        prm[i] = Bin2int (bitno[mode][i], bits);
+        bits += bitno[mode][i];
+        add(0,0);       // account for above pointer update
+    }
+
+   return;
+}
+
+------------------------------------------------------------------------------
+ CAUTION [optional]
+ [State any special notes, constraints or cautions for users of this function]
+
+------------------------------------------------------------------------------
+*/
+
+/*----------------------------------------------------------------------------
+; FUNCTION CODE
+----------------------------------------------------------------------------*/
+void Bits2prm(
+    enum Mode mode,     /* i : AMR mode                                    */
+    Word16 bits[],      /* i : serial bits       (size <= MAX_SERIAL_SIZE) */
+    Word16 prm[],        /* o : analysis parameters  (size <= MAX_PRM_SIZE) */
+    CommonAmrTbls* common_amr_tbls /* i : ptr to strcut of table ptrs        */
+)
+{
+    Word16 i;
+    const Word16* prmno_ptr = common_amr_tbls->prmno_ptr;
+    const Word16* const* bitno_ptr = common_amr_tbls->bitno_ptr;
+
+
+    for (i = 0; i < prmno_ptr[mode]; i++)
+    {
+        prm[i] = Bin2int(bitno_ptr[mode][i], bits);
+        bits += bitno_ptr[mode][i];
+    }
+
+    return;
+}
+
+
 
 
 /*
@@ -217,22 +357,6 @@ int Speech_Decode_Frame_init (Speech_Decode_FrameState **state,
 
   return 0;
 }
-
-------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
 
 ------------------------------------------------------------------------------
  CAUTION [optional]
@@ -348,22 +472,6 @@ int Speech_Decode_Frame_reset (Speech_Decode_FrameState *state)
 }
 
 ------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
-
-------------------------------------------------------------------------------
  CAUTION [optional]
  [State any special notes, constraints or cautions for users of this function]
 
@@ -456,22 +564,6 @@ void Speech_Decode_Frame_exit (Speech_Decode_FrameState **state)
 
   return;
 }
-
-------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
 
 ------------------------------------------------------------------------------
  CAUTION [optional]
@@ -607,22 +699,6 @@ int Speech_Decode_Frame (
 
 
 ------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
-
-------------------------------------------------------------------------------
  CAUTION [optional]
  [State any special notes, constraints or cautions for users of this function]
 
@@ -652,11 +728,11 @@ void GSMFrameDecode(
             (frame_type == RX_SID_UPDATE))
     {
         /* Override mode to MRDTX */
-        Bits2prm(MRDTX, serial, parm);
+        Bits2prm(MRDTX, serial, parm, &st->decoder_amrState.common_amr_tbls);
     }
     else
     {
-        Bits2prm(mode, serial, parm);
+        Bits2prm(mode, serial, parm, &st->decoder_amrState.common_amr_tbls);
     }
 
     /* Synthesis */

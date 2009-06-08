@@ -28,53 +28,10 @@ terms listed above has been obtained from the copyright holder.
 ****************************************************************************************/
 /*
 
- Pathname: ./audio/gsm-amr/c/src/az_lsp.c
+ Filename: az_lsp.cpp
  Funtions: Chebps
            Chebps_Wrapper
            Az_lsp
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Finished first pass of optimization.
-
- Description: Made changes based on review comments.
-
- Description: Made input to Chebps_Wrapper consistent with that of Chebps.
-
- Description: Replaced current Pseudo-code with the UMTS code version 3.2.0.
-              Updated coding template.
-
- Description: Replaced basic_op.h and oper_32b.h with the header files of the
-              math functions used by the file.
-
- Description: Made the following changes per comments from Phase 2/3 review:
-              1. Used "-" operator instead of calling sub function in the
-                 az_lsp() code.
-              2. Copied detailed function description of az_lsp from the
-                 header file.
-              3. Modified local variable definition to one per line.
-              4. Used NC in the definition of f1 and f2 arrays.
-              5. Added curly brackets in the IF statement.
-
- Description: Changed function interface to pass in a pointer to overflow
-              flag into the function instead of using a global flag. Removed
-              inclusion of unneeded header files.
-
- Description:  For Chebps() and Az_lsp()
-              1. Eliminated unused include files.
-              2. Replaced array addressing by pointers
-              3. Eliminated math operations that unnecessary checked for
-                 saturation.
-              4. Eliminated not needed variables
-              5. Eliminated if-else checks for saturation
-              6. Deleted unused function cheps_wraper
-
- Description:  Added casting to eliminate warnings
-
-
- Who:                           Date:
- Description:
 
 ------------------------------------------------------------------------------
  MODULE DESCRIPTION
@@ -214,22 +171,6 @@ static Word16 Chebps (Word16 x,
 
     return (cheb);
 }
-
-------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
 
 ------------------------------------------------------------------------------
  CAUTION [optional]
@@ -533,22 +474,6 @@ void Az_lsp (
     }
     return;
 }
-
-------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
 
 ------------------------------------------------------------------------------
  CAUTION [optional]

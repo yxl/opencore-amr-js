@@ -31,23 +31,7 @@ terms listed above has been obtained from the copyright holder.
 
 
 
- Pathname: ./audio/gsm-amr/c/src/lag_wind.c
-
-     Date: 01/31/2002
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description:
-              1. Eliminated unused include files.
-              2. Replaced array addressing by pointers
-              3. Eliminated l_extract() function call
-
- Description:  Added casting to eliminate warnings
-
- Description:  Replaced "int" and/or "char" with OSCL defined types.
-
- Description:
+ Filename: lag_wind.cpp
 
 ------------------------------------------------------------------------------
 */
@@ -146,22 +130,6 @@ terms listed above has been obtained from the copyright holder.
         L_Extract (x, &r_h[i], &r_l[i], pOverflow);
     }
     return;
-
-------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
 
 ------------------------------------------------------------------------------
  CAUTION [optional]

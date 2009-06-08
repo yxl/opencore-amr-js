@@ -28,20 +28,7 @@ terms listed above has been obtained from the copyright holder.
 ****************************************************************************************/
 /*
 
- Filename: /audio/gsm_amr/c/include/lsp.h
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Placed header file in the proper template format.  Added
- parameter pOverflow for the basic math ops.
-
- Description:  Replaced "int" and/or "char" with OSCL defined types.
-
- Description: Moved _cplusplus #ifdef after Include section.
-
- Who:                       Date:
- Description:
+ Filename: lsp.h
 
 ------------------------------------------------------------------------------
  INCLUDE DESCRIPTION
@@ -124,7 +111,7 @@ extern "C"
     *
     **************************************************************************
     */
-    Word16 lsp_init(lspState **st);
+    OSCL_IMPORT_REF Word16 lsp_init(lspState **st);
 
     /*
     **************************************************************************
@@ -135,7 +122,7 @@ extern "C"
     *
     **************************************************************************
     */
-    Word16 lsp_reset(lspState *st);
+    OSCL_IMPORT_REF Word16 lsp_reset(lspState *st);
 
     /*
     **************************************************************************
@@ -146,7 +133,7 @@ extern "C"
     *
     **************************************************************************
     */
-    void lsp_exit(lspState **st);
+    OSCL_IMPORT_REF void lsp_exit(lspState **st);
 
     /*
     **************************************************************************
@@ -164,15 +151,15 @@ extern "C"
     *
     **************************************************************************
     */
-    void lsp(lspState *st,       /* i/o : State struct                            */
-             enum Mode req_mode, /* i   : requested coder mode                    */
-             enum Mode used_mode,/* i   : used coder mode                         */
-             Word16 az[],        /* i/o : interpolated LP parameters Q12          */
-             Word16 azQ[],       /* o   : quantization interpol. LP parameters Q12*/
-             Word16 lsp_new[],   /* o   : new lsp vector                          */
-             Word16 **anap,      /* o   : analysis parameters                     */
-             Flag   *pOverflow   /* o   : Flag set when overflow occurs           */
-            );
+    OSCL_IMPORT_REF void lsp(lspState *st,  /* i/o : State struct                 */
+                             enum Mode req_mode, /* i   : requested coder mode                    */
+                             enum Mode used_mode,/* i   : used coder mode                         */
+                             Word16 az[],        /* i/o : interpolated LP parameters Q12          */
+                             Word16 azQ[],       /* o   : quantization interpol. LP parameters Q12*/
+                             Word16 lsp_new[],   /* o   : new lsp vector                          */
+                             Word16 **anap,      /* o   : analysis parameters                     */
+                             Flag   *pOverflow   /* o   : Flag set when overflow occurs           */
+                            );
 
     /*----------------------------------------------------------------------------
     ; END

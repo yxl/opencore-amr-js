@@ -31,47 +31,9 @@ terms listed above has been obtained from the copyright holder.
 
 
 
- Pathname: ./audio/gsm-amr/c/src/set_sign.c
+ Filename: set_sign.cpp
  Funtions: set_sign
            set_sign12k2
-
-     Date: 05/26/2000
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description:  Placed into PV template and optimized.
-
- Description: Synchronized file with UMTS version 3.2.0. Updated coding
-              template. Removed unnecessary include files.
-
- Description: Replaced basic_op.h with the header files of the math functions
-              used in the file.
-
- Description: Made the following changes per comments from Phase 2/3 review:
-              1. Modified certain FOR loops to count down.
-              2. Modified code for further optimization.
-
- Description: Modified FOR loops in set_sign12k2 to count up. The FOR loops
-              affected are the loop that calculates the starting position of
-              each incoming pulse, and the loop that calculates the position
-              of the max correlation. Updated copyright year.
-
- Description: Passing in pointer to overflow flag for EPOC compatibility.
-
- Description:  For set_sign12k2()
-              1. Eliminated unused include files.
-              2. Replaced array addressing by pointers
-              3. Eliminated math operations that unnecessary checked for
-                 saturation, this by evaluating the operands
-              4. Replaced loop counter with decrement loops
-
- Description:  Replaced "int" and/or "char" with OSCL defined types.
-
- Description: Changed round function name to pv_round to avoid conflict with
-              round function in C standard library.
-
- Description:
 
 ------------------------------------------------------------------------------
  MODULE DESCRIPTION
@@ -218,22 +180,6 @@ void set_sign(Word16 dn[],    i/o : correlation between target and h[]
 
    return;
 }
-
-------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
 
 ------------------------------------------------------------------------------
  CAUTION [optional]
@@ -459,22 +405,6 @@ void set_sign12k2 (
         ipos[add(i, nb_track)] = pos;
     }
 }
-
-------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
 
 ------------------------------------------------------------------------------
  CAUTION [optional]

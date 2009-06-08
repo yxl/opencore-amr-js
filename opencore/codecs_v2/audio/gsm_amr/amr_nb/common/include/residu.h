@@ -69,7 +69,7 @@ extern "C"
     *                         DECLARATION OF PROTOTYPES
     ********************************************************************************
     */
-    void Residu(
+    OSCL_IMPORT_REF void Residu(
         Word16 a[],        /* (i)  : prediction coefficients                    */
         Word16 x[],        /* (i)  : speech signal                              */
         Word16 y[],        /* (o)  : residual signal                            */

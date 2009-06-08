@@ -27,23 +27,7 @@ Permission to distribute, modify and use this file under the standard license
 terms listed above has been obtained from the copyright holder.
 ****************************************************************************************/
 /*
- Filename: /audio/gsm_amr/c/include/l_msu.h
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Created separate header file for L_msu function.
-
- Description: Updated function prototype declaration to reflect new interface.
-              A pointer to overflow flag is passed into the function. Updated
-              template.
-
- Description: Moved _cplusplus #ifdef after Include section.
-
- Description: Providing support for ARM and Linux-ARM assembly instructions.
-
- Who:                       Date:
- Description:
+ Filename: l_msu.h
 
 ------------------------------------------------------------------------------
  INCLUDE DESCRIPTION

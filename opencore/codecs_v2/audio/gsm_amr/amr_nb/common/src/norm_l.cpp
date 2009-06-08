@@ -27,29 +27,7 @@ Permission to distribute, modify and use this file under the standard license
 terms listed above has been obtained from the copyright holder.
 ****************************************************************************************/
 /*
- Pathname: ./gsm-amr/c/src/norm_l.c
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Created separate file for the norm_l function. Sync'ed up
-          with the current template and fixed tabs.
-
- Description: Updated module description to be the same as the equivalent
-          assembly file (norm_l.asm).
-
- Description: Removed conditional code that updates WMOPS counter
-
- Description: Made the following changes
-              1. Unrolled the search loop to make four comparison per
-                 pass, using only four iterations of the loop and saving
-                 shifts cycles
-              2. Updated header and copyright year
-
- Description: 1. Support for ARM and Linux-ARM assembly instructions.
-
- Who:                       Date:
- Description:
+ Filename: norm_l.cpp
 
 ------------------------------------------------------------------------------
  INPUT AND OUTPUT DEFINITIONS
@@ -132,28 +110,6 @@ Word16 norm_l (Word32 L_var1)
 }
 
 ------------------------------------------------------------------------------
- RESOURCES USED
-   When the code is written for a specific target processor the
-     the resources used should be documented below.
-
- STACK USAGE: [stack count for this module] + [variable to represent
-          stack usage for each subroutine called]
-
-     where: [stack usage variable] = stack usage for [subroutine
-         name] (see [filename].ext)
-
- DATA MEMORY USED: x words
-
- PROGRAM MEMORY USED: x words
-
- CLOCK CYCLES: [cycle count equation for this module] + [variable
-           used to represent cycle count for each subroutine
-           called]
-
-     where: [cycle count variable] = cycle count for [subroutine
-        name] (see [filename].ext)
-
-------------------------------------------------------------------------------
 */
 
 
@@ -197,7 +153,7 @@ Word16 norm_l (Word32 L_var1)
 ; FUNCTION CODE
 ----------------------------------------------------------------------------*/
 #if !( defined(PV_ARM_V5) || defined(PV_ARM_GCC_V5) )
-Word16 norm_l(register Word32 L_var1)
+OSCL_EXPORT_REF Word16 norm_l(register Word32 L_var1)
 {
     /*----------------------------------------------------------------------------
     ; Define all local variables

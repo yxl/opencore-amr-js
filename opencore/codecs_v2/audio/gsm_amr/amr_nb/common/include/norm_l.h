@@ -27,22 +27,7 @@ Permission to distribute, modify and use this file under the standard license
 terms listed above has been obtained from the copyright holder.
 ****************************************************************************************/
 /*
- Pathname: ./gsm-amr/c/include/norm_l.h
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Created separate header file for norm_l function.
-
- Description: Updated template to make it build in Symbian. Updated copyright
-              year.
-
- Description: Moved _cplusplus #ifdef after Include section.
-
- Description: Support for ARM and Linux-ARM assembly.
-
- Who:						Date:
- Description:
+ Filename: norm_l.h
 
 ------------------------------------------------------------------------------
  INCLUDE DESCRIPTION
@@ -56,13 +41,13 @@ terms listed above has been obtained from the copyright holder.
 /*----------------------------------------------------------------------------
 ; CONTINUE ONLY IF NOT ALREADY DEFINED
 ----------------------------------------------------------------------------*/
-#ifndef	NORM_L_H
-#define	NORM_L_H
+#ifndef NORM_L_H
+#define NORM_L_H
 
 /*----------------------------------------------------------------------------
 ; INCLUDES
 ----------------------------------------------------------------------------*/
-#include	"basicop_malloc.h"
+#include    "basicop_malloc.h"
 
 /*--------------------------------------------------------------------------*/
 #ifdef __cplusplus
@@ -104,7 +89,7 @@ extern "C"
 #if !( defined(PV_ARM_V5) || defined(PV_ARM_GCC_V5) )
 
     /* C EQUIVALENT */
-    Word16 norm_l(Word32 L_var1);
+    OSCL_IMPORT_REF Word16 norm_l(Word32 L_var1);
 
 #elif defined(PV_ARM_V5)
 

@@ -31,19 +31,7 @@ terms listed above has been obtained from the copyright holder.
 
 
 
- Filename: /audio/gsm_amr/c/include/d1035pf.h
-
-     Date: 09/28/2000
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Updated template. Added extern declaration for dgray[] defined
-              in gray_tbl.c
-
- Description: Moved _cplusplus #ifdef after Include section.
-
- Description:
+ Filename: d1035pf.h
 
 ------------------------------------------------------------------------------
  INCLUDE DESCRIPTION
@@ -56,13 +44,13 @@ terms listed above has been obtained from the copyright holder.
 /*----------------------------------------------------------------------------
 ; CONTINUE ONLY IF NOT ALREADY DEFINED
 ----------------------------------------------------------------------------*/
-#ifndef	D1035PF_H
-#define	D1035PF_H
+#ifndef D1035PF_H
+#define D1035PF_H
 
 /*----------------------------------------------------------------------------
 ; INCLUDES
 ----------------------------------------------------------------------------*/
-#include	"typedef.h"
+#include    "typedef.h"
 
 /*--------------------------------------------------------------------------*/
 #ifdef __cplusplus
@@ -84,7 +72,7 @@ extern "C"
     ; EXTERNAL VARIABLES REFERENCES
     ; Declare variables used in this module but defined elsewhere
     ----------------------------------------------------------------------------*/
-    extern Word16 dgray[];
+
     /*----------------------------------------------------------------------------
     ; SIMPLE TYPEDEF'S
     ----------------------------------------------------------------------------*/
@@ -104,7 +92,8 @@ extern "C"
 
     void dec_10i40_35bits(
         Word16 index[],    /* (i)   : index of 10 pulses (sign+position)        */
-        Word16 cod[]       /* (o)   : algebraic (fixed) codebook excitation     */
+        Word16 cod[],       /* (o)   : algebraic (fixed) codebook excitation     */
+        const Word16* dgray_ptr /* i : ptr to read-only tbl                      */
     );
 
     /*----------------------------------------------------------------------------

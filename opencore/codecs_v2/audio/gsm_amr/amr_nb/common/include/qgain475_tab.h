@@ -28,13 +28,7 @@ terms listed above has been obtained from the copyright holder.
 ****************************************************************************************/
 /*
 
- Pathname: .audio/gsm-amr/c/include/qgain475_tab.h
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Who:                        Date:
- Description:
+ Filename: qgain475_tab.h
 
 ------------------------------------------------------------------------------
  INCLUDE DESCRIPTION

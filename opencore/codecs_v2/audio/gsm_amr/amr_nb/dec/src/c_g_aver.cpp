@@ -31,42 +31,11 @@ terms listed above has been obtained from the copyright holder.
 
 
 
- Pathname: ./audio/gsm-amr/c/src/c_g_aver.c
+ Filename: c_g_aver.cpp
  Functions:
             Cb_gain_average_reset
             Cb_gain_average
 
-     Date: 03/28/2000
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Made some changes to the comments to match the comments from
-    other modules.
-
- Description: Made changes based on comments from the review meeting.
-
- Description: Synchronized file with UMTS version 3.2.0. Updated coding
-              template.
-
- Description: Made the following changes per comments from Phase 2/3 review:
-              1. Defined one local variable per line.
-
- Description: Removed the functions Cb_gain_average_init and
- Cb_gain_average_exit.  The Cb_gain_average related structure is no longer
- dynamically allocated.
-
- Description: Passing in pOverflow to comply with changes needed for EPOC
-              Updated the include files for the module.
-
- Description: Changed round function name to pv_round to avoid conflict with
-              round function in C standard library.
-
-
- Description:  Replaced OSCL mem type functions and eliminated include
-               files that now are chosen by OSCL definitions
-
- Description:
 ------------------------------------------------------------------------------
  MODULE DESCRIPTION
 
@@ -166,22 +135,6 @@ Word16 Cb_gain_average_reset (Cb_gain_averageState *state)
 
    return 0;
 }
-
-------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
 
 ------------------------------------------------------------------------------
  CAUTION [optional]
@@ -437,22 +390,6 @@ Word16 Cb_gain_average (
 }
 
 ------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
-
-------------------------------------------------------------------------------
  CAUTION [optional]
  [State any special notes, constraints or cautions for users of this function]
 
@@ -514,7 +451,7 @@ Word16 Cb_gain_average(
     {
         tmp1 = abs_s(sub(*(lspAver + i), *(lsp + i), pOverflow));
         /* Q15      */
-        shift1 = sub(norm_s(tmp1), 1, pOverflow);       /* Qn       */
+        shift1 = norm_s(tmp1) - 1 ;                     /* Qn       */
         tmp1 = shl(tmp1, shift1, pOverflow);            /* Q15+Qn   */
         shift2 = norm_s(*(lspAver + i));                /* Qm       */
         tmp2 = shl(*(lspAver + i), shift2, pOverflow);  /* Q15+Qm   */
@@ -533,7 +470,7 @@ Word16 Cb_gain_average(
             /* Q15+Qn-Qm-Qx=Q13 */
         }
 
-        diff = add(diff, *(tmp + i), pOverflow);           /* Q13 */
+        diff = add_16(diff, *(tmp + i), pOverflow);           /* Q13 */
     }
 
     /* Compute hangover */
@@ -570,12 +507,12 @@ Word16 Cb_gain_average(
                     (mode == MR59))))
         {
             /* bgMix = min(0.25, max(0.0, diff-0.55)) / 0.25; */
-            tmp_diff = sub(diff, 4506, pOverflow);   /* 0.55 in Q13 */
+            tmp_diff = diff - 4506;   /* 0.55 in Q13 */
         }
         else
         {
             /* bgMix = min(0.25, max(0.0, diff-0.40)) / 0.25; */
-            tmp_diff = sub(diff, 3277, pOverflow); /* 0.4 in Q13 */
+            tmp_diff = diff - 3277; /* 0.4 in Q13 */
         }
 
         /* max(0.0, diff-0.55)  or  */

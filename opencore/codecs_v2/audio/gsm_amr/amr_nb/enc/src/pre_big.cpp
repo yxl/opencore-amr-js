@@ -31,20 +31,7 @@ terms listed above has been obtained from the copyright holder.
 
 
 
- Pathname: ./audio/gsm-amr/c/src/pre_big.c
- Functions:
-
-     Date: 02/04/2002
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Updated template used to PV coding template.
- Changed to accept the pOverflow flag for EPOC compatibility.
-
- Description:  Replaced "int" and/or "char" with OSCL defined types.
-
- Description:
+ Filename: pre_big.cpp
 
 ------------------------------------------------------------------------------
  MODULE DESCRIPTION
@@ -133,22 +120,6 @@ terms listed above has been obtained from the copyright holder.
 
 
 ------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
-
-------------------------------------------------------------------------------
  CAUTION [optional]
  [State any special notes, constraints or cautions for users of this function]
 
@@ -185,7 +156,7 @@ void pre_big(
 
     if (frameOffset > 0)
     {
-        aOffset = 2 * MP1;
+        aOffset = MP1 << 1;
     }
     else
     {
@@ -201,9 +172,9 @@ void pre_big(
 
         Syn_filt(Ap2, &wsp[frameOffset], &wsp[frameOffset], L_SUBFR, mem_w, 1);
 
-        aOffset = add(aOffset, MP1, pOverflow);
+        aOffset += MP1;
 
-        frameOffset = add(frameOffset, L_SUBFR, pOverflow);
+        frameOffset += L_SUBFR;
     }
 
     return;

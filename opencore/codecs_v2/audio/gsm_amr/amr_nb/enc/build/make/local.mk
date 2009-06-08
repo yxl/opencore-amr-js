@@ -12,11 +12,7 @@ XCXXFLAGS += $(FLAG_COMPILE_WARNINGS_AS_ERRORS)
 
 OPTIMIZE_FOR_PERFORMANCE_OVER_SIZE := true
 
-XCPPFLAGS += 
-
 XINCDIRS +=  ../../../common/include
-
-XLIBDIRS += 
 
 SRCDIR := ../../src
 INCSRCDIR := ../../include
@@ -39,6 +35,7 @@ SRCS := amrencode.cpp \
 	cor_h_x.cpp \
 	cor_h_x2.cpp \
 	corrwght_tab.cpp \
+	div_32.cpp \
 	dtx_enc.cpp \
 	enc_lag3.cpp \
 	enc_lag6.cpp \
@@ -49,9 +46,11 @@ SRCS := amrencode.cpp \
 	g_code.cpp \
 	g_pitch.cpp \
 	gain_q.cpp \
+	gsmamr_encoder_wrapper.cpp \
 	hp_max.cpp \
 	inter_36.cpp \
 	inter_36_tab.cpp \
+	l_abs.cpp \
 	l_comp.cpp \
 	l_extract.cpp \
 	l_negate.cpp \
@@ -78,12 +77,9 @@ SRCS := amrencode.cpp \
 	spreproc.cpp \
 	spstproc.cpp \
 	ton_stab.cpp \
-	gsmamr_encoder_wrapper.cpp 
+	vad1.cpp 
 
 HDRS := gsmamr_encoder_wrapper.h
-
-LIBS =
-
 
 include $(MK)/library.mk
 

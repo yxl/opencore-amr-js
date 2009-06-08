@@ -28,20 +28,7 @@ terms listed above has been obtained from the copyright holder.
 ****************************************************************************************/
 /*
 
- Filename: /audio/gsm_amr/c/include/q_plsf.h
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Placed header file in the proper template format.  Added
- parameter pOverflow for the basic math ops.
-
- Description:  Replaced "int" and/or "char" with OSCL defined types.
-
- Description: Moved _cplusplus #ifdef after Include section.
-
- Who:                       Date:
- Description:
+ Filename: q_plsf.h
 
 ------------------------------------------------------------------------------
  INCLUDE DESCRIPTION
@@ -139,7 +126,7 @@ extern "C"
        stores NULL in *st
      */
 
-    void Q_plsf_3(
+    OSCL_IMPORT_REF void Q_plsf_3(
         Q_plsfState *st,    /* i/o: state struct                             */
         enum Mode mode,     /* i  : coder mode                               */
         Word16 *lsp1,       /* i  : 1st LSP vector                      Q15  */
@@ -149,7 +136,7 @@ extern "C"
         Flag  *pOverflow    /* o : Flag set when overflow occurs             */
     );
 
-    void Q_plsf_5(
+    OSCL_IMPORT_REF void Q_plsf_5(
         Q_plsfState *st,
         Word16 *lsp1,      /* i  : 1st LSP vector,                     Q15 */
         Word16 *lsp2,      /* i  : 2nd LSP vector,                     Q15 */

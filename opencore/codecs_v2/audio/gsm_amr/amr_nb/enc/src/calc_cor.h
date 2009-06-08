@@ -74,10 +74,10 @@ extern "C"
      *
      *************************************************************************/
     void comp_corr(Word16 scal_sig[],   /* i   : scaled signal.                     */
-                   Word16 L_frame,     /* i   : length of frame to compute pitch   */
-                   Word16 lag_max,     /* i   : maximum lag                        */
-                   Word16 lag_min,     /* i   : minimum lag                        */
-                   Word32 corr[]       /* o   : correlation of selected lag        */
+    Word16 L_frame,     /* i   : length of frame to compute pitch   */
+    Word16 lag_max,     /* i   : maximum lag                        */
+    Word16 lag_min,     /* i   : minimum lag                        */
+    Word32 corr[]       /* o   : correlation of selected lag        */
                   );
 
 #ifdef __cplusplus

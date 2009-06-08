@@ -28,22 +28,7 @@ terms listed above has been obtained from the copyright holder.
 ****************************************************************************************/
 /*
 
- Filename: /audio/gsm_amr/c/include/az_lsp.h.h
-
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
-
- Description: Changed function prototype; pointer to  overflow flag is passed
-			  in as a parameter. Added extern declaration for grid_tbl[],
-              defined in grid_tbl.c
-
- Description: Moved _cplusplus #ifdef after Include section.
-
- Who: 							Date:
- Description:
-
+ Filename: az_lsp.h
 
 ------------------------------------------------------------------------------
  INCLUDE DESCRIPTION
@@ -54,13 +39,13 @@ terms listed above has been obtained from the copyright holder.
 ------------------------------------------------------------------------------
 */
 
-#ifndef	AZ_LSP_H
-#define	AZ_LSP_H
+#ifndef AZ_LSP_H
+#define AZ_LSP_H
 
 /*----------------------------------------------------------------------------
 ; INCLUDES
 ----------------------------------------------------------------------------*/
-#include	"typedef.h"
+#include    "typedef.h"
 
 /*--------------------------------------------------------------------------*/
 #ifdef __cplusplus

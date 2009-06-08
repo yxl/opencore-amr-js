@@ -31,19 +31,7 @@ terms listed above has been obtained from the copyright holder.
 
 
 
- Filename: /audio/gsm_amr/c/include/d2_9pf.h
-
-     Date: 01/29/2002
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Placed header file in the proper template format.  Added
- parameter pOverflow for the basic math ops.
-
- Description: Moved _cplusplus #ifdef after Include section.
-
- Description:
+ Filename: d2_9pf.h
 
 ------------------------------------------------------------------------------
  INCLUDE DESCRIPTION
@@ -107,6 +95,7 @@ extern "C"
         Word16 subNr,       /* i : subframe number                          */
         Word16 sign,        /* i : signs of 2 pulses.                       */
         Word16 index,       /* i : Positions of the 2 pulses.               */
+        const Word16* startPos_ptr, /*  i: ptr to read only table               */
         Word16 cod[],       /* o : algebraic (fixed) codebook excitation    */
         Flag   * pOverflow  /* o : Flag set when overflow occurs            */
     );

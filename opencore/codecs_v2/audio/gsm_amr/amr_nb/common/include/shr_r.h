@@ -27,22 +27,7 @@ Permission to distribute, modify and use this file under the standard license
 terms listed above has been obtained from the copyright holder.
 ****************************************************************************************/
 /*
- Pathname: ./gsm-amr/c/include/shr_r.h
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Created separate header file for shr_r function.
-
- Description: Passing in pOverflow.
-
- Description: Updated template to make it build in Symbian. Updated copyright
-              year.
-
- Description: Moved _cplusplus #define after Include section.
-
- Who:                           Date:
- Description:
+ Filename: shr_r.h
 
 ------------------------------------------------------------------------------
  INCLUDE DESCRIPTION
@@ -101,7 +86,7 @@ extern "C"
     ; GLOBAL FUNCTION DEFINITIONS
     ; Function Prototype declaration
     ----------------------------------------------------------------------------*/
-    Word16 shr_r(Word16 var1, Word16 var2, Flag *pOverflow);
+    OSCL_IMPORT_REF Word16 shr_r(Word16 var1, Word16 var2, Flag *pOverflow);
 
     /*----------------------------------------------------------------------------
     ; END

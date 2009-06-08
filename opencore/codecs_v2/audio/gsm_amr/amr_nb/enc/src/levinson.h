@@ -31,19 +31,7 @@ terms listed above has been obtained from the copyright holder.
 
 
 
- Filename: /audio/gsm_amr/c/src/include/levinson.h
-
-     Date: 01/29/2002
-
-------------------------------------------------------------------------------
- REVISION HISTORY
- Description: 1. Modified "int" definition by Word16
-
- Description:  Replaced "int" and/or "char" with OSCL defined types.
-
- Description: Moved _cplusplus #ifdef after Include section.
-
- Description:
+ Filename: levinson.h
 
 ------------------------------------------------------------------------------
  INCLUDE DESCRIPTION

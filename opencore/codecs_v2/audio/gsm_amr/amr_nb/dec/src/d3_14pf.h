@@ -31,18 +31,7 @@ terms listed above has been obtained from the copyright holder.
 
 
 
- Filename: /audio/gsm_amr/c/include/d2_9pf.h
-
-     Date: 01/29/2002
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Placed header file in the proper template format.
-
- Description: Moved _cplusplus #ifdef after Include section.
-
- Description:
+ Filename: d3_14pf.h
 
 ------------------------------------------------------------------------------
  INCLUDE DESCRIPTION

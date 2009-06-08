@@ -171,7 +171,7 @@ OSCL_EXPORT_REF int32 CPvGsmAmrEncoder::Encode(TInputAudioStream& aInStream,
         // encode this frame
         // //////////////////////////////////////////
         int32 * temp = & iLastModeUsed;
-        Word16 nStatus = AMREncode(iEncState, iSidState, 	// BX, Word16 instead of int32 to avoid wierd case(IF2 format): the function returns 31, but nStatus ends up with a big wierd number
+        Word16 nStatus = AMREncode(iEncState, iSidState,    // BX, Word16 instead of int32 to avoid wierd case(IF2 format): the function returns 31, but nStatus ends up with a big wierd number
                                    (Mode)iGsmAmrMode,
                                    (Word16 *)pFrameIn,
                                    (unsigned char *)pFrameOut,

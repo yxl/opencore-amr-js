@@ -31,16 +31,7 @@ terms listed above has been obtained from the copyright holder.
 
 
 
- Filename: /audio/gsm_amr/c/src/include/lag_wind.h
-
-     Date: 01/29/2002
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Moved _cplusplus #ifdef after Include section.
-
- Description:
+ Filename: lag_wind.h
 
 ------------------------------------------------------------------------------
  INCLUDE DESCRIPTION

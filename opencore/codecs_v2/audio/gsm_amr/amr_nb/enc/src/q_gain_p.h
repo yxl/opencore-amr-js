@@ -31,19 +31,7 @@ terms listed above has been obtained from the copyright holder.
 
 
 
- Filename: /audio/gsm_amr/c/include/q_gain_p.h
-
-     Date: 02/05/2002
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Placed header file in the proper template format.  Added
- parameter pOverflow for the basic math ops.
-
- Description: Moved _cplusplus #ifdef after Include section.
-
- Description:
+ Filename: q_gain_p.h
 
 ------------------------------------------------------------------------------
  INCLUDE DESCRIPTION
@@ -110,6 +98,7 @@ extern "C"
         Word16 *gain,       /* i/o: Pitch gain (unquant/quant),              Q14 */
         Word16 gain_cand[], /* o  : pitch gain candidates (3),   MR795 only, Q14 */
         Word16 gain_cind[], /* o  : pitch gain cand. indices (3),MR795 only, Q0  */
+        const Word16* qua_gain_pitch_ptr, /* i : ptr to read-only table          */
         Flag   *pOverflow
     );
 

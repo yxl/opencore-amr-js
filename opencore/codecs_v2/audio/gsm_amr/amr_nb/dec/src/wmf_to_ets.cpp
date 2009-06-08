@@ -31,21 +31,8 @@ terms listed above has been obtained from the copyright holder.
 
 
 
- Pathname: ./audio/gsm-amr/c/src/wmf_to_ets.c
- Funtions: wmf_to_ets
-
-     Date: 01/21/2002
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Changing mode to frame_type_3gpp for DTX support. Modifying for
-              loops for optimized code. Updating as per review comments.
-
- Description: Changed MRDTX to AMR_SID in the code and added bitreorder_tab.h
-              in the Include section.
-
- Description:
+ Filename: wmf_to_ets.cpp
+ Functions: wmf_to_ets
 
 ------------------------------------------------------------------------------
 */
@@ -56,7 +43,6 @@ terms listed above has been obtained from the copyright holder.
 #include "frame_type_3gpp.h"
 #include "wmf_to_ets.h"
 #include "typedef.h"
-#include "bitreorder_tab.h"
 /*----------------------------------------------------------------------------
 ; MACROS
 ; Define module specific macros here
@@ -130,22 +116,6 @@ AMR Speech Codec Frame Structure", 3GPP TS 26.101 version 4.1.0 Release 4, June 
 
 
 ------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
-
-------------------------------------------------------------------------------
  CAUTION [optional]
  [State any special notes, constraints or cautions for users of this function]
 
@@ -155,10 +125,13 @@ AMR Speech Codec Frame Structure", 3GPP TS 26.101 version 4.1.0 Release 4, June 
 void wmf_to_ets(
     enum Frame_Type_3GPP frame_type_3gpp,
     UWord8   *wmf_input_ptr,
-    Word16   *ets_output_ptr)
+    Word16   *ets_output_ptr,
+    CommonAmrTbls* common_amr_tbls)
 {
 
     Word16 i;
+    const Word16* const* reorderBits_ptr = common_amr_tbls->reorderBits_ptr;
+    const Word16* numOfBits_ptr = common_amr_tbls->numOfBits_ptr;
 
     /*
      * The following section of code accesses bits in the WMF method of
@@ -170,17 +143,17 @@ void wmf_to_ets(
     if (frame_type_3gpp < AMR_SID)
     {
         /* The table numOfBits[] can be found in bitreorder.c. */
-        for (i = numOfBits[frame_type_3gpp] - 1; i >= 0; i--)
+        for (i = numOfBits_ptr[frame_type_3gpp] - 1; i >= 0; i--)
         {
             /* The table reorderBits[][] can be found in bitreorder.c. */
-            ets_output_ptr[reorderBits[frame_type_3gpp][i]] =
+            ets_output_ptr[reorderBits_ptr[frame_type_3gpp][i]] =
                 (wmf_input_ptr[i>>3] >> ((~i) & 0x7)) & 0x01;
         }
     }
     else
     {
         /* The table numOfBits[] can be found in bitreorder.c. */
-        for (i = numOfBits[frame_type_3gpp] - 1; i >= 0; i--)
+        for (i = numOfBits_ptr[frame_type_3gpp] - 1; i >= 0; i--)
         {
             ets_output_ptr[i] = (wmf_input_ptr[i>>3] >> ((~i) & 0x7)) & 0x01;
         }

@@ -31,20 +31,7 @@ terms listed above has been obtained from the copyright holder.
 
 
 
- Filename: /audio/gsm-amr/c/include/sid_sync.h
-
-     Date: 03/13/2002
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Added PV coding template sections to 3GPP version 3.2.0.
-
- Description:  Replaced "int" and/or "char" with OSCL defined types.
-
- Description: Moved _cplusplus #ifdef after Include section.
-
- Description:
+ Filename: sid_sync.h
 
 ------------------------------------------------------------------------------
  INCLUDE DESCRIPTION

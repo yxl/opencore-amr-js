@@ -31,29 +31,7 @@ terms listed above has been obtained from the copyright holder.
 
 
 
- Pathname: ./audio/gsm-amr/c/src/c4_17pf.c
- Functions:
-
-     Date: 05/26/2000
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Modified to pass overflow flag through to basic math function.
- The flag is passed back to the calling function by pointer reference.
-
- Description: Optimized functions to further reduce clock cycle usage.
-              Updated copyright year, removed unnecessary include files,
-              and removed unused #defines.
-
- Description: Changed round function name to pv_round to avoid conflict with
-              round function in C standard library.
-
- Description:  Replaced "int" and/or "char" with OSCL defined types.
-
- Description: Added #ifdef __cplusplus around extern'ed table.
-
- Description:
+ Filename: c4_17pf.cpp
 
 ------------------------------------------------------------------------------
  MODULE DESCRIPTION
@@ -112,6 +90,7 @@ extern "C"
         Word16 h[],         /* i : impulse response of weighted synthesis filter */
         Word16 y[],         /* o : filtered fixed codebook excitation            */
         Word16 sign[],      /* o : index of 4 pulses (position+sign+ampl)*4      */
+        const Word16* gray_ptr,   /* i : ptr to read-only table                        */
         Flag   * pOverflow  /* o : Flag set when overflow occurs                 */
     );
 
@@ -124,8 +103,6 @@ extern "C"
     ; EXTERNAL GLOBAL STORE/BUFFER/POINTER REFERENCES
     ; Declare variables used in this module but defined elsewhere
     ----------------------------------------------------------------------------*/
-    extern const Word16 gray[];
-    extern const Word16 dgray[];
 
     /*
     ------------------------------------------------------------------------------
@@ -187,22 +164,6 @@ extern "C"
      PSEUDO-CODE
 
     ------------------------------------------------------------------------------
-     RESOURCES USED [optional]
-
-     When the code is written for a specific target processor the
-     the resources used should be documented below.
-
-     HEAP MEMORY USED: x bytes
-
-     STACK MEMORY USED: x bytes
-
-     CLOCK CYCLES: (cycle count equation for this function) + (variable
-                    used to represent cycle count for each subroutine
-                    called)
-         where: (cycle count variable) = cycle count for [subroutine
-                                         name]
-
-    ------------------------------------------------------------------------------
      CAUTION [optional]
      [State any special notes, constraints or cautions for users of this function]
 
@@ -218,6 +179,7 @@ extern "C"
         Word16 code[],      /* o : Innovative codebook                           */
         Word16 y[],         /* o : filtered fixed codebook excitation            */
         Word16 * sign,      /* o : Signs of 4 pulses                             */
+        const Word16* gray_ptr,   /* i : ptr to read-only table                  */
         Flag   * pOverflow  /* o : Flag set when overflow occurs                 */
     )
     {
@@ -245,7 +207,7 @@ extern "C"
                         pOverflow);
 
                 h[i] =
-                    add(
+                    add_16(
                         h[i],
                         tempWord,
                         pOverflow);
@@ -287,6 +249,7 @@ extern "C"
                 h,
                 y,
                 sign,
+                gray_ptr,
                 pOverflow);
 
         /*-----------------------------------------------------------------*
@@ -307,7 +270,7 @@ extern "C"
                         pOverflow);
 
                 code[i] =
-                    add(
+                    add_16(
                         code[i],
                         tempWord,
                         pOverflow);
@@ -360,22 +323,6 @@ extern "C"
 
     ------------------------------------------------------------------------------
      PSEUDO-CODE
-
-    ------------------------------------------------------------------------------
-     RESOURCES USED [optional]
-
-     When the code is written for a specific target processor the
-     the resources used should be documented below.
-
-     HEAP MEMORY USED: x bytes
-
-     STACK MEMORY USED: x bytes
-
-     CLOCK CYCLES: (cycle count equation for this function) + (variable
-                    used to represent cycle count for each subroutine
-                    called)
-         where: (cycle count variable) = cycle count for [subroutine
-                                         name]
 
     ------------------------------------------------------------------------------
      CAUTION [optional]
@@ -572,7 +519,7 @@ extern "C"
                          *----------------------------------------------------------------*/
 
                         ps0 = ps;
-                        alp0 = L_deposit_h(alp);
+                        alp0 = ((Word32)alp << 16);
 
                         sq = -1;
                         alp = 1;
@@ -712,22 +659,6 @@ extern "C"
      PSEUDO-CODE
 
     ------------------------------------------------------------------------------
-     RESOURCES USED [optional]
-
-     When the code is written for a specific target processor the
-     the resources used should be documented below.
-
-     HEAP MEMORY USED: x bytes
-
-     STACK MEMORY USED: x bytes
-
-     CLOCK CYCLES: (cycle count equation for this function) + (variable
-                    used to represent cycle count for each subroutine
-                    called)
-         where: (cycle count variable) = cycle count for [subroutine
-                                         name]
-
-    ------------------------------------------------------------------------------
      CAUTION [optional]
      [State any special notes, constraints or cautions for users of this function]
 
@@ -742,6 +673,7 @@ extern "C"
         Word16 h[],       /* i : impulse response of weighted synthesis filter */
         Word16 y[],       /* o : filtered innovative code                      */
         Word16 sign[],    /* o : index of 4 pulses (sign+position)             */
+        const Word16* gray_ptr, /* i : ptr to read-only table                  */
         Flag   * pOverflow  /* o : Flag set when overflow occurs               */
     )
     {
@@ -789,7 +721,7 @@ extern "C"
             /* track = sub(i, (Word16) s, pOverflow); */
             track = i - (Word16) s;
 
-            index = gray[index];
+            index = gray_ptr[index];
 
             if (track == 1)
             {

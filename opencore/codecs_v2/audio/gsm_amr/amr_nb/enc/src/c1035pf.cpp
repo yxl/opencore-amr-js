@@ -31,37 +31,10 @@ terms listed above has been obtained from the copyright holder.
 
 
 
- Pathname: ./audio/gsm-amr/c/src/c1035pf.c
+ Filename: c1035pf.cpp
  Functions: q_p
             build_code
             code_10i40_35bits
-
-
-     Date: 09/28/2000
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Updated template. Cleaned up code. Passing in a pointer to
-              overflow flag for build_code() and code_10i40_35bits() functions.
-              Removed unnecessary header files.
-
- Description:
-              1. Eliminated unused include files.
-              2. Replaced array addressing by pointers
-              3. Eliminated math operations that unnecessary checked for
-                 saturation
-              4. Replaced for-loops with memset()
-
- Description: Changed function name to pv_round to avoid conflict with
-              round function in C standard library.
-
- Description:  Replaced OSCL mem type functions and eliminated include
-               files that now are chosen by OSCL definitions
-
- Description:  Replaced "int" and/or "char" with OSCL defined types.
-
- Description:
 
 ------------------------------------------------------------------------------
  MODULE DESCRIPTION
@@ -169,22 +142,6 @@ void q_p (
 }
 
 ------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
-
-------------------------------------------------------------------------------
  CAUTION [optional]
  [State any special notes, constraints or cautions for users of this function]
 
@@ -197,7 +154,8 @@ void q_p (
 
 void q_p(
     Word16 *pInd,       /* Pulse position */
-    Word16 n            /* Pulse number   */
+    Word16 n,            /* Pulse number   */
+    const Word16* gray_ptr
 )
 {
     Word16 tmp;
@@ -206,11 +164,11 @@ void q_p(
 
     if (n < 5)
     {
-        *pInd = (tmp & 0x8) | gray[tmp & 0x7];
+        *pInd = (tmp & 0x8) | gray_ptr[tmp & 0x7];
     }
     else
     {
-        *pInd = gray[tmp & 0x7];
+        *pInd = gray_ptr[tmp & 0x7];
     }
 }
 
@@ -370,22 +328,6 @@ static void build_code (
 }
 
 ------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
-
-------------------------------------------------------------------------------
  CAUTION [optional]
  [State any special notes, constraints or cautions for users of this function]
 
@@ -432,7 +374,7 @@ static void build_code(
 
         /* track = pos%5 */
         /* track = sub (i, extract_l (L_shr (L_mult (index, 5), 1))); */
-        track = i - (index * 5);
+        track = i - (index + (index << 2));
 
         if (sign[i] > 0)
         {
@@ -618,22 +560,6 @@ void code_10i40_35bits (
 }
 
 ------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
-
-------------------------------------------------------------------------------
  CAUTION [optional]
  [State any special notes, constraints or cautions for users of this function]
 
@@ -651,6 +577,7 @@ void code_10i40_35bits(
     Word16 cod[],   /* (o)   : algebraic (fixed) codebook excitation        */
     Word16 y[],     /* (o)   : filtered fixed codebook excitation           */
     Word16 indx[],  /* (o)   : index of 10 pulses (sign + position)         */
+    const Word16* gray_ptr, /* (i) : ptr to read-only table                 */
     Flag *pOverflow /* (i/o) : overflow Flag                                */
 )
 {
@@ -668,7 +595,7 @@ void code_10i40_35bits(
     build_code(codvec, sign, cod, h, y, indx, pOverflow);
     for (i = 0; i < 10; i++)
     {
-        q_p(&indx[i], i);
+        q_p(&indx[i], i, gray_ptr);
     }
     return;
 }

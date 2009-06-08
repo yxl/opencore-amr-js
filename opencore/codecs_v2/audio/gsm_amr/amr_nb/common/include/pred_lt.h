@@ -27,15 +27,7 @@ Permission to distribute, modify and use this file under the standard license
 terms listed above has been obtained from the copyright holder.
 ****************************************************************************************/
 /*
- Filename: /audio/gsm_amr/c/include/pred_lt.h
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Moved _cplusplus #ifdef after Include section.
-
- Who:						Date:
- Description:
+ Filename: pred_lt.h
 
 ------------------------------------------------------------------------------
  INCLUDE DESCRIPTION
@@ -94,7 +86,7 @@ extern "C"
     ; GLOBAL FUNCTION DEFINITIONS
     ; Function Prototype declaration
     ----------------------------------------------------------------------------*/
-    void Pred_lt_3or6(
+    OSCL_IMPORT_REF void Pred_lt_3or6(
         Word16 exc[],     /* in/out: excitation buffer                          */
         Word16 T0,        /* input : integer pitch lag                          */
         Word16 frac,      /* input : fraction of lag                            */

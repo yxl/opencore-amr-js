@@ -31,16 +31,7 @@ terms listed above has been obtained from the copyright holder.
 
 
 
- Filename: /audio/gsm_amr/c/include/autocorr.h
-
-     Date: 01/23/2002
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Moved _cplusplus #ifdef after Include section.
-
- Description:
+ Filename: autocorr.h
 
 ------------------------------------------------------------------------------
  INCLUDE DESCRIPTION

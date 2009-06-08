@@ -31,23 +31,8 @@ terms listed above has been obtained from the copyright holder.
 
 
 
- Pathname: ./audio/gsm-amr/c/src/g_adapt.c
+ Filename: g_adapt.cpp
  Functions:
-
-     Date: 02/04/2002
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Updated template used to PV coding template.
- Changed to accept the pOverflow flag for EPOC compatibility.
-
- Description:  Replaced OSCL mem type functions and eliminated include
-               files that now are chosen by OSCL definitions
-
- Description:  Replaced "int" and/or "char" with OSCL defined types.
-
- Description:
 
 ------------------------------------------------------------------------------
  MODULE DESCRIPTION
@@ -133,22 +118,6 @@ terms listed above has been obtained from the copyright holder.
 
 
 ------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
-
-------------------------------------------------------------------------------
  CAUTION [optional]
  [State any special notes, constraints or cautions for users of this function]
 
@@ -217,22 +186,6 @@ Word16 gain_adapt_init(GainAdaptState **st)
 ------------------------------------------------------------------------------
  PSEUDO-CODE
 
-
-------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
 
 ------------------------------------------------------------------------------
  CAUTION [optional]
@@ -304,22 +257,6 @@ Word16 gain_adapt_reset(GainAdaptState *st)
 
 
 ------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
-
-------------------------------------------------------------------------------
  CAUTION [optional]
  [State any special notes, constraints or cautions for users of this function]
 
@@ -383,22 +320,6 @@ void gain_adapt_exit(GainAdaptState **st)
 
 
 ------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
-
-------------------------------------------------------------------------------
  CAUTION [optional]
  [State any special notes, constraints or cautions for users of this function]
 
@@ -455,7 +376,7 @@ void gain_adapt(
     {
         if (st->onset != 0)
         {
-            st->onset = sub(st->onset, 1, pOverflow);
+            st->onset--;
         }
     }
 
@@ -465,7 +386,7 @@ void gain_adapt(
      */
     if ((st->onset != 0) && (adapt < 2))
     {
-        adapt = add(adapt, 1, pOverflow);
+        adapt += 1;
     }
 
     st->ltpg_mem[0] = ltpg;
@@ -488,7 +409,7 @@ void gain_adapt(
                 /* result (Q15) = 16384 - 24660 * (filt << 2) */
                 filt = shl(filt, 2, pOverflow);  /* Q15 */
                 result = mult(24660, filt, pOverflow);
-                result = sub(16384, result, pOverflow);
+                result = 16384 - result;
             }
         }
     }

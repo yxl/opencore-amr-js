@@ -29,16 +29,7 @@ terms listed above has been obtained from the copyright holder.
 /*
 ------------------------------------------------------------------------------
 
- Pathname: .audio/gsm-amr/c/include/inter_36_tab.h
-
-     Date: 02/01/2002
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Added #ifdef __cplusplus after Include section.
-
- Description:
+ Filename: inter_36_tab.h
 
 ------------------------------------------------------------------------------
  INCLUDE DESCRIPTION

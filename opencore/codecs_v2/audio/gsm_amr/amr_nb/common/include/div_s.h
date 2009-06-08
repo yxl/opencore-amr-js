@@ -28,20 +28,7 @@ terms listed above has been obtained from the copyright holder.
 ****************************************************************************************/
 /*
 
- Pathname: ./gsm-amr/c/include/div_s.h
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Created separate header file for div_s function.
-
- Description: Updated template to make it build in Symbian. Updated copyright
-              year.
-
- Description: Moved _cplusplus #ifdef after Include section.
-
- Who:						Date:
- Description:
+ Filename: div_s.h
 
 ------------------------------------------------------------------------------
  INCLUDE DESCRIPTION
@@ -55,13 +42,13 @@ terms listed above has been obtained from the copyright holder.
 /*----------------------------------------------------------------------------
 ; CONTINUE ONLY IF NOT ALREADY DEFINED
 ----------------------------------------------------------------------------*/
-#ifndef	DIV_S_H
-#define	DIV_S_H
+#ifndef DIV_S_H
+#define DIV_S_H
 
 /*----------------------------------------------------------------------------
 ; INCLUDES
 ----------------------------------------------------------------------------*/
-#include	"basicop_malloc.h"
+#include    "basicop_malloc.h"
 
 /*--------------------------------------------------------------------------*/
 #ifdef __cplusplus
@@ -100,7 +87,7 @@ extern "C"
     ; GLOBAL FUNCTION DEFINITIONS
     ; Function Prototype declaration
     ----------------------------------------------------------------------------*/
-    Word16 div_s(Word16 var1, Word16 var2);
+    OSCL_IMPORT_REF Word16 div_s(Word16 var1, Word16 var2);
 
     /*----------------------------------------------------------------------------
     ; END

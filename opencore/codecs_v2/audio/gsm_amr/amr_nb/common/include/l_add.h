@@ -28,26 +28,7 @@ terms listed above has been obtained from the copyright holder.
 ****************************************************************************************/
 /*
 
- Filename: /audio/gsm_amr/c/include/l_add.h
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Created separate header file for L_add function.
-
- Description: Changed function prototype declaration. A pointer to the overflow
-              flag is being passed in as a parameter instead of using global
-              data.
-
- Description: Updated template. Changed paramter name from overflow to
-              pOverflow
-
- Description: Moved _cplusplus #ifdef after Include section.
-
- Description: Providing support for ARM and Linux-ARM assembly instructions.
-
- Who:                       Date:
- Description:
+ Filename: l_add.h
 
 ------------------------------------------------------------------------------
  INCLUDE DESCRIPTION

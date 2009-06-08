@@ -31,34 +31,7 @@ terms listed above has been obtained from the copyright holder.
 
 
 
- Pathname: ./audio/gsm-amr/c/src/cor_h_x2.c
-
-     Date: 11/07/2001
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Created a separate file for cor_h_x2 function.
-
- Description: Fixed typecasting issue with TI C compiler and defined one
-              local variable per line. Updated copyright year.
-
- Description: Added #define for log2(32) = 5.
-
- Description: Added call to round() and L_shl() functions in the last FOR
-              loop to make code bit-exact.
-
- Description: Added pOverflow as a variable that's passed in for the EPOC
-              modifications.
-
- Description: Changed round function name to pv_round to avoid conflict with
-              round function in C standard library.
-
- Description: Using intrinsics from fxp_arithmetic.h .
-
- Description: Replacing fxp_arithmetic.h with basic_op.h.
-
- Description:
+ Filename: cor_h_x2.cpp
 
 ------------------------------------------------------------------------------
 */
@@ -71,6 +44,7 @@ terms listed above has been obtained from the copyright holder.
 #include "cor_h_x.h"
 #include "cor_h_x2.h" // BX
 #include "basic_op.h"
+#include "l_abs.h"
 
 /*----------------------------------------------------------------------------
 ; MACROS
@@ -203,22 +177,6 @@ void cor_h_x2 (
 }
 
 ------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
-
-------------------------------------------------------------------------------
  CAUTION [optional]
  [State any special notes, constraints or cautions for users of this function]
 
@@ -271,7 +229,7 @@ void cor_h_x2(
         tot = (tot + (max >> 1));
     }
 
-    j = sub(norm_l(tot), sf, pOverflow);
+    j = norm_l(tot) - sf;
 
     for (i = 0; i < L_CODE; i++)
     {

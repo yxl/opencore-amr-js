@@ -66,7 +66,7 @@ extern "C"
     *                         DECLARATION OF PROTOTYPES
     ********************************************************************************
     */
-    Word16 gmed_n(    /* o : index of the median value (0...N-1)      */
+    OSCL_IMPORT_REF Word16 gmed_n(    /* o : index of the median value (0...N-1)      */
         Word16 ind[], /* i : Past gain values                         */
         Word16 n      /* i : The number of gains; this routine        */
         /*     is only valid for a odd number of gains  */

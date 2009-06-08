@@ -33,14 +33,6 @@ terms listed above has been obtained from the copyright holder.
 
  Filename: pred_lt4.cpp
 
-     Date: 05/08/2004
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
-
- Description:
-
 ------------------------------------------------------------------------------
  INPUT AND OUTPUT DEFINITIONS
 

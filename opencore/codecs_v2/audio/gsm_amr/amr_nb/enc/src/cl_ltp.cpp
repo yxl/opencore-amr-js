@@ -31,40 +31,11 @@ terms listed above has been obtained from the copyright holder.
 
 
 
- Pathname: ./audio/gsm-amr/c/src/cl_ltp.c
+ Filename: cl_ltp.cpp
  Funtions: cl_ltp_init
            cl_ltp_reset
            cl_ltp_exit
            cl_ltp
-
-     Date: 06/07/2000
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description:   Placed into PV template and optimized.
-
- Description: Synchronized file with UMTS version 3.2.0. Updated coding
-              template. Removed unnecessary include files.
-
- Description: Removed basic_op.h and oper_32b.h in the include section, and
-              added basicop_malloc.h.
-
- Description: Fixed typecasting issue in TI C compiler.
-
- Description: Added pOverflow parameter -- fixed minor template problem.
-
- Description:
-              1. Eliminated unused include file typedef.h.
-              2. Replaced array addressing by pointers
-              3. Eliminated if-else checks for saturation
-
- Description:  Replaced OSCL mem type functions and eliminated include
-               files that now are chosen by OSCL definitions
-
- Description:  Replaced "int" and/or "char" with OSCL defined types.
-
- Description:
 
 ------------------------------------------------------------------------------
  MODULE DESCRIPTION
@@ -186,22 +157,6 @@ int cl_ltp_init (clLtpState **state)
 
 
 ------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
-
-------------------------------------------------------------------------------
  CAUTION [optional]
  [State any special notes, constraints or cautions for users of this function]
 
@@ -293,22 +248,6 @@ int cl_ltp_reset (clLtpState *state)
 }
 
 ------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
-
-------------------------------------------------------------------------------
  CAUTION [optional]
  [State any special notes, constraints or cautions for users of this function]
 
@@ -386,22 +325,6 @@ void cl_ltp_exit (clLtpState **state)
 
     return;
 }
-
-------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
 
 ------------------------------------------------------------------------------
  CAUTION [optional]
@@ -593,22 +516,6 @@ int cl_ltp (
 }
 
 ------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
-
-------------------------------------------------------------------------------
  CAUTION [optional]
  [State any special notes, constraints or cautions for users of this function]
 
@@ -634,6 +541,7 @@ void cl_ltp(
     Word16 g_coeff[],    /* o   : Correlations between xn, y1, & y2         */
     Word16 **anap,       /* o   : Analysis parameters                       */
     Word16 *gp_limit,    /* o   : pitch gain limit                          */
+    const Word16* qua_gain_pitch_ptr, /* i : ptr to read-only table         */
     Flag   *pOverflow    /* o   : overflow indicator                        */
 )
 {
@@ -737,6 +645,7 @@ void cl_ltp(
                     gain_pit,
                     NULL,
                     NULL,
+                    qua_gain_pitch_ptr,
                     pOverflow);
         }
     }

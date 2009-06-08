@@ -30,21 +30,7 @@ terms listed above has been obtained from the copyright holder.
 
 
 
- Filename: /audio/gsm_amr/c/src/qgain475_tab.c
-
-     Date: 12/09/2002
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Created this file from the reference, qgain475.tab.
-
- Description: Added #ifdef __cplusplus and removed "extern" from table
-              definition.
-
- Description: Put "extern" back.
-
- Description:
+ Filename: qgain475_tab.cpp
 
 ------------------------------------------------------------------------------
  MODULE DESCRIPTION
@@ -92,7 +78,7 @@ extern "C"
      *    g_fac(2)          (Q12) // frame 1 and 3
      *
      */
-    const Word16 table_gain_MR475[MR475_VQ_SIZE*4] =
+    extern const Word16 table_gain_MR475[MR475_VQ_SIZE*4] =
     {
         /*g_pit(0), g_fac(0),      g_pit(1), g_fac(1) */
         812,          128,           542,      140,
@@ -366,13 +352,13 @@ extern "C"
  INPUT AND OUTPUT DEFINITIONS
 
  Inputs:
-	None
+    None
 
  Outputs:
-	None
+    None
 
  Returns:
-	None
+    None
 
  Global Variables Used:
     None
@@ -399,22 +385,6 @@ extern "C"
 ------------------------------------------------------------------------------
  PSEUDO-CODE
 
-
-------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
 
 ------------------------------------------------------------------------------
  CAUTION [optional]

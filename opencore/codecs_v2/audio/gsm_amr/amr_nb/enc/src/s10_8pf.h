@@ -31,26 +31,7 @@ terms listed above has been obtained from the copyright holder.
 
 
 
- Filename: /audio/gsm_amr/c/include/s10_8pf.h
-
-
-
-
-     Date: 08/11/2000
-
-
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
-
- Description: Changed function prototype; pointer to  overflow flag is passed
-			  in as a parameter. Updated template
-
- Description: Moved _cplusplus #ifdef after Include section.
-
- Description:
-
+ Filename: s10_8pf.h
 
 ------------------------------------------------------------------------------
  INCLUDE DESCRIPTION
@@ -60,13 +41,13 @@ terms listed above has been obtained from the copyright holder.
 ------------------------------------------------------------------------------
 */
 
-#ifndef	S10_8PF_H
-#define	S10_8PF_H
+#ifndef S10_8PF_H
+#define S10_8PF_H
 
 /*----------------------------------------------------------------------------
 ; INCLUDES
 ----------------------------------------------------------------------------*/
-#include	"basicop_malloc.h"
+#include    "basicop_malloc.h"
 #include    "cnst.h"
 
 /*--------------------------------------------------------------------------*/

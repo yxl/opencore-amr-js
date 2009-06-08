@@ -33,14 +33,6 @@ terms listed above has been obtained from the copyright holder.
 
  Filename: normalize_amr_wb.cpp
 
-     Date: 12/10/2004
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
-
- Description:
-
 ------------------------------------------------------------------------------
  INPUT AND OUTPUT DEFINITIONS
 

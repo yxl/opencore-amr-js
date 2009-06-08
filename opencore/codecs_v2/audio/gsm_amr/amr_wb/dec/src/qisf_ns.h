@@ -33,12 +33,6 @@ terms listed above has been obtained from the copyright holder.
 
  Pathname: ./cpp/include/qisf_ns.h
 
-     Date: 01/04/2007
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description:
 ------------------------------------------------------------------------------
  INCLUDE DESCRIPTION
 

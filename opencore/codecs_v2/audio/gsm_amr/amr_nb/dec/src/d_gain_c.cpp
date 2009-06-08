@@ -31,25 +31,8 @@ terms listed above has been obtained from the copyright holder.
 
 
 
- Pathname: ./audio/gsm-amr/c/src/d_gain_c.c
+ Filename: d_gain_c.cpp
  Functions: d_gain_c
-
-     Date: 01/29/2002
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Updated include files and intput/output section. Changed .tab
-              files to .c files.
-
- Description:  Replaced OSCL mem type functions and eliminated include
-               files that now are chosen by OSCL definitions
-
- Description:  Replaced "int" and/or "char" with OSCL defined types.
-
- Description: Added #ifdef __cplusplus around extern'ed table.
-
- Description:
 
  ------------------------------------------------------------------------------
  INPUT AND OUTPUT DEFINITIONS
@@ -95,28 +78,6 @@ terms listed above has been obtained from the copyright holder.
  PSEUDO-CODE
 
 
-
-------------------------------------------------------------------------------
- RESOURCES USED
-   When the code is written for a specific target processor the
-     the resources used should be documented below.
-
- STACK USAGE: [stack count for this module] + [variable to represent
-          stack usage for each subroutine called]
-
-     where: [stack usage variable] = stack usage for [subroutine
-         name] (see [filename].ext)
-
- DATA MEMORY USED: x words
-
- PROGRAM MEMORY USED: x words
-
- CLOCK CYCLES: [cycle count equation for this module] + [variable
-           used to represent cycle count for each subroutine
-           called]
-
-     where: [cycle count variable] = cycle count for [subroutine
-        name] (see [filename].ext)
 
 ------------------------------------------------------------------------------
 */
@@ -176,8 +137,6 @@ extern "C"
     ; EXTERNAL GLOBAL STORE/BUFFER/POINTER REFERENCES
     ; Declare variables used in this module but defined elsewhere
     ----------------------------------------------------------------------------*/
-    extern const Word16 qua_gain_code[];
-
 
     /*--------------------------------------------------------------------------*/
 #ifdef __cplusplus
@@ -192,6 +151,7 @@ void d_gain_code(
     enum Mode mode,           /* i   : AMR mode (MR795 or MR122)        */
     Word16 index,             /* i   : received quantization index      */
     Word16 code[],            /* i   : innovation codevector            */
+    const Word16* qua_gain_code_ptr, /* i : Pointer to read-only table      */
     Word16 *gain_code,        /* o   : decoded innovation gain          */
     Flag   *pOverflow
 )
@@ -220,7 +180,7 @@ void d_gain_code(
     index &= 31;                    /* index < 32, to avoid buffer overflow */
     tbl_tmp = index + (index << 1);
 
-    p = &qua_gain_code[tbl_tmp];
+    p = &qua_gain_code_ptr[tbl_tmp];
 
     /* Different scalings between MR122 and the other modes */
     temp = sub((Word16)mode, (Word16)MR122, pOverflow);
@@ -235,7 +195,7 @@ void d_gain_code(
         gcode0 = (Word16)(Pow2(14, frac, pOverflow));
         L_tmp = L_mult(*p++, gcode0, pOverflow);
         L_tmp = L_shr(L_tmp, sub(9, exp, pOverflow), pOverflow);
-        *gain_code = extract_h(L_tmp);          /* Q1 */
+        *gain_code = (Word16)(L_tmp >> 16);        /* Q1 */
     }
 
     /*-------------------------------------------------------------------*

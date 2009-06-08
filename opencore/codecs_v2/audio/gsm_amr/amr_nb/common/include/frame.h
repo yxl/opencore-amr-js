@@ -66,15 +66,15 @@ extern "C"
     */
 
     enum RXFrameType { RX_SPEECH_GOOD = 0,
-                       RX_SPEECH_DEGRADED,
-                       RX_ONSET,
-                       RX_SPEECH_BAD,
-                       RX_SID_FIRST,
-                       RX_SID_UPDATE,
-                       RX_SID_BAD,
-                       RX_NO_DATA,
-                       RX_N_FRAMETYPES     /* number of frame types */
-                     };
+        RX_SPEECH_DEGRADED,
+        RX_ONSET,
+        RX_SPEECH_BAD,
+        RX_SID_FIRST,
+        RX_SID_UPDATE,
+        RX_SID_BAD,
+        RX_NO_DATA,
+        RX_N_FRAMETYPES     /* number of frame types */
+    };
 
     enum TXFrameType { TX_SPEECH_GOOD = 0,
                        TX_SID_FIRST,

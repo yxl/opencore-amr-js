@@ -31,26 +31,26 @@ terms listed above has been obtained from the copyright holder.
  INPUT AND OUTPUT DEFINITIONS
 
  Inputs:
-	L_var1 = 32 bit long signed integer (Word32) whose value falls
-	         in the range : 0x8000 0000 <= L_var1 <= 0x7fff ffff.
+    L_var1 = 32 bit long signed integer (Word32) whose value falls
+             in the range : 0x8000 0000 <= L_var1 <= 0x7fff ffff.
 
  Local Stores/Buffers/Pointers Needed:
-	None
+    None
 
  Global Stores/Buffers/Pointers Needed:
-	None
+    None
 
  Outputs:
-	L_var1 = 32-bit negation of input
+    L_var1 = 32-bit negation of input
 
  Pointers and Buffers Modified:
-	None
+    None
 
  Local Stores Modified:
-	None
+    None
 
  Global Stores Modified:
-	None
+    None
 
 ------------------------------------------------------------------------------
  FUNCTION DESCRIPTION
@@ -83,35 +83,13 @@ Word32 L_negate (Word32 L_var1)
 }
 
 ------------------------------------------------------------------------------
- RESOURCES USED
-   When the code is written for a specific target processor the
-     the resources used should be documented below.
-
- STACK USAGE: [stack count for this module] + [variable to represent
-		  stack usage for each subroutine called]
-
-     where: [stack usage variable] = stack usage for [subroutine
-		 name] (see [filename].ext)
-
- DATA MEMORY USED: x words
-
- PROGRAM MEMORY USED: x words
-
- CLOCK CYCLES: [cycle count equation for this module] + [variable
-		   used to represent cycle count for each subroutine
-		   called]
-
-     where: [cycle count variable] = cycle count for [subroutine
-		name] (see [filename].ext)
-
-------------------------------------------------------------------------------
 */
 
 
 /*----------------------------------------------------------------------------
 ; INCLUDES
 ----------------------------------------------------------------------------*/
-#include	"basic_op.h"
+#include    "basic_op.h"
 
 /*----------------------------------------------------------------------------
 ; MACROS

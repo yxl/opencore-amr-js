@@ -29,7 +29,7 @@ terms listed above has been obtained from the copyright holder.
 /*
 ------------------------------------------------------------------------------
 
- Pathname: ./audio/gsm-amr/c/src/dec_amr.c
+ Filename: dec_amr.cpp
  Funtions: Decoder_amr_init
            Decoder_amr_reset
            Decoder_amr
@@ -50,7 +50,6 @@ terms listed above has been obtained from the copyright holder.
 #include "dec_amr.h"
 #include "typedef.h"
 #include "cnst.h"
-#include "copy.h"
 #include "set_zero.h"
 #include "syn_filt.h"
 #include "d_plsf.h"
@@ -79,7 +78,6 @@ terms listed above has been obtained from the copyright holder.
 #include "ex_ctrl.h"
 #include "sqrt_l.h"
 #include "frame.h"
-#include "bitno_tab.h"
 #include "b_cn_cod.h"
 #include "basic_op.h"
 #include "oscl_mem.h"
@@ -202,22 +200,6 @@ int Decoder_amr_init (Decoder_amrState **state)
 }
 
 ------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
-
-------------------------------------------------------------------------------
  CAUTION [optional]
  [State any special notes, constraints or cautions for users of this function]
 
@@ -234,6 +216,8 @@ Word16 Decoder_amr_init(Decoder_amrState *s)
         return(-1);
     }
 
+    get_const_tbls(&s->common_amr_tbls);
+
     s->T0_lagBuff = 40;
     s->inBackgroundNoise = 0;
     s->voicedHangover = 0;
@@ -247,11 +231,11 @@ Word16 Decoder_amr_init(Decoder_amrState *s)
         s->ltpGainHistory[i] = 0;
     }
 
-    D_plsf_reset(&s->lsfState);
+    D_plsf_reset(&s->lsfState, s->common_amr_tbls.mean_lsf_5_ptr);
     ec_gain_pitch_reset(&s->ec_gain_p_st);
     ec_gain_code_reset(&s->ec_gain_c_st);
     Cb_gain_average_reset(&s->Cb_gain_averState);
-    lsp_avg_reset(&s->lsp_avg_st);
+    lsp_avg_reset(&s->lsp_avg_st, s->common_amr_tbls.mean_lsf_5_ptr);
     Bgn_scd_reset(&s->background_state);
     ph_disp_reset(&s->ph_disp_st);
     dtx_dec_reset(&s->dtxDecoderState);
@@ -369,22 +353,6 @@ int Decoder_amr_reset (Decoder_amrState *state, enum Mode mode)
 }
 
 ------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
-
-------------------------------------------------------------------------------
  CAUTION [optional]
  [State any special notes, constraints or cautions for users of this function]
 
@@ -445,7 +413,7 @@ Word16 Decoder_amr_reset(Decoder_amrState *state, enum Mode mode)
     state->voicedHangover = 0;
     if (mode != MRDTX)
     {
-        for (i = 0;i < EXC_ENERGY_HIST_LEN;i++)
+        for (i = 0; i < EXC_ENERGY_HIST_LEN; i++)
         {
             state->excEnergyHist[i] = 0;
         }
@@ -459,9 +427,9 @@ Word16 Decoder_amr_reset(Decoder_amrState *state, enum Mode mode)
     Cb_gain_average_reset(&(state->Cb_gain_averState));
     if (mode != MRDTX)
     {
-        lsp_avg_reset(&(state->lsp_avg_st));
+        lsp_avg_reset(&(state->lsp_avg_st), state->common_amr_tbls.mean_lsf_5_ptr);
     }
-    D_plsf_reset(&(state->lsfState));
+    D_plsf_reset(&(state->lsfState), state->common_amr_tbls.mean_lsf_5_ptr);
     ec_gain_pitch_reset(&(state->ec_gain_p_st));
     ec_gain_code_reset(&(state->ec_gain_c_st));
 
@@ -618,10 +586,10 @@ int Decoder_amr (
        if ((sub(frame_type, RX_NO_DATA) == 0) ||
            (sub(frame_type, RX_ONSET) == 0))
        {
-	  build_CN_param(&st->nodataSeed,
-			 prmno[mode],
-			 bitno[mode],
-			 parm);
+      build_CN_param(&st->nodataSeed,
+             prmno[mode],
+             bitno[mode],
+             parm);
        }
     }
     else if (sub(frame_type, RX_SPEECH_DEGRADED) == 0)
@@ -1307,22 +1275,6 @@ the_end:
 }
 
 ------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
-
-------------------------------------------------------------------------------
  CAUTION [optional]
  [State any special notes, constraints or cautions for users of this function]
 
@@ -1413,7 +1365,7 @@ void Decoder_amr(
                 &(st->Cb_gain_averState),
                 newDTXState,
                 mode,
-                parm, synth, A_t, pOverflow);
+                parm, &(st->common_amr_tbls), synth, A_t, pOverflow);
 
         /* update average lsp */
         Lsf_lsp(
@@ -1439,9 +1391,10 @@ void Decoder_amr(
         if ((frame_type == RX_NO_DATA) || (frame_type == RX_ONSET))
         {
             build_CN_param(&st->nodataSeed,
-                           prmno[mode],
-                           bitno[mode],
+                           st->common_amr_tbls.prmno_ptr[mode],
+                           st->common_amr_tbls.bitno_ptr[mode],
                            parm,
+                           st->common_amr_tbls.window_200_40_ptr,
                            pOverflow);
         }
     }
@@ -1492,7 +1445,7 @@ void Decoder_amr(
     }
 
     /* save old LSFs for CB gain smoothing */
-    Copy(st->lsfState.past_lsf_q, prev_lsf, M);
+    oscl_memmove((void *)prev_lsf, st->lsfState.past_lsf_q, M*sizeof(*st->lsfState.past_lsf_q));
 
     /* decode LSF parameters and generate interpolated lpc coefficients
        for the 4 subframes */
@@ -1504,6 +1457,7 @@ void Decoder_amr(
             mode,
             bfi,
             parm,
+            &st->common_amr_tbls,
             lsp_new,
             pOverflow);
 
@@ -1522,6 +1476,7 @@ void Decoder_amr(
             &(st->lsfState),
             bfi,
             parm,
+            &(st->common_amr_tbls),
             lsp_mid,
             lsp_new,
             pOverflow);
@@ -1610,13 +1565,13 @@ void Decoder_amr(
                 delta_frc_range = 19;
             }
 
-            t0_min = sub(st->old_T0, delta_frc_low, pOverflow);
+            t0_min = st->old_T0 - delta_frc_low;
 
             if (t0_min < PIT_MIN)
             {
                 t0_min = PIT_MIN;
             }
-            t0_max = add(t0_min, delta_frc_range, pOverflow);
+            t0_max = t0_min + delta_frc_range;
 
             if (t0_max > PIT_MAX)
             {
@@ -1673,7 +1628,7 @@ void Decoder_amr(
             index = *parm++;        /* index of position */
             i = *parm++;            /* signs             */
 
-            decode_2i40_9bits(subfrNr, i, index, code, pOverflow);
+            decode_2i40_9bits(subfrNr, i, index, st->common_amr_tbls.startPos_ptr, code, pOverflow);
 
             L_temp = (Word32)st->sharp << 1;
             if (L_temp != (Word32)((Word16) L_temp))
@@ -1724,7 +1679,7 @@ void Decoder_amr(
             index = *parm++;        /* index of position */
             i = *parm++;            /* signs             */
 
-            decode_4i40_17bits(i, index, code);
+            decode_4i40_17bits(i, index, st->common_amr_tbls.dgray_ptr, code);
 
             L_temp = (Word32)st->sharp << 1;
             if (L_temp != (Word32)((Word16) L_temp))
@@ -1765,7 +1720,7 @@ void Decoder_amr(
             }
             else
             {
-                gain_pit = d_gain_pitch(mode, index);
+                gain_pit = d_gain_pitch(mode, index, st->common_amr_tbls.qua_gain_pitch_ptr);
             }
             ec_gain_pitch_update(
                 &(st->ec_gain_p_st),
@@ -1775,7 +1730,7 @@ void Decoder_amr(
                 pOverflow);
 
 
-            dec_10i40_35bits(parm, code);
+            dec_10i40_35bits(parm, code, st->common_amr_tbls.dgray_ptr);
             parm += 10;
 
             /* pit_sharp = gain_pit;                   */
@@ -1797,7 +1752,7 @@ void Decoder_amr(
         for (i = T0; i < L_SUBFR; i++)
         {
             temp = mult(*(code + i - T0), pit_sharp, pOverflow);
-            *(code + i) = add(*(code + i), temp, pOverflow);
+            *(code + i) = add_16(*(code + i), temp, pOverflow);
 
         }
 
@@ -1825,6 +1780,7 @@ void Decoder_amr(
                     evenSubfr,
                     &gain_pit,
                     &gain_code,
+                    &(st->common_amr_tbls),
                     pOverflow);
             }
             else
@@ -1879,6 +1835,7 @@ void Decoder_amr(
                     evenSubfr,
                     &gain_pit,
                     &gain_code,
+                    &(st->common_amr_tbls),
                     pOverflow);
             }
             else
@@ -1951,7 +1908,7 @@ void Decoder_amr(
                 }
                 else
                 {
-                    gain_pit = d_gain_pitch(mode, index);
+                    gain_pit = d_gain_pitch(mode, index, st->common_amr_tbls.qua_gain_pitch_ptr);
                 }
                 ec_gain_pitch_update(
                     &(st->ec_gain_p_st),
@@ -1970,6 +1927,7 @@ void Decoder_amr(
                         mode,
                         index,
                         code,
+                        st->common_amr_tbls.qua_gain_code_ptr,
                         &gain_code,
                         pOverflow);
                 }
@@ -2007,6 +1965,7 @@ void Decoder_amr(
                         mode,
                         index,
                         code,
+                        st->common_amr_tbls.qua_gain_code_ptr,
                         &gain_code,
                         pOverflow);
                 }
@@ -2201,6 +2160,7 @@ void Decoder_amr(
             code,
             pitch_fac,
             tmp_shift,
+            &(st->common_amr_tbls),
             pOverflow);
 
         /*-------------------------------------------------------*
@@ -2272,7 +2232,7 @@ void Decoder_amr(
         {
             for (i = 0; i < L_SUBFR; i++)
             {
-                *(excp + i) = add(*(excp + i), *(exc_enhanced + i), pOverflow);
+                *(excp + i) = add_16(*(excp + i), *(exc_enhanced + i), pOverflow);
 
             }
             agc2(exc_enhanced, excp, L_SUBFR, pOverflow);
@@ -2317,7 +2277,7 @@ void Decoder_amr(
         }
         else
         {
-            Copy(&synth[i_subfr+L_SUBFR-M], st->mem_syn, M);
+            oscl_memmove((void *)st->mem_syn, &synth[i_subfr+L_SUBFR-M], M*sizeof(synth[0]));
         }
 
         /*--------------------------------------------------*
@@ -2325,7 +2285,7 @@ void Decoder_amr(
          * -> shift to the left by L_SUBFR  st->exc[]       *
          *--------------------------------------------------*/
 
-        Copy(&st->old_exc[L_SUBFR], &st->old_exc[0], PIT_MAX + L_INTERPOL);
+        oscl_memmove((void *)&st->old_exc[0], &st->old_exc[L_SUBFR], (PIT_MAX + L_INTERPOL)*sizeof(st->old_exc[0]));
 
         /* interpolated LPC parameters for next subframe */
         Az += MP1;

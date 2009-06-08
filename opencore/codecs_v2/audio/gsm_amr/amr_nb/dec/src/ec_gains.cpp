@@ -32,29 +32,7 @@ terms listed above has been obtained from the copyright holder.
 
 
 
- Pathname: ./audio/gsm-amr/c/src/ec_gain.c
- Funtions:
-
-     Date: 01/28/2002
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Removed the functions ec_gain_code_init, ec_gain_pitch_init,
- ech_gain_code_exit, and ec_gain_pitch_exit.
-
- The ec_gains related structures are no longer dynamically allocated.
-
- Description: Updated include files and input/output sections.
-
- Description:  Replaced OSCL mem type functions and eliminated include
-               files that now are chosen by OSCL definitions
-
- Description:  Replaced "int" and/or "char" with OSCL defined types.
-
- Description: Added #ifdef __cplusplus around extern'ed table.
-
- Description:
+ Filename: ec_gains.cpp
 
 ------------------------------------------------------------------------------
  MODULE DESCRIPTION
@@ -106,10 +84,6 @@ extern "C"
     ; LOCAL VARIABLE DEFINITIONS
     ; Variable declaration - defined here and used outside this module
     ----------------------------------------------------------------------------*/
-
-    extern const Word16 qua_gain_pitch[];
-    extern const Word16 qua_gain_code[];
-
 
     /*--------------------------------------------------------------------------*/
 #ifdef __cplusplus
@@ -172,22 +146,6 @@ int ec_gain_code_reset (ec_gain_codeState *state)
 
   return 0;
 }
-
-------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
 
 ------------------------------------------------------------------------------
  CAUTION [optional]
@@ -289,22 +247,6 @@ only in BFI (instead of normal gain decoding function).
     gc_pred_average_limited(pred_state, &qua_ener_MR122, &qua_ener);
     gc_pred_update(pred_state, qua_ener_MR122, qua_ener);
 }
-
-------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
 
 ------------------------------------------------------------------------------
  CAUTION [optional]
@@ -428,22 +370,6 @@ void ec_gain_code(
 }
 
 ------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
-
-------------------------------------------------------------------------------
  CAUTION [optional]
  [State any special notes, constraints or cautions for users of this function]
 
@@ -553,22 +479,6 @@ void ec_gain_code_update(
 
 
 ------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
-
-------------------------------------------------------------------------------
  CAUTION [optional]
  [State any special notes, constraints or cautions for users of this function]
 
@@ -660,22 +570,6 @@ int ec_gain_pitch_reset (ec_gain_pitchState *state)
 
   return 0;
 }
-
-------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
 
 ------------------------------------------------------------------------------
  CAUTION [optional]
@@ -780,22 +674,6 @@ Word16 ec_gain_pitch_reset(ec_gain_pitchState *state)
     }
     st->pbuf[4] = st->past_gain_pit;
 
-
-------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
 
 ------------------------------------------------------------------------------
  CAUTION [optional]

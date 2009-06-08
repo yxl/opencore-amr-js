@@ -31,43 +31,11 @@ terms listed above has been obtained from the copyright holder.
 
 
 
- Filename:  /audio/gsm-amr/c/src/amrencode.c
+ Filename: amrencode.cpp
  Functions: AMREncode
             AMREncodeInit
             AMREncodeReset
             AMREncodeExit
-
-     Date: 01/26/2002
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Added input_type in the parameter list and updated code to
-              check the type of output formatting to use.
-
- Description: Corrected typo in Include section.
-
- Description: Added code to support ETS format.
-
- Description: Modified file by adding the return of the number of encoder
-              frame bytes.
-
- Description: Added call to sid_sync function to support TX_NO_DATA case.
-              Added SID type and mode info to ets_output_bfr for ETS SID
-              frames. Created AMREncodeInit, AMREncodeReset, and AMREncodeExit
-              functions.
-
- Description: Modified design of handling of ETS outputs such that the ETS
-              testvectors could be compared directly to the output of this
-              function.
-
- Description: Added conditional compile around calls to AMR Encoder interface
-              functions to allow amrencode.c to be used in the ETS reference
-              console.
-
- Description:  Replaced "int" and/or "char" with OSCL defined types.
-
- Description:
 
 ------------------------------------------------------------------------------
  MODULE DESCRIPTION
@@ -182,22 +150,6 @@ terms listed above has been obtained from the copyright holder.
 
  MODIFY(nothing)
  RETURN(init_status)
-
-------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
 
 ------------------------------------------------------------------------------
  CAUTION [optional]
@@ -318,22 +270,6 @@ Word16 AMREncodeInit(
  RETURN(reset_status)
 
 ------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
-
-------------------------------------------------------------------------------
  CAUTION [optional]
  [State any special notes, constraints or cautions for users of this function]
 
@@ -422,22 +358,6 @@ Word16 AMREncodeReset(
 
  MODIFY(nothing)
  RETURN(nothing)
-
-------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
 
 ------------------------------------------------------------------------------
  CAUTION [optional]
@@ -722,22 +642,6 @@ void AMREncodeExit(
  RETURN (num_enc_bytes)
 
 ------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
-
-------------------------------------------------------------------------------
  CAUTION [optional]
  [State any special notes, constraints or cautions for users of this function]
 
@@ -816,7 +720,7 @@ Word16 AMREncode(
         if (output_format == AMR_TX_WMF)
         {
             /* Change output data format to WMF */
-            ets_to_wmf(*p3gpp_frame_type, ets_output_bfr, pEncOutput);
+            ets_to_wmf(*p3gpp_frame_type, ets_output_bfr, pEncOutput, &(((Speech_Encode_FrameState*)pEncState)->cod_amr_state->common_amr_tbls));
 
             /* Set up the number of encoded WMF bytes */
             num_enc_bytes = WmfEncBytesPerFrame[(Word16) *p3gpp_frame_type];
@@ -825,7 +729,7 @@ Word16 AMREncode(
         else if (output_format == AMR_TX_IF2)
         {
             /* Change output data format to IF2 */
-            ets_to_if2(*p3gpp_frame_type, ets_output_bfr, pEncOutput);
+            ets_to_if2(*p3gpp_frame_type, ets_output_bfr, pEncOutput, &(((Speech_Encode_FrameState*)pEncState)->cod_amr_state->common_amr_tbls));
 
             /* Set up the number of encoded IF2 bytes */
             num_enc_bytes = If2EncBytesPerFrame[(Word16) *p3gpp_frame_type];

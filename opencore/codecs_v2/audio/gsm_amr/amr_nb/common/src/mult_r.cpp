@@ -28,26 +28,7 @@ terms listed above has been obtained from the copyright holder.
 ****************************************************************************************/
 /*
 
- Filename: /audio/gsm_amr/c/src/mult_r.c
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Created separate file for the mult_r function. Sync'ed up
-	      with the current template and fixed tabs.
-
- Description: Passing in a pointer to the overflow flag instead of using
-		  a global flag.
-
- Description: Made the following changes based on P2/P3 review:
-			  1) Simplified test to determine if sign extension is necessary
-			  2) Changed the name of pointer "overflow" to "Poverflow"
-			  3) Removed code that updates MOPS counter
-			  4) Updated template and reference section
-
- Who: 						Date:
- Description:
-
+ Filename: mult_r.cpp
 
 ------------------------------------------------------------------------------
  MODULE DESCRIPTION
@@ -60,7 +41,7 @@ terms listed above has been obtained from the copyright holder.
 /*----------------------------------------------------------------------------
 ; INCLUDES
 ----------------------------------------------------------------------------*/
-#include	"basic_op.h"
+#include    "basic_op.h"
 
 /*----------------------------------------------------------------------------
 ; MACROS
@@ -91,19 +72,19 @@ terms listed above has been obtained from the copyright holder.
  INPUT AND OUTPUT DEFINITIONS
 
  Inputs:
-	var1 = 16 bit short signed integer (Word16) whose value falls in
-	       the range : 0xffff 8000 <= var1 <= 0x0000 7fff.
+    var1 = 16 bit short signed integer (Word16) whose value falls in
+           the range : 0xffff 8000 <= var1 <= 0x0000 7fff.
 
-	var2 = 16 bit short signed integer (Word16) whose value falls in
-	       the range : 0xffff 8000 <= var2 <= 0x0000 7fff.
+    var2 = 16 bit short signed integer (Word16) whose value falls in
+           the range : 0xffff 8000 <= var2 <= 0x0000 7fff.
 
-	pOverflow = pointer to overflow (Flag)
+    pOverflow = pointer to overflow (Flag)
 
  Outputs:
-	pOverflow -> 1 if the add operation resulted in overflow
+    pOverflow -> 1 if the add operation resulted in overflow
 
  Returns:
-	L_product_arr = 16-bit limited product of var1 and var2 (Word16)
+    L_product_arr = 16-bit limited product of var1 and var2 (Word16)
 
  Global Variables Used:
     None
@@ -116,8 +97,8 @@ terms listed above has been obtained from the copyright holder.
 
  This function performs the multiplication of var1 by var2 with rounding, and
  gives a 16 bit result which is scaled, i.e.:
-	mult_r(var1,var2) = extract_l(L_shr(((var1 * var2) + 16384),15)) and  |
-	mult_r(-32768,-32768) = 32767
+    mult_r(var1,var2) = extract_l(L_shr(((var1 * var2) + 16384),15)) and  |
+    mult_r(-32768,-32768) = 32767
 
 ------------------------------------------------------------------------------
  REQUIREMENTS
@@ -161,22 +142,6 @@ Word16 mult_r (Word16 var1, Word16 var2)
 }
 
 ------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
-
-------------------------------------------------------------------------------
  CAUTION [optional]
  [State any special notes, constraints or cautions for users of this function]
 
@@ -187,7 +152,7 @@ Word16 mult_r (Word16 var1, Word16 var2)
 ; FUNCTION CODE
 ----------------------------------------------------------------------------*/
 
-Word16 mult_r(Word16 var1, Word16 var2, Flag *pOverflow)
+OSCL_EXPORT_REF Word16 mult_r(Word16 var1, Word16 var2, Flag *pOverflow)
 {
 
     register Word32 L_product_arr;

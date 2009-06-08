@@ -27,13 +27,7 @@ Permission to distribute, modify and use this file under the standard license
 terms listed above has been obtained from the copyright holder.
 ****************************************************************************************/
 /*
- Pathname: .audio/gsm-amr/c/include/window_tab.h
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Who:						Date:
- Description:
+ Filename: window_tab.h
 
 ------------------------------------------------------------------------------
  INCLUDE DESCRIPTION
@@ -46,8 +40,8 @@ terms listed above has been obtained from the copyright holder.
 /*----------------------------------------------------------------------------
 ; CONTINUE ONLY IF NOT ALREADY DEFINED
 ----------------------------------------------------------------------------*/
-#ifndef	WINDOW_TAB_H
-#define	WINDOW_TAB_H
+#ifndef WINDOW_TAB_H
+#define WINDOW_TAB_H
 
 /*----------------------------------------------------------------------------
 ; INCLUDES

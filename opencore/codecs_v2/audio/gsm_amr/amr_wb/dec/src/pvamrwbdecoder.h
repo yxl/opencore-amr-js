@@ -31,14 +31,6 @@ terms listed above has been obtained from the copyright holder.
 
  Name: pvamrwbdecoder.h
 
-     Date: 05/02/2007
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
-
- Description:
-
 ------------------------------------------------------------------------------
  INCLUDE DESCRIPTION
 

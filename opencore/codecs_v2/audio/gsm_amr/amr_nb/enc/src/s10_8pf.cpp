@@ -31,65 +31,8 @@ terms listed above has been obtained from the copyright holder.
 
 
 
- Pathname: ./audio/gsm-amr/c/src/s10_8pf.c
+ Filename: s10_8pf.cpp
  Funtions: search_10and8i40
-
-     Date: 04/18/2000
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Adding pOverflow to the functions to remove global variables.
-              These changes are needed for the EPOC releases. Cleaned up code.
-              Updated template.
-
- Description: Changed temp to temp32. When temp was only 16 bits it was not
-              holding the 32 bit value returned from the functions. Some
-              variables were also being declared as Word16 rather than Word32
-              as they were suposed to be.
-
- Description: Changed copyright year. Removed all calls to math functions by
-              inlining them, and removed all unnecessary files in the Include
-              section.
-
- Description: Made the following changes per comments from Phase 2/3 review:
-              1. Removed all #defines.
-              2. Used a pointer to &codvec[0] instead of array indexing.
-              3. Removed multiple data casting in the code.
-
- Description:
-              1. Eliminated unused include files.
-              2. Replaced array addressing by pointers, this by taking
-                 advantage of the fact that the autocrrelation  matrix is
-                 a toeplitz matrix, so r[i][j] = r[j][i], then a single
-                 pointer can be used to address a matrix. The use of this
-                 is not uniform along the function (due to compiler limitations:
-                 handling so many variables in this file) so the use
-                 of this is pointer optimizations is limited to places
-                 where the ARM compiler provides the lesses numer of cycles
-              3. Eliminated use of intermediate variables to accelerate
-                 comparisons (like in the nested loops)
-              4. Introduced array temp1[], to pre-calculate the elements
-                 used in the nested loops, in this way the calculation is
-                 not repeated in every loop iteration. This is done for
-                 loops i3-i5-i7 and i9
-              5. Use array Index[] to store indexes i1:i9, and then use memcpy
-                 to update indexes.
-              6. Eliminated shifts by modifying the way number are rounded,
-                 this does not have any effect in ARM processors but may help
-                 other compilers
-
- Description:
-              1. When storing indexes, added memcpy() to support the rates
-                 that use this function: 12.2 (already done) and 10.2 (missing).
-
- Description:  Replaced OSCL mem type functions and eliminated include
-               files that now are chosen by OSCL definitions
-
- Description: Changed round function name to pv_round to avoid conflict with
-              round function in C standard library.
-
- Description:
 
 ------------------------------------------------------------------------------
 */
@@ -524,22 +467,6 @@ void search_10and8i40 (
         ipos[sub(nbPulse,1)] = pos;
    } // end 1..nbTracks  loop
 }
-
-------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
 
 ------------------------------------------------------------------------------
  CAUTION [optional]

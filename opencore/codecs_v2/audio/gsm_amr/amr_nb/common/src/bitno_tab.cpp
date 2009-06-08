@@ -28,21 +28,7 @@ terms listed above has been obtained from the copyright holder.
 ****************************************************************************************/
 /*
 
- Pathname: .audio/gsm-amr/c/src/bitno_tab.c
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Define "const Word16 *bitno[N_MODES]" as "const Word16 *const
-                      bitno[N_MODES]"
-
- Description: Added #ifdef __cplusplus and removed "extern" from table
-              definition.
-
- Description: Put "extern" back.
-
- Who:                       Date:
- Description:
+ Filename: bitno_tab.cpp
 
 ------------------------------------------------------------------------------
  INPUT AND OUTPUT DEFINITIONS
@@ -89,28 +75,6 @@ terms listed above has been obtained from the copyright holder.
 
 
 ------------------------------------------------------------------------------
- RESOURCES USED
-   When the code is written for a specific target processor the
-     the resources used should be documented below.
-
- STACK USAGE: [stack count for this module] + [variable to represent
-          stack usage for each subroutine called]
-
-     where: [stack usage variable] = stack usage for [subroutine
-         name] (see [filename].ext)
-
- DATA MEMORY USED: x words
-
- PROGRAM MEMORY USED: x words
-
- CLOCK CYCLES: [cycle count equation for this module] + [variable
-           used to represent cycle count for each subroutine
-           called]
-
-     where: [cycle count variable] = cycle count for [subroutine
-        name] (see [filename].ext)
-
-------------------------------------------------------------------------------
 */
 
 
@@ -152,7 +116,7 @@ extern "C"
     ; Variable declaration - defined here and used outside this module
     ----------------------------------------------------------------------------*/
     /* number of parameters per modes (values must be <= MAX_PRM_SIZE!) */
-    const Word16 prmno[N_MODES] =
+    extern const Word16 prmno[N_MODES] =
     {
         PRMNO_MR475,
         PRMNO_MR515,
@@ -166,7 +130,7 @@ extern "C"
     };
 
     /* number of parameters to first subframe per modes */
-    const Word16 prmnofsf[N_MODES - 1] =
+    extern const Word16 prmnofsf[N_MODES - 1] =
     {
         PRMNOFSF_MR475,
         PRMNOFSF_MR515,
@@ -179,7 +143,7 @@ extern "C"
     };
 
     /* parameter sizes (# of bits), one table per mode */
-    const Word16 bitno_MR475[PRMNO_MR475] =
+    extern const Word16 bitno_MR475[PRMNO_MR475] =
     {
         8, 8, 7,                                 /* LSP VQ          */
         8, 7, 2, 8,                              /* first subframe  */
@@ -188,7 +152,7 @@ extern "C"
         4, 7, 2,                                 /* fourth subframe */
     };
 
-    const Word16 bitno_MR515[PRMNO_MR515] =
+    extern const Word16 bitno_MR515[PRMNO_MR515] =
     {
         8, 8, 7,                                 /* LSP VQ          */
         8, 7, 2, 6,                              /* first subframe  */
@@ -197,7 +161,7 @@ extern "C"
         4, 7, 2, 6,                              /* fourth subframe */
     };
 
-    const Word16 bitno_MR59[PRMNO_MR59] =
+    extern const Word16 bitno_MR59[PRMNO_MR59] =
     {
         8, 9, 9,                                 /* LSP VQ          */
         8, 9, 2, 6,                              /* first subframe  */
@@ -206,7 +170,7 @@ extern "C"
         4, 9, 2, 6,                              /* fourth subframe */
     };
 
-    const Word16 bitno_MR67[PRMNO_MR67] =
+    extern const Word16 bitno_MR67[PRMNO_MR67] =
     {
         8, 9, 9,                                 /* LSP VQ          */
         8, 11, 3, 7,                             /* first subframe  */
@@ -215,7 +179,7 @@ extern "C"
         4, 11, 3, 7,                             /* fourth subframe */
     };
 
-    const Word16 bitno_MR74[PRMNO_MR74] =
+    extern const Word16 bitno_MR74[PRMNO_MR74] =
     {
         8, 9, 9,                                 /* LSP VQ          */
         8, 13, 4, 7,                             /* first subframe  */
@@ -224,7 +188,7 @@ extern "C"
         5, 13, 4, 7,                             /* fourth subframe */
     };
 
-    const Word16 bitno_MR795[PRMNO_MR795] =
+    extern const Word16 bitno_MR795[PRMNO_MR795] =
     {
         9, 9, 9,                                 /* LSP VQ          */
         8, 13, 4, 4, 5,                          /* first subframe  */
@@ -233,7 +197,7 @@ extern "C"
         6, 13, 4, 4, 5,                          /* fourth subframe */
     };
 
-    const Word16 bitno_MR102[PRMNO_MR102] =
+    extern const Word16 bitno_MR102[PRMNO_MR102] =
     {
         8, 9, 9,                                 /* LSP VQ          */
         8, 1, 1, 1, 1, 10, 10, 7, 7,             /* first subframe  */
@@ -242,7 +206,7 @@ extern "C"
         5, 1, 1, 1, 1, 10, 10, 7, 7,             /* fourth subframe */
     };
 
-    const Word16 bitno_MR122[PRMNO_MR122] =
+    extern const Word16 bitno_MR122[PRMNO_MR122] =
     {
         7, 8, 9, 8, 6,                           /* LSP VQ          */
         9, 4, 4, 4, 4, 4, 4, 3, 3, 3, 3, 3, 5,   /* first subframe  */
@@ -251,7 +215,7 @@ extern "C"
         6, 4, 4, 4, 4, 4, 4, 3, 3, 3, 3, 3, 5    /* fourth subframe */
     };
 
-    const Word16 bitno_MRDTX[PRMNO_MRDTX] =
+    extern const Word16 bitno_MRDTX[PRMNO_MRDTX] =
     {
         3,
         8, 9, 9,
@@ -259,7 +223,7 @@ extern "C"
     };
 
     /* overall table with all parameter sizes for all modes */
-    const Word16 * const bitno[N_MODES] =
+    extern const Word16 * const bitno[N_MODES] =
     {
         bitno_MR475,
         bitno_MR515,

@@ -28,25 +28,7 @@ terms listed above has been obtained from the copyright holder.
 ****************************************************************************************/
 /*
 
- Filename: /audio/gsm_amr/c/include/inv_sqrt.h
-
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
-
- Description: Updated function prototype declaration to reflect new interface.
-              A pointer to overflow flag is passed into the function. Updated
-              template.
-
- Description: Added an extern declaration for inv_sqrt_tbl[], now defined in
-              the file inv_sqrt_tbl.c
-
- Description: Moved _cplusplus #ifdef after Include section.
-
- Who:                           Date:
- Description:
-
+ Filename: inv_sqrt.h
 
 ------------------------------------------------------------------------------
  INCLUDE DESCRIPTION
@@ -102,7 +84,7 @@ extern "C"
     ; GLOBAL FUNCTION DEFINITIONS
     ; Function Prototype declaration
     ----------------------------------------------------------------------------*/
-    Word32 Inv_sqrt(        /* (o) : output value   */
+    OSCL_IMPORT_REF Word32 Inv_sqrt(        /* (o) : output value   */
         Word32 L_x,         /* (i) : input value    */
         Flag   *pOverflow  /* (i) : pointer to overflow flag */
     );

@@ -33,12 +33,6 @@ terms listed above has been obtained from the copyright holder.
 
  Pathname: ./cpp/include/synthesis_amr_wb.h
 
-     Date: 05/04/2007
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description:
 ------------------------------------------------------------------------------
  INCLUDE DESCRIPTION
 

@@ -31,17 +31,7 @@ terms listed above has been obtained from the copyright holder.
 
 
 
- Pathname: ./audio/gsm-amr/c/src/enc_lag3.c
- Functions:
-
-     Date: 01/28/2002
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description:  Replaced "int" and/or "char" with OSCL defined types.
-
- Description:
+ Filename: enc_lag3.cpp
 
 ------------------------------------------------------------------------------
 */
@@ -225,22 +215,6 @@ terms listed above has been obtained from the copyright holder.
 }
 
 ------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
-
-------------------------------------------------------------------------------
  CAUTION [optional]
  [State any special notes, constraints or cautions for users of this function]
 
@@ -270,18 +244,15 @@ Word16 Enc_lag3(         /* o  : Return index of encoding             */
     {  /* if 1st or 3rd subframe */
 
         /* encode pitch delay (with fraction) */
-        temp1 = sub(T0, 85, pOverflow);
+        temp1 = T0 - 85;
         if (temp1 <= 0)
         {
             /* index = T0*3 - 58 + T0_frac   */
-            temp2 = add(T0, T0, pOverflow);
-            i = add(temp2, T0, pOverflow);
-            temp2 = sub(i, 58, pOverflow);
-            index = add(temp2, T0_frac, pOverflow);
+            index = (T0 << 1) + T0 -  58 + T0_frac;
         }
         else
         {
-            index = add(T0, 112, pOverflow);
+            index = T0 + 112;
         }
     }
     else
@@ -292,11 +263,8 @@ Word16 Enc_lag3(         /* o  : Return index of encoding             */
             /* 'normal' encoding: either with 5 or 6 bit resolution */
 
             /* index = 3*(T0 - T0_min) + 2 + T0_frac */
-            i = sub(T0, T0_min, pOverflow);
-            temp2 = add(i, i, pOverflow);
-            i = add(temp2, i, pOverflow);
-            temp2 = add(i, 2, pOverflow);
-            index = add(temp2, T0_frac, pOverflow);
+            i = T0 - T0_min;
+            index = i + (i << 1) + 2 + T0_frac;
         }
         else
         {
@@ -304,45 +272,42 @@ Word16 Enc_lag3(         /* o  : Return index of encoding             */
             /* encoding with 4 bit resolution */
 
             tmp_lag = T0_prev;
-            temp1 = sub(tmp_lag, T0_min, pOverflow);
-            temp2 = sub(temp1, 5, pOverflow);
+            temp1 = tmp_lag - T0_min;
+            temp2 = temp1 - 5;
             if (temp2 > 0)
-                tmp_lag = add(T0_min, 5, pOverflow);
-            temp1 = sub(T0_max, tmp_lag, pOverflow);
-            temp2 = sub(temp1, 4, pOverflow);
+            {
+                tmp_lag = T0_min + 5;
+            }
+            temp1 = T0_max - tmp_lag;
+            temp2 = temp1 - 4;
             if (temp2 > 0)
-                tmp_lag = sub(T0_max, 4, pOverflow);
+            {
+                tmp_lag = T0_max - 4;
+            }
+            uplag  = T0 + (T0 << 1);
+            uplag += T0_frac;
+            i = tmp_lag - 2;
 
-            temp1 = add(T0, T0, pOverflow);
-            temp2 = add(temp1, T0, pOverflow);
-            uplag = add(temp2, T0_frac, pOverflow);
+            tmp_ind  = i + (i << 1);
+            temp1    = tmp_ind - uplag;
 
-            i = sub(tmp_lag, 2, pOverflow);
-            temp1 = add(i, i, pOverflow);
-            tmp_ind = add(temp1, i, pOverflow);
-
-            temp1 = sub(tmp_ind, uplag, pOverflow);
             if (temp1 >= 0)
             {
-                temp1 = sub(T0, tmp_lag, pOverflow);
-                index = add(temp1, 5, pOverflow);
+                index = T0 - tmp_lag + 5;
             }
             else
             {
+                i = tmp_lag + 1;
 
-                i = add(tmp_lag, 1, pOverflow);
-                temp1 = add(i, i, pOverflow);
-                i = add(temp1, i, pOverflow);
+                i += i << 1;
 
-                if (sub(i, uplag, pOverflow) > 0)
+                if (i > uplag)
                 {
-                    temp1 = sub(uplag, tmp_ind, pOverflow);
-                    index = add(temp1, 3, pOverflow);
+                    index = uplag - tmp_ind + 3;
                 }
                 else
                 {
-                    temp1 = sub(T0, tmp_lag, pOverflow);
-                    index = add(temp1, 11, pOverflow);
+                    index = T0 - tmp_lag + 11;
                 }
             }
 

@@ -28,18 +28,7 @@ terms listed above has been obtained from the copyright holder.
 ****************************************************************************************/
 /*
 
- Pathname: ./gsm-amr/c/src/shr_r.c
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Created separate file for the shr_r function. Sync'ed up
-          with the current template and fixed tabs.
-
- Description: Passing around pOverflow as per EPOC changes.
-
- Who:                           Date:
- Description:
+ Filename: shr_r.cpp
 
 ------------------------------------------------------------------------------
  INPUT AND OUTPUT DEFINITIONS
@@ -129,28 +118,6 @@ Word16 shr_r (Word16 var1, Word16 var2)
 }
 
 ------------------------------------------------------------------------------
- RESOURCES USED
-   When the code is written for a specific target processor the
-     the resources used should be documented below.
-
- STACK USAGE: [stack count for this module] + [variable to represent
-          stack usage for each subroutine called]
-
-     where: [stack usage variable] = stack usage for [subroutine
-         name] (see [filename].ext)
-
- DATA MEMORY USED: x words
-
- PROGRAM MEMORY USED: x words
-
- CLOCK CYCLES: [cycle count equation for this module] + [variable
-           used to represent cycle count for each subroutine
-           called]
-
-     where: [cycle count variable] = cycle count for [subroutine
-        name] (see [filename].ext)
-
-------------------------------------------------------------------------------
 */
 
 
@@ -193,7 +160,7 @@ Word16 shr_r (Word16 var1, Word16 var2)
 /*----------------------------------------------------------------------------
 ; FUNCTION CODE
 ----------------------------------------------------------------------------*/
-Word16 shr_r(register Word16 var1, register Word16 var2, Flag *pOverflow)
+OSCL_EXPORT_REF Word16 shr_r(register Word16 var1, register Word16 var2, Flag *pOverflow)
 {
     /*----------------------------------------------------------------------------
     ; Define all local variables

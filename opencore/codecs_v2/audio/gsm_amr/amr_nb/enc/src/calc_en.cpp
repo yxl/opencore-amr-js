@@ -31,7 +31,7 @@ terms listed above has been obtained from the copyright holder.
 
 
 
- Pathname: ./audio/gsm-amr/c/src/calc_en.c
+ Filename: calc_en.cpp
  Funtions: calc_unfilt_energies
            calc_filt_energies
            calc_target_energy
@@ -239,22 +239,6 @@ calc_unfilt_energies(
 
 
 ------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
-
-------------------------------------------------------------------------------
  CAUTION [optional]
  [State any special notes, constraints or cautions for users of this function]
 
@@ -349,7 +333,7 @@ void calc_unfilt_energies(
 
     exp = norm_l(s2);
     frac_en[1] = (Word16)(L_shl(s2, exp, pOverflow) >> 16);
-    exp_en[1] = sub(15, exp, pOverflow);
+    exp_en[1] = 15 - exp;
 
     /*  s3 is not always sum of squares */
     exp = norm_l(s3);
@@ -358,7 +342,7 @@ void calc_unfilt_energies(
 
     exp = norm_l(s4);
     ltp_res_en = (Word16)(L_shl(s4, exp, pOverflow) >> 16);
-    exp = sub(15, exp, pOverflow);
+    exp = 15 - exp;
 
     frac_en[3] = ltp_res_en;
     exp_en[3] = exp;
@@ -380,7 +364,7 @@ void calc_unfilt_energies(
         Log2(L_temp, &ltpg_exp, &ltpg_frac, pOverflow);
 
         /* ltpg = log2(LtpGain) * 2^13 --> range: +- 4 = +- 12 dB */
-        L_temp = L_Comp(sub(ltpg_exp, 27, pOverflow), ltpg_frac, pOverflow);
+        L_temp = L_Comp((ltpg_exp - 27), ltpg_frac, pOverflow);
         *ltpg = pv_round(L_shl(L_temp, 13, pOverflow), pOverflow);   /* Q13 */
     }
     else
@@ -567,22 +551,6 @@ calc_filt_energies(
 }
 
 ------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
-
-------------------------------------------------------------------------------
  CAUTION [optional]
  [State any special notes, constraints or cautions for users of this function]
 
@@ -618,7 +586,7 @@ void calc_filt_energies(
     frac_coeff[0] = g_coeff[0];
     exp_coeff[0]  = g_coeff[1];
     frac_coeff[1] = negate(g_coeff[2]);    /* coeff[1] = -2 xn y1 */
-    exp_coeff[1]  = add(g_coeff[3], 1, pOverflow);
+    exp_coeff[1]  = g_coeff[3] + 1;
 
     if ((mode == MR795) || (mode == MR475))
     {
@@ -659,7 +627,7 @@ void calc_filt_energies(
 
     exp = norm_l(s3);
     frac_coeff[4] = (Word16)(L_shl(s3, exp, pOverflow) >> 16);
-    exp_coeff[4] = sub(7, exp, pOverflow);
+    exp_coeff[4] = (7 - exp);
 
 
     if ((mode == MR795) || (mode == MR475))
@@ -766,22 +734,6 @@ calc_target_energy(
     *en_frac = extract_h(L_shl(s, exp));
     *en_exp = sub(16, exp);
 }
-
-------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
 
 ------------------------------------------------------------------------------
  CAUTION [optional]

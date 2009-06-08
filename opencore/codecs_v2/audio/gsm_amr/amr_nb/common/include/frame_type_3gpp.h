@@ -28,17 +28,7 @@ terms listed above has been obtained from the copyright holder.
 ****************************************************************************************/
 /*
 
- Pathname: ./audio/gsm-amr/c/include/frame_type_3gpp.h
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Updated to new PV C header template.
-
- Description: Added #ifdef __cplusplus after Include section.
-
- Who:						Date:
- Description:
+ Filename: frame_type_3gpp.h
 
 ------------------------------------------------------------------------------
  INCLUDE DESCRIPTION
@@ -48,8 +38,8 @@ terms listed above has been obtained from the copyright holder.
 ------------------------------------------------------------------------------
 */
 
-#ifndef	FRAME_TYPE_3GPP_H
-#define	FRAME_TYPE_3GPP_H
+#ifndef FRAME_TYPE_3GPP_H
+#define FRAME_TYPE_3GPP_H
 
 /*----------------------------------------------------------------------------
 ; INCLUDES

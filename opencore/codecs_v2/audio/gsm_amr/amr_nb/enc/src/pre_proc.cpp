@@ -31,52 +31,11 @@ terms listed above has been obtained from the copyright holder.
 
 
 
- Pathname: ./audio/gsm-amr/c/src/pre_proc.c
+ Filename: pre_proc.cpp
  Funtions: Pre_Process_init
            Pre_Process_reset
            Pre_Process_exit
            Pre_Process
-
-     Date: 05/17/2000
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Put the file into our template structure.
-
- Description: First pass optimization.
-
- Description: Made changes based on comments from review meeting.
-
- Description: Synchronized file with UMTS version 3.2.0. Updated coding
-              template. Removed unnecessary include files.
-
- Description: Removed basic_op.h from the Include section. It is not used.
-
- Description: Made the following changes per comments from Phase 2/3 review:
-              1. Fixed typecasting issue with TI C compiler.
-              2. Modified FOR loop to count down.
-              3. Cosmetic changes to the code to make address post-increment
-                 clearer.
-              4. Removed unnecessary typecasting in the multiply-accumulate
-                 portion of FOR loop body.
-              5. Removed "static" in table definitions.
-              6. Updated copyright year.
-
- Description:  For Pre_Process()
-              1. Replaced variables (containing filter coefficients) with
-                 constants, to avoid extra register swaping.
-              2. Changed to decrement loop
-
- Description:  Replaced OSCL mem type functions and eliminated include
-               files that now are chosen by OSCL definitions
-
- Description:  Replaced "int" and/or "char" with OSCL defined types.
-
- Description: Changed round function name to pv_round to avoid conflict with
-              round function in C standard library.
-
- Description:
 
 ------------------------------------------------------------------------------
  MODULE DESCRIPTION
@@ -186,22 +145,6 @@ int Pre_Process_init (Pre_ProcessState **state)
 }
 
 ------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
-
-------------------------------------------------------------------------------
  CAUTION [optional]
  [State any special notes, constraints or cautions for users of this function]
 
@@ -294,22 +237,6 @@ int Pre_Process_reset (Pre_ProcessState *state)
 }
 
 ------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
-
-------------------------------------------------------------------------------
  CAUTION [optional]
  [State any special notes, constraints or cautions for users of this function]
 
@@ -388,22 +315,6 @@ void Pre_Process_exit (Pre_ProcessState **state)
 
   return;
 }
-
-------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
 
 ------------------------------------------------------------------------------
  CAUTION [optional]
@@ -506,22 +417,6 @@ int Pre_Process (
     }
     return 0;
 }
-
-------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
 
 ------------------------------------------------------------------------------
  CAUTION [optional]

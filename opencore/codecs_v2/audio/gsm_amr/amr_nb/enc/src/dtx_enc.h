@@ -31,18 +31,7 @@ terms listed above has been obtained from the copyright holder.
 
 
 
- Filename: /audio/gsm_amr/c/src/include/dtx_enc.h
-
-     Date: 01/29/2002
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description:  Replaced "int" and/or "char" with OSCL defined types.
-
- Description: Moved _cplusplus #ifdef after Include section.
-
- Description:
+ Filename: dtx_enc.h
 
 ------------------------------------------------------------------------------
  INCLUDE DESCRIPTION
@@ -86,7 +75,7 @@ extern "C"
     ; EXTERNAL VARIABLES REFERENCES
     ; [Declare variables used in this module but defined elsewhere]
     ----------------------------------------------------------------------------*/
-    extern const Word16 lsp_init_data[];
+
     /*----------------------------------------------------------------------------
     ; SIMPLE TYPEDEF'S
     ----------------------------------------------------------------------------*/
@@ -127,7 +116,7 @@ extern "C"
     *
     **************************************************************************
     */
-    Word16 dtx_enc_init(dtx_encState **st);
+    Word16 dtx_enc_init(dtx_encState **st, const Word16* lsp_init_data_ptr);
 
     /*
     **************************************************************************
@@ -138,7 +127,7 @@ extern "C"
     *
     **************************************************************************
     */
-    Word16 dtx_enc_reset(dtx_encState *st);
+    Word16 dtx_enc_reset(dtx_encState *st, const Word16* lsp_init_data_ptr);
 
     /*
     **************************************************************************

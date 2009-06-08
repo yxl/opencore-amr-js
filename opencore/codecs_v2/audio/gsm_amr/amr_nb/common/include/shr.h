@@ -28,23 +28,7 @@ terms listed above has been obtained from the copyright holder.
 ****************************************************************************************/
 /*
 
- Filename: /audio/gsm_amr/c/include/shr.h
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Created separate header file for shr function.
-
- Description: Changed the function prototype declaration.
-			  Updated template.
-
- Description: Updated template. Changed the parameter name from "overflow" to
-			  "pOverflow" in the function prototype declaration
-
- Description: Moved _cplusplus #ifdef after Include section.
-
- Who:						Date:
- Description:
+ Filename: shr.h
 
 ------------------------------------------------------------------------------
  INCLUDE DESCRIPTION
@@ -58,13 +42,13 @@ terms listed above has been obtained from the copyright holder.
 /*----------------------------------------------------------------------------
 ; CONTINUE ONLY IF NOT ALREADY DEFINED
 ----------------------------------------------------------------------------*/
-#ifndef	SHR_H
-#define	SHR_H
+#ifndef SHR_H
+#define SHR_H
 
 /*----------------------------------------------------------------------------
 ; INCLUDES
 ----------------------------------------------------------------------------*/
-#include	"basicop_malloc.h"
+#include    "basicop_malloc.h"
 
 /*--------------------------------------------------------------------------*/
 #ifdef __cplusplus
@@ -103,7 +87,7 @@ extern "C"
     ; GLOBAL FUNCTION DEFINITIONS
     ; Function Prototype declaration
     ----------------------------------------------------------------------------*/
-    Word16 shr(Word16 var1, Word16 var2, Flag *pOverflow);
+    OSCL_IMPORT_REF Word16 shr(Word16 var1, Word16 var2, Flag *pOverflow);
 
     /*----------------------------------------------------------------------------
     ; END
@@ -112,4 +96,4 @@ extern "C"
 }
 #endif
 
-#endif	/* _SHR_H_ */
+#endif  /* _SHR_H_ */

@@ -28,19 +28,7 @@ terms listed above has been obtained from the copyright holder.
 ****************************************************************************************/
 /*
 
- Pathname: ./gsm-amr/c/include/abs_s.h
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Created separate header file for abs_s function.
-
- Description: Updated template to make it build for Symbian.
-
- Description: Moved _cplusplus #ifdef after Include section.
-
- Who:						Date:
- Description:
+ Filename: abs_s.h
 
 ------------------------------------------------------------------------------
  INCLUDE DESCRIPTION
@@ -54,13 +42,13 @@ terms listed above has been obtained from the copyright holder.
 /*----------------------------------------------------------------------------
 ; CONTINUE ONLY IF NOT ALREADY DEFINED
 ----------------------------------------------------------------------------*/
-#ifndef	ABS_S_H
-#define	ABS_S_H
+#ifndef ABS_S_H
+#define ABS_S_H
 
 /*----------------------------------------------------------------------------
 ; INCLUDES
 ----------------------------------------------------------------------------*/
-#include	"basicop_malloc.h"
+#include    "basicop_malloc.h"
 
 /*--------------------------------------------------------------------------*/
 #ifdef __cplusplus

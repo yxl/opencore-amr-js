@@ -27,20 +27,7 @@ Permission to distribute, modify and use this file under the standard license
 terms listed above has been obtained from the copyright holder.
 ****************************************************************************************/
 /*
- Pathname: ./gsm-amr/c/include/norm_s.h
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Created separate header file for norm_s function.
-
- Description: Updated template to make it build in Symbian. Updated copyright
-              year.
-
- Description: Moved _cplusplus #ifdef after Include section.
-
- Who:						Date:
- Description:
+ Filename: norm_s.h
 
 ------------------------------------------------------------------------------
  INCLUDE DESCRIPTION
@@ -54,13 +41,13 @@ terms listed above has been obtained from the copyright holder.
 /*----------------------------------------------------------------------------
 ; CONTINUE ONLY IF NOT ALREADY DEFINED
 ----------------------------------------------------------------------------*/
-#ifndef	NORM_S_H
-#define	NORM_S_H
+#ifndef NORM_S_H
+#define NORM_S_H
 
 /*----------------------------------------------------------------------------
 ; INCLUDES
 ----------------------------------------------------------------------------*/
-#include	"basicop_malloc.h"
+#include    "basicop_malloc.h"
 
 /*--------------------------------------------------------------------------*/
 #ifdef __cplusplus
@@ -103,7 +90,7 @@ extern "C"
 
     /* C EQUIVALENT */
 
-    Word16 norm_s(Word16 var1);
+    OSCL_IMPORT_REF Word16 norm_s(Word16 var1);
 
 #elif defined(PV_ARM_V5)
 

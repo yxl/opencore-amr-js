@@ -28,21 +28,7 @@ terms listed above has been obtained from the copyright holder.
 ****************************************************************************************/
 /*
 
- Pathname: .audio/gsm-amr/c/include/reverse_bits.h
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Adding #include "mode.h" so that it compiles and works for the
-              ARM tools.
-
- Description: Updated template to make it build in Symbian. Updated copyright
-              year.
-
- Description: Moved _cplusplus #ifdef after Include section.
-
- Who:                        Date:
- Description:
+ Filename: reverse_bits.h
 
 ------------------------------------------------------------------------------
  INCLUDE DESCRIPTION

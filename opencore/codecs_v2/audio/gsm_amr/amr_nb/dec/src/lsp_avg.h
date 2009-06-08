@@ -31,24 +31,7 @@ terms listed above has been obtained from the copyright holder.
 
 
 
- Filename: /audio/gsm_amr/c/include/lsp_avg.h
-
-     Date: 01/29/2002
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Placed header file in the proper template format.  Added
- parameter pOverflow for the basic math ops.
-
- Description: Per review comments, I removed the prototype definition
- of lsp_avg_init and lsp_avg_exit.
-
- Description:  Replaced "int" and/or "char" with OSCL defined types.
-
- Description: Moved _cplusplus #ifdef after Include section.
-
- Description:
+ Filename: lsp_avg.h
 
 ------------------------------------------------------------------------------
  INCLUDE DESCRIPTION
@@ -115,7 +98,8 @@ extern "C"
     ----------------------------------------------------------------------------*/
 
     Word16 lsp_avg_reset(
-        lsp_avgState *state
+        lsp_avgState *state,
+        const Word16* mean_lsf_5_ptr
     );
 
 

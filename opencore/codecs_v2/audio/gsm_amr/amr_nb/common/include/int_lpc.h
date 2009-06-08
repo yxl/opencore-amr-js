@@ -28,18 +28,7 @@ terms listed above has been obtained from the copyright holder.
 ****************************************************************************************/
 /*
 
- Filename: /audio/gsm_amr/c/include/lsp_avg.h
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Placed header file in the proper template format.  Added
- parameter pOverflow for the basic math ops.
-
- Description: Moved _cplusplus #ifdef after Include section.
-
- Who:                       Date:
- Description:
+ Filename: int_lpc.h
 
 ------------------------------------------------------------------------------
  INCLUDE DESCRIPTION
@@ -120,7 +109,7 @@ extern "C"
     *
     **************************************************************************
     */
-    void Int_lpc_1and3(
+    OSCL_IMPORT_REF void Int_lpc_1and3(
         Word16 lsp_old[],  /* i : LSP vector at the 4th subfr. of past frame (M) */
         Word16 lsp_mid[],  /* i : LSP vector at the 2nd subfr. of
                               present frame (M)                              */
@@ -174,7 +163,7 @@ extern "C"
     *
     **************************************************************************
     */
-    void Int_lpc_1to3(
+    OSCL_IMPORT_REF void Int_lpc_1to3(
         Word16 lsp_old[], /* i : LSP vector at the 4th SF of past frame (M)      */
         Word16 lsp_new[], /* i : LSP vector at the 4th SF of present frame (M)   */
         Word16 Az[],      /* o : interpolated LP parameters in all SFs (AZ_SIZE) */

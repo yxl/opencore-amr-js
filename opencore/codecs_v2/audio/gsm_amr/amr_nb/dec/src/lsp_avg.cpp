@@ -31,42 +31,7 @@ terms listed above has been obtained from the copyright holder.
 
 
 
- Pathname: ./audio/gsm-amr/c/src/lsp_avg.c
- Functions:
-
-
-     Date: 04/14/2000
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Removed the functions lsp_avg_init and lsp_avg_exit.
- The lsp_avg related structure is no longer dynamically allocated.
-
- Also, placed code in the proper PV Software Template.
-
- Description: Per review comments, updated the inputs/outputs section
- for the function lsp_avg.
-
- Description: Changed to accept the pOverflow flag for EPOC compatibility.
-
- Description: Per review comments, I added a description of pOverflow
- to the input/output section of the template.  I also removed an unnecessary
- include file, <stdio.h>
-
- Description: Removed q_plsf_5.tab from Include section and added
-			  q_plsf_5_tbl.h to Include section. Changed "mean_lsf"
-              to "mean_lsf_5" in lsp_avg_reset().
-
- Description:  Replaced OSCL mem type functions and eliminated include
-               files that now are chosen by OSCL definitions
-
- Description:  Replaced "int" and/or "char" with OSCL defined types.
-
- Description: Changed round function name to pv_round to avoid conflict with
-              round function in C standard library.
-
- Description:
+ Filename: lsp_avg.cpp
 
 ------------------------------------------------------------------------------
  MODULE DESCRIPTION
@@ -81,7 +46,7 @@ terms listed above has been obtained from the copyright holder.
 #include "lsp_avg.h"
 #include "basic_op.h"
 #include "oper_32b.h"
-#include "copy.h"
+#include "oscl_mem.h"
 #include "q_plsf_5_tbl.h"
 
 /*----------------------------------------------------------------------------
@@ -166,29 +131,13 @@ int lsp_avg_reset (lsp_avgState *st)
 }
 
 ------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
-
-------------------------------------------------------------------------------
  CAUTION [optional]
  [State any special notes, constraints or cautions for users of this function]
 
 ------------------------------------------------------------------------------
 */
 
-Word16 lsp_avg_reset(lsp_avgState *st)
+Word16 lsp_avg_reset(lsp_avgState *st, const Word16* mean_lsf_5_ptr)
 {
     if (st == (lsp_avgState *) NULL)
     {
@@ -196,7 +145,7 @@ Word16 lsp_avg_reset(lsp_avgState *st)
         return -1;
     }
 
-    Copy(mean_lsf_5, &st->lsp_meanSave[0], M);
+    oscl_memmove((void *)&st->lsp_meanSave[0], mean_lsf_5_ptr, M*sizeof(*mean_lsf_5_ptr));
 
     return 0;
 }
@@ -268,22 +217,6 @@ void lsp_avg (
 }
 
 ------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
-
-------------------------------------------------------------------------------
  CAUTION [optional]
  [State any special notes, constraints or cautions for users of this function]
 
@@ -303,7 +236,7 @@ void lsp_avg(
     {
 
         /* mean = 0.84*mean */
-        L_tmp = L_deposit_h(st->lsp_meanSave[i]);
+        L_tmp = ((Word32)st->lsp_meanSave[i] << 16);
         L_tmp = L_msu(L_tmp, EXPCONST, st->lsp_meanSave[i], pOverflow);
 
         /* Add 0.16 of newest LSPs to mean */

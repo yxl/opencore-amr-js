@@ -31,21 +31,7 @@ terms listed above has been obtained from the copyright holder.
 
 
 
- Filename: /audio/gsm-amr/c/include/qgain475.h
-
-     Date: 01/04/2002
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Updated template and copied #defines from qgain475.c file.
-
- Description: Changed to include pOverflow as a function parameter for all
- functions in qgain475.c
-
- Description: Moved _cplusplus #ifdef after Include section.
-
- Description:
+ Filename: qgain475.h
 
 ------------------------------------------------------------------------------
  INCLUDE DESCRIPTION
@@ -55,8 +41,8 @@ terms listed above has been obtained from the copyright holder.
 
 ------------------------------------------------------------------------------
 */
-#ifndef	_QGAIN475_H_
-#define	_QGAIN475_H_
+#ifndef _QGAIN475_H_
+#define _QGAIN475_H_
 #define qgain475_h "$Id $"
 
 /*----------------------------------------------------------------------------

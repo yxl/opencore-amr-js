@@ -31,23 +31,10 @@ terms listed above has been obtained from the copyright holder.
 
 
 
- Pathname: ./audio/gsm-amr/c/src/b_cn_cod.c
+ Filename: b_cn_cod.cpp
  Functions: pseudonoise
             build_CN_code
             build_CN_param
-
-     Date: 09/28/2000
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Updated template. Cleaned up code. Passing in a pointer to
-              overflow flag for build_CN_code() and build_CN_param() functions.
-              Removed unnecessary header files.
- Description: Make chnages per formal review. Fix error introduced during
-              optimization in pseudonoise().
-
- Description:
 
 ------------------------------------------------------------------------------
  MODULE DESCRIPTION
@@ -171,22 +158,6 @@ Word16 pseudonoise (
    }
    return noise_bits;
 }
-
-------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
 
 ------------------------------------------------------------------------------
  CAUTION [optional]
@@ -329,22 +300,6 @@ void build_CN_code (
    return;
 }
 ------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
-
-------------------------------------------------------------------------------
  CAUTION [optional]
  [State any special notes, constraints or cautions for users of this function]
 
@@ -374,7 +329,7 @@ void build_CN_code(
 
         temp = (Word16)(L_mult(i, 10, pOverflow));
         i = temp >> 1;
-        i = add(i, k, pOverflow);
+        i = add_16(i, k, pOverflow);
 
         j = pseudonoise(pSeed, 1);       /* generate sign */
 
@@ -461,22 +416,6 @@ void build_CN_param (
 
 
 ------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
-
-------------------------------------------------------------------------------
  CAUTION [optional]
  [State any special notes, constraints or cautions for users of this function]
 
@@ -491,6 +430,7 @@ void build_CN_param(
     const Word16 n_param,           /* i  : number of params                */
     const Word16 param_size_table[],/* i : size of params                   */
     Word16 parm[],                  /* o : CN Generated params              */
+    const Word16* window_200_40_ptr, /* i : ptr to read-only table          */
     Flag  *pOverflow                /* i/o : Overflow Flag                  */
 )
 
@@ -505,9 +445,9 @@ void build_CN_param(
 
     *pSeed = (Word16)(L_add(L_temp, 13849L, pOverflow));
 
-    pTemp = &window_200_40[*pSeed & 0x7F];
+    pTemp = &window_200_40_ptr[*pSeed & 0x7F];
 
-    for (i = 0; i < n_param;i++)
+    for (i = 0; i < n_param; i++)
     {
         temp = ~(0xFFFF << param_size_table[i]);
         parm[i] = *pTemp++ & temp;

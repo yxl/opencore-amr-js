@@ -27,17 +27,7 @@ Permission to distribute, modify and use this file under the standard license
 terms listed above has been obtained from the copyright holder.
 ****************************************************************************************/
 /*
- Filename: /audio/gsm_amr/c/include/lsp_lsf.h
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Placed header file in the proper template format.  Added
- parameter pOverflow for the basic math ops.
-
- Description: Moved _cplusplus #ifdef after Include section.
-
- Description:
+ Filename: lsp_lsf.h
 
 ------------------------------------------------------------------------------
  INCLUDE DESCRIPTION
@@ -97,13 +87,13 @@ extern "C"
     ; Function Prototype declaration
     ----------------------------------------------------------------------------*/
 
-    void Lsf_lsp(
+    OSCL_IMPORT_REF void Lsf_lsp(
         Word16 lsf[],      /* (i)    : lsf[m] normalized (range: 0.0<=val<=0.5) */
         Word16 lsp[],      /* (o)    : lsp[m] (range: -1<=val<1)                */
         Word16 m,          /* (i)    : LPC order                                */
         Flag  *pOverflow   /* (o)    : Flag set when overflow occurs            */
     );
-    void Lsp_lsf(
+    OSCL_IMPORT_REF void Lsp_lsf(
         Word16 lsp[],      /* (i)    : lsp[m] (range: -1<=val<1)                */
         Word16 lsf[],      /* (o)    : lsf[m] normalized (range: 0.0<=val<=0.5) */
         Word16 m,          /* (i)    : LPC order                                */

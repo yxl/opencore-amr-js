@@ -31,23 +31,7 @@ terms listed above has been obtained from the copyright holder.
 
 
 
- Filename: /audio/gsm_amr/c/src/prm2bits.c
-
-     Date: 02/04/2002
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Improved the code as per review comments.
-
- Description:  For Int2bin() and Prm2bits()
-              1. Eliminated unused include file typedef.h.
-              2. Replaced array addressing by pointers
-              3. Changed to decrement loops
-
- Description:  Replaced "int" and/or "char" with OSCL defined types.
-
- Description:
+ Filename: prm2bits.cpp
 
 ------------------------------------------------------------------------------
 */
@@ -57,7 +41,6 @@ terms listed above has been obtained from the copyright holder.
 ----------------------------------------------------------------------------*/
 #include "prm2bits.h"
 #include "mode.h"
-#include "bitno_tab.h"
 
 
 /*----------------------------------------------------------------------------
@@ -148,22 +131,6 @@ static void Int2bin (
         value = shr (value, 1);
     }
 }
-
-------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
 
 ------------------------------------------------------------------------------
  CAUTION [optional]
@@ -261,22 +228,6 @@ void Prm2bits (
 }
 
 ------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
-
-------------------------------------------------------------------------------
  CAUTION [optional]
  [State any special notes, constraints or cautions for users of this function]
 
@@ -289,17 +240,19 @@ void Prm2bits (
 void Prm2bits(
     enum Mode mode,    /* i : AMR mode                                      */
     Word16 prm[],      /* i : analysis parameters (size <= MAX_PRM_SIZE)    */
-    Word16 bits[]      /* o : serial bits         (size <= MAX_SERIAL_SIZE) */
+    Word16 bits[],      /* o : serial bits         (size <= MAX_SERIAL_SIZE) */
+    CommonAmrTbls* common_amr_tbls /* i : ptr to strcut of table ptrs        */
 )
 {
     Word16 i;
     const Word16 *p_mode;
     Word16 *p_prm;
+    const Word16* prmno_ptr = common_amr_tbls->prmno_ptr;
 
-    p_mode = &bitno[mode][0];
+    p_mode = &common_amr_tbls->bitno_ptr[mode][0];
     p_prm  = &prm[0];
 
-    for (i = prmno[mode]; i != 0; i--)
+    for (i = prmno_ptr[mode]; i != 0; i--)
     {
         Int2bin(*(p_prm++), *(p_mode), bits);
         bits += *(p_mode++);

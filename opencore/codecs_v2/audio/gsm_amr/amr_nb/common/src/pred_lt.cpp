@@ -27,49 +27,7 @@ Permission to distribute, modify and use this file under the standard license
 terms listed above has been obtained from the copyright holder.
 ****************************************************************************************/
 /*
- Pathname: ./audio/gsm-amr/c/src/pred_lt.c
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Updated template used to PV coding template. First attempt at
-          optimizing C code.
-
- Description: Deleted variables listed in the Local Stores Needed/Modified
-          sections.
-
- Description: Updated file per comments from Phase 2/3 review.
-
- Description: Synchronized file with UMTS version 3.2.0. Updated coding
-              template. Removed unnecessary include files.
-
- Description: Fixed typecasting issue with TI C compiler. Updated copyright
-              year.
-
- Description:
- (1) Removed instance of static in the const table "inter_6"
- (2) Changed Overflow from a global to a parameter passed via a pointer.
- (3) Made numerous small changes to bring code more in line with PV standards.
-
- Description:  For pred_ltp()
-              1. Eliminated unused include files.
-              2. Replaced array addressing by pointers
-              3. Eliminated math operations that unnecessary checked for
-                 saturation
-              4. Unrolled loops to speed up processing, use decrement loops,
-                 loaded into memory filter coefficient in linear order for
-                 faster execution in main loop.
-              5. Eliminated call to round by proper initialization
-
- Description:  Replaced "int" and/or "char" with defined types.
-               Added proper casting (Word32) to some left shifting operations
-
-
- Description: Changed round function name to pv_round to avoid conflict with
-              round function in C standard library.
-
- Who:                           Date:
- Description:
+ Filename: pred_lt.cpp
 
 ------------------------------------------------------------------------------
 */
@@ -142,14 +100,14 @@ const Word16 inter_6_pred_lt[FIR_SIZE] =
     flag3 = flag to indicate the upsampling rate; if set, upsampling
             rate is 3, otherwise, upsampling rate is 6 (Word16)
 
-	pOverflow = pointer to overflow (Flag)
+    pOverflow = pointer to overflow (Flag)
 
  Returns:
     None
 
  Outputs:
     exc buffer contains the newly formed adaptive codebook excitation
-	pOverflow -> 1 if the add operation resulted in overflow
+    pOverflow -> 1 if the add operation resulted in overflow
 
  Global Variables Used:
     inter_6_pred_lt = (1/6) resolution interpolation filter table (Word16)
@@ -229,29 +187,13 @@ void Pred_lt_3or6 (
 }
 
 ------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
-
-------------------------------------------------------------------------------
  CAUTION [optional]
  [State any special notes, constraints or cautions for users of this function]
 
 ------------------------------------------------------------------------------
 */
 
-void Pred_lt_3or6(
+OSCL_EXPORT_REF void Pred_lt_3or6(
     Word16 exc[],     /* in/out: excitation buffer                          */
     Word16 T0,        /* input : integer pitch lag                          */
     Word16 frac,      /* input : fraction of lag                            */

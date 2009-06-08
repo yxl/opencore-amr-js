@@ -67,7 +67,7 @@ extern "C"
     *                         DECLARATION OF PROTOTYPES
     ********************************************************************************
     */
-    void Syn_filt(
+    OSCL_IMPORT_REF void Syn_filt(
         Word16 a[],        /* (i)  : a[m+1] prediction coefficients   (m=10)    */
         Word16 x[],        /* (i)  : input signal                               */
         Word16 y[],        /* (o)  : output signal                              */

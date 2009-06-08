@@ -31,24 +31,7 @@ terms listed above has been obtained from the copyright holder.
 
 
 
- Filename: /audio/gsm_amr/c/include/ph_disp.h
-
-
-     Date: 08/11/2000
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Updated template. Updated function prototype declaration for
-              ph_disp(). Included extern declaration for ph_imp_low_MR795 and
-              ph_imp_mid_MR795
-
- Description:  Replaced "int" and/or "char" with OSCL defined types.
-
- Description: Moved _cplusplus #ifdef after Include section.
-
- Description:
-
+ Filename: ph_disp.h
 
 ------------------------------------------------------------------------------
  INCLUDE DESCRIPTION
@@ -59,14 +42,15 @@ terms listed above has been obtained from the copyright holder.
 ------------------------------------------------------------------------------
 */
 
-#ifndef	PH_DISP_H
-#define	PH_DISP_H "$Id $"
+#ifndef PH_DISP_H
+#define PH_DISP_H "$Id $"
 
 /*----------------------------------------------------------------------------
 ; INCLUDES
 ----------------------------------------------------------------------------*/
-#include	"typedef.h"
+#include    "typedef.h"
 #include    "mode.h"
+#include "get_const_tbls.h"
 
 /*--------------------------------------------------------------------------*/
 #ifdef __cplusplus
@@ -93,10 +77,6 @@ extern "C"
     ; EXTERNAL VARIABLES REFERENCES
     ; Declare variables used in this module but defined elsewhere
     ----------------------------------------------------------------------------*/
-    extern Word16 ph_imp_low_MR795[];
-    extern Word16 ph_imp_mid_MR795[];
-    extern Word16 ph_imp_low[];
-    extern Word16 ph_imp_mid[];
 
     /*----------------------------------------------------------------------------
     ; SIMPLE TYPEDEF'S
@@ -178,6 +158,7 @@ extern "C"
         Word16 tmp_shift,       /* i   Q0  : shift factor applied to sum of
                                          scaled LTP ex & innov. before
                                          rounding                           */
+        CommonAmrTbls* common_amr_tbls, /* i : ptr to struct of table ptrs      */
         Flag   *pOverflow       /* i/o     : oveflow indicator                  */
     );
 

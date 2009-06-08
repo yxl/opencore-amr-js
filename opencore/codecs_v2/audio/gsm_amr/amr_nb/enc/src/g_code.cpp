@@ -31,36 +31,7 @@ terms listed above has been obtained from the copyright holder.
 
 
 
- Filename: /audio/gsm_amr/c/src/g_code.c
-
-     Date: 01/31/2002
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: The return of L_mult was being stored in a Word16 before it was
-              being operated on (extract_h). Data loss happened here.
-
- Description:
-              1. Eliminated unused include files.
-              2. Replaced array addressing by pointers
-              3. Eliminated math operations that unnecessary checked for
-                 saturation, in some cases this by shifting before adding and
-                 in other cases by evaluating the operands
-              4. Unrolled loops to speed up processing
-              5. Eliminated calls to shifts left and right functions by adding
-                 if-else statements that do the same faster.
-
- Description:  Added casting to eliminate warnings
-
- Description:  Replaced "int" and/or "char" with OSCL defined types.
-
- Description: 1. Using inlines from fxp_arithmetic.h
-              2. Removing a compiler warning.
-
- Description: Replacing fxp_arithmetic.h with basic_op.h.
-
- Description:
+ Filename: g_code.cpp
 
 ------------------------------------------------------------------------------
 */
@@ -199,22 +170,6 @@ Word16 G_code (         // out   : Gain of innovation code
     return (gain);
 }
 
-
-------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
 
 ------------------------------------------------------------------------------
  CAUTION [optional]

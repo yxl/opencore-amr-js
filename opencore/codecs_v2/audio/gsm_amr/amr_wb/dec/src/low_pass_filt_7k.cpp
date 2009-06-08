@@ -33,14 +33,6 @@ terms listed above has been obtained from the copyright holder.
 
  Filename: low_pass_filt_7k.cpp
 
-     Date: 05/08/2004
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
-
- Description:
-
 ------------------------------------------------------------------------------
  INPUT AND OUTPUT DEFINITIONS
 

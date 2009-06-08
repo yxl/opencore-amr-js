@@ -33,21 +33,13 @@ terms listed above has been obtained from the copyright holder.
 
  Filename: oversamp_12k8_to_16k.cpp
 
-     Date: 05/08/2004
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
-
- Description:
-
 ------------------------------------------------------------------------------
  INPUT AND OUTPUT DEFINITIONS
 
      int16 signal[],             input signal / output is divided by 16
      int16 lg,                   lenght of signal
      int16 mem[]                 in/out: memory (size=30)
-	 int16 x[]                   scratch mem ( size= 60)
+     int16 x[]                   scratch mem ( size= 60)
 
 ------------------------------------------------------------------------------
  FUNCTION DESCRIPTION

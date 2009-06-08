@@ -28,7 +28,7 @@ terms listed above has been obtained from the copyright holder.
 ****************************************************************************************/
 /*
 
-  Filename: /audio/gsm_amr/c/include/mpy_32_16.h
+ Filename: mpy_32_16.h
 
 ------------------------------------------------------------------------------
  INCLUDE DESCRIPTION
@@ -42,13 +42,13 @@ terms listed above has been obtained from the copyright holder.
 /*----------------------------------------------------------------------------
 ; CONTINUE ONLY IF NOT ALREADY DEFINED
 ----------------------------------------------------------------------------*/
-#ifndef	MPY_32_16_H
-#define	MPY_32_16_H
+#ifndef MPY_32_16_H
+#define MPY_32_16_H
 
 /*----------------------------------------------------------------------------
 ; INCLUDES
 ----------------------------------------------------------------------------*/
-#include	"basicop_malloc.h"
+#include    "basicop_malloc.h"
 
 /*--------------------------------------------------------------------------*/
 #ifdef __cplusplus
@@ -91,9 +91,9 @@ extern "C"
 #if defined(PV_ARM_V5) /* Instructions for ARM Assembly on ADS*/
 
     __inline Word32 Mpy_32_16(Word16 L_var1_hi,
-                              Word16 L_var1_lo,
-                              Word16 var2,
-                              Flag *pOverflow)
+    Word16 L_var1_lo,
+    Word16 var2,
+    Flag *pOverflow)
     {
 
         Word32 L_product;

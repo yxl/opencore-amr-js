@@ -27,54 +27,34 @@ Permission to distribute, modify and use this file under the standard license
 terms listed above has been obtained from the copyright holder.
 ****************************************************************************************/
 /*
- Pathname: ./gsm-amr/c/src/div_s.c
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Created separate file for the div_s function. Sync'ed up
-	      with the current template and fixed tabs.
-
- Description: Making changes based on review meeting.
-
- Description: Made changes based on P3 review meeting.
-
- Description: Changing abort() to exit(0).
-
- Description: Made the following changes
-              1. Unrolled the division loop to make three comparison per
-                 pass, using only five iterations of the loop and saving
-                 shifts cycles
-
- Who: 						Date:
- Description:
+ Filename: div_s.cpp
 
 ------------------------------------------------------------------------------
  INPUT AND OUTPUT DEFINITIONS
 
  Inputs:
-	var1 = 16 bit signed integer (Word16) whose value falls in
-	       the range : 0x0000 <= var1 <= 0x7fff.
-	var2 = 16 bit signed integer (Word16) whose value falls in
-	       the range : 0x0000 <= var1 <= 0x7fff.
+    var1 = 16 bit signed integer (Word16) whose value falls in
+           the range : 0x0000 <= var1 <= 0x7fff.
+    var2 = 16 bit signed integer (Word16) whose value falls in
+           the range : 0x0000 <= var1 <= 0x7fff.
 
  Local Stores/Buffers/Pointers Needed:
-	None
+    None
 
  Global Stores/Buffers/Pointers Needed:
-	None
+    None
 
  Outputs:
-	var_out = quotient of var1 divided by var2 (Word16)
+    var_out = quotient of var1 divided by var2 (Word16)
 
  Pointers and Buffers Modified:
-	None
+    None
 
  Local Stores Modified:
-	None
+    None
 
  Global Stores Modified:
-	None
+    None
 
 ------------------------------------------------------------------------------
  FUNCTION DESCRIPTION
@@ -143,35 +123,13 @@ Word16 div_s (Word16 var1, Word16 var2)
 }
 
 ------------------------------------------------------------------------------
- RESOURCES USED
-   When the code is written for a specific target processor the
-     the resources used should be documented below.
-
- STACK USAGE: [stack count for this module] + [variable to represent
-		  stack usage for each subroutine called]
-
-     where: [stack usage variable] = stack usage for [subroutine
-		 name] (see [filename].ext)
-
- DATA MEMORY USED: x words
-
- PROGRAM MEMORY USED: x words
-
- CLOCK CYCLES: [cycle count equation for this module] + [variable
-		   used to represent cycle count for each subroutine
-		   called]
-
-     where: [cycle count variable] = cycle count for [subroutine
-		name] (see [filename].ext)
-
-------------------------------------------------------------------------------
 */
 
 
 /*----------------------------------------------------------------------------
 ; INCLUDES
 ----------------------------------------------------------------------------*/
-#include	"basic_op.h"
+#include    "basic_op.h"
 
 /*----------------------------------------------------------------------------
 ; MACROS
@@ -207,7 +165,7 @@ Word16 div_s (Word16 var1, Word16 var2)
 /*----------------------------------------------------------------------------
 ; FUNCTION CODE
 ----------------------------------------------------------------------------*/
-Word16 div_s(register Word16 var1, register Word16 var2)
+OSCL_EXPORT_REF Word16 div_s(register Word16 var1, register Word16 var2)
 {
     /*----------------------------------------------------------------------------
     ; Define all local variables

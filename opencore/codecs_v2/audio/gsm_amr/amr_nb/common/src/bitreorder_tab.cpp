@@ -28,25 +28,7 @@ terms listed above has been obtained from the copyright holder.
 ****************************************************************************************/
 /*
 
- Pathname: .audio/gsm-amr/c/src/bitreorder.c
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Changed file name to bitreorder_tab.c and .h. Also, updated the
-              module description.
-
- Description: Define "const Word16 *reorderBits[NUM_MODES-1]" as
-              "const Word16 *const reorderBits[NUM_MODES-1]".
-
- Description: Added #ifdef __cplusplus and removed "extern" from table
-              definition. Removed corresponding header file from Include
-              section.
-
- Description: Put "extern" back.
-
- Who:                       Date:
- Description:
+ Filename: bitreorder_tab.cpp
 
 ------------------------------------------------------------------------------
  INPUT AND OUTPUT DEFINITIONS
@@ -92,28 +74,6 @@ terms listed above has been obtained from the copyright holder.
 ------------------------------------------------------------------------------
  PSEUDO-CODE
 
-
-------------------------------------------------------------------------------
- RESOURCES USED
-   When the code is written for a specific target processor the
-     the resources used should be documented below.
-
- STACK USAGE: [stack count for this module] + [variable to represent
-          stack usage for each subroutine called]
-
-     where: [stack usage variable] = stack usage for [subroutine
-         name] (see [filename].ext)
-
- DATA MEMORY USED: x words
-
- PROGRAM MEMORY USED: x words
-
- CLOCK CYCLES: [cycle count equation for this module] + [variable
-           used to represent cycle count for each subroutine
-           called]
-
-     where: [cycle count variable] = cycle count for [subroutine
-        name] (see [filename].ext)
 
 ------------------------------------------------------------------------------
 */
@@ -171,7 +131,7 @@ extern "C"
     ; Variable declaration - defined here and used outside this module
     ----------------------------------------------------------------------------*/
     /* number of parameters per modes (values must be <= MAX_PRM_SIZE!) */
-    const Word16 numOfBits[NUM_MODES] =
+    extern const Word16 numOfBits[NUM_MODES] =
     {
         NUMBIT_MR475,
         NUMBIT_MR515,
@@ -191,7 +151,7 @@ extern "C"
         NUMBIT_NO_DATA
     };
 
-    const Word16 reorderBits_MR475[NUMBIT_MR475] =
+    extern const Word16 reorderBits_MR475[NUMBIT_MR475] =
     {
         0,  1,  2,  3,  4,  5,  6,  7,  8,  9,
         10, 11, 12, 13, 14, 15, 23, 24, 25, 26,
@@ -205,7 +165,7 @@ extern "C"
         92, 31, 52, 65, 86
     };
 
-    const Word16 reorderBits_MR515[NUMBIT_MR515] =
+    extern const Word16 reorderBits_MR515[NUMBIT_MR515] =
     {
         7,  6,  5,  4,  3,  2,  1,  0, 15, 14,
         13, 12, 11, 10,  9,  8, 23, 24, 25, 26,
@@ -220,7 +180,7 @@ extern "C"
         53, 72, 91
     };
 
-    const Word16 reorderBits_MR59[NUMBIT_MR59] =
+    extern const Word16 reorderBits_MR59[NUMBIT_MR59] =
     {
         0,  1,  4,  5,  3,  6,  7,  2, 13, 15,
         8,  9, 11, 12, 14, 10, 16, 28, 74, 29,
@@ -236,7 +196,7 @@ extern "C"
         38, 59, 84, 105, 37, 58, 83, 104
     };
 
-    const Word16 reorderBits_MR67[NUMBIT_MR67] =
+    extern const Word16 reorderBits_MR67[NUMBIT_MR67] =
     {
         0,  1,  4,  3,  5,  6, 13,  7,  2,  8,
         9, 11, 15, 12, 14, 10, 28, 82, 29, 83,
@@ -254,7 +214,7 @@ extern "C"
         36, 61, 90, 115
     };
 
-    const Word16 reorderBits_MR74[NUMBIT_MR74] =
+    extern const Word16 reorderBits_MR74[NUMBIT_MR74] =
     {
         0,  1,  2,  3,  4,  5,  6,  7,  8,  9,
         10, 11, 12, 13, 14, 15, 16, 26, 87, 27,
@@ -273,7 +233,7 @@ extern "C"
         39, 68, 100, 129, 40, 69, 101, 130
     };
 
-    const Word16 reorderBits_MR795[NUMBIT_MR795] =
+    extern const Word16 reorderBits_MR795[NUMBIT_MR795] =
     {
         8,  7,  6,  5,  4,  3,  2, 14, 16,  9,
         10, 12, 13, 15, 11, 17, 20, 22, 24, 23,
@@ -293,7 +253,7 @@ extern "C"
         139, 37, 69, 103, 135, 38, 70, 104, 136
     };
 
-    const Word16 reorderBits_MR102[NUMBIT_MR102] =
+    extern const Word16 reorderBits_MR102[NUMBIT_MR102] =
     {
         7,  6,  5,  4,  3,  2,  1,  0, 16, 15,
         14, 13, 12, 11, 10,  9,  8, 26, 27, 28,
@@ -318,7 +278,7 @@ extern "C"
         63, 46, 55, 56
     };
 
-    const Word16 reorderBits_MR122[NUMBIT_MR122] =
+    extern const Word16 reorderBits_MR122[NUMBIT_MR122] =
     {
         0,  1,  2,  3,  4,  5,  6,  7,  8,  9,
         10, 11, 12, 13, 14, 23, 15, 16, 17, 18,
@@ -348,7 +308,7 @@ extern "C"
     };
 
     /* overall table with all parameter sizes for all modes */
-    const Word16 * const reorderBits[NUM_MODES-1] =
+    extern const Word16 * const reorderBits[NUM_MODES-1] =
     {
         reorderBits_MR475,
         reorderBits_MR515,
@@ -361,7 +321,7 @@ extern "C"
     };
 
     /* Number of Frames (16-bit segments sent for each mode */
-    const Word16 numCompressedBytes[16] =
+    extern const Word16 numCompressedBytes[16] =
     {
         13, /*4.75*/
         14, /*5.15*/

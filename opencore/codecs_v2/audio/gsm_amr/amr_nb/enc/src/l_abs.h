@@ -28,26 +28,13 @@ terms listed above has been obtained from the copyright holder.
 ****************************************************************************************/
 /*
 
- Pathname: ./gsm-amr/c/include/l_deposit_l.h
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Created separate header file for L_deposit_l function.
-
- Description: Updated template to make it build for Symbian. Updated copyright
-              year.
-
- Description: Moved _cplusplus #ifdef after Include section.
-
- Who:						Date:
- Description:
+ Filename: l_abs.h
 
 ------------------------------------------------------------------------------
  INCLUDE DESCRIPTION
 
  This file contains all the constant definitions and prototype definitions
- needed by the L_deposit_l function.
+ needed by the L_abs function.
 
 ------------------------------------------------------------------------------
 */
@@ -55,13 +42,13 @@ terms listed above has been obtained from the copyright holder.
 /*----------------------------------------------------------------------------
 ; CONTINUE ONLY IF NOT ALREADY DEFINED
 ----------------------------------------------------------------------------*/
-#ifndef	L_DEPOSIT_L_H
-#define	L_DEPOSIT_L_H
+#ifndef L_ABS_H
+#define L_ABS_H
 
 /*----------------------------------------------------------------------------
 ; INCLUDES
 ----------------------------------------------------------------------------*/
-#include	"basicop_malloc.h"
+#include    "basicop_malloc.h"
 
 /*--------------------------------------------------------------------------*/
 #ifdef __cplusplus
@@ -100,7 +87,7 @@ extern "C"
     ; GLOBAL FUNCTION DEFINITIONS
     ; Function Prototype declaration
     ----------------------------------------------------------------------------*/
-    Word32 L_deposit_l(Word16 var1);
+    Word32 L_abs(Word32 L_var1);
 
     /*----------------------------------------------------------------------------
     ; END

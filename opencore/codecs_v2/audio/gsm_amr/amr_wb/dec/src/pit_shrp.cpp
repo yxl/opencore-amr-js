@@ -33,14 +33,6 @@ terms listed above has been obtained from the copyright holder.
 
  Filename: pit_shrp.cpp
 
-     Date: 05/08/2007
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
-
- Description:
-
 ------------------------------------------------------------------------------
  INPUT AND OUTPUT DEFINITIONS
 

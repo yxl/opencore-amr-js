@@ -31,22 +31,8 @@ terms listed above has been obtained from the copyright holder.
 
 
 
- Pathname: ./audio/gsm-amr/c/src/cbsearch.c
+ Filename: cbsearch.cpp
  Functions: D_plsf_3
-
-     Date: 01/31/2002
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description:
- (1) Removed "count.h" and "basic_op.h" and replaced with individual include
-     files (add.h, sub.h, etc.)
- (2) Added pOverflow parameter to code_10i40_35bits()
-
- Description:  Replaced "int" and/or "char" with OSCL defined types.
-
- Description:
 
  ------------------------------------------------------------------------------
  INPUT AND OUTPUT DEFINITIONS
@@ -101,28 +87,6 @@ terms listed above has been obtained from the copyright holder.
  PSEUDO-CODE
 
 
-
-------------------------------------------------------------------------------
- RESOURCES USED
-   When the code is written for a specific target processor the
-     the resources used should be documented below.
-
- STACK USAGE: [stack count for this module] + [variable to represent
-          stack usage for each subroutine called]
-
-     where: [stack usage variable] = stack usage for [subroutine
-         name] (see [filename].ext)
-
- DATA MEMORY USED: x words
-
- PROGRAM MEMORY USED: x words
-
- CLOCK CYCLES: [cycle count equation for this module] + [variable
-           used to represent cycle count for each subroutine
-           called]
-
-     where: [cycle count variable] = cycle count for [subroutine
-        name] (see [filename].ext)
 
 ------------------------------------------------------------------------------
 */
@@ -195,6 +159,7 @@ void cbsearch(Word16 x[],        /* i : target vector, Q0                     */
               Word16 **anap,     /* o : Signs of the pulses                   */
               enum Mode mode,    /* i : coder mode                            */
               Word16 subNr,      /* i : subframe number                       */
+              CommonAmrTbls* common_amr_tbls, /* ptr to struct of tables    */
               Flag  *pOverflow)  /* o : Flag set when overflow occurs         */
 {
     Word16 index;
@@ -219,6 +184,7 @@ void cbsearch(Word16 x[],        /* i : target vector, Q0                     */
                 code,
                 y,
                 &index,
+                common_amr_tbls->startPos_ptr,
                 pOverflow);
 
         *(*anap)++ = index;    /* sign index */
@@ -264,6 +230,7 @@ void cbsearch(Word16 x[],        /* i : target vector, Q0                     */
                 code,
                 y,
                 &index,
+                common_amr_tbls->gray_ptr,
                 pOverflow);
 
         *(*anap)++ = index;    /* sign index */
@@ -291,7 +258,7 @@ void cbsearch(Word16 x[],        /* i : target vector, Q0                     */
                     pOverflow);
 
             h[i] =
-                add(
+                add_16(
                     h[i],
                     temp,
                     pOverflow);
@@ -323,7 +290,7 @@ void cbsearch(Word16 x[],        /* i : target vector, Q0                     */
                     pOverflow);
 
             code[i] =
-                add(
+                add_16(
                     code[i],
                     temp,
                     pOverflow);
@@ -350,7 +317,7 @@ void cbsearch(Word16 x[],        /* i : target vector, Q0                     */
                             pOverflow);
             */
             h[i] =
-                add(
+                add_16(
                     h[i],
                     temp,
                     pOverflow);
@@ -366,6 +333,7 @@ void cbsearch(Word16 x[],        /* i : target vector, Q0                     */
             code,
             y,
             *anap,
+            common_amr_tbls->gray_ptr,
             pOverflow);
 
         *anap += 10;
@@ -382,7 +350,7 @@ void cbsearch(Word16 x[],        /* i : target vector, Q0                     */
                     pOverflow);
 
             code[i] =
-                add(
+                add_16(
                     code[i],
                     temp,
                     pOverflow);

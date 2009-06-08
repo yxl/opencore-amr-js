@@ -31,27 +31,8 @@ terms listed above has been obtained from the copyright holder.
 
 
 
- Pathname: ./audio/gsm-amr/c/src/d2_9pf.c
+ Filename: d2_9pf.cpp
  Functions: decode_2i40_9bits
-
-     Date: 01/28/2002
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Modified to place file in the correct template format. Eliminated
- use of special functions to perform simple mathematical operations, where
- possible.  Added the parameter pOverflow for the basic math operations.
-
- Description: Per review comments...
- (1) Removed include of basic_op.h, replaced with shl.h
- (2) Added pOverflow to the output section of the template
-
- Description:  Replaced "int" and/or "char" with OSCL defined types.
-
- Description: Added #ifdef __cplusplus around extern'ed table.
-
- Description:
 
 ------------------------------------------------------------------------------
  MODULE DESCRIPTION
@@ -101,8 +82,6 @@ extern "C"
     ; Variable declaration - defined here and used outside this module
     ----------------------------------------------------------------------------*/
 
-    extern const Word16 startPos[];
-
     /*--------------------------------------------------------------------------*/
 #ifdef __cplusplus
 }
@@ -150,22 +129,6 @@ extern "C"
 
 
 ------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
-
-------------------------------------------------------------------------------
  CAUTION [optional]
  [State any special notes, constraints or cautions for users of this function]
 
@@ -176,6 +139,7 @@ void decode_2i40_9bits(
     Word16 subNr,  /* i : subframe number                          */
     Word16 sign,   /* i : signs of 2 pulses.                       */
     Word16 index,  /* i : Positions of the 2 pulses.               */
+    const Word16* startPos_ptr, /*  i: ptr to read only table          */
     Word16 cod[],  /* o : algebraic (fixed) codebook excitation    */
     Flag  *pOverflow  /* o : Flag set when overflow occurs         */
 )
@@ -203,16 +167,16 @@ void decode_2i40_9bits(
 
     k += j;
 
-    /* pos0 =i*5+startPos[j*8+subNr*2] */
-    pos[0] = i * 5 + startPos[k++];
+    /* pos0 =i*5+startPos_ptr[j*8+subNr*2] */
+    pos[0] = i * 5 + startPos_ptr[k++];
 
 
     index >>= 3;
 
     i = index & 7;
 
-    /* pos1 =i*5+startPos[j*8+subNr*2 + 1] */
-    pos[1] = i * 5 + startPos[k];
+    /* pos1 =i*5+startPos_ptr[j*8+subNr*2 + 1] */
+    pos[1] = i * 5 + startPos_ptr[k];
 
 
     /* decode the signs  and build the codeword */

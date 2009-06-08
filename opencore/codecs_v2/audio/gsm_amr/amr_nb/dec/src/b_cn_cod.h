@@ -31,31 +31,7 @@ terms listed above has been obtained from the copyright holder.
 
 
 
- Filename: /audio/gsm_amr/c/include/add.h
-
-
-
-
-     Date: 08/11/2000
-
-
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
-
- Description: Created separate header file for add function.
-
- Description: Changed function prototype; pointer to  overflow flag is passed
-              in as a parameter.
-
- Description: Updated copyright section.
-              Changed "overflow" to "pOverflow" in the function prototype.
-
- Description: Moved _cplusplus #ifdef after Include section.
-
- Description:
-
+ Filename: b_cn_cod.h
 
 ------------------------------------------------------------------------------
  INCLUDE DESCRIPTION
@@ -94,7 +70,6 @@ extern "C"
     ; EXTERNAL VARIABLES REFERENCES
     ; Declare variables used in this module but defined elsewhere
     ----------------------------------------------------------------------------*/
-    extern Word16 window_200_40[];
 
     /*----------------------------------------------------------------------------
     ; SIMPLE TYPEDEF'S
@@ -157,6 +132,7 @@ extern "C"
         const Word16 n_param,               /* i  : number of params            */
         const Word16 param_size_table[],    /* i : size of params               */
         Word16 parm[],                  /* o : CN Generated params              */
+        const Word16* window_200_40_ptr, /* i : ptr to read-only table          */
         Flag  *pOverflow                /* i/o : Overflow Flag                  */
     );
 

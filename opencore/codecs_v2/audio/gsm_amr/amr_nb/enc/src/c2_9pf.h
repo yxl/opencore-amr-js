@@ -31,16 +31,7 @@ terms listed above has been obtained from the copyright holder.
 
 
 
- Filename: /audio/gsm_amr/c/include/c2_9pf.h
-
-     Date: 01/29/2002
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Moved _cplusplus #ifdef after Include section.
-
- Description:
+ Filename: c2_9pf.h
 
 ------------------------------------------------------------------------------
  INCLUDE DESCRIPTION
@@ -109,6 +100,7 @@ extern "C"
         Word16 code[],      /* o : Innovative codebook                           */
         Word16 y[],         /* o : filtered fixed codebook excitation            */
         Word16 * sign,      /* o : Signs of 2 pulses                             */
+        const Word16* startPos_ptr, /* ptr to read-only table                    */
         Flag   * pOverflow  /* o : Flag set when overflow occurs                 */
     );
 

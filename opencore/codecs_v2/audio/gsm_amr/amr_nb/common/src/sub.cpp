@@ -28,33 +28,7 @@ terms listed above has been obtained from the copyright holder.
 ****************************************************************************************/
 /*
 
- Filename: /audio/gsm_amr/c/src/sub.c
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Created separate file for the sub function. Sync'ed up with the
-          current template and fixed tabs.
-
- Description: Changed all occurrences of L_diff to diff, deleted "short" in
-          the definition of var1 and var2, and fixed the range values.
-
- Description: Changed function prototype passing in a pointer to overflow flag
-              instead of using global data.
-
- Description: Changes made per formal review comments.
-              1. Changed the parameter name fron "overflow" to "pOverflow"
-              2. Updated template
-              3. Updated reference section
-
- Description: Removed conditional code that updates WMOPS counter
-
- Description:
-              1. Modified if-else structure to save cycles by processing
-                 the most common case faster.
-
- Who:                       Date:
- Description:
+ Filename: sub.cpp
 
 ------------------------------------------------------------------------------
  MODULE DESCRIPTION
@@ -161,22 +135,6 @@ terms listed above has been obtained from the copyright holder.
  }
 
 ------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
-
-------------------------------------------------------------------------------
  CAUTION [optional]
  [State any special notes, constraints or cautions for users of this function]
 
@@ -187,7 +145,7 @@ terms listed above has been obtained from the copyright holder.
 ; FUNCTION CODE
 ----------------------------------------------------------------------------*/
 
-Word16 sub(Word16 var1, Word16 var2, Flag *pOverflow)
+OSCL_EXPORT_REF Word16 sub(Word16 var1, Word16 var2, Flag *pOverflow)
 {
 
     Word32 diff;

@@ -31,56 +31,12 @@ terms listed above has been obtained from the copyright holder.
 
 
 
- Pathname: ./audio/gsm-amr/c/src/ph_disp.c
+ Filename: ph_disp.cpp
  Functions:
             ph_disp_reset
             ph_disp_lock
             ph_disp_release
             ph_disp
-
-     Date: 04/05/2000
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Changed template used to PV coding template. First attempt at
-          optimizing C code.
-
- Description: Updated file per comments gathered from Phase 2/3 review.
-
- Description: Clarified grouping in the equation to calculated L_temp from the
-          product of state->prevCbGain and ONFACTPLUS1 in the ph_disp
-          function.
-
- Description: Added setting of Overflow flag in inlined code.
-
- Description: Synchronized file with UMTS version 3.2.0. Updated coding
-              coding template. Removed unnecessary include files.
-
- Description: Replaced basic_op.h with the header file of the math functions
-              used in the file.
-
- Description: Removed the functions ph_disp_init and ph_disp_exit.
- The ph_disp related structure is no longer dynamically allocated.
-
- Description: Pass in pointer to overflow flag for EPOC compatibility.
-              Change code for ph_disp() function to reflect this. Remove
-              inclusion of ph_disp.tab. This table will now be referenced
-              externally.
-
- Description: Optimized ph_disp() to reduce clock cycle usage. Updated
-              copyright year and removed unused files in Include section.
-
- Description:  Replaced OSCL mem type functions and eliminated include
-               files that now are chosen by OSCL definitions
-
- Description:  Replaced "int" and/or "char" with defined types.
-               Added proper casting (Word32) to some left shifting operations
-
- Description: Changed round function name to pv_round to avoid conflict with
-              round function in C standard library.
-
- Description:
 
 ------------------------------------------------------------------------------
  MODULE DESCRIPTION
@@ -183,22 +139,6 @@ int ph_disp_reset (ph_dispState *state)
 }
 
 ------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
-
-------------------------------------------------------------------------------
  CAUTION [optional]
  [State any special notes, constraints or cautions for users of this function]
 
@@ -274,22 +214,6 @@ void ph_disp_lock (ph_dispState *state)
 }
 
 ------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
-
-------------------------------------------------------------------------------
  CAUTION [optional]
  [State any special notes, constraints or cautions for users of this function]
 
@@ -349,22 +273,6 @@ void ph_disp_release (ph_dispState *state)
   state->lockFull = 0;
   return;
 }
-
-------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
 
 ------------------------------------------------------------------------------
  CAUTION [optional]
@@ -629,22 +537,6 @@ void ph_disp (
 }
 
 ------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
-
-------------------------------------------------------------------------------
  CAUTION [optional]
  [State any special notes, constraints or cautions for users of this function]
 
@@ -664,6 +556,7 @@ void ph_disp(
     Word16 tmp_shift,       /* i   Q0  : shift factor applied to sum of
                                          scaled LTP ex & innov. before
                                          rounding                           */
+    CommonAmrTbls* common_amr_tbls, /* i : ptr to struct of table ptrs      */
     Flag   *pOverflow       /* i/o     : oveflow indicator                  */
 )
 {
@@ -684,6 +577,11 @@ void ph_disp(
     Word16 *p_x;
     const Word16 *p_ph_imp;
     Word16 c_inno_sav;
+
+    const Word16* ph_imp_low_MR795_ptr = common_amr_tbls->ph_imp_low_MR795_ptr;
+    const Word16* ph_imp_mid_MR795_ptr = common_amr_tbls->ph_imp_mid_MR795_ptr;
+    const Word16* ph_imp_low_ptr = common_amr_tbls->ph_imp_low_ptr;
+    const Word16* ph_imp_mid_ptr = common_amr_tbls->ph_imp_mid_ptr;
 
     /* Update LTP gain memory */
     /* Unrolled FOR loop below since PHDGAINMEMSIZE is assumed to stay */
@@ -824,22 +722,22 @@ void ph_disp(
         {
             if (impNr == 0)
             {
-                ph_imp = ph_imp_low_MR795;
+                ph_imp = ph_imp_low_MR795_ptr;
             }
             else
             {
-                ph_imp = ph_imp_mid_MR795;
+                ph_imp = ph_imp_mid_MR795_ptr;
             }
         }
         else
         {
             if (impNr == 0)
             {
-                ph_imp = ph_imp_low;
+                ph_imp = ph_imp_low_ptr;
             }
             else
             {
-                ph_imp = ph_imp_mid;
+                ph_imp = ph_imp_mid_ptr;
             }
         }
 
@@ -858,7 +756,7 @@ void ph_disp(
                 /* inno[i1] += inno_sav[ppos] * ph_imp[i1-ppos] */
                 L_temp = ((Word32) c_inno_sav * *(p_ph_imp++)) >> 15;
                 tmp1 = (Word16) L_temp;
-                *(p_inno) = add(*(p_inno), tmp1, pOverflow);
+                *(p_inno) = add_16(*(p_inno), tmp1, pOverflow);
                 p_inno += 1;
             }
 
@@ -869,7 +767,7 @@ void ph_disp(
                 /* inno[i] += inno_sav[ppos] * ph_imp[L_SUBFR-ppos+i] */
                 L_temp = ((Word32) c_inno_sav * *(p_ph_imp++)) >> 15;
                 tmp1 = (Word16) L_temp;
-                *(p_inno) = add(*(p_inno), tmp1, pOverflow);
+                *(p_inno) = add_16(*(p_inno), tmp1, pOverflow);
                 p_inno += 1;
             }
         }

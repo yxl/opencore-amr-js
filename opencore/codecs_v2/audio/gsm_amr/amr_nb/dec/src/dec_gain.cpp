@@ -31,33 +31,8 @@ terms listed above has been obtained from the copyright holder.
 
 
 
- Pathname: ./audio/gsm-amr/c/src/dec_gain.c
- Funtions: dec_gain
-
-     Date: 01/31/2002
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Updating include file lists, and other things as per review
-              comments.
-
- Description: Added fixes to the code as per review comments. Removed nested
-              function calls and declared temp2 as a variable.
-
- Description: A Word32 was being stored improperly in a Word16.
-
- Description: Removed qua_gain.tab and qgain475.tab from Include section and
-              added qua_gain_tbl.h and qgain475_tab.h to Include section.
-
- Description: Changed round function name to pv_round to avoid conflict with
-              round function in C standard library.
-
- Description:  Added casting to eliminate warnings
-
- Description:  Replaced "int" and/or "char" with OSCL defined types.
-
- Description:
+ Filename: dec_gain.cpp
+ Functions: dec_gain
 
 ------------------------------------------------------------------------------
 */
@@ -155,22 +130,6 @@ terms listed above has been obtained from the copyright holder.
 
 
 ------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
-
-------------------------------------------------------------------------------
  CAUTION [optional]
  [State any special notes, constraints or cautions for users of this function]
 
@@ -186,6 +145,7 @@ void Dec_gain(
     Word16 evenSubfr,         /* i  : Flag for even subframes      */
     Word16 * gain_pit,        /* o  : Pitch gain.                  */
     Word16 * gain_cod,        /* o  : Code gain.                   */
+    CommonAmrTbls* common_amr_tbls, /* i : ptr to struct of tbls ptrs */
     Flag   * pOverflow
 )
 {
@@ -205,7 +165,7 @@ void Dec_gain(
 
     if (mode == MR102 || mode == MR74 || mode == MR67)
     {
-        p = &table_gain_highrates[index];
+        p = &(common_amr_tbls->table_gain_highrates_ptr[index]);
 
         *gain_pit = *p++;
         g_code = *p++;
@@ -238,13 +198,13 @@ void Dec_gain(
              *---------------------------------------------------------*/
 
             /* Log2(x Q12) = log2(x) + 12 */
-            temp1 = (Word16) L_deposit_l(g_code);
+            temp1 = g_code;
             Log2(temp1, &exp, &frac, pOverflow);
-            exp = sub(exp, 12, pOverflow);
+            exp -= 12;
 
             temp1 = shr_r(frac, 5, pOverflow);
             temp2 = shl(exp, 10, pOverflow);
-            qua_ener_MR122 = add(temp1, temp2, pOverflow);
+            qua_ener_MR122 = add_16(temp1, temp2, pOverflow);
 
             /* 24660 Q12 ~= 6.0206 = 20*log10(2) */
             L_tmp = Mpy_32_16(exp, frac, 24660, pOverflow);
@@ -254,7 +214,7 @@ void Dec_gain(
         }
         else
         {
-            p = &table_gain_lowrates[index];
+            p = &(common_amr_tbls->table_gain_lowrates_ptr[index]);
 
             *gain_pit = *p++;
             g_code = *p++;
@@ -286,9 +246,9 @@ void Dec_gain(
      *------------------------------------------------------------------*/
 
     L_tmp = L_mult(g_code, gcode0, pOverflow);
-    temp1 = sub(10, exp, pOverflow);
+    temp1 = 10 - exp;
     L_tmp = L_shr(L_tmp, temp1, pOverflow);
-    *gain_cod = extract_h(L_tmp);
+    *gain_cod = (Word16)(L_tmp >> 16);
 
     /* update table of past quantized energies */
 

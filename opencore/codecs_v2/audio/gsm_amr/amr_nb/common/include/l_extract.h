@@ -28,19 +28,7 @@ terms listed above has been obtained from the copyright holder.
 ****************************************************************************************/
 /*
 
- Filename: /audio/gsm_amr/c/include/l_extract.h
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Updated function prototype declaration to reflect new interface.
-              A pointer to overflow flag is passed into the function. Updated
-              template.
-
- Description: Moved _cplusplus #ifdef after Include section.
-
- Who:						Date:
- Description:
+ Filename: l_extract.h
 
 ------------------------------------------------------------------------------
  INCLUDE DESCRIPTION
@@ -54,8 +42,8 @@ terms listed above has been obtained from the copyright holder.
 /*----------------------------------------------------------------------------
 ; CONTINUE ONLY IF NOT ALREADY DEFINED
 ----------------------------------------------------------------------------*/
-#ifndef	L_EXTRACT_H
-#define	L_EXTRACT_H
+#ifndef L_EXTRACT_H
+#define L_EXTRACT_H
 
 /*----------------------------------------------------------------------------
 ; INCLUDES
@@ -101,9 +89,9 @@ extern "C"
     ; Function Prototype declaration
     ----------------------------------------------------------------------------*/
     void L_Extract(Word32 L_var,
-                   Word16 *pL_var_hi,
-                   Word16 *pL_var_lo,
-                   Flag   *pOverflow);
+    Word16 *pL_var_hi,
+    Word16 *pL_var_lo,
+    Flag   *pOverflow);
 
     /*----------------------------------------------------------------------------
     ; END

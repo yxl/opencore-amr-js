@@ -33,12 +33,6 @@ terms listed above has been obtained from the copyright holder.
 
  Pathname: ./src/pvamrwbdecoder_basic_op.h
 
-     Date: 05/07/2007
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description:
 ------------------------------------------------------------------------------
  INCLUDE DESCRIPTION
 
@@ -230,14 +224,14 @@ static inline int32 shr_int32(int32 L_var1, int16 var2)
 
 #include "pvamrwbdecoder_basic_op_armv5.h"
 
-#elif defined(PV_ARM_GCC_V5)
+#elif defined(xxPV_ARM_GCC_V5) //@TODO: Enable gcc-arm assembly
 
 #include "pvamrwbdecoder_basic_op_gcc_armv5.h"
 
 #else
 
 #ifndef C_EQUIVALENT
-#define C_EQUIVALENT		// default to C_EQUIVALENT
+#define C_EQUIVALENT        // default to C_EQUIVALENT
 #endif
 
 #include "pvamrwbdecoder_basic_op_cequivalent.h"

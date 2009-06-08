@@ -31,21 +31,7 @@ terms listed above has been obtained from the copyright holder.
 
 
 
- Pathname: ./audio/gsm-amr/c/src/lpc.c
-
-     Date: 01/31/2002
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Updating includes and making code more simple as per comments.
-
- Description:  Replaced OSCL mem type functions and eliminated include
-               files that now are chosen by OSCL definitions
-
- Description:  Replaced "int" and/or "char" with OSCL defined types.
-
- Description:
+ Filename: lpc.cpp
 
 ------------------------------------------------------------------------------
 */
@@ -61,7 +47,6 @@ terms listed above has been obtained from the copyright holder.
 #include "levinson.h"
 #include "cnst.h"
 #include "mode.h"
-#include "window_tab.h"
 #include "sub.h"
 #include "oscl_mem.h"
 
@@ -158,22 +143,6 @@ terms listed above has been obtained from the copyright holder.
   return 0;
 
 ------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
-
-------------------------------------------------------------------------------
  CAUTION [optional]
  [State any special notes, constraints or cautions for users of this function]
 
@@ -261,22 +230,6 @@ Word16 lpc_init(lpcState **state)
   return 0;
 
 ------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
-
-------------------------------------------------------------------------------
  CAUTION [optional]
  [State any special notes, constraints or cautions for users of this function]
 
@@ -347,22 +300,6 @@ Word16 lpc_reset(lpcState *state)
 
   return;
 
-
-------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
 
 ------------------------------------------------------------------------------
  CAUTION [optional]
@@ -462,22 +399,6 @@ void lpc_exit(lpcState **state)
    return 0;
 
 ------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
-
-------------------------------------------------------------------------------
  CAUTION [optional]
  [State any special notes, constraints or cautions for users of this function]
 
@@ -489,6 +410,7 @@ void lpc(
     Word16 x[],       /* i  : Input signal           Q15  */
     Word16 x_12k2[],  /* i  : Input signal (EFR)     Q15  */
     Word16 a[],       /* o  : predictor coefficients Q12  */
+    CommonAmrTbls* common_amr_tbls, /* i : ptr to struct with table ptrs */
     Flag   *pOverflow
 )
 {
@@ -497,17 +419,21 @@ void lpc(
     /* No fixed Q value but normalized  */
     /* so that overflow is avoided      */
 
+    const Word16* window_160_80_ptr = common_amr_tbls->window_160_80_ptr;
+    const Word16* window_232_8_ptr = common_amr_tbls->window_232_8_ptr;
+    const Word16* window_200_40_ptr = common_amr_tbls->window_200_40_ptr;
+
     if (mode == MR122)
     {
         /* Autocorrelations */
-        Autocorr(x_12k2, M, rHigh, rLow, window_160_80, pOverflow);
+        Autocorr(x_12k2, M, rHigh, rLow, window_160_80_ptr, pOverflow);
         /* Lag windowing    */
         Lag_window(M, rHigh, rLow, pOverflow);
         /* Levinson Durbin  */
         Levinson(st->levinsonSt, rHigh, rLow, &a[MP1], rc, pOverflow);
 
         /* Autocorrelations */
-        Autocorr(x_12k2, M, rHigh, rLow, window_232_8, pOverflow);
+        Autocorr(x_12k2, M, rHigh, rLow, window_232_8_ptr, pOverflow);
         /* Lag windowing    */
         Lag_window(M, rHigh, rLow, pOverflow);
         /* Levinson Durbin  */
@@ -516,7 +442,7 @@ void lpc(
     else
     {
         /* Autocorrelations */
-        Autocorr(x, M, rHigh, rLow, window_200_40, pOverflow);
+        Autocorr(x, M, rHigh, rLow, window_200_40_ptr, pOverflow);
         /* Lag windowing    */
         Lag_window(M, rHigh, rLow, pOverflow);
         /* Levinson Durbin  */

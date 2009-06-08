@@ -28,37 +28,8 @@ terms listed above has been obtained from the copyright holder.
 ****************************************************************************************/
 /*
 
- Filename: /audio/gsm_amr/c/src/shr.c
+ Filename: shr.cpp
 
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Created separate file for the shr function. Sync'ed up with
-	      the current template and fixed tabs.
-
- Description: 1. Modified code by seperating var2=0 condition.
-              2. Changed Input range definitions.
-
- Description: Made changes based on review meeting.
-              1. Changed Overflow definition.
-              2. Removed pseudo-code.
-              3. Deleted (var2>15&&var1!=0) condition.
-              4. Moved var2>0 condition in front of var2<0 condition.
-
- Description: Changed the function prototype to pass in a pointer to the
-			  overflow flag instead of using global data.
-
- Description: Made changes per formal review. Updated template.
-			  Removed code that updates MOPS counter.
-			  Changed parameter name from "overflow" and "pOverflow".
-			  Optimized code by eliminating unnecessary typecasting.
-			  Filled in the PSEUDO CODE section
-
- Description: Further optimized typecasting for overflow case
-
- Who:		  				Date:
- Description:
-------------------------------------------------------------------------------
 ------------------------------------------------------------------------------
  MODULE DESCRIPTION
  Shift right function with overflow control
@@ -68,7 +39,7 @@ terms listed above has been obtained from the copyright holder.
 /*----------------------------------------------------------------------------
 ; INCLUDES
 ----------------------------------------------------------------------------*/
-#include	"basic_op.h"
+#include    "basic_op.h"
 
 /*----------------------------------------------------------------------------
 ; MACROS
@@ -99,19 +70,19 @@ terms listed above has been obtained from the copyright holder.
  INPUT AND OUTPUT DEFINITIONS
 
  Inputs:
-	var1 = 16 bit short signed integer (Word16) whose value falls in
-	       the range : 0xffff 8000 <= var1 <= 0x0000 7fff.
+    var1 = 16 bit short signed integer (Word16) whose value falls in
+           the range : 0xffff 8000 <= var1 <= 0x0000 7fff.
 
-	var2 = 16 bit short signed integer (Word16) whose value falls in
-	       the range : 0xffff 8000 <= var2 <= 0x0000 7fff.
+    var2 = 16 bit short signed integer (Word16) whose value falls in
+           the range : 0xffff 8000 <= var2 <= 0x0000 7fff.
 
-	pOverflow = pointer to overflow (Flag)
+    pOverflow = pointer to overflow (Flag)
 
  Outputs:
-	pOverflow -> 1 if the shift operation resulted in overflow
+    pOverflow -> 1 if the shift operation resulted in overflow
 
  Returns:
-	product = Shifted result limited to 16 bits (Word16)
+    product = Shifted result limited to 16 bits (Word16)
 
  Global Variables Used:
     None
@@ -177,22 +148,6 @@ Word16 shr_std (Word16 var1, Word16 var2)
     return (var_out);
 }
 ------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
-
-------------------------------------------------------------------------------
  CAUTION [optional]
  [State any special notes, constraints or cautions for users of this function]
 
@@ -202,45 +157,33 @@ Word16 shr_std (Word16 var1, Word16 var2)
 /*----------------------------------------------------------------------------
 ; FUNCTION CODE
 ----------------------------------------------------------------------------*/
-Word16 shr(register Word16 var1, register Word16 var2, Flag *pOverflow)
+OSCL_EXPORT_REF Word16 shr(register Word16 var1, register Word16 var2, Flag *pOverflow)
 {
     register Word16 result;
-    register Word32 temp_res;
 
     if (var2 != 0)
     {
         if (var2 > 0)
         {
-            if (var2 >= 15)
+            if (var2 > 15)
             {
-                result = ((var1 < 0) ? -1 : 0);
+                var2 = 15;
             }
-            else
-            {
-                if (var1 < 0)
-                {
-                    result = (~((~var1) >> var2));
-                }
-                else
-                {
-                    result = (var1 >> var2);
-                }
-            }
+
+            result = var1 >> var2;
+
         }
         else
         {
-            if (var2 < -16)
+            var2 = -var2;   /* Shift right negative is equivalent */
+
+            if (var2 > 15)
             {
-                var2 = -16;
+                var2 = 15;
             }
 
-            var2 = -var2;	/* Shift right negative is equivalent */
-            /*   to shifting left positive.       */
-
-            temp_res = ((Word32) var1) << var2;
-            result = (Word16)(temp_res);
-
-            if (temp_res != (Word32) result)
+            result = (var1 << var2);
+            if ((result >> var2) != var1)
             {
                 *pOverflow = 1;
                 result = ((var1 > 0) ? MAX_16 : MIN_16);

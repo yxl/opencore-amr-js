@@ -31,7 +31,7 @@ terms listed above has been obtained from the copyright holder.
 
 
 
- Pathname: ./audio/gsm-amr/c/src/pitch_ol.c
+ Filename: pitch_ol.cpp
  Funtions: Pitch_ol
            Lag_max
 
@@ -264,22 +264,6 @@ static Word16 Lag_max ( // o   : lag found
 
     return (p_max);
 }
-
-------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
 
 ------------------------------------------------------------------------------
  CAUTION [optional]
@@ -580,22 +564,6 @@ static Word16 Lag_max(  /* o   : lag found                               */
    RETURNING(temp)
 
 #endif
-
-------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
 
 ------------------------------------------------------------------------------
  CAUTION [optional]
@@ -913,22 +881,6 @@ Word16 Pitch_ol (      // o   : open loop pitch lag
 }
 
 ------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
-
-------------------------------------------------------------------------------
  CAUTION [optional]
  [State any special notes, constraints or cautions for users of this function]
 
@@ -1167,7 +1119,7 @@ Word16 Pitch_ol(       /* o   : open loop pitch lag                         */
      * Compare the 3 sections maximum, and favor small lag.               *
      *--------------------------------------------------------------------*/
 
-    i =  mult(max1, THRESHOLD, pOverflow);
+    i = (Word16)(((Word32)max1 * THRESHOLD) >> 15);
 
     if (i < max2)
     {
@@ -1183,7 +1135,8 @@ Word16 Pitch_ol(       /* o   : open loop pitch lag                         */
 #endif
     }
 
-    i =  mult(max1, THRESHOLD, pOverflow);
+    i = (Word16)(((Word32)max1 * THRESHOLD) >> 15);
+
 
     if (i < max3)
     {

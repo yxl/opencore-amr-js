@@ -15,7 +15,7 @@
  * and limitations under the License.
  * -------------------------------------------------------------------
  */
-/****************************************************************************************
+/*****************************************************************************
 Portions of this file are derived from the following 3GPP standard:
 
     3GPP TS 26.073
@@ -25,22 +25,9 @@ Portions of this file are derived from the following 3GPP standard:
 (C) 2004, 3GPP Organizational Partners (ARIB, ATIS, CCSA, ETSI, TTA, TTC)
 Permission to distribute, modify and use this file under the standard license
 terms listed above has been obtained from the copyright holder.
-****************************************************************************************/
+**************************************************************************/
 /*
- Pathname: ./gsm-amr/c/include/negate.h
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Created separate header file for negate function.
-
- Description: Updated template to make it build in Symbian. Updated copyright
-              year.
-
- Description: Moved _cplusplus #ifdef after Include section.
-
- Who:						Date:
- Description:
+ Filename: negate.h
 
 ------------------------------------------------------------------------------
  INCLUDE DESCRIPTION
@@ -54,13 +41,13 @@ terms listed above has been obtained from the copyright holder.
 /*----------------------------------------------------------------------------
 ; CONTINUE ONLY IF NOT ALREADY DEFINED
 ----------------------------------------------------------------------------*/
-#ifndef	NEGATE_H
-#define	NEGATE_H
+#ifndef NEGATE_H
+#define NEGATE_H
 
 /*----------------------------------------------------------------------------
 ; INCLUDES
 ----------------------------------------------------------------------------*/
-#include	"basicop_malloc.h"
+#include    "basicop_malloc.h"
 
 /*--------------------------------------------------------------------------*/
 #ifdef __cplusplus

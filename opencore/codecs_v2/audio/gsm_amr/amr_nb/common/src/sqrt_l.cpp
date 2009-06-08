@@ -28,22 +28,7 @@ terms listed above has been obtained from the copyright holder.
 ****************************************************************************************/
 /*
 
- Pathname: ./audio/gsm-amr/c/src/sqrt_l.c
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
-
- Description: Updated template. Changed function interface to pass in a
-              pointer to overflow flag into the function instead of using a
-              global flag. Changed name of an input pointer from "exp" to "pExp"
-              for clarity. Removed inclusion of unwanted header files.
-
- Description: Removed inclusion of sqrt_l.tab file. Changed the array name
-              "table" to "sqrt_l_tbl". Fixed typos.
-
- Who:                           Date:
- Description:
+ Filename: sqrt_l.cpp
 
 ------------------------------------------------------------------------------
 */
@@ -185,29 +170,13 @@ Word32 sqrt_l_exp (     // o : output value
 }
 
 ------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
-
-------------------------------------------------------------------------------
  CAUTION [optional]
  [State any special notes, constraints or cautions for users of this function]
 
 ------------------------------------------------------------------------------
 */
 
-Word32 sqrt_l_exp(      /* o : output value,                          Q31 */
+OSCL_EXPORT_REF Word32 sqrt_l_exp(      /* o : output value,          Q31 */
     Word32 L_x,         /* i : input value,                           Q31 */
     Word16 *pExp,       /* o : right shift to be applied to result,   Q1  */
     Flag   *pOverflow   /* i : pointer to overflow flag */
@@ -252,10 +221,10 @@ Word32 sqrt_l_exp(      /* o : output value,                          Q31 */
         i -= 16;                              /* 0 <= i <= 47                   */
     }
 
-    L_y = L_deposit_h(sqrt_l_tbl[i]);       /* sqrt_l_tbl[i] << 16            */
+    L_y = ((Word32) sqrt_l_tbl[i] << 16);      /* sqrt_l_tbl[i] << 16            */
 
     /* sqrt_l_tbl[i] - sqrt_l_tbl[i+1]) */
-    tmp = sub(sqrt_l_tbl[i], sqrt_l_tbl[i + 1], pOverflow);
+    tmp = sqrt_l_tbl[i] - sqrt_l_tbl[i + 1];
 
     L_y = L_msu(L_y, tmp, a, pOverflow);    /* L_y -= tmp*a*2                 */
 

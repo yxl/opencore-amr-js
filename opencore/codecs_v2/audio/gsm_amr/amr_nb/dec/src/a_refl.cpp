@@ -31,26 +31,8 @@ terms listed above has been obtained from the copyright holder.
 
 
 
- Filename:  /audio/gsm-amr/c/src/a_refl.c
+ Filename: a_refl.cpp
  Functions: a_refl
-
-     Date: 02/05/2002
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Removing unneeded include files and the goto statement.
-
-
- Description: Changed function name to pv_round to avoid conflict with
-              round function in C standard library.
-
- Description:  Replaced "int" and/or "char" with OSCL defined types.
-
- Description:  Using inline functions from basic_op.h .
-               Removing unneeded include files.
-
- Description:
 
 ------------------------------------------------------------------------------
 */
@@ -204,22 +186,6 @@ ExitRefl:
 }
 
 ------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
-
-------------------------------------------------------------------------------
  CAUTION [optional]
  [State any special notes, constraints or cautions for users of this function]
 
@@ -269,7 +235,7 @@ void A_Refl(
         L_acc = L_sub(MAX_32, L_temp, pOverflow);
 
         normShift = norm_l(L_acc);
-        scale = sub(15, normShift, pOverflow);
+        scale = 15 - normShift;
 
         L_acc = L_shl(L_acc, normShift, pOverflow);
         normProd = pv_round(L_acc, pOverflow);
@@ -278,14 +244,18 @@ void A_Refl(
 
         for (j = 0; j < i; j++)
         {
-            L_acc = L_deposit_h(aState[j]);
+            L_acc = ((Word32)aState[j] << 16);
             L_acc = L_msu(L_acc, refl[i], aState[i-j-1], pOverflow);
 
             temp = pv_round(L_acc, pOverflow);
             L_temp = L_mult(mult, temp, pOverflow);
             L_temp = L_shr_r(L_temp, scale, pOverflow);
 
-            if (L_abs(L_temp) > 32767)
+
+            Word32 L_tmp_abs = L_temp - (L_temp < 0);
+            L_tmp_abs = L_tmp_abs ^(L_tmp_abs >> 31);
+
+            if (L_tmp_abs > 32767)
             {
                 for (i = 0; i < M; i++)
                 {
@@ -294,7 +264,7 @@ void A_Refl(
                 break;
             }
 
-            bState[j] = extract_l(L_temp);
+            bState[j] = (Word16)(L_temp);
         }
 
         for (j = 0; j < i; j++)

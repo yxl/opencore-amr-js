@@ -31,16 +31,7 @@ terms listed above has been obtained from the copyright holder.
 
 
 
- Filename: /audio/gsm_amr/c/include/c4_17pf.h
-
-     Date: 01/29/2002
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Moved _cplusplus #ifdef after Include section.
-
- Description:
+ Filename: c4_17pf.h
 
 ------------------------------------------------------------------------------
  INCLUDE DESCRIPTION
@@ -108,6 +99,7 @@ extern "C"
         Word16 code[],      /* (o)   : Innovative codebook                   */
         Word16 y[],         /* (o)   : filtered fixed codebook excitation    */
         Word16 * sign,      /* (o)   : Signs of 4 pulses                     */
+        const Word16* gray_ptr,   /* i : ptr to read-only table                  */
         Flag   * pOverflow  /* (o)   : Flag set when overflow occurs         */
     );
 

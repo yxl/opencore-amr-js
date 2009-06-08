@@ -27,43 +27,32 @@ Permission to distribute, modify and use this file under the standard license
 terms listed above has been obtained from the copyright holder.
 ****************************************************************************************/
 /*
- Pathname: ./gsm-amr/c/src/l_abs.c
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Created separate file for the L_abs function. Sync'ed up
-	      with the current template and fixed tabs.
-
- Description: Removed conditional code that updates WMOPS counter
-
- Who: 						Date:
- Description:
+ Filename: l_abs.cpp
 
 ------------------------------------------------------------------------------
  INPUT AND OUTPUT DEFINITIONS
 
  Inputs:
-	L_var1 = 32 bit long signed integer (Word32 ) whose value falls
-	         in the range : 0x8000 0000 <= L_var1 <= 0x7fff ffff.
+    L_var1 = 32 bit long signed integer (Word32 ) whose value falls
+             in the range : 0x8000 0000 <= L_var1 <= 0x7fff ffff.
 
  Local Stores/Buffers/Pointers Needed:
-	None
+    None
 
  Global Stores/Buffers/Pointers Needed:
-	None
+    None
 
  Outputs:
-	L_var1 = absolute value of input (Word32)
+    L_var1 = absolute value of input (Word32)
 
  Pointers and Buffers Modified:
-	None
+    None
 
  Local Stores Modified:
-	None
+    None
 
  Global Stores Modified:
-	None
+    None
 
 ------------------------------------------------------------------------------
  FUNCTION DESCRIPTION
@@ -112,35 +101,13 @@ Word32 L_abs (Word32 L_var1)
 
 
 ------------------------------------------------------------------------------
- RESOURCES USED
-   When the code is written for a specific target processor the
-     the resources used should be documented below.
-
- STACK USAGE: [stack count for this module] + [variable to represent
-		  stack usage for each subroutine called]
-
-     where: [stack usage variable] = stack usage for [subroutine
-		 name] (see [filename].ext)
-
- DATA MEMORY USED: x words
-
- PROGRAM MEMORY USED: x words
-
- CLOCK CYCLES: [cycle count equation for this module] + [variable
-		   used to represent cycle count for each subroutine
-		   called]
-
-     where: [cycle count variable] = cycle count for [subroutine
-		name] (see [filename].ext)
-
-------------------------------------------------------------------------------
 */
 
 
 /*----------------------------------------------------------------------------
 ; INCLUDES
 ----------------------------------------------------------------------------*/
-#include	"basic_op.h"
+#include    "basic_op.h"
 
 /*----------------------------------------------------------------------------
 ; MACROS

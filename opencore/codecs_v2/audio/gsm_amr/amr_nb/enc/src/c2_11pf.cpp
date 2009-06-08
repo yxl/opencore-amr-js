@@ -31,33 +31,11 @@ terms listed above has been obtained from the copyright holder.
 
 
 
- Pathname: ./audio/gsm-amr/c/src/c2_11pf.c
+ Filename: c2_11pf.cpp
  Functions:
             code_2i40_11bits
             search_2i40
             build_code
-
-     Date: 01/28/2002
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Modified to pass overflow flag through to basic math function.
- The flag is passed back to the calling function by pointer reference.
-
- Description: Fixed tabs prior to optimization to make diff'ing easier.
-              Optimized search_2i40() to reduce clock cycle usage.
-
- Description: Optimized build_code() to reduce clock cycle usage.
-
- Description: Changed function name to pv_round to avoid conflict with
-              round function in C standard library.
-
- Description:  Added casting to eliminate warnings
-
- Description:  Replaced "int" and/or "char" with OSCL defined types.
-
- Description:
 
 ------------------------------------------------------------------------------
  MODULE DESCRIPTION
@@ -203,22 +181,6 @@ const Word16 startPos2[4] = {0, 1, 2, 4};
 
 
 ------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
-
-------------------------------------------------------------------------------
  CAUTION [optional]
  [State any special notes, constraints or cautions for users of this function]
 
@@ -261,7 +223,7 @@ Word16 code_2i40_11bits(
                     pOverflow);
 
             h[i] =
-                add(
+                add_16(
                     h[i],
                     tempWord,
                     pOverflow);
@@ -322,7 +284,7 @@ Word16 code_2i40_11bits(
                     pOverflow);
 
             code[i] =
-                add(
+                add_16(
                     code[i],
                     tempWord,
                     pOverflow);
@@ -377,22 +339,6 @@ Word16 code_2i40_11bits(
 ------------------------------------------------------------------------------
  PSEUDO-CODE
 
-
-------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
 
 ------------------------------------------------------------------------------
  CAUTION [optional]
@@ -480,7 +426,7 @@ static void search_2i40(
                 for (i1 = ipos[1]; i1 < L_CODE; i1 += STEP)
                 {
                     /* idx increment = STEP */
-                    ps1 = add(ps0, dn[i1], pOverflow);
+                    ps1 = add_16(ps0, dn[i1], pOverflow);
 
                     /* alp1 = alp0 + rr[i0][i1] + 1/2*rr[i1][i1]; */
 
@@ -590,22 +536,6 @@ static void search_2i40(
  PSEUDO-CODE
 
 ------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
-
-------------------------------------------------------------------------------
  CAUTION [optional]
  [State any special notes, constraints or cautions for users of this function]
 
@@ -659,7 +589,7 @@ static Word16 build_code(
             index,
             5,
             pOverflow); */
-        tempWord = ((Word32) index * 5) << 1;
+        tempWord = (index << 3) + (index << 1);
 
         /* tempWord =
             L_shr(
@@ -789,7 +719,7 @@ static Word16 build_code(
                     pOverflow);
 
             rsign =
-                add(
+                add_16(
                     rsign,
                     tempWord,
                     pOverflow);
@@ -801,7 +731,7 @@ static Word16 build_code(
         }
 
         indx =
-            add(
+            add_16(
                 indx,
                 index,
                 pOverflow);

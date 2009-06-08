@@ -31,21 +31,7 @@ terms listed above has been obtained from the copyright holder.
 
 
 
- Filename: /audio/gsm_amr/c/include/dec_amr.h
-
-     Date: 02/06/2002
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Update function prototype for Decoder_amr(). Include overflow
-              flag in Decode_amrState structure
-
- Description:  Replaced "int" and/or "char" with OSCL defined types.
-
- Description: Moved _cplusplus #ifdef after Include section.
-
- Description:
+ Filename: dec_amr.h
 
 ------------------------------------------------------------------------------
  INCLUDE DESCRIPTION
@@ -77,6 +63,7 @@ terms listed above has been obtained from the copyright holder.
 #include "bgnscd.h"
 #include "lsp_avg.h"
 #include "frame.h"
+#include "get_const_tbls.h"
 
 /*--------------------------------------------------------------------------*/
 #ifdef __cplusplus
@@ -155,6 +142,7 @@ extern "C"
         ph_dispState ph_disp_st;
         dtx_decState dtxDecoderState;
         Flag overflow;
+        CommonAmrTbls common_amr_tbls;
     } Decoder_amrState;
 
     /*----------------------------------------------------------------------------

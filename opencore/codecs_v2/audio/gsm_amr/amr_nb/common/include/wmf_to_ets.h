@@ -28,20 +28,7 @@ terms listed above has been obtained from the copyright holder.
 ****************************************************************************************/
 /*
 
- Pathname: ./audio/gsm-amr/include/src/wmf_to_ets.h
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Changed mode to frame_type_3gpp
-
- Description: Updated template to make it build in Symbian. Updated copyright
-              year.
-
- Description: Moved _cplusplus #ifdef after Include section.
-
- Who:                       Date:
- Description:
+ Filename: wmf_to_ets.h
 
 ------------------------------------------------------------------------------
  INCLUDE DESCRIPTION
@@ -63,6 +50,7 @@ terms listed above has been obtained from the copyright holder.
 ----------------------------------------------------------------------------*/
 #include "frame_type_3gpp.h"
 #include "typedef.h"
+#include "get_const_tbls.h"
 
 /*--------------------------------------------------------------------------*/
 #ifdef __cplusplus
@@ -104,8 +92,9 @@ extern "C"
     ----------------------------------------------------------------------------*/
 
     void wmf_to_ets(enum Frame_Type_3GPP frame_type_3gpp,
-                    UWord8   *wmf_input_ptr,
-                    Word16   *ets_output_ptr);
+    UWord8   *wmf_input_ptr,
+    Word16   *ets_output_ptr,
+    CommonAmrTbls* common_amr_tbls);
 
 
 

@@ -31,30 +31,7 @@ terms listed above has been obtained from the copyright holder.
 
 
 
- Filename: /audio/gsm_amr/c/include/gain_q.h
-
-     Date: 02/05/2002
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Placed header file in the proper template format.  Added
- parameter pOverflow.
-
- Description: Changed definition of...
-
-    gc_predState     gc_predSt;
-    gc_predState     gc_predUnqSt;
-
-  in the structure typedef.  These are no longer pointers, which avoids
-  the need to malloc memory for the pointers.  They are, rather, the actual
-  structure declared within the gainQuantState structure.
-
- Description:  Replaced "int" and/or "char" with OSCL defined types.
-
- Description: Moved _cplusplus #ifdef after Include section.
-
- Description:
+ Filename: gain_q.h
 
 ------------------------------------------------------------------------------
  INCLUDE DESCRIPTION
@@ -78,6 +55,7 @@ terms listed above has been obtained from the copyright holder.
 #include "mode.h"
 #include "gc_pred.h"
 #include "g_adapt.h"
+#include "get_const_tbls.h"
 
 /*--------------------------------------------------------------------------*/
 #ifdef __cplusplus
@@ -167,6 +145,7 @@ extern "C"
         /*       MR475: gain_* unquantized in even */
         /*       subframes, quantized otherwise    */
         Word16 **anap,        /* o   : Index of quantization             */
+        CommonAmrTbls* common_amr_tbls, /* i : ptr to struct of tbl ptrs */
         Flag   *pOverflow     /* o   : overflow indicator                */
     );
 

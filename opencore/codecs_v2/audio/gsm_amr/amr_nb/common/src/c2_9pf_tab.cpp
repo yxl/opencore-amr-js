@@ -28,23 +28,7 @@ terms listed above has been obtained from the copyright holder.
 ****************************************************************************************/
 /*
 
- Filename: /audio/gsm_amr/c/src/c2_9pf_tab.c
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description:
- (1)    Corrected the module description
- (2)    Corrected the filename in the template.
- (3)    Removed embedded tabs.
-
- Description: Added #ifdef __cplusplus and removed "extern" from table
-              definition.
-
- Description: Put "extern" back.
-
- Who:                       Date:
- Description:
+ Filename: c2_9pf_tab.cpp
 
 ------------------------------------------------------------------------------
  MODULE DESCRIPTION
@@ -86,11 +70,11 @@ extern "C"
     ; LOCAL VARIABLE DEFINITIONS
     ; [Variable declaration - defined here and used outside this module]
     ----------------------------------------------------------------------------*/
-    const Word16 startPos[2*4*2] = {0, 2, 0, 3,
-                                               0, 2, 0, 3,
-                                               1, 3, 2, 4,
-                                               1, 4, 1, 4
-                                              };
+    extern const Word16 startPos[2*4*2] = {0, 2, 0, 3,
+        0, 2, 0, 3,
+        1, 3, 2, 4,
+        1, 4, 1, 4
+    };
 
     /*--------------------------------------------------------------------------*/
 #ifdef __cplusplus
@@ -136,22 +120,6 @@ extern "C"
 ------------------------------------------------------------------------------
  PSEUDO-CODE
 
-
-------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
 
 ------------------------------------------------------------------------------
  CAUTION [optional]

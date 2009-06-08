@@ -28,15 +28,7 @@ terms listed above has been obtained from the copyright holder.
 ****************************************************************************************/
 /*
 
- Filename: /audio/gsm_amr/c/src/include/d_gain_c.h
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Moved _cplusplus #ifdef after Include section.
-
- Who:                       Date:
- Description:
+ Filename: d_gain_c.h
 
 ------------------------------------------------------------------------------
  INCLUDE DESCRIPTION
@@ -112,6 +104,7 @@ extern "C"
         enum Mode mode,           /* i   : AMR mode                         */
         Word16 index,             /* i   : received quantization index      */
         Word16 code[],            /* i   : innovation codevector            */
+        const Word16* qua_gain_code_ptr, /* i : Pointer to read-only table      */
         Word16 *gain_code,        /* o   : decoded innovation gain          */
         Flag   *pOverflow
     );

@@ -31,18 +31,7 @@ terms listed above has been obtained from the copyright holder.
 
 
 
- Filename: /audio/gsm_amr/c/include/g_pitch.h
-
-
-     Date: 02/01/2002
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Moved _cplusplus #ifdef after Include section.
-
- Description:
-
+ Filename: g_pitch.h
 
 ------------------------------------------------------------------------------
  INCLUDE DESCRIPTION

@@ -28,23 +28,7 @@ terms listed above has been obtained from the copyright holder.
 ****************************************************************************************/
 /*
 
- Pathname: ./include/basic_op.h
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Revised basic_op.h since the basicop2.c functions were split
-	      up into separate source and header files. This function was
-	      retained because there are legacy GSM AMR C functions that still
-	      include this file. This file now includes the various basicop2
-	      functions' header files instead of defining the function
-	      prototypes.
-
- Description: Including header files with platform specific inline assembly
-              instructions.
-
- Who:						Date:
- Description:
+ Filename: basic_op.h
 
 ------------------------------------------------------------------------------
  INCLUDE DESCRIPTION
@@ -57,18 +41,18 @@ terms listed above has been obtained from the copyright holder.
 /*----------------------------------------------------------------------------
 ; CONTINUE ONLY IF NOT ALREADY DEFINED
 ----------------------------------------------------------------------------*/
-#ifndef	BASIC_OP_H
-#define	BASIC_OP_H
+#ifndef BASIC_OP_H
+#define BASIC_OP_H
 
 /*----------------------------------------------------------------------------
 ; INCLUDES
 ----------------------------------------------------------------------------*/
-#include	"basicop_malloc.h"
+#include    "basicop_malloc.h"
 
 #if defined(PV_ARM_V5)
 #include "basic_op_arm_v5.h"
 
-#elif defined(PV_ARM_GCC_V5)
+#elif defined(xxPV_ARM_GCC_V5) // @TODO: Enable gcc-arm assembly
 #include "basic_op_arm_gcc_v5.h"
 
 #else
@@ -78,25 +62,18 @@ terms listed above has been obtained from the copyright holder.
 
 
 
-#include	"add.h"
-#include	"div_s.h"
-#include	"div_32.h"
-#include	"extract_h.h"
-#include	"extract_l.h"
-#include	"l_deposit_h.h"
-#include	"l_deposit_l.h"
-#include	"l_shr_r.h"
-#include	"mult_r.h"
-#include	"norm_l.h"
-#include	"norm_s.h"
-#include	"round.h"
-#include	"shr_r.h"
-#include 	"sub.h"
-#include 	"shr.h"
-#include 	"l_abs.h"
-#include 	"l_negate.h"
-#include 	"l_extract.h"
-#include	"l_abs.h"
+#include    "add.h"
+#include    "div_s.h"
+#include    "l_shr_r.h"
+#include    "mult_r.h"
+#include    "norm_l.h"
+#include    "norm_s.h"
+#include    "round.h"
+#include    "shr_r.h"
+#include    "sub.h"
+#include    "shr.h"
+#include    "l_negate.h"
+#include    "l_extract.h"
 /*--------------------------------------------------------------------------*/
 #ifdef __cplusplus
 extern "C"
@@ -162,11 +139,11 @@ extern "C"
 
     */
     static inline Word32 Mac_32(Word32 L_var3,
-                                Word16 L_var1_hi,
-                                Word16 L_var1_lo,
-                                Word16 L_var2_hi,
-                                Word16 L_var2_lo,
-                                Flag *pOverflow)
+    Word16 L_var1_hi,
+    Word16 L_var1_lo,
+    Word16 L_var2_hi,
+    Word16 L_var2_lo,
+    Flag *pOverflow)
     {
         Word16  product;
 

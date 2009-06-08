@@ -31,32 +31,8 @@ terms listed above has been obtained from the copyright holder.
 
 
 
- Pathname: ./audio/gsm-amr/c/src/q_gain_c.c
+ Filename: q_gain_c.cpp
  Functions: q_gain_code
-
-     Date: 02/05/2002
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Updated template used to PV coding template.
- Changed to accept the pOverflow flag for EPOC compatibility.
-
- Description:
- (1) Removed optimization -- mult(i, 3, pOverflow) is NOT the same as adding
-     i to itself 3 times.  The reason is because the mult function does a
-     right shift by 15, which will obliterate smaller numbers.
-
- Description:
-              1. Eliminated unused include files.
-              2. Eliminated math operations that unnecessary checked for
-                 saturation by evaluating the operands
-
- Description:  Replaced "int" and/or "char" with OSCL defined types.
-
- Description: Added #ifdef __cplusplus around extern'ed table.
-
- Description:
 
 ------------------------------------------------------------------------------
  MODULE DESCRIPTION
@@ -108,7 +84,6 @@ extern "C"
     ; EXTERNAL GLOBAL STORE/BUFFER/POINTER REFERENCES
     ; Declare variables used in this module but defined elsewhere
     ----------------------------------------------------------------------------*/
-    extern const Word16 qua_gain_code[NB_QUA_CODE*3];
 
     /*--------------------------------------------------------------------------*/
 #ifdef __cplusplus
@@ -166,22 +141,6 @@ extern "C"
 
 
 ------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
-
-------------------------------------------------------------------------------
  CAUTION [optional]
  [State any special notes, constraints or cautions for users of this function]
 
@@ -197,6 +156,7 @@ Word16 q_gain_code(         /* o  : quantization index,            Q0  */
     /*      (for MR122 MA predictor update)    */
     Word16 *qua_ener,       /* o  : quantized energy error,        Q10 */
     /*      (for other MA predictor update)    */
+    const Word16* qua_gain_code_ptr, /* i : ptr to read-only table           */
     Flag   *pOverflow
 )
 {
@@ -241,7 +201,7 @@ Word16 q_gain_code(         /* o  : quantization index,            Q0  */
      *                   Search for best quantizer                        *
      *-------------------------------------------------------------------*/
 
-    p = &qua_gain_code[0];
+    p = &qua_gain_code_ptr[0];
     err_min = ((Word32)gcode0 * *(p++)) >> 15;
     err_min =  g_q0 - err_min;
     if (err_min < 0)
@@ -273,7 +233,7 @@ Word16 q_gain_code(         /* o  : quantization index,            Q0  */
 
     temp = index + (index << 1);
 
-    p = &qua_gain_code[temp];
+    p = &qua_gain_code_ptr[temp];
 
     temp  = (gcode0 * *(p++)) >> 15;
     if (mode == MR122)

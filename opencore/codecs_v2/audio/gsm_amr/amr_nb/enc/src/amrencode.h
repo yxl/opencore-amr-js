@@ -31,33 +31,7 @@ terms listed above has been obtained from the copyright holder.
 
 
 
- Filename: /audio/gsm-amr/c/include/amrencode.h
-
-     Date: 02/01/2002
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Removed hard tabs from file.
-
- Description: Added #define for WMF and IF2, and updated function prototype.
-
- Description: Renamed WMF to AMR_WMF, IF2 to AMR_IF2, and added AMR_ETS.
-
- Description: Changed output_type to output_format.
-
- Description: Added external reference to WmfEncBytesPerFrame and
-              If2EncBytesPerFrame tables.
-
- Description: Updated function prototype for AMREncode(). Added function
-              prototype for AMREncodeInit, AMREncodeReset, and AMREncodeExit.
-              Added #defines for TX SID frame formatting.
-
- Description:  Replaced "int" and/or "char" with OSCL defined types.
-
- Description: Moved _cplusplus #ifdef after Include section.
-
- Description:
+ Filename: amrencode.h
 
 ------------------------------------------------------------------------------
  INCLUDE DESCRIPTION

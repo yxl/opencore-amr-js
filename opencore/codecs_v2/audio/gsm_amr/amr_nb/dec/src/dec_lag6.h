@@ -31,19 +31,8 @@ terms listed above has been obtained from the copyright holder.
 
 
 
- Filename: /audio/gsm_amr/c/include/dec_lag6.h
+ Filename: dec_lag6.h
 
-     Date: 01/29/2002
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Placed header file in the proper template format.  Added
- parameter pOverflow for the basic math ops.
-
- Description: Moved _cplusplus #ifdef after Include section.
-
- Description:
 
 ------------------------------------------------------------------------------
  INCLUDE DESCRIPTION

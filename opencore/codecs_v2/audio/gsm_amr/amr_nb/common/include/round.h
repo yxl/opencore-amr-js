@@ -27,24 +27,7 @@ Permission to distribute, modify and use this file under the standard license
 terms listed above has been obtained from the copyright holder.
 ****************************************************************************************/
 /*
- Filename: /audio/gsm_amr/c/include/round.h
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Created separate header file for round function.
-
- Description: Updated function prototype declaration to reflect new interface.
-              A pointer to overflow flag is passed into the function. Updated
-              template.
-
- Description: Changed round function name to pv_round to avoid conflict with
-              round function in C standard library.
-
- Description: Moved _cplusplus #ifdef after Include section.
-
- Who:                       Date:
- Description:
+ Filename: round.h
 
 ------------------------------------------------------------------------------
  INCLUDE DESCRIPTION
@@ -103,7 +86,7 @@ extern "C"
     ; GLOBAL FUNCTION DEFINITIONS
     ; Function Prototype declaration
     ----------------------------------------------------------------------------*/
-    Word16 pv_round(Word32 L_var1, Flag *pOverflow);
+    OSCL_IMPORT_REF Word16 pv_round(Word32 L_var1, Flag *pOverflow);
 
     /*----------------------------------------------------------------------------
     ; END

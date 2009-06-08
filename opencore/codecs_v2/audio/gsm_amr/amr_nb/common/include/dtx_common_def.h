@@ -27,14 +27,7 @@ Permission to distribute, modify and use this file under the standard license
 terms listed above has been obtained from the copyright holder.
 ****************************************************************************************/
 /*
- Filename: /audio/gsm_amr/c/include/dtx_common_def.h
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
-
- Who:                       Date:
- Description:
+ Filename: dtx_common_def.h
 
 ------------------------------------------------------------------------------
  INCLUDE DESCRIPTION

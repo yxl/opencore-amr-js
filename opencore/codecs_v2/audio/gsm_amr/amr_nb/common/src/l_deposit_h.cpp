@@ -27,43 +27,32 @@ Permission to distribute, modify and use this file under the standard license
 terms listed above has been obtained from the copyright holder.
 ****************************************************************************************/
 /*
- Pathname: ./gsm-amr/c/src/l_deposit_h.c
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Created separate file for the L_deposit_h function. Sync'ed up
-	      with the current template and fixed tabs.
-
- Description: Removed conditional code that updates WMOPS counter
-
- Who: 						Date:
- Description:
+ Filename: l_deposit_h.cpp
 
 ------------------------------------------------------------------------------
  INPUT AND OUTPUT DEFINITIONS
 
  Inputs:
-	var1 = 16 bit short signed integer (Word16) whose value falls in
-	       the range : 0xffff 8000 <= var1 <= 0x0000 7fff.
+    var1 = 16 bit short signed integer (Word16) whose value falls in
+           the range : 0xffff 8000 <= var1 <= 0x0000 7fff.
 
  Local Stores/Buffers/Pointers Needed:
-	None
+    None
 
  Global Stores/Buffers/Pointers Needed:
-	None
+    None
 
  Outputs:
-	var1 = deposit of var1 into MSWord of 32 bit value (Word32)
+    var1 = deposit of var1 into MSWord of 32 bit value (Word32)
 
  Pointers and Buffers Modified:
-	None
+    None
 
  Local Stores Modified:
-	None
+    None
 
  Global Stores Modified:
-	None
+    None
 
 ------------------------------------------------------------------------------
  FUNCTION DESCRIPTION
@@ -96,35 +85,13 @@ Word32 L_deposit_h (Word16 var1)
 }
 
 ------------------------------------------------------------------------------
- RESOURCES USED
-   When the code is written for a specific target processor the
-     the resources used should be documented below.
-
- STACK USAGE: [stack count for this module] + [variable to represent
-		  stack usage for each subroutine called]
-
-     where: [stack usage variable] = stack usage for [subroutine
-		 name] (see [filename].ext)
-
- DATA MEMORY USED: x words
-
- PROGRAM MEMORY USED: x words
-
- CLOCK CYCLES: [cycle count equation for this module] + [variable
-		   used to represent cycle count for each subroutine
-		   called]
-
-     where: [cycle count variable] = cycle count for [subroutine
-		name] (see [filename].ext)
-
-------------------------------------------------------------------------------
 */
 
 
 /*----------------------------------------------------------------------------
 ; INCLUDES
 ----------------------------------------------------------------------------*/
-#include	"basic_op.h"
+#include    "basic_op.h"
 
 /*----------------------------------------------------------------------------
 ; MACROS

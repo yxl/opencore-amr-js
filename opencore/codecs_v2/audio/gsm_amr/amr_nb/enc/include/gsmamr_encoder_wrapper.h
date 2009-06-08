@@ -49,10 +49,10 @@ class TInputAudioStream
         int32 iMode;
 
         // Start time when samples were taken
-        uint32 iStartTime;
+        uint64 iStartTime;
 
         // End time when samples were taken
-        uint32 iStopTime;
+        uint64 iStopTime;
 };
 
 
@@ -226,7 +226,7 @@ class CPvGsmAmrEncoder
         *  This function initializes the GSM-AMR encoder.
         * @param "aMaxOutputBufferSize" "the maximum buffer size for the output buffer when Encode() gets called"
         * @param "aProps" "TEncodeProperties based pointer for the input encoding setting. if aProps=NULL, then
-        *		 default settings will be set"
+        *        default settings will be set"
         * @return 0 for the correct operation, and -1 for the wrong operation
         */
         OSCL_IMPORT_REF int32 InitializeEncoder(int32 aMaxOutputBufferSize,
@@ -308,14 +308,14 @@ class CPvGsmAmrEncoder
 
 typedef enum
 {
-    GSMAMR_ENC_NO_ERROR					= 0,
-    GSMAMR_ENC_NO_MEMORY_ERROR			= -1,
-    GSMAMR_ENC_CODEC_INIT_FAILURE		= -2,
-    GSMAMR_ENC_CODEC_NOT_INITIALIZED	= -3,
-    GSMAMR_ENC_INVALID_PARAM			= -4,
-    GSMAMR_ENC_INVALID_MODE				= -5,
-    GSMAMR_ENC_CODEC_ENCODE_FAILURE		= -6,
-    GSMAMR_ENC_MEMORY_OVERFLOW			= -7
+    GSMAMR_ENC_NO_ERROR                 = 0,
+    GSMAMR_ENC_NO_MEMORY_ERROR          = -1,
+    GSMAMR_ENC_CODEC_INIT_FAILURE       = -2,
+    GSMAMR_ENC_CODEC_NOT_INITIALIZED    = -3,
+    GSMAMR_ENC_INVALID_PARAM            = -4,
+    GSMAMR_ENC_INVALID_MODE             = -5,
+    GSMAMR_ENC_CODEC_ENCODE_FAILURE     = -6,
+    GSMAMR_ENC_MEMORY_OVERFLOW          = -7
 } GSMAMR_ENC_STATUS;
 
 #endif  // __GSMAMR_ENCODER_WRAPPER_H__

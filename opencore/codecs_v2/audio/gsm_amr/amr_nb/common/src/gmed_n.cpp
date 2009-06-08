@@ -27,23 +27,7 @@ Permission to distribute, modify and use this file under the standard license
 terms listed above has been obtained from the copyright holder.
 ****************************************************************************************/
 /*
- Pathname: ./audio/gsm-amr/c/src/gmed_n.c
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Put file into template and first pass at optimization.
-
- Description: Made changes based on comments from the review meeting. Used
-    pointers instead of index addressing in the arrays.
-
- Description: Synchronized file with UMTS version 3.2.0. Updated coding
-              template. Removed unncessary include files.
-
- Description:  Replaced "int" and/or "char" with OSCL defined types.
-
- Who:                           Date:
- Description:
+ Filename: gmed_n.cpp
 
 ------------------------------------------------------------------------------
 */
@@ -53,6 +37,7 @@ terms listed above has been obtained from the copyright holder.
 ----------------------------------------------------------------------------*/
 #include    "gmed_n.h"
 #include    "typedef.h"
+#include    "oscl_mem.h"
 
 /*----------------------------------------------------------------------------
 ; MACROS
@@ -158,29 +143,13 @@ Word16 gmed_n (   // o : The median value (0...N-1)
 }
 
 ------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
-
-------------------------------------------------------------------------------
  CAUTION [optional]
  [State any special notes, constraints or cautions for users of this function]
 
 ------------------------------------------------------------------------------
 */
 
-Word16 gmed_n(            /* o : the median value    */
+OSCL_EXPORT_REF Word16 gmed_n(            /* o : the median value    */
     Word16 ind[],   /* i : input values        */
     Word16 n        /* i : number of inputs    */
 )
@@ -191,10 +160,7 @@ Word16 gmed_n(            /* o : the median value    */
     Word16  tmp[NMAX];
     Word16  tmp2[NMAX];
 
-    for (i = 0; i < n; i++)
-    {
-        *(tmp2 + i) = *(ind + i);
-    }
+    oscl_memmove(tmp2, ind, n*sizeof(*ind));
 
     for (i = 0; i < n; i++)
     {

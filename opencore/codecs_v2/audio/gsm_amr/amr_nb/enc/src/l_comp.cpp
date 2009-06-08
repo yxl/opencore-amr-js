@@ -73,28 +73,6 @@ terms listed above has been obtained from the copyright holder.
  PSEUDO-CODE
 
 ------------------------------------------------------------------------------
- RESOURCES USED
-   When the code is written for a specific target processor the
-     the resources used should be documented below.
-
- STACK USAGE: [stack count for this module] + [variable to represent
-          stack usage for each subroutine called]
-
-     where: [stack usage variable] = stack usage for [subroutine
-         name] (see [filename].ext)
-
- DATA MEMORY USED: x words
-
- PROGRAM MEMORY USED: x words
-
- CLOCK CYCLES: [cycle count equation for this module] + [variable
-           used to represent cycle count for each subroutine
-           called]
-
-     where: [cycle count variable] = cycle count for [subroutine
-        name] (see [filename].ext)
-
-------------------------------------------------------------------------------
 */
 
 
@@ -151,7 +129,7 @@ Word32 L_Comp(Word16 hi, Word16 lo, Flag *pOverflow)
     ; Function body here
     ----------------------------------------------------------------------------*/
 
-    L_32 = L_deposit_h(hi);
+    L_32 = ((Word32)hi << 16);
 
     temp32 = L_mac(L_32, lo, 1, pOverflow);
     /*----------------------------------------------------------------------------

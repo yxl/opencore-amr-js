@@ -31,22 +31,7 @@ terms listed above has been obtained from the copyright holder.
 
 
 
- Filename: /audio/gsm_amr/c/src/include/cod_amr.h
-
-     Date: 02/07/2002
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Added overflow flag as an element to the cod_amrState data
-              structure. Corrected the function prototype declaration for
-              cod_amr().
-
- Description:  Replaced "int" and/or "char" with OSCL defined types.
-
- Description: Moved _cplusplus #ifdef after Include section.
-
- Description:
+ Filename: cod_amr.h
 
 ------------------------------------------------------------------------------
  INCLUDE DESCRIPTION
@@ -74,6 +59,7 @@ terms listed above has been obtained from the copyright holder.
 #include "ton_stab.h"
 #include "vad.h"
 #include "dtx_enc.h"
+#include "get_const_tbls.h"
 
 /*--------------------------------------------------------------------------*/
 #ifdef __cplusplus
@@ -166,6 +152,9 @@ extern "C"
         Word16 mem_err[M + L_SUBFR], *error;
 
         Word16 sharp;
+
+        /* tables from amr common lib */
+        CommonAmrTbls common_amr_tbls;
 
         /* Overflow flag */
         Flag   overflow;

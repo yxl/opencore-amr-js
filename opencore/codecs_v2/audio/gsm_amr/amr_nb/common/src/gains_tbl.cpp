@@ -28,22 +28,7 @@ terms listed above has been obtained from the copyright holder.
 ****************************************************************************************/
 /*
 
- Filename: /audio/gsm_amr/c/src/gains_tbl.c
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Created this file from the reference, gains.tab
-
- Description: Added include of "typedef.h" to includes section.
-
- Description: Added #ifdef __cplusplus and removed "extern" from table
-              definition.
-
- Description: Put "extern" back.
-
- Who:                               Date:
- Description:
+ Filename: gains_tbl.cpp
 
 ------------------------------------------------------------------------------
  MODULE DESCRIPTION
@@ -86,14 +71,14 @@ extern "C"
     ----------------------------------------------------------------------------*/
 
 
-    const Word16 qua_gain_pitch[NB_QUA_PITCH] =
+    extern const Word16 qua_gain_pitch[NB_QUA_PITCH] =
     {
         0, 3277, 6556, 8192, 9830, 11469, 12288, 13107,
         13926, 14746, 15565, 16384, 17203, 18022, 18842, 19661
     };
 
 
-    const Word16 qua_gain_code[(NB_QUA_CODE+1)*3] =
+    extern const Word16 qua_gain_code[(NB_QUA_CODE+1)*3] =
     {
         /* gain factor (g_fac) and quantized energy error (qua_ener_MR122, qua_ener)
          * are stored:
@@ -153,13 +138,13 @@ extern "C"
  INPUT AND OUTPUT DEFINITIONS
 
  Inputs:
-	None
+    None
 
  Outputs:
-	None
+    None
 
  Returns:
-	None
+    None
 
  Global Variables Used:
     None
@@ -185,22 +170,6 @@ extern "C"
 ------------------------------------------------------------------------------
  PSEUDO-CODE
 
-
-------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
 
 ------------------------------------------------------------------------------
  CAUTION [optional]

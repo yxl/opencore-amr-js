@@ -31,24 +31,8 @@ terms listed above has been obtained from the copyright holder.
 
 
 
- Pathname: ./audio/gsm-amr/c/src/ets_to_wmf.c
- Funtions: ets_to_wmf
-
-     Date: 01/23/2002
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Modified code as per review comments regarding things such as
-              adding the tables in bitreorder_tab.c to the Global section of
-              the input/output section of the template and removing the #define
-              of 244 since it wasn't needed in this function.
-
- Description: Fixed the loop that packs the last octet of the WMF output.
-
- Description:  Replaced "int" and/or "char" with OSCL defined types.
-
- Description:
+ Filename: ets_to_wmf.cpp
+ Functions: ets_to_wmf
 
 ------------------------------------------------------------------------------
 */
@@ -58,7 +42,6 @@ terms listed above has been obtained from the copyright holder.
 ----------------------------------------------------------------------------*/
 #include "ets_to_wmf.h"
 #include "typedef.h"
-#include "bitreorder_tab.h"
 
 /*----------------------------------------------------------------------------
 ; MACROS
@@ -139,22 +122,6 @@ terms listed above has been obtained from the copyright holder.
 
 
 ------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
-
-------------------------------------------------------------------------------
  CAUTION [optional]
  [State any special notes, constraints or cautions for users of this function]
 
@@ -164,7 +131,8 @@ terms listed above has been obtained from the copyright holder.
 void ets_to_wmf(
     enum Frame_Type_3GPP frame_type_3gpp,
     Word16 *ets_input_ptr,
-    UWord8 *wmf_output_ptr)
+    UWord8 *wmf_output_ptr,
+    CommonAmrTbls* common_amr_tbls)
 {
     Word16  i;
     Word16  k = 0;
@@ -172,40 +140,42 @@ void ets_to_wmf(
     Word16 *ptr_temp;
     Word16  bits_left;
     UWord8  accum;
+    const Word16* const* reorderBits_ptr = common_amr_tbls->reorderBits_ptr;
+    const Word16* numOfBits_ptr = common_amr_tbls->numOfBits_ptr;
 
     if (frame_type_3gpp < AMR_SID)
     {
         wmf_output_ptr[j++] = (UWord8)(frame_type_3gpp) & 0x0f;
 
-        for (i = 0; i < numOfBits[frame_type_3gpp] - 7;)
+        for (i = 0; i < numOfBits_ptr[frame_type_3gpp] - 7;)
         {
             wmf_output_ptr[j]  =
-                (UWord8) ets_input_ptr[reorderBits[frame_type_3gpp][i++]] << 7;
+                (UWord8) ets_input_ptr[reorderBits_ptr[frame_type_3gpp][i++]] << 7;
             wmf_output_ptr[j] |=
-                (UWord8) ets_input_ptr[reorderBits[frame_type_3gpp][i++]] << 6;
+                (UWord8) ets_input_ptr[reorderBits_ptr[frame_type_3gpp][i++]] << 6;
             wmf_output_ptr[j] |=
-                (UWord8) ets_input_ptr[reorderBits[frame_type_3gpp][i++]] << 5;
+                (UWord8) ets_input_ptr[reorderBits_ptr[frame_type_3gpp][i++]] << 5;
             wmf_output_ptr[j] |=
-                (UWord8) ets_input_ptr[reorderBits[frame_type_3gpp][i++]] << 4;
+                (UWord8) ets_input_ptr[reorderBits_ptr[frame_type_3gpp][i++]] << 4;
             wmf_output_ptr[j] |=
-                (UWord8) ets_input_ptr[reorderBits[frame_type_3gpp][i++]] << 3;
+                (UWord8) ets_input_ptr[reorderBits_ptr[frame_type_3gpp][i++]] << 3;
             wmf_output_ptr[j] |=
-                (UWord8) ets_input_ptr[reorderBits[frame_type_3gpp][i++]] << 2;
+                (UWord8) ets_input_ptr[reorderBits_ptr[frame_type_3gpp][i++]] << 2;
             wmf_output_ptr[j] |=
-                (UWord8) ets_input_ptr[reorderBits[frame_type_3gpp][i++]] << 1;
+                (UWord8) ets_input_ptr[reorderBits_ptr[frame_type_3gpp][i++]] << 1;
             wmf_output_ptr[j++] |=
-                (UWord8) ets_input_ptr[reorderBits[frame_type_3gpp][i++]];
+                (UWord8) ets_input_ptr[reorderBits_ptr[frame_type_3gpp][i++]];
         }
 
-        bits_left = numOfBits[frame_type_3gpp] -
-                    (numOfBits[frame_type_3gpp] & 0xFFF8);
+        bits_left = numOfBits_ptr[frame_type_3gpp] -
+                    (numOfBits_ptr[frame_type_3gpp] & 0xFFF8);
 
         wmf_output_ptr[j] = 0;
 
         for (k = 0; k < bits_left; k++)
         {
             wmf_output_ptr[j] |=
-                (UWord8) ets_input_ptr[reorderBits[frame_type_3gpp][i++]] << (7 - k);
+                (UWord8) ets_input_ptr[reorderBits_ptr[frame_type_3gpp][i++]] << (7 - k);
 
         }
     }
@@ -215,7 +185,7 @@ void ets_to_wmf(
 
         ptr_temp = &ets_input_ptr[0];
 
-        for (i = numOfBits[frame_type_3gpp] - 7; i > 0; i -= 8)
+        for (i = numOfBits_ptr[frame_type_3gpp] - 7; i > 0; i -= 8)
         {
             accum  = (UWord8) * (ptr_temp++) << 7;
             accum |= (UWord8) * (ptr_temp++) << 6;
@@ -229,8 +199,8 @@ void ets_to_wmf(
             wmf_output_ptr[j++] = accum;
         }
 
-        bits_left = numOfBits[frame_type_3gpp] -
-                    (numOfBits[frame_type_3gpp] & 0xFFF8);
+        bits_left = numOfBits_ptr[frame_type_3gpp] -
+                    (numOfBits_ptr[frame_type_3gpp] & 0xFFF8);
 
         wmf_output_ptr[j] = 0;
 

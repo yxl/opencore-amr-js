@@ -28,18 +28,7 @@ terms listed above has been obtained from the copyright holder.
 ****************************************************************************************/
 /*
 
- Filename: /audio/gsm_amr/c/src/ph_disp_tab.c
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Added #ifdef __cplusplus and removed "extern" from table
-              definition.
-
- Description: Put "extern" back.
-
- Who: 						Date:
- Description:
+ Filename: ph_disp_tab.cpp
 
 ------------------------------------------------------------------------------
  MODULE DESCRIPTION
@@ -81,14 +70,14 @@ extern "C"
     ; LOCAL VARIABLE DEFINITIONS
     ; [Variable declaration - defined here and used outside this module]
     ----------------------------------------------------------------------------*/
-    const Word16 ph_imp_low_MR795[40] =
+    extern const Word16 ph_imp_low_MR795[40] =
     {
         26777,    801,   2505,   -683,  -1382,    582,    604,  -1274,   3511,  -5894,
         4534,   -499,  -1940,   3011,  -5058,   5614,  -1990,  -1061,  -1459,   4442,
         -700,  -5335,   4609,    452,   -589,  -3352,   2953,   1267,  -1212,  -2590,
         1731,   3670,  -4475,   -975,   4391,  -2537,    949,  -1363,   -979,   5734
     };
-    const Word16 ph_imp_mid_MR795[40] =
+    extern const Word16 ph_imp_mid_MR795[40] =
     {
         30274,   3831,  -4036,   2972,  -1048,  -1002,   2477,  -3043,   2815,  -2231,
         1753,  -1611,   1714,  -1775,   1543,  -1008,    429,   -169,    472,  -1264,
@@ -96,14 +85,14 @@ extern "C"
         -2063,   2644,  -3060,   2897,  -1978,    557,    780,  -1369,    842,    655
     };
 
-    const Word16 ph_imp_low[40] =
+    extern const Word16 ph_imp_low[40] =
     {
         14690,  11518,   1268,  -2761,  -5671,   7514,    -35,  -2807,  -3040,   4823,
         2952,  -8424,   3785,   1455,   2179,  -8637,   8051,  -2103,  -1454,    777,
         1108,  -2385,   2254,   -363,   -674,  -2103,   6046,  -5681,   1072,   3123,
         -5058,   5312,  -2329,  -3728,   6924,  -3889,    675,  -1775,     29,  10145
     };
-    const Word16 ph_imp_mid[40] =
+    extern const Word16 ph_imp_mid[40] =
     {
         30274,   3831,  -4036,   2972,  -1048,  -1002,   2477,  -3043,   2815,  -2231,
         1753,  -1611,   1714,  -1775,   1543,  -1008,    429,   -169,    472,  -1264,
@@ -123,13 +112,13 @@ extern "C"
  INPUT AND OUTPUT DEFINITIONS
 
  Inputs:
-	None
+    None
 
  Outputs:
-	None
+    None
 
  Returns:
-	None
+    None
 
  Global Variables Used:
     None
@@ -155,22 +144,6 @@ extern "C"
 ------------------------------------------------------------------------------
  PSEUDO-CODE
 
-
-------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
 
 ------------------------------------------------------------------------------
  CAUTION [optional]

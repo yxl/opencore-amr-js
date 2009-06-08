@@ -31,19 +31,7 @@ terms listed above has been obtained from the copyright holder.
 
 
 
- Filename: /audio/gsm_amr/c/include/q_gain.h
-
-     Date: 02/05/2002
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Placed header file in the proper template format.  Added
- parameter pOverflow for the basic math ops.
-
- Description: Moved _cplusplus #ifdef after Include section.
-
- Description:
+ Filename: q_gain_c.h
 
 ------------------------------------------------------------------------------
  INCLUDE DESCRIPTION
@@ -121,6 +109,7 @@ extern "C"
         /*      (for MR122 MA predictor update)    */
         Word16 *qua_ener,       /* o  : quantized energy error,        Q10 */
         /*      (for other MA predictor update)    */
+        const Word16* qua_gain_code_ptr, /* i : ptr to read-only table           */
         Flag   *pOverflow
     );
 

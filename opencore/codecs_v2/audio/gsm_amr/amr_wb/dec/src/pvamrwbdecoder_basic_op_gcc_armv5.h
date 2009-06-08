@@ -33,12 +33,6 @@ terms listed above has been obtained from the copyright holder.
 
  Pathname: ./src/pvamrwbdecoder_basic_op_gcc_armv5.h
 
-     Date: 05/07/2007
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description:
 ------------------------------------------------------------------------------
  INCLUDE DESCRIPTION
 

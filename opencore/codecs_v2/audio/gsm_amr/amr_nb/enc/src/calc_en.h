@@ -31,16 +31,7 @@ terms listed above has been obtained from the copyright holder.
 
 
 
- Filename: /audio/gsm_amr/c/src/include/c_g_aver.h
-
-     Date: 12/29/2002
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Moved _cplusplus #ifdef after Include section.
-
- Description:
+ Filename: calc_en.h
 
 ------------------------------------------------------------------------------
  INCLUDE DESCRIPTION

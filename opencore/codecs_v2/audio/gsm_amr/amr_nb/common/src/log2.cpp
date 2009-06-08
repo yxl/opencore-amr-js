@@ -27,28 +27,7 @@ Permission to distribute, modify and use this file under the standard license
 terms listed above has been obtained from the copyright holder.
 ****************************************************************************************/
 /*
- Filename: /audio/gsm_amr/c/src/log2.c
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Updated template used to PV coding template. Moved Log2_norm
-	      function to its own file.
-
- Description: Changed l_shl.c to l_shl.h in Include section.
-
- Description: Updated template. Changed function interface to pass in a
-              pointer to overflow flag into the function instead of using a
-              global flag. Changed input pointer names for clarity.
-
- Description:
-              1. Eliminated l_shl function knowing that after normalization
-                 the left shift factor will not saturate.
-              2. Eliminated unused include files typedef.h and l_shl.h.
-
-
- Who: 						Date:
- Description:
+ Filename: log2.cpp
 
 ------------------------------------------------------------------------------
 */
@@ -89,18 +68,18 @@ terms listed above has been obtained from the copyright holder.
  INPUT AND OUTPUT DEFINITIONS
 
  Inputs:
-	L_x = input value of type Word32
-	pExponent = pointer to the integer part of Log2 of type Word16 whose
-		   valid range is: 0 <= value <= 30
-	pFraction = pointer to the fractional part of Log2 of type Word16
-		   whose valid range is: 0 <= value < 1
+    L_x = input value of type Word32
+    pExponent = pointer to the integer part of Log2 of type Word16 whose
+           valid range is: 0 <= value <= 30
+    pFraction = pointer to the fractional part of Log2 of type Word16
+           whose valid range is: 0 <= value < 1
     pOverflow = pointer to overflow flag
 
 
  Outputs:
-	pExponent -> integer part of the newly calculated Log2
-	pFraction -> fractional part of the newly calculated Log2
-	pOverflow -> 1 if the log2() operation resulted in saturation
+    pExponent -> integer part of the newly calculated Log2
+    pFraction -> fractional part of the newly calculated Log2
+    pOverflow -> 1 if the log2() operation resulted in saturation
 
  Returns:
     None
@@ -135,22 +114,6 @@ terms listed above has been obtained from the copyright holder.
 
 
 ------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
-
-------------------------------------------------------------------------------
  CAUTION [optional]
  [State any special notes, constraints or cautions for users of this function]
 
@@ -160,7 +123,7 @@ terms listed above has been obtained from the copyright holder.
 /*----------------------------------------------------------------------------
 ; FUNCTION CODE
 ----------------------------------------------------------------------------*/
-void Log2(
+OSCL_EXPORT_REF void Log2(
     Word32 L_x,         /* (i) : input value                                */
     Word16 *pExponent,  /* (o) : Integer part of Log2.   (range: 0<=val<=30)*/
     Word16 *pFraction,  /* (o) : Fractional part of Log2. (range: 0<=val<1) */

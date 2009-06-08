@@ -29,7 +29,7 @@ terms listed above has been obtained from the copyright holder.
 /*--------------------------------------------------------------------------*
  *                       get_amr_wb_bits.h                                  *
  *--------------------------------------------------------------------------*
- *       Number of bits for different modes			                        *
+ *       Number of bits for different modes                                 *
  *--------------------------------------------------------------------------*/
 
 #ifndef GET_AMR_WB_BITS_H

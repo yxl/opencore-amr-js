@@ -27,23 +27,8 @@ Permission to distribute, modify and use this file under the standard license
 terms listed above has been obtained from the copyright holder.
 ****************************************************************************************/
 /*
- Filename: /audio/gsm_amr/c/src/l_shr_r.c
+ Filename: l_shr_r.cpp
 
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Created separate file for the L_shr_r function. Sync'ed up
-          with the current template and fixed tabs.
-
- Description: Updated template. Changed function interface to pass in a
-              pointer to overflow flag into the function instead of using a
-              global flag. Removed code that updates MOPS counter. Changed
-              function return value name from "L_var_out" to "result".
-
- Who:                       Date:
- Description:
-
-------------------------------------------------------------------------------
 */
 
 
@@ -165,22 +150,6 @@ Word32 L_shr_r (Word32 L_var1, Word16 var2)
 }
 
 ------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
-
-------------------------------------------------------------------------------
  CAUTION [optional]
  [State any special notes, constraints or cautions for users of this function]
 
@@ -190,7 +159,7 @@ Word32 L_shr_r (Word32 L_var1, Word16 var2)
 /*----------------------------------------------------------------------------
 ; FUNCTION CODE
 ----------------------------------------------------------------------------*/
-Word32 L_shr_r(register Word32 L_var1, register Word16 var2, Flag *pOverflow)
+OSCL_EXPORT_REF Word32 L_shr_r(register Word32 L_var1, register Word16 var2, Flag *pOverflow)
 {
     Word32 result;
 

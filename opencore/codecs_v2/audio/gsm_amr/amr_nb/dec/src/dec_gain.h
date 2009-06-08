@@ -31,16 +31,7 @@ terms listed above has been obtained from the copyright holder.
 
 
 
- Filename: /audio/gsm_amr/c/src/include/dec_gain.h
-
-     Date: 01/31/2002
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Moved _cplusplus #ifdef after Include section.
-
- Description:
+ Filename: dec_gain.h
 
 ------------------------------------------------------------------------------
  INCLUDE DESCRIPTION
@@ -61,6 +52,7 @@ terms listed above has been obtained from the copyright holder.
 #include "typedef.h"
 #include "gc_pred.h"
 #include "mode.h"
+#include "get_const_tbls.h"
 
 /*--------------------------------------------------------------------------*/
 #ifdef __cplusplus
@@ -112,6 +104,7 @@ extern "C"
         Word16 evenSubfr,         /* i  : Flag for even subframes      */
         Word16 * gain_pit,        /* o  : Pitch gain.                  */
         Word16 * gain_cod,        /* o  : Code gain.                   */
+        CommonAmrTbls* common_amr_tbls, /* i : ptr to struct of tbls ptrs */
         Flag   * pOverflow
     );
 

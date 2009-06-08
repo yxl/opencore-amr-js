@@ -31,18 +31,7 @@ terms listed above has been obtained from the copyright holder.
 
 
 
- Filename: /audio/gsm_amr/c/src/include/lpc.h
-
-     Date: 01/29/2002
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description:  Replaced "int" and/or "char" with OSCL defined types.
-
- Description: Moved _cplusplus #ifdef after Include section.
-
- Description:
+ Filename: lpc.h
 
 ------------------------------------------------------------------------------
  INCLUDE DESCRIPTION
@@ -66,6 +55,7 @@ terms listed above has been obtained from the copyright holder.
 #include "typedef.h"
 #include "levinson.h"
 #include "mode.h"
+#include "get_const_tbls.h"
 
 
 /*--------------------------------------------------------------------------*/
@@ -132,6 +122,7 @@ extern "C"
         Word16 x[],       /* i  : Input signal           Q15  */
         Word16 x_12k2[],  /* i  : Input signal (EFR)     Q15  */
         Word16 a[],       /* o  : predictor coefficients Q12  */
+        CommonAmrTbls* common_amr_tbls, /* i : ptr to struct with table ptrs */
         Flag   *pOverflow
     );
 

@@ -31,41 +31,12 @@ terms listed above has been obtained from the copyright holder.
 
 
 
- Pathname: ./audio/gsm-amr/c/src/cod_amr.c
- Funtions: cod_amr_init
+ Filename: cod_amr.cpp
+ Functions: cod_amr_init
            cod_amr_reset
            cod_amr_exit
            cod_amr_first
            cod_amr
-
-     Date: 06/09/2000
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Made changes based on comments from the review meeting.
-
- Description: Synchronized file with UMTS version 3.2.0. Updated coding
-              template. Removed unnecessary include files.
-
- Description: Added initialization of the overflow flag in cod_amr_init()
-              and in cod_amr_reset(). This overflow flag is now part of
-              the cod_amrState structure.
-
- Description: Cleaned up INCLUDES. removed inclusion of basic_op.h and repeat
-              inclusion of copy.h
-
- Description: Updated function call to dtx_enc
-
- Description:  For cod_amr_first() and cod_amr()
-              1. Replaced copy() function with memcpy()
-
- Description:  Replaced OSCL mem type functions and eliminated include
-               files that now are chosen by OSCL definitions
-
- Description:  Replaced "int" and/or "char" with OSCL defined types.
-
- Description:
 
 ------------------------------------------------------------------------------
  MODULE DESCRIPTION
@@ -82,7 +53,6 @@ terms listed above has been obtained from the copyright holder.
 #include "cod_amr.h"
 #include "typedef.h"
 #include "cnst.h"
-#include "copy.h"
 #include "qua_gain.h"
 #include "lpc.h"
 #include "lsp.h"
@@ -100,6 +70,10 @@ terms listed above has been obtained from the copyright holder.
 #include "vad.h"
 #include "dtx_enc.h"
 #include "oscl_mem.h"
+
+#ifdef VAD2
+#include "vad2.h"
+#endif
 
 /*----------------------------------------------------------------------------
 ; MACROS
@@ -238,22 +212,6 @@ int cod_amr_init (cod_amrState **state, Flag dtx)
 }
 
 ------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
-
-------------------------------------------------------------------------------
  CAUTION [optional]
  [State any special notes, constraints or cautions for users of this function]
 
@@ -278,6 +236,8 @@ Word16 cod_amr_init(cod_amrState **state, Flag dtx)
                            can not malloc state structure\n");  */
         return(-1);
     }
+
+    get_const_tbls(&s->common_amr_tbls);
 
     s->lpcSt = NULL;
     s->lspSt = NULL;
@@ -305,7 +265,7 @@ Word16 cod_amr_init(cod_amrState **state, Flag dtx)
 #else
             vad2_init(&s->vadSt) ||
 #endif
-            dtx_enc_init(&s->dtx_encSt) ||
+            dtx_enc_init(&s->dtx_encSt, s->common_amr_tbls.lsp_init_data_ptr) ||
             lpc_init(&s->lpcSt))
     {
         cod_amr_exit(&s);
@@ -436,22 +396,6 @@ int cod_amr_reset (cod_amrState *st)
 }
 
 ------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
-
-------------------------------------------------------------------------------
  CAUTION [optional]
  [State any special notes, constraints or cautions for users of this function]
 
@@ -529,7 +473,7 @@ Word16 cod_amr_reset(cod_amrState *st)
     vad2_reset(st->vadSt);
 #endif
 
-    dtx_enc_reset(st->dtx_encSt);
+    dtx_enc_reset(st->dtx_encSt, st->common_amr_tbls.lsp_init_data_ptr);
 
     st->sharp = SHARPMIN;
 
@@ -602,22 +546,6 @@ void cod_amr_exit (cod_amrState **state)
 
    return;
 }
-
-------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
 
 ------------------------------------------------------------------------------
  CAUTION [optional]
@@ -709,22 +637,6 @@ int cod_amr_first(cod_amrState *st,     // i/o : State struct
 
    return 0;
 }
-
-------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
 
 ------------------------------------------------------------------------------
  CAUTION [optional]
@@ -1188,22 +1100,6 @@ the_end:
    return 0;
 }
 ------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
-
-------------------------------------------------------------------------------
  CAUTION [optional]
  [State any special notes, constraints or cautions for users of this function]
 
@@ -1301,7 +1197,7 @@ Word16 cod_amr(
     *------------------------------------------------------------------------*/
 
     /* LP analysis */
-    lpc(st->lpcSt, mode, st->p_window, st->p_window_12k2, A_t, pOverflow);
+    lpc(st->lpcSt, mode, st->p_window, st->p_window_12k2, A_t, &(st->common_amr_tbls), pOverflow);
 
     /* From A(z) to lsp. LSP quantization and interpolation */
     lsp(st->lspSt, mode, *usedMode, A_t, Aq_t, lsp_new, &ana, pOverflow);
@@ -1484,7 +1380,7 @@ Word16 cod_amr(
         cl_ltp(st->clLtpSt, st->tonStabSt, *usedMode, i_subfr, T_op, st->h1,
                &st->exc[i_subfr], res2, xn, lsp_flag, xn2, y1,
                &T0, &T0_frac, &gain_pit, gCoeff, &ana,
-               &gp_limit, pOverflow);
+               &gp_limit, st->common_amr_tbls.qua_gain_pitch_ptr, pOverflow);
 
         /* update LTP lag history */
 
@@ -1503,7 +1399,7 @@ Word16 cod_amr(
         * - Inovative codebook search (find index and gain)               *
         *-----------------------------------------------------------------*/
         cbsearch(xn2, st->h1, T0, st->sharp, gain_pit, res2,
-                 code, y2, &ana, *usedMode, subfrNr, pOverflow);
+                 code, y2, &ana, *usedMode, subfrNr, &(st->common_amr_tbls), pOverflow);
 
         /*------------------------------------------------------*
         * - Quantization of gains.                             *
@@ -1511,7 +1407,7 @@ Word16 cod_amr(
         gainQuant(st->gainQuantSt, *usedMode, res, &st->exc[i_subfr], code,
                   xn, xn2,  y1, y2, gCoeff, evenSubfr, gp_limit,
                   &gain_pit_sf0, &gain_code_sf0,
-                  &gain_pit, &gain_code, &ana, pOverflow);
+                  &gain_pit, &gain_code, &ana, &(st->common_amr_tbls), pOverflow);
 
         /* update gain history */
         update_gp_clipping(st->tonStabSt, gain_pit, pOverflow);

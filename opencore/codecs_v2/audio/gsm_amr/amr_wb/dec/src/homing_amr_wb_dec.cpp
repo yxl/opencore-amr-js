@@ -33,14 +33,6 @@ terms listed above has been obtained from the copyright holder.
 
  Filename: homing_amr_wb_dec.cpp
 
-     Date: 4/25/2007
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
-
- Description:
-
 ------------------------------------------------------------------------------
 
 

@@ -31,32 +31,7 @@ terms listed above has been obtained from the copyright holder.
 
 
 
- Pathname: ./audio/gsm-amr/c/src/gain_q.c
- Functions:
-
-     Date: 02/05/2002
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Updated template used to PV coding template.
- Changed to accept the pOverflow flag for EPOC compatibility.
-
- Description: Removed everything associated with gc_pred_init
- and gc_pred_exit.  gc_pred_exit was simply removed -- gc_pred_init
- was replaced with calls to gc_pred_reset.  This is because the gc_pred
- related structures are no longer dynamically allocated via malloc.
-
- Description:  For gainQuant()
-              1. Replaced gc_pred_copy() with memcpy.
-              2. Eliminated unused include file gc_pred.h.
-
- Description:  Replaced OSCL mem type functions and eliminated include
-               files that now are chosen by OSCL definitions
-
- Description:  Replaced "int" and/or "char" with OSCL defined types.
-
- Description:
+ Filename: gain_q.cpp
 
 ------------------------------------------------------------------------------
  MODULE DESCRIPTION
@@ -147,22 +122,6 @@ terms listed above has been obtained from the copyright holder.
 
 
 ------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
-
-------------------------------------------------------------------------------
  CAUTION [optional]
  [State any special notes, constraints or cautions for users of this function]
 
@@ -247,22 +206,6 @@ Word16 gainQuant_init(gainQuantState **state)
 
 
 ------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
-
-------------------------------------------------------------------------------
  CAUTION [optional]
  [State any special notes, constraints or cautions for users of this function]
 
@@ -283,8 +226,10 @@ Word16 gainQuant_reset(gainQuantState *state)
     state->sf0_exp_target_en = 0;
     state->sf0_frac_target_en = 0;
 
-    Set_zero(state->sf0_exp_coeff, 5);
-    Set_zero(state->sf0_frac_coeff, 5);
+
+    oscl_memset((void *)state->sf0_exp_coeff,  0, 5*sizeof(*state->sf0_exp_coeff));
+    oscl_memset((void *)state->sf0_frac_coeff, 0, 5*sizeof(*state->sf0_frac_coeff));
+
     state->gain_idx_ptr = NULL;
 
     gc_pred_reset(&(state->gc_predSt));
@@ -332,22 +277,6 @@ Word16 gainQuant_reset(gainQuantState *state)
 ------------------------------------------------------------------------------
  PSEUDO-CODE
 
-
-------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
 
 ------------------------------------------------------------------------------
  CAUTION [optional]
@@ -438,22 +367,6 @@ void gainQuant_exit(gainQuantState **state)
 
 
 ------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
-
-------------------------------------------------------------------------------
  CAUTION [optional]
  [State any special notes, constraints or cautions for users of this function]
 
@@ -484,6 +397,7 @@ void gainQuant(
     /*       MR475: gain_* unquantized in even */
     /*       subframes, quantized otherwise    */
     Word16 **anap,        /* o   : Index of quantization             */
+    CommonAmrTbls* common_amr_tbls, /* i : ptr to struct of tbl ptrs */
     Flag   *pOverflow     /* o   : overflow indicator                */
 )
 {
@@ -546,11 +460,7 @@ void gainQuant(
                 pOverflow);
 
             /* store optimum codebook gain (Q1) */
-            temp =
-                add(
-                    cod_gain_exp,
-                    1,
-                    pOverflow);
+            temp = cod_gain_exp + 1;
 
             *gain_cod =
                 shl(
@@ -667,6 +577,7 @@ void gainQuant(
                     gain_cod,
                     &qua_ener_MR122,
                     &qua_ener,
+                    common_amr_tbls->qua_gain_code_ptr,
                     pOverflow);
         }
         else
@@ -707,6 +618,7 @@ void gainQuant(
                     &qua_ener_MR122,
                     &qua_ener,
                     anap,
+                    common_amr_tbls,
                     pOverflow);
             }
             else
@@ -723,6 +635,7 @@ void gainQuant(
                         gain_cod,
                         &qua_ener_MR122,
                         &qua_ener,
+                        common_amr_tbls,
                         pOverflow);
             }
         }

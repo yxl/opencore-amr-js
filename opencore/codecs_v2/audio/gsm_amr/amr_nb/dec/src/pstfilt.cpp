@@ -31,48 +31,10 @@ terms listed above has been obtained from the copyright holder.
 
 
 
- Pathname: ./audio/gsm-amr/c/src/pstfilt.c
+ Filename: pstfilt.cpp
  Functions:
             Post_Filter_reset
             Post_Filter
-
-     Date: 04/14/2000
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Changed template used to PV coding template. First attempt at
-          optimizing C code.
-
- Description: Updated file per comments gathered from Phase 2/3 review.
-
- Description: Added setting of Overflow flag in inlined code.
-
- Description: Synchronized file with UMTS version 3.2.0. Updated coding
-              template. Removed unnecessary include files.
-
- Description: Replaced basic_op.h with the header file of the math functions
-              used in the file.
-
- Description: Made the following changes per comments from Phase 2/3 review:
-              1. Updated copyright year.
-              2. Modified FOR loops to count down.
-              3. Fixed typecasting issue with TI C compiler.
-              4. Added "break" statement after overflow condition occurs.
-
- Description: Removed the functions pstfilt_init and pstfilt_exit.
- The pst_filt related structure is no longer dynamically allocated.
-
- Description: Modified code for EPOC changes where pOverflow is passed in
-              rather than allowing overflow to be a global variable.
-
- Description:  Replaced OSCL mem type functions and eliminated include
-               files that now are chosen by OSCL definitions
-
- Description:  Replaced "int" and/or "char" with defined types.
-               Added proper casting (Word32) to some left shifting operations
-
- Description:
 
 ------------------------------------------------------------------------------
  MODULE DESCRIPTION
@@ -94,7 +56,6 @@ terms listed above has been obtained from the copyright holder.
 #include "basic_op.h"
 #include "weight_a.h"
 #include "residu.h"
-#include "copy.h"
 #include "syn_filt.h"
 #include "preemph.h"
 #include "cnst.h"
@@ -210,22 +171,6 @@ int Post_Filter_reset (Post_FilterState *state)
 
   return 0;
 }
-
-------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
 
 ------------------------------------------------------------------------------
  CAUTION [optional]
@@ -413,22 +358,6 @@ int Post_Filter (
 }
 
 ------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
-
-------------------------------------------------------------------------------
  CAUTION [optional]
  [State any special notes, constraints or cautions for users of this function]
 
@@ -462,7 +391,7 @@ void Post_Filter(
      * Post filtering                                      *
      *-----------------------------------------------------*/
 
-    Copy(syn, syn_work , L_FRAME);
+    oscl_memmove((void *)syn_work , syn, L_FRAME*sizeof(*syn));
 
     Az = Az_4;
 
@@ -489,7 +418,7 @@ void Post_Filter(
 
         /* impulse response of A(z/0.7)/A(z/0.75) */
 
-        Copy(Ap3, h, M + 1);
+        oscl_memmove((void *)h, Ap3, (M + 1)*sizeof(*Ap3));
         oscl_memset(&h[M + 1], 0, sizeof(Word16)*(L_H - M - 1));
         Syn_filt(Ap4, h, h, L_H, &h[M + 1], 0);
 
@@ -571,7 +500,7 @@ void Post_Filter(
 
     /* update syn_work[] buffer */
 
-    Copy(&syn_work[L_FRAME - M], &syn_work[-M], M);
+    oscl_memmove((void *)&syn_work[-M], &syn_work[L_FRAME - M], M*sizeof(*syn_work));
 
     return;
 }

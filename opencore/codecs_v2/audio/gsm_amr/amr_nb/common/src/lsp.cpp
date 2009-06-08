@@ -27,32 +27,8 @@ Permission to distribute, modify and use this file under the standard license
 terms listed above has been obtained from the copyright holder.
 ****************************************************************************************/
 /*
- Pathname: ./audio/gsm-amr/c/src/lsp.c
+ Filename: lsp.cpp
  Functions:
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Updated template used to PV coding template.
- Changed to accept the pOverflow flag for EPOC compatibility.
-
- Description: Per review comments, added pOverflow flag to a few forgotten
- functions.  Removed unnecessary include files.
-
- Description:  For lsp_reset() and lsp()
-              1. Replaced copy() with more efficient memcpy().
-              2. Eliminated unused include file copy.h.
-
- Description:  For lsp_reset()
-              1. Modified memcpy() operands order.
-
- Description:  Replaced OSCL mem type functions and eliminated include
-               files that now are chosen by OSCL definitions
-
- Description:  Replaced "int" and/or "char" with OSCL defined types.
-
- Who:                           Date:
- Description:
 
 ------------------------------------------------------------------------------
  MODULE DESCRIPTION
@@ -136,29 +112,13 @@ terms listed above has been obtained from the copyright holder.
 
 
 ------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
-
-------------------------------------------------------------------------------
  CAUTION [optional]
  [State any special notes, constraints or cautions for users of this function]
 
 ------------------------------------------------------------------------------
 */
 
-Word16 lsp_init(lspState **st)
+OSCL_EXPORT_REF Word16 lsp_init(lspState **st)
 {
     lspState* s;
 
@@ -237,28 +197,12 @@ Word16 lsp_init(lspState **st)
 
 
 ------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
-
-------------------------------------------------------------------------------
  CAUTION [optional]
  [State any special notes, constraints or cautions for users of this function]
 
 ------------------------------------------------------------------------------
 */
-Word16 lsp_reset(lspState *st)
+OSCL_EXPORT_REF Word16 lsp_reset(lspState *st)
 {
 
     if (st == (lspState *) NULL)
@@ -326,28 +270,12 @@ Word16 lsp_reset(lspState *st)
 
 
 ------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
-
-------------------------------------------------------------------------------
  CAUTION [optional]
  [State any special notes, constraints or cautions for users of this function]
 
 ------------------------------------------------------------------------------
 */
-void lsp_exit(lspState **st)
+OSCL_EXPORT_REF void lsp_exit(lspState **st)
 {
     if (st == NULL || *st == NULL)
         return;
@@ -414,35 +342,19 @@ void lsp_exit(lspState **st)
 
 
 ------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
-
-------------------------------------------------------------------------------
  CAUTION [optional]
  [State any special notes, constraints or cautions for users of this function]
 
 ------------------------------------------------------------------------------
 */
-void lsp(lspState *st,       /* i/o : State struct                            */
-         enum Mode req_mode, /* i   : requested coder mode                    */
-         enum Mode used_mode,/* i   : used coder mode                         */
-         Word16 az[],        /* i/o : interpolated LP parameters Q12          */
-         Word16 azQ[],       /* o   : quantization interpol. LP parameters Q12*/
-         Word16 lsp_new[],   /* o   : new lsp vector                          */
-         Word16 **anap,      /* o   : analysis parameters                     */
-         Flag   *pOverflow)  /* o   : Flag set when overflow occurs           */
+OSCL_EXPORT_REF void lsp(lspState *st,       /* i/o : State struct            */
+                         enum Mode req_mode, /* i   : requested coder mode                    */
+                         enum Mode used_mode,/* i   : used coder mode                         */
+                         Word16 az[],        /* i/o : interpolated LP parameters Q12          */
+                         Word16 azQ[],       /* o   : quantization interpol. LP parameters Q12*/
+                         Word16 lsp_new[],   /* o   : new lsp vector                          */
+                         Word16 **anap,      /* o   : analysis parameters                     */
+                         Flag   *pOverflow)  /* o   : Flag set when overflow occurs           */
 
 {
     Word16 lsp_new_q[M];    /* LSPs at 4th subframe           */

@@ -31,24 +31,7 @@ terms listed above has been obtained from the copyright holder.
 
 
 
- Pathname: ./audio/gsm-amr/c/src/d1035pf.c
-
-     Date: 04/14/2000
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Updated template used to PV coding template. First attempt at
-          optimizing C code.
-
- Description: Updated file per comments gathered from Phase 2/3 review.
-
- Description: Synchronized file with UTMS version 3.2.0. Updated coding
-              template. Removed unnecessary include files.
-
- Description: Removed inclusion of "gray.tab".
-
- Description:
+ Filename: d1035pf.cpp
 
 ------------------------------------------------------------------------------
 */
@@ -182,22 +165,6 @@ void dec_10i40_35bits (
 }
 
 ------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
-
-------------------------------------------------------------------------------
  CAUTION [optional]
  [State any special notes, constraints or cautions for users of this function]
 
@@ -206,7 +173,8 @@ void dec_10i40_35bits (
 
 void dec_10i40_35bits(
     Word16 index[],    /* (i)     : index of 10 pulses (sign+position)       */
-    Word16 cod[]       /* (o)     : algebraic (fixed) codebook excitation    */
+    Word16 cod[],       /* (o)     : algebraic (fixed) codebook excitation    */
+    const Word16* dgray_ptr /* i : ptr to read-only tbl                       */
 )
 {
     register Word16 i, j, pos1, pos2;
@@ -225,7 +193,7 @@ void dec_10i40_35bits(
 
         tmp = *(index + j);
         i = tmp & 7;
-        i = *(dgray + i);
+        i = *(dgray_ptr + i);
 
         i = (Word16)(i * 5);
         pos1 = i + j; /* position of pulse "j" */
@@ -246,7 +214,7 @@ void dec_10i40_35bits(
         /* compute index i */
 
         i = *(index + j + 5) & 7;
-        i = *(dgray + i);
+        i = *(dgray_ptr + i);
         i = (Word16)(i * 5);
 
         pos2 = i + j;      /* position of pulse "j+5" */

@@ -28,7 +28,7 @@ terms listed above has been obtained from the copyright holder.
 ****************************************************************************************/
 /*
 
- Pathname: ./audio/gsm-amr/c/src/gc_pred.c
+ Filename: gc_pred.cpp
  Functions:
             gc_pred_reset
             gc_pred
@@ -148,29 +148,13 @@ int gc_pred_reset (gc_predState *state)
 }
 
 ------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
-
-------------------------------------------------------------------------------
  CAUTION [optional]
  [State any special notes, constraints or cautions for users of this function]
 
 ------------------------------------------------------------------------------
 */
 
-Word16 gc_pred_reset(gc_predState *state)
+OSCL_EXPORT_REF Word16 gc_pred_reset(gc_predState *state)
 {
     Word16 i;
 
@@ -441,29 +425,13 @@ gc_pred(
 }
 
 ------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
-
-------------------------------------------------------------------------------
  CAUTION [optional]
  [State any special notes, constraints or cautions for users of this function]
 
 ------------------------------------------------------------------------------
 */
 
-void gc_pred(
+OSCL_EXPORT_REF void gc_pred(
     gc_predState *st,   /* i/o: State struct                           */
     enum Mode mode,     /* i  : AMR mode                               */
     Word16 *code,       /* i  : innovative codebook vector (L_SUBFR)   */
@@ -645,7 +613,7 @@ void gc_pred(
             :                 = frac_en            * 2^exp_en
                           ==> exp_en = -11-exp_code;      */
             *frac_en = (Word16)(ener_code >> 16);
-            *exp_en = sub(-11, exp_code, pOverflow);
+            *exp_en = -11 - exp_code;
 
             /* mean = 36 dB */
             L_temp2 = (Word32) 17062 << 7;
@@ -811,29 +779,13 @@ void gc_pred_update(
 }
 
 ------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
-
-------------------------------------------------------------------------------
  CAUTION [optional]
  [State any special notes, constraints or cautions for users of this function]
 
 ------------------------------------------------------------------------------
 */
 
-void gc_pred_update(
+OSCL_EXPORT_REF void gc_pred_update(
     gc_predState *st,      /* i/o: State struct                     */
     Word16 qua_ener_MR122, /* i  : quantized energy for update, Q10 */
     /*      (log2(qua_err))                  */
@@ -961,29 +913,13 @@ void gc_pred_average_limited(
 }
 
 ------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
-
-------------------------------------------------------------------------------
  CAUTION [optional]
  [State any special notes, constraints or cautions for users of this function]
 
 ------------------------------------------------------------------------------
 */
 
-void gc_pred_average_limited(
+OSCL_EXPORT_REF void gc_pred_average_limited(
     gc_predState *st,       /* i: State struct                    */
     Word16 *ener_avg_MR122, /* o: everaged quantized energy,  Q10 */
     /*    (log2(qua_err))                 */
@@ -1000,7 +936,7 @@ void gc_pred_average_limited(
     for (i = 0; i < NPRED; i++)
     {
         av_pred_en =
-            add(av_pred_en, st->past_qua_en_MR122[i], pOverflow);
+            add_16(av_pred_en, st->past_qua_en_MR122[i], pOverflow);
     }
 
     /* av_pred_en = 0.25*av_pred_en  (with sign-extension)*/
@@ -1024,7 +960,7 @@ void gc_pred_average_limited(
     av_pred_en = 0;
     for (i = 0; i < NPRED; i++)
     {
-        av_pred_en = add(av_pred_en, st->past_qua_en[i], pOverflow);
+        av_pred_en = add_16(av_pred_en, st->past_qua_en[i], pOverflow);
     }
 
     /* av_pred_en = 0.25*av_pred_en  (with sign-extension)*/

@@ -28,22 +28,8 @@ terms listed above has been obtained from the copyright holder.
 ****************************************************************************************/
 /*
 
- Filename: /audio/gsm_amr/c/include/mac_32.h
+ Filename: mac_32.h
 
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Updated function prototype declaration to reflect new interface.
-              A pointer to overflow flag is passed into the function. Updated
-              template.
-
- Description: Moved _cplusplus #ifdef after Include section.
-
- Description: Inlined the functions from mac_32.cpp. A performance improvement
-              change.
-
- Who:                       Date:
- Description:
 ------------------------------------------------------------------------------
  INCLUDE DESCRIPTION
 
@@ -103,11 +89,11 @@ extern "C"
     ----------------------------------------------------------------------------*/
 
     static inline Word32 Mac_32(Word32 L_var3,
-                                Word16 L_var1_hi,
-                                Word16 L_var1_lo,
-                                Word16 L_var2_hi,
-                                Word16 L_var2_lo,
-                                Flag *pOverflow)
+    Word16 L_var1_hi,
+    Word16 L_var1_lo,
+    Word16 L_var2_hi,
+    Word16 L_var2_lo,
+    Flag *pOverflow)
     {
         Word16  product;
 

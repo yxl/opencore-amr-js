@@ -31,25 +31,8 @@ terms listed above has been obtained from the copyright holder.
 
 
 
- Pathname: ./audio/gsm-amr/c/src/d_gain_p.c
+ Filename: d_gain_p.cpp
  Functions: d_gain_p
-
-     Date: 01/31/2002
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description:
- (1) Removed extra includes
- (2) Replaced function calls to basic math operations with ANSI C standard
-     mathemtical operations.
- (3) Placed code in the proper software template.
-
- Description:  Replaced "int" and/or "char" with OSCL defined types.
-
- Description: Added #ifdef __cplusplus around extern'ed table.
-
- Description:
 
  ------------------------------------------------------------------------------
  INPUT AND OUTPUT DEFINITIONS
@@ -90,28 +73,6 @@ terms listed above has been obtained from the copyright holder.
  PSEUDO-CODE
 
 
-
-------------------------------------------------------------------------------
- RESOURCES USED
-   When the code is written for a specific target processor the
-     the resources used should be documented below.
-
- STACK USAGE: [stack count for this module] + [variable to represent
-          stack usage for each subroutine called]
-
-     where: [stack usage variable] = stack usage for [subroutine
-         name] (see [filename].ext)
-
- DATA MEMORY USED: x words
-
- PROGRAM MEMORY USED: x words
-
- CLOCK CYCLES: [cycle count equation for this module] + [variable
-           used to represent cycle count for each subroutine
-           called]
-
-     where: [cycle count variable] = cycle count for [subroutine
-        name] (see [filename].ext)
 
 ------------------------------------------------------------------------------
 */
@@ -162,7 +123,6 @@ extern "C"
     ; EXTERNAL GLOBAL STORE/BUFFER/POINTER REFERENCES
     ; Declare variables used in this module but defined elsewhere
     ----------------------------------------------------------------------------*/
-    extern const Word16 qua_gain_pitch[];
 
     /*--------------------------------------------------------------------------*/
 #ifdef __cplusplus
@@ -175,12 +135,13 @@ extern "C"
 
 Word16 d_gain_pitch(       /* return value: gain (Q14)                */
     enum Mode mode,        /* i   : AMR mode                          */
-    Word16 index           /* i   : index of quantization             */
+    Word16 index,          /* i   : index of quantization             */
+    const Word16* qua_gain_pitch_ptr /* i : pointer to read-only tables   */
 )
 {
     Word16 gain;
 
-    gain = qua_gain_pitch[index];
+    gain = qua_gain_pitch_ptr[index];
 
     if (mode == MR122)
     {

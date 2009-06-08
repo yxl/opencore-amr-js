@@ -31,44 +31,7 @@ terms listed above has been obtained from the copyright holder.
 
 
 
- Filename: /audio/gsm-amr/c/include/gsmamr_dec.h
-
-     Date: 09/10/2001
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Adding comments and removing some tables as per review comments.
-
- Description: Replace enum Mode with enum Frame_Type_3GPP and updated function
-              prototype of AMRDecode().
-
- Description: Added back the enum Mode type definition, removed RXFrameType
-              type definition, and updated AMRDecode and GSMInitDecode function
-              prototypes.
-
- Description: Added #defines for WMF and IF2. Updated AMRDecode function
-              prototype.
-
- Description: Removed enum Mode type definition and updated AMRDecode function
-              prototype.
-
- Description: Renamed WMF and IF2 to AMR_WMF and AMR_IF2, respectively. Added
-              #define for AMR_ETS format.
-
- Description: Rename input format defines to make it unique to the decoder.
-
- Description: Added comment to describe L_FRAME.
-
- Description: Moved _cplusplus #ifdef after Include section.
-
- Description: Included file "typedefs.h" to avoid re-declaring similar typedef
-              this for OSCL-ed compatibility
-
- Description: Included file "gsm_amr_typedefs.h" and eliminated re-definition
-              of types UWord8, Word8, Word16
-
- Description:
+ Filename: gsmamr_dec.h
 
 ------------------------------------------------------------------------------
  INCLUDE DESCRIPTION

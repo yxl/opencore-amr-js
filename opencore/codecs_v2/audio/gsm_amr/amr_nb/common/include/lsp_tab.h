@@ -28,15 +28,7 @@ terms listed above has been obtained from the copyright holder.
 ****************************************************************************************/
 /*
 
- Pathname: .audio/gsm-amr/c/include/lsp_tab.h
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Added #ifdef __cplusplus after Include section.
-
- Who:                       Date:
- Description:
+ Filename: lsp_tab.h
 
 ------------------------------------------------------------------------------
  INCLUDE DESCRIPTION

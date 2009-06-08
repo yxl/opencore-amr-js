@@ -31,29 +31,7 @@ terms listed above has been obtained from the copyright holder.
 
 
 
- Pathname: ./audio/gsm-amr/c/src/d_plsf_5.c
-
-     Date: 04/24/2000
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Made changes based on review meeting.
-
- Description: Synchronized file with UMTS version 3.2.0. Updated coding
-              template. Removed unnecessary include files.
-
- Description: Updated to accept new parameter, Flag *pOverflow.
-
- Description:
- (1) Removed "count.h" and "basic_op.h" and replaced with individual include
-     files (add.h, sub.h, etc.)
-
- Description:  Replaced "int" and/or "char" with OSCL defined types.
-
- Description: Added #ifdef __cplusplus around extern'ed table.
-
- Description:
+ Filename: d_plsf_5.cpp
 
 ------------------------------------------------------------------------------
 */
@@ -67,7 +45,7 @@ terms listed above has been obtained from the copyright holder.
 #include "lsp_lsf.h"
 #include "reorder.h"
 #include "cnst.h"
-#include "copy.h"
+#include "oscl_mem.h"
 
 /*--------------------------------------------------------------------------*/
 #ifdef __cplusplus
@@ -100,14 +78,6 @@ extern "C"
     ; LOCAL STORE/BUFFER/POINTER DEFINITIONS
     ; Variable declaration - defined here and used outside this module
     ----------------------------------------------------------------------------*/
-
-    /* These tables are defined in q_plsf_5_tbl.c */
-    extern const Word16 mean_lsf_5[];
-    extern const Word16 dico1_lsf_5[];
-    extern const Word16 dico2_lsf_5[];
-    extern const Word16 dico3_lsf_5[];
-    extern const Word16 dico4_lsf_5[];
-    extern const Word16 dico5_lsf_5[];
 
     /*--------------------------------------------------------------------------*/
 #ifdef __cplusplus
@@ -276,22 +246,6 @@ int D_plsf_5 (
 }
 
 ------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
-
-------------------------------------------------------------------------------
  CAUTION [optional]
  [State any special notes, constraints or cautions for users of this function]
 
@@ -303,6 +257,7 @@ void D_plsf_5(
     Word16 bfi,         /* i  : bad frame indicator (set to 1 if a bad
                                 frame is received)                          */
     Word16 *indice,     /* i  : quantization indices of 5 submatrices, Q0   */
+    CommonAmrTbls* common_amr_tbls, /* i : structure containing ptrs to read-only tables */
     Word16 *lsp1_q,     /* o  : quantized 1st LSP vector (M),          Q15  */
     Word16 *lsp2_q,     /* o  : quantized 2nd LSP vector (M),          Q15  */
     Flag  *pOverflow    /* o : Flag set when overflow occurs                */
@@ -319,6 +274,14 @@ void D_plsf_5(
     Word16 lsf1_q[M];
     Word16 lsf2_q[M];
 
+    /* These tables are defined in q_plsf_5_tbl.c */
+    const Word16* mean_lsf_5_ptr = common_amr_tbls->mean_lsf_5_ptr;
+    const Word16* dico1_lsf_5_ptr = common_amr_tbls->dico1_lsf_5_ptr;
+    const Word16* dico2_lsf_5_ptr = common_amr_tbls->dico2_lsf_5_ptr;
+    const Word16* dico3_lsf_5_ptr = common_amr_tbls->dico3_lsf_5_ptr;
+    const Word16* dico4_lsf_5_ptr = common_amr_tbls->dico4_lsf_5_ptr;
+    const Word16* dico5_lsf_5_ptr = common_amr_tbls->dico5_lsf_5_ptr;
+
     if (bfi != 0)                               /* if bad frame */
     {
         /* use the past LSFs slightly shifted towards their mean */
@@ -330,23 +293,11 @@ void D_plsf_5(
              *  ONE_ALPHA*mean_lsf[i];
              */
 
-            temp =
-                mult(
-                    st->past_lsf_q[i],
-                    ALPHA,
-                    pOverflow);
+            temp = (Word16)(((Word32)  st->past_lsf_q[i] * ALPHA) >> 15);
 
-            sign =
-                mult(
-                    *(mean_lsf_5 + i),
-                    ONE_ALPHA,
-                    pOverflow);
+            sign = (Word16)(((Word32)  * (mean_lsf_5_ptr + i) * ONE_ALPHA) >> 15);
 
-            *(lsf1_q + i) =
-                add(
-                    sign,
-                    temp,
-                    pOverflow);
+            *(lsf1_q + i) = add_16(sign, temp,  pOverflow);
 
             *(lsf2_q + i) = *(lsf1_q + i);
 
@@ -360,23 +311,11 @@ void D_plsf_5(
              * st->past_r_q[i] * LSP_PRED_FAC_MR122;
              */
 
-            temp =
-                mult(
-                    st->past_r_q[i],
-                    LSP_PRED_FAC_MR122,
-                    pOverflow);
+            temp = (Word16)(((Word32)  st->past_r_q[i] * LSP_PRED_FAC_MR122) >> 15);
 
-            temp =
-                add(
-                    *(mean_lsf_5 + i),
-                    temp,
-                    pOverflow);
+            temp = add_16(*(mean_lsf_5_ptr + i), temp, pOverflow);
 
-            st->past_r_q[i] =
-                sub(
-                    *(lsf2_q + i),
-                    temp,
-                    pOverflow);
+            st->past_r_q[i] = sub(*(lsf2_q + i), temp, pOverflow);
         }
     }
     else
@@ -390,20 +329,16 @@ void D_plsf_5(
                 2,
                 pOverflow);
 
-        p_dico = &dico1_lsf_5[temp];
+        p_dico = &dico1_lsf_5_ptr[temp];
 
         *(lsf1_r + 0) = *p_dico++;
         *(lsf1_r + 1) = *p_dico++;
         *(lsf2_r + 0) = *p_dico++;
         *(lsf2_r + 1) = *p_dico++;
 
-        temp =
-            shl(
-                *(indice + 1),
-                2,
-                pOverflow);
+        temp = shl(*(indice + 1), 2, pOverflow);
 
-        p_dico = &dico2_lsf_5[temp];
+        p_dico = &dico2_lsf_5_ptr[temp];
 
         *(lsf1_r + 2) = *p_dico++;
         *(lsf1_r + 3) = *p_dico++;
@@ -421,13 +356,9 @@ void D_plsf_5(
             i = *(indice + 2) >> 1;
         }
 
-        temp =
-            shl(
-                i,
-                2,
-                pOverflow);
+        temp = shl(i, 2, pOverflow);
 
-        p_dico = &dico3_lsf_5[temp];
+        p_dico = &dico3_lsf_5_ptr[temp];
 
         if (sign == 0)
         {
@@ -444,26 +375,18 @@ void D_plsf_5(
             *(lsf2_r + 5) = negate(*p_dico++);
         }
 
-        temp =
-            shl(
-                *(indice + 3),
-                2,
-                pOverflow);
+        temp = shl(*(indice + 3), 2, pOverflow);
 
-        p_dico = &dico4_lsf_5[temp];
+        p_dico = &dico4_lsf_5_ptr[temp];
 
         *(lsf1_r + 6) = *p_dico++;
         *(lsf1_r + 7) = *p_dico++;
         *(lsf2_r + 6) = *p_dico++;
         *(lsf2_r + 7) = *p_dico++;
 
-        temp =
-            shl(
-                *(indice + 4),
-                2,
-                pOverflow);
+        temp = shl(*(indice + 4), 2, pOverflow);
 
-        p_dico = &dico5_lsf_5[temp];
+        p_dico = &dico5_lsf_5_ptr[temp];
 
         *(lsf1_r + 8) = *p_dico++;
         *(lsf1_r + 9) = *p_dico++;
@@ -481,19 +404,19 @@ void D_plsf_5(
                     pOverflow);
 
             temp =
-                add(
-                    *(mean_lsf_5 + i),
+                add_16(
+                    *(mean_lsf_5_ptr + i),
                     temp,
                     pOverflow);
 
             *(lsf1_q + i) =
-                add(
+                add_16(
                     *(lsf1_r + i),
                     temp,
                     pOverflow);
 
             *(lsf2_q + i) =
-                add(
+                add_16(
                     *(lsf2_r + i),
                     temp,
                     pOverflow);
@@ -516,10 +439,7 @@ void D_plsf_5(
         M,
         pOverflow);
 
-    Copy(
-        lsf2_q,
-        st->past_lsf_q,
-        M);
+    oscl_memmove((void *)st->past_lsf_q, lsf2_q, M*sizeof(*lsf2_q));
 
     /*  convert LSFs to the cosine domain */
 

@@ -30,13 +30,6 @@ terms listed above has been obtained from the copyright holder.
  Name: pvamrnbdecoder_api.h
 
 ------------------------------------------------------------------------------
- REVISION HISTORY
-
-
- Who:                                       Date:
- Description:
-
-------------------------------------------------------------------------------
  INCLUDE DESCRIPTION
 
  Main header file for the Packet Video AMR Narrow  Band  decoder library. The

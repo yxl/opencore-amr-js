@@ -32,17 +32,6 @@ terms listed above has been obtained from the copyright holder.
 
 
  Filename: pvamrwbdecoder_mem_funcs.h
- Funtions:
-
-
-     Date: 05/04/2007
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
-
- Description:
-------------------------------------------------------------------------------
 
 
 ----------------------------------------------------------------------------

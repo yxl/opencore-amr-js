@@ -33,12 +33,6 @@ terms listed above has been obtained from the copyright holder.
 
  Pathname: ./src/pvamrwbdecoder_basic_op_cequivalent.h
 
-     Date: 05/07/2007
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description:
 ------------------------------------------------------------------------------
  INCLUDE DESCRIPTION
 
@@ -306,7 +300,7 @@ extern "C"
         }
         else
         {
-            L_mul = MAX_32;		/* saturation */
+            L_mul = MAX_32;     /* saturation */
         }
 
         L_var_out = L_var3 + L_mul;
@@ -365,7 +359,7 @@ extern "C"
         }
         else
         {
-            L_mul = MAX_32;		/* saturation */
+            L_mul = MAX_32;     /* saturation */
         }
 
         L_var_out = L_var3 - L_mul;
@@ -419,7 +413,7 @@ extern "C"
         }
         else
         {
-            L_mul = MAX_32;		/* saturation */
+            L_mul = MAX_32;     /* saturation */
         }
 
         return (L_mul);
@@ -460,7 +454,7 @@ extern "C"
          Function Name : amr_wb_shl1_round
 
          Shift the 32 bit input number to the left by 1, round up the result and
-    	 shift down by 16
+         shift down by 16
                      amr_wb_shl1_round(L_var1) = round(L_shl(L_var1,1))
 
          Inputs :

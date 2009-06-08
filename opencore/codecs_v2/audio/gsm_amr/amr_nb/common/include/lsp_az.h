@@ -28,15 +28,7 @@ terms listed above has been obtained from the copyright holder.
 ****************************************************************************************/
 /*
 
- Filename: /audio/gsm_amr/c/include/lsp_az.h
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Moved _cplusplus #ifdef after Include section.
-
- Who:						Date:
- Description:
+ Filename: lsp_az.h
 
 ------------------------------------------------------------------------------
  INCLUDE DESCRIPTION
@@ -50,8 +42,8 @@ terms listed above has been obtained from the copyright holder.
 /*----------------------------------------------------------------------------
 ; CONTINUE ONLY IF NOT ALREADY DEFINED
 ----------------------------------------------------------------------------*/
-#ifndef	LSP_AZ_H
-#define	LSP_AZ_H
+#ifndef LSP_AZ_H
+#define LSP_AZ_H
 
 /*----------------------------------------------------------------------------
 ; INCLUDES
@@ -95,7 +87,7 @@ extern "C"
     ; GLOBAL FUNCTION DEFINITIONS
     ; Function Prototype declaration
     ----------------------------------------------------------------------------*/
-    void Lsp_Az(
+    OSCL_IMPORT_REF void Lsp_Az(
         Word16 lsp[],        /* (i)  : line spectral frequencies            */
         Word16 a[],          /* (o)  : predictor coefficients (order = 10)  */
         Flag  *pOverflow     /* (o)  : overflow flag                        */

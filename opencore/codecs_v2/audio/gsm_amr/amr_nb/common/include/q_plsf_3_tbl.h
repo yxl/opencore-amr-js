@@ -28,20 +28,7 @@ terms listed above has been obtained from the copyright holder.
 ****************************************************************************************/
 /*
 
- Filename: /audio/gsm_amr/c/src/q_plsf_3_tbl.h
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Created this file from the reference, q_plsf_3_tbl.tab
-
- Description: Added #ifdef __cplusplus and removed "extern" from table
-              definition.
-
- Description: Put "extern" back.
-
- Who: 						Date:
- Description:
+ Filename: q_plsf_3_tbl.h
 
 ------------------------------------------------------------------------------
  MODULE DESCRIPTION

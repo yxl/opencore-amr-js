@@ -28,59 +28,12 @@ terms listed above has been obtained from the copyright holder.
 ****************************************************************************************/
 /*
 
- Pathname: ./audio/gsm-amr/c/src/q_plsf_3.c
+ Filename: q_plsf_3.cpp
  Funtions: Vq_subvec4
            Test_Vq_subvec4
            Vq_subvec3
            Test_Vq_subvec3
            Q_plsf_3
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Updated template used to PV coding template. First attempt at
-          optimizing C code.
-
- Description: Updated modules per Phase 2/3 review comments. Updated
-          Vq_subvec3 pseudo-code to reflect the new restructured code.
-
- Description: Added setting of Overflow flag in inlined code.
-
- Description: Synchronized file with UMTS version 3.2.0. Updated coding
-              template. Removed unnecessary include files.
-
- Description: Replaced basic_op.h with the header file of the math functions
-              used in the file.
-
- Description: Made the following changes per comments from Phase 2/3 review:
-              1. Fixed typecasting issue with TI C compiler.
-              2. Optimized IF stament in Vq_subvec3() function.
-              3. Updated copyright year.
-
- Description: Removed redundancy in the Vq_subvec4 function.
-
- Description: Updated to accept new parameter, Flag *pOverflow.
-
- Description: Per review comments, added pOverflow flag description
- to the input/outputs section.
-
- Description: Corrected missed Overflow global variables -- changed to
- proper pOverflow.
-
- Description: Optimized all functions to further reduce clock cycle usage.
-              Updated copyright year.
-
- Description: Added left shift by 1 in line 1050 of Q_plsf_3().
-
- Description:  Replaced OSCL mem type functions and eliminated include
-               files that now are chosen by OSCL definitions
-
- Description:  Replaced "int" and/or "char" with OSCL defined types.
-
- Description: Added #ifdef __cplusplus around extern'ed table.
-
- Who:                           Date:
- Description:
 
 ------------------------------------------------------------------------------
  MODULE DESCRIPTION
@@ -249,22 +202,6 @@ Vq_subvec4(             // o: quantization index,            Q0
 }
 
 ------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
-
-------------------------------------------------------------------------------
  CAUTION [optional]
  [State any special notes, constraints or cautions for users of this function]
 
@@ -402,22 +339,6 @@ static Word16 Vq_subvec4( /* o: quantization index,            Q0  */
                  dico_size = dico_size)
    MODIFYING(nothing)
    RETURNING(index = tst_index4)
-
-------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
 
 ------------------------------------------------------------------------------
  CAUTION [optional]
@@ -575,22 +496,6 @@ Vq_subvec3(             // o: quantization index,            Q0
 }
 
 ------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
-
-------------------------------------------------------------------------------
  CAUTION [optional]
  [State any special notes, constraints or cautions for users of this function]
 
@@ -736,22 +641,6 @@ static Word16 Vq_subvec3( /* o: quantization index,            Q0  */
                  use_half = use_half)
    MODIFYING(nothing)
    RETURNING(index = tst_index3)
-
-------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
 
 ------------------------------------------------------------------------------
  CAUTION [optional]
@@ -979,29 +868,13 @@ void Q_plsf_3(
 }
 
 ------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
-
-------------------------------------------------------------------------------
  CAUTION [optional]
  [State any special notes, constraints or cautions for users of this function]
 
 ------------------------------------------------------------------------------
 */
 
-void Q_plsf_3(
+OSCL_EXPORT_REF void Q_plsf_3(
     Q_plsfState *st,    /* i/o: state struct                             */
     enum Mode mode,     /* i  : coder mode                               */
     Word16 *lsp1,       /* i  : 1st LSP vector                      Q15  */

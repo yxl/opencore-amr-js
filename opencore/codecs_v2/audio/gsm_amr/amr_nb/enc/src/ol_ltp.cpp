@@ -31,23 +31,9 @@ terms listed above has been obtained from the copyright holder.
 
 
 
- Pathname: ./audio/gsm-amr/c/src/ol_ltp.c
- Funtions: ol_ltp
+ Filename: ol_ltp.cpp
+ Functions: ol_ltp
 
-     Date: 04/18/2000
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Adding pOverflow to the functions to remove global variables.
-              These changes are needed for the EPOC releases. Cleaned up code.
-              Updated template.
-
- Description:  Replaced "int" and/or "char" with OSCL defined types.
-
- Description:
-
-------------------------------------------------------------------------------
 */
 
 /*----------------------------------------------------------------------------
@@ -170,22 +156,6 @@ int ol_ltp(
    }
    return 0;
 }
-
-------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
 
 ------------------------------------------------------------------------------
  CAUTION [optional]

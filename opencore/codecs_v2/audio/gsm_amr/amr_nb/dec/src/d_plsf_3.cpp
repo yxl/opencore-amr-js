@@ -31,7 +31,7 @@ terms listed above has been obtained from the copyright holder.
 
 
 
- Pathname: ./audio/gsm-amr/c/src/d_plsf_3.c
+ Filename: d_plsf_3.cpp
  Functions: D_plsf_3
 
  ------------------------------------------------------------------------------
@@ -81,28 +81,6 @@ terms listed above has been obtained from the copyright holder.
 
 
 ------------------------------------------------------------------------------
- RESOURCES USED
-   When the code is written for a specific target processor the
-     the resources used should be documented below.
-
- STACK USAGE: [stack count for this module] + [variable to represent
-          stack usage for each subroutine called]
-
-     where: [stack usage variable] = stack usage for [subroutine
-         name] (see [filename].ext)
-
- DATA MEMORY USED: x words
-
- PROGRAM MEMORY USED: x words
-
- CLOCK CYCLES: [cycle count equation for this module] + [variable
-           used to represent cycle count for each subroutine
-           called]
-
-     where: [cycle count variable] = cycle count for [subroutine
-        name] (see [filename].ext)
-
-------------------------------------------------------------------------------
 */
 
 
@@ -114,7 +92,7 @@ terms listed above has been obtained from the copyright holder.
 #include "basic_op.h"
 #include "lsp_lsf.h"
 #include "reorder.h"
-#include "copy.h"
+#include "oscl_mem.h"
 #include "q_plsf_3_tbl.h"
 
 
@@ -165,6 +143,7 @@ void D_plsf_3(
     Word16 bfi,        /* i  : bad frame indicator (set to 1 if a         */
     /*      bad frame is received)                     */
     Word16 * indice,   /* i  : quantization indices of 3 submatrices, Q0  */
+    CommonAmrTbls* common_amr_tbls, /* i : structure containing ptrs to read-only tables */
     Word16 * lsp1_q,   /* o  : quantized 1st LSP vector,              Q15 */
     Flag  *pOverflow   /* o : Flag set when overflow occurs               */
 )
@@ -175,6 +154,14 @@ void D_plsf_3(
 
     Word16 lsf1_r[M];
     Word16 lsf1_q[M];
+
+    const Word16* mean_lsf_3_ptr = common_amr_tbls->mean_lsf_3_ptr;
+    const Word16* pred_fac_3_ptr = common_amr_tbls->pred_fac_3_ptr;
+    const Word16* dico1_lsf_3_ptr = common_amr_tbls->dico1_lsf_3_ptr;
+    const Word16* dico2_lsf_3_ptr = common_amr_tbls->dico2_lsf_3_ptr;
+    const Word16* dico3_lsf_3_ptr = common_amr_tbls->dico3_lsf_3_ptr;
+    const Word16* mr515_3_lsf_ptr = common_amr_tbls->mr515_3_lsf_ptr;
+    const Word16* mr795_1_lsf_ptr = common_amr_tbls->mr795_1_lsf_ptr;
 
     if (bfi != 0)   /* if bad frame */
     {
@@ -191,12 +178,12 @@ void D_plsf_3(
 
             index =
                 mult(
-                    mean_lsf_3[i],
+                    mean_lsf_3_ptr[i],
                     ONE_ALPHA,
                     pOverflow);
 
             lsf1_q[i] =
-                add(
+                add_16(
                     index,
                     temp,
                     pOverflow);
@@ -212,12 +199,12 @@ void D_plsf_3(
                 temp =
                     mult(
                         st->past_r_q[i],
-                        pred_fac_3[i],
+                        pred_fac_3_ptr[i],
                         pOverflow);
 
                 temp =
-                    add(
-                        mean_lsf_3[i],
+                    add_16(
+                        mean_lsf_3_ptr[i],
                         temp,
                         pOverflow);
 
@@ -236,8 +223,8 @@ void D_plsf_3(
                 /* temp  = mean_lsf[i] +  past_r2_q[i]; */
 
                 temp =
-                    add(
-                        mean_lsf_3[i],
+                    add_16(
+                        mean_lsf_3_ptr[i],
                         st->past_r_q[i],
                         pOverflow);
 
@@ -264,12 +251,12 @@ void D_plsf_3(
         const Word16 *p_dico;
 
 
-        p_cb2 = dico2_lsf_3;    /* size DICO2_SIZE*3 */
+        p_cb2 = dico2_lsf_3_ptr;    /* size DICO2_SIZE*3 */
 
         if ((mode == MR475) || (mode == MR515))
         {   /* MR475, MR515 */
-            p_cb1 = dico1_lsf_3;    /* size DICO1_SIZE*3 */
-            p_cb3 = mr515_3_lsf;    /* size MR515_3_SIZE*4 */
+            p_cb1 = dico1_lsf_3_ptr;    /* size DICO1_SIZE*3 */
+            p_cb3 = mr515_3_lsf_ptr;    /* size MR515_3_SIZE*4 */
 
             index_limit_1 = (DICO1_SIZE - 1) * 3;
             index_limit_3 = (MR515_3_SIZE - 1) * 4;
@@ -277,8 +264,8 @@ void D_plsf_3(
         }
         else if (mode == MR795)
         {   /* MR795 */
-            p_cb1 = mr795_1_lsf;    /* size MR795_1_SIZE*3 */
-            p_cb3 = dico3_lsf_3;    /* size DICO3_SIZE*4 */
+            p_cb1 = mr795_1_lsf_ptr;    /* size MR795_1_SIZE*3 */
+            p_cb3 = dico3_lsf_3_ptr;    /* size DICO3_SIZE*4 */
 
             index_limit_1 = (MR795_1_SIZE - 1) * 3;
             index_limit_3 = (DICO3_SIZE - 1) * 4;
@@ -286,8 +273,8 @@ void D_plsf_3(
         }
         else
         {   /* MR59, MR67, MR74, MR102, MRDTX */
-            p_cb1 = dico1_lsf_3;    /* size DICO1_SIZE*3 */
-            p_cb3 = dico3_lsf_3;    /* size DICO3_SIZE*4 */
+            p_cb1 = dico1_lsf_3_ptr;    /* size DICO1_SIZE*3 */
+            p_cb3 = dico3_lsf_3_ptr;    /* size DICO3_SIZE*4 */
 
             index_limit_1 = (DICO1_SIZE - 1) * 3;
             index_limit_3 = (DICO3_SIZE - 1) * 4;
@@ -359,17 +346,17 @@ void D_plsf_3(
                 temp =
                     mult(
                         st->past_r_q[i],
-                        pred_fac_3[i],
+                        pred_fac_3_ptr[i],
                         pOverflow);
 
                 temp =
-                    add(
-                        mean_lsf_3[i],
+                    add_16(
+                        mean_lsf_3_ptr[i],
                         temp,
                         pOverflow);
 
                 lsf1_q[i] =
-                    add(
+                    add_16(
                         lsf1_r[i],
                         temp,
                         pOverflow);
@@ -382,13 +369,13 @@ void D_plsf_3(
             for (i = 0; i < M; i++)
             {
                 temp =
-                    add(
-                        mean_lsf_3[i],
+                    add_16(
+                        mean_lsf_3_ptr[i],
                         st->past_r_q[i],
                         pOverflow);
 
                 lsf1_q[i] =
-                    add(
+                    add_16(
                         lsf1_r[i],
                         temp,
                         pOverflow);
@@ -407,10 +394,10 @@ void D_plsf_3(
         M,
         pOverflow);
 
-    Copy(
+    oscl_memmove(
+        (void *)st->past_lsf_q,
         lsf1_q,
-        st->past_lsf_q,
-        M);
+        M*sizeof(*lsf1_q));
 
     /*  convert LSFs to the cosine domain */
 
@@ -464,22 +451,6 @@ void D_plsf_3(
  PSEUDO-CODE
 
 ------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
-
-------------------------------------------------------------------------------
  CAUTION [optional]
  [State any special notes, constraints or cautions for users of this function]
 
@@ -487,10 +458,11 @@ void D_plsf_3(
 */
 void Init_D_plsf_3(
     D_plsfState *st,      /* i/o: State struct                */
-    Word16       index    /* i  : past_rq_init[] index [0, 7] */)
+    Word16       index,   /* i  : past_rq_init[] index [0, 7] */
+    const Word16* past_rq_init_ptr /* ptr to read-only table */)
 {
-    Copy(
-        &past_rq_init[index * M],
-        st->past_r_q,
-        M);
+    oscl_memmove(
+        (void *)st->past_r_q,
+        &past_rq_init_ptr[index * M],
+        M*sizeof(*past_rq_init_ptr));
 }

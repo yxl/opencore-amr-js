@@ -31,22 +31,8 @@ terms listed above has been obtained from the copyright holder.
 
 
 
- Pathname: ./audio/gsm-amr/c/src/q_gain_p.c
+ Filename: q_gain_p.cpp
  Functions: q_gain_pitch
-
-     Date: 02/04/2002
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Updated template used to PV coding template.
- Changed to accept the pOverflow flag for EPOC compatibility.
-
- Description:  Replaced "int" and/or "char" with OSCL defined types.
-
- Description: Added #ifdef __cplusplus around extern'ed table.
-
- Description:
 
 ------------------------------------------------------------------------------
  MODULE DESCRIPTION
@@ -97,7 +83,6 @@ extern "C"
     ; EXTERNAL GLOBAL STORE/BUFFER/POINTER REFERENCES
     ; Declare variables used in this module but defined elsewhere
     ----------------------------------------------------------------------------*/
-    extern const Word16 qua_gain_pitch[NB_QUA_PITCH];
 
     /*--------------------------------------------------------------------------*/
 #ifdef __cplusplus
@@ -154,22 +139,6 @@ extern "C"
 
 
 ------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
-
-------------------------------------------------------------------------------
  CAUTION [optional]
  [State any special notes, constraints or cautions for users of this function]
 
@@ -182,6 +151,7 @@ Word16 q_gain_pitch(    /* Return index of quantization                      */
     Word16 *gain,       /* i/o: Pitch gain (unquant/quant),              Q14 */
     Word16 gain_cand[], /* o  : pitch gain candidates (3),   MR795 only, Q14 */
     Word16 gain_cind[], /* o  : pitch gain cand. indices (3),MR795 only, Q0  */
+    const Word16* qua_gain_pitch_ptr, /* i : ptr to read-only table          */
     Flag   *pOverflow
 )
 {
@@ -190,16 +160,16 @@ Word16 q_gain_pitch(    /* Return index of quantization                      */
     Word16 err;
     Word16 err_min;
 
-    err_min = sub(*gain, qua_gain_pitch[0], pOverflow);
+    err_min = sub(*gain, qua_gain_pitch_ptr[0], pOverflow);
     err_min = abs_s(err_min);
 
     index = 0;
 
     for (i = 1; i < NB_QUA_PITCH; i++)
     {
-        if (qua_gain_pitch[i] <= gp_limit)
+        if (qua_gain_pitch_ptr[i] <= gp_limit)
         {
-            err = sub(*gain, qua_gain_pitch[i], pOverflow);
+            err = sub(*gain, qua_gain_pitch_ptr[i], pOverflow);
             err = abs_s(err);
 
             if (err < err_min)
@@ -226,7 +196,7 @@ Word16 q_gain_pitch(    /* Return index of quantization                      */
         else
         {
             if (index == (NB_QUA_PITCH - 1) ||
-                    (qua_gain_pitch[index+1] > gp_limit))
+                    (qua_gain_pitch_ptr[index+1] > gp_limit))
             {
                 ii = index - 2;
             }
@@ -240,12 +210,12 @@ Word16 q_gain_pitch(    /* Return index of quantization                      */
         for (i = 0; i < 3; i++)
         {
             gain_cind[i] = ii;
-            gain_cand[i] = qua_gain_pitch[ii];
+            gain_cand[i] = qua_gain_pitch_ptr[ii];
 
-            ii = add(ii, 1, pOverflow);
+            ii += 1;
         }
 
-        *gain = qua_gain_pitch[index];
+        *gain = qua_gain_pitch_ptr[index];
     }
     else
     {
@@ -256,11 +226,11 @@ Word16 q_gain_pitch(    /* Return index of quantization                      */
         if (mode == MR122)
         {
             /* clear 2 LSBits */
-            *gain = qua_gain_pitch[index] & 0xFFFC;
+            *gain = qua_gain_pitch_ptr[index] & 0xFFFC;
         }
         else
         {
-            *gain = qua_gain_pitch[index];
+            *gain = qua_gain_pitch_ptr[index];
         }
     }
     return index;

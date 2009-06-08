@@ -31,19 +31,7 @@ terms listed above has been obtained from the copyright holder.
 
 
 
- Filename: /audio/gsm_amr/c/include/g_code.h
-
-
-     Date: 01/31/2002
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
-
- Description: Moved _cplusplus #ifdef after Include section.
-
- Description:
-
+ Filename: g_code.h
 
 ------------------------------------------------------------------------------
  INCLUDE DESCRIPTION

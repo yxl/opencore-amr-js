@@ -28,62 +28,9 @@ terms listed above has been obtained from the copyright holder.
 ****************************************************************************************/
 /*
 
- Pathname: ./audio/gsm-amr/c/src/lsp_az.c
- Funtions: Get_lsp_pol
+ Filename: lsp_az.cpp
+ Functions: Get_lsp_pol
            Lsp_Az
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Updated template used to PV coding template. First attempt at
-          optimizing C code.
-
- Description: Deleted all Local stores needed/modified. Optimized Lsp_Az
-          function by getting rid of call to L_shr_r function.
-
- Description: Updated file per comments gathered from Phase 2/3 review.
-
- Description: Added setting of Overflow flag in the inlined code.
-
- Description: 1. Optimized Lsp_Az function code.
-              2. Changed Input/Output definitions by adding Word type.
-
- Description: Made changes based on review meeting.
-              1. Removed pseudocode.
-
- Description: Synchronized file with UMTS version 3.2.0. Updated coding
-              template. Removed unnecessary include files.
-
- Description: Replaced basic_op.h and oper_32b.h with the header files of the
-              math functions used in the file.
-
- Description: Modified to pass overflow flag through to L_add and L_sub.  The
- flag is passed back to the calling function by pointer reference.
-
- Description: Removed the id line since it was removed in the header file by
-              Ken.
-
- Description: Added the write-only variable, pOverflow, to the inputs section.
-
- Description:  For lsp_az() and Get_lsp_pol()
-              1. Eliminated unused include files.
-              2. Replaced array addressing by pointers
-              3. Eliminated math operations that unnecessary checked for
-                 saturation, in some cases this by shifting before adding and
-                 in other cases by evaluating the operands
-              4. Unrolled loops to speed up processing
-              5. Replaced mpy_32_16 by multpilcations in place
-              6. Eliminated if-else statements for sign extension when
-                 right-shifting
-
- Description:  Added casting to eliminate warnings, and eliminated include
-               files that now are chosen by OSCL definitions
-
- Description:  Replaced "int" and/or "char" with defined types.
-               Added proper casting (Word32) to some left shifting operations
-
- Who:                           Date:
- Description:
 
 ------------------------------------------------------------------------------
  MODULE DESCRIPTION
@@ -227,22 +174,6 @@ static void Get_lsp_pol (Word16 *lsp, Word32 *f)
 }
 
 ------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
-
-------------------------------------------------------------------------------
  CAUTION [optional]
  [State any special notes, constraints or cautions for users of this function]
 
@@ -297,100 +228,6 @@ static void Get_lsp_pol(
 /****************************************************************************/
 
 
-/*
-------------------------------------------------------------------------------
- FUNCTION NAME: Get_lsp_pol_wrapper
-------------------------------------------------------------------------------
- INPUT AND OUTPUT DEFINITIONS
-
- Inputs:
-    lsp = pointer to the buffer containing the line spectral pairs (LSP)
-          of type Word16
-    f = pointer to the polynomial of type Word32 to be generated
-
-    pOverflow  = pointer set in case where one of the operations overflows.
-                 [data type Pointer to Flag]
-
- Outputs:
-    buffer pointed to by f contains the polynomial generated
-
-    pOverflow  = pointer set in case where one of the operations overflows.
-                 [data type Pointer to Flag]
-
- Returns:
-    None
-
- Global Variables Used:
-    None
-
- Local Variables Needed:
-    None
-
-------------------------------------------------------------------------------
- FUNCTION DESCRIPTION
-
- This function provides external access to the static function Get_lsp_pol.
-
-------------------------------------------------------------------------------
- REQUIREMENTS
-
- None
-
-------------------------------------------------------------------------------
- REFERENCES
-
- None
-
-------------------------------------------------------------------------------
- PSEUDO-CODE
-
- CALL Get_lsp_pol(lsp = lsp_ptr
-                  f = f_ptr )
-   MODIFYING(nothing)
-   RETURNING(nothing)
-
-------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
-
-------------------------------------------------------------------------------
- CAUTION [optional]
- [State any special notes, constraints or cautions for users of this function]
-
-------------------------------------------------------------------------------
-*/
-
-void Get_lsp_pol_wrapper(
-    Word16 *lsp,
-    Word32 *f,
-    Flag   *pOverflow)
-{
-    /*----------------------------------------------------------------------------
-     CALL Get_lsp_pol(lsp = lsp_ptr
-              f = f_ptr )
-    ----------------------------------------------------------------------------*/
-    Get_lsp_pol(lsp, f, pOverflow);
-
-    /*----------------------------------------------------------------------------
-       MODIFYING(nothing)
-       RETURNING(nothing)
-    ----------------------------------------------------------------------------*/
-    return;
-}
-
-/****************************************************************************/
 
 
 /*
@@ -483,29 +320,13 @@ void Lsp_Az (
 }
 
 ------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
-
-------------------------------------------------------------------------------
  CAUTION [optional]
  [State any special notes, constraints or cautions for users of this function]
 
 ------------------------------------------------------------------------------
 */
 
-void Lsp_Az(
+OSCL_EXPORT_REF void Lsp_Az(
     Word16 lsp[],        /* (i)  : line spectral frequencies            */
     Word16 a[],          /* (o)  : predictor coefficients (order = 10)  */
     Flag  *pOverflow     /* (o)  : overflow flag                        */

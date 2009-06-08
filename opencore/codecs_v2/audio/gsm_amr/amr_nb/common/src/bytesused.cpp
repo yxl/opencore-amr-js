@@ -28,22 +28,7 @@ terms listed above has been obtained from the copyright holder.
 ****************************************************************************************/
 /*
 
- Pathname: ./audio/gsm-amr/c/src/BytesUsed.c
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Corrected entries for all SID frames and updated function
-              description. Updated copyright year.
-
- Description: Added #ifdef __cplusplus and removed "extern" from table
-              definition. Removed corresponding header file from Include
-              section.
-
- Description: Put "extern" back.
-
- Who:                       Date:
- Description:
+ Filename: bytesused.cpp
 
 ------------------------------------------------------------------------------
  INPUT AND OUTPUT DEFINITIONS
@@ -94,28 +79,6 @@ terms listed above has been obtained from the copyright holder.
 
 
 ------------------------------------------------------------------------------
- RESOURCES USED
-   When the code is written for a specific target processor the
-     the resources used should be documented below.
-
- STACK USAGE: [stack count for this module] + [variable to represent
-          stack usage for each subroutine called]
-
-     where: [stack usage variable] = stack usage for [subroutine
-         name] (see [filename].ext)
-
- DATA MEMORY USED: x words
-
- PROGRAM MEMORY USED: x words
-
- CLOCK CYCLES: [cycle count equation for this module] + [variable
-           used to represent cycle count for each subroutine
-           called]
-
-     where: [cycle count variable] = cycle count for [subroutine
-        name] (see [filename].ext)
-
-------------------------------------------------------------------------------
 */
 
 
@@ -152,7 +115,7 @@ extern "C"
     ; LOCAL STORE/BUFFER/POINTER DEFINITIONS
     ; Variable declaration - defined here and used outside this module
     ----------------------------------------------------------------------------*/
-    const short BytesUsed[16] =
+    extern const short BytesUsed[16] =
     {
         13, /* 4.75 */
         14, /* 5.15 */

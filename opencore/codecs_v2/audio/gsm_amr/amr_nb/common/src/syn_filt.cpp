@@ -27,63 +27,7 @@ Permission to distribute, modify and use this file under the standard license
 terms listed above has been obtained from the copyright holder.
 ****************************************************************************************/
 /*
- Pathname: ./audio/gsm-amr/c/src/syn_filt.c
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Making changes based on comments from the review meeting.
-
- Description: Added typedef to Input/Output Definition section.
-
- Description: Synchronized file with UMTS version 3.2.0. Updated coding
-              template.
-
- Description: Fixed typecasting issue with the TI C compiler.
-
- Description: Modified FOR loops to count down.
-
- Description: Modified FOR loop to count up again so that the correct values
-              are stored in the tmp buffer. Updated copyright year.
-
- Description:
-        - Modified for loop and introduced pointers to avoid adding
-          offsets
-        - Eliminated check for saturation given that the max values of input
-          data and coefficients will not saturate the multiply and
-          accumulation
-        - eliminated memcpy to update history buffer in every pass. This is
-          done now just updating the pointers.
-
- Description:
-              1. Eliminated unused include files.
-              2. Unrolled loops to process twice as many samples as before,
-                 this saves on memory accesses to the vector coeff. a[] and
-                 elements in the history buffer of this recursive filter
-
- Description:
-              1. Added overflow check inside both loops. (this is needed just
-                 to satisfy bit exactness on the decoder, a faster
-                 implementation will add an extra shift, do the same,
-                 but will not be bit exact, and it may have better audio
-                 quality because will avoid clipping)
-              2. Added include file for constant definitions
-
- Description:  Replaced OSCL mem type functions and eliminated include
-               files that now are chosen by OSCL definitions
-
- Description:  Replaced "int" and/or "char" with OSCL defined types.
-
- Description: Changed round function name to pv_round to avoid conflict with
-              round function in C standard library.
-
- Description: Using fxp_arithmetic.h that includes inline assembly functions
-              for ARM and linux-arm.
-
- Description: Replacing fxp_arithmetic.h with basic_op.h.
-
- Who:                           Date:
- Description:
+ Filename: syn_filt.cpp
 
 ------------------------------------------------------------------------------
 */
@@ -222,29 +166,13 @@ void Syn_filt (
 }
 
 ------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
-
-------------------------------------------------------------------------------
  CAUTION [optional]
  [State any special notes, constraints or cautions for users of this function]
 
 ------------------------------------------------------------------------------
 */
 
-void Syn_filt(
+OSCL_EXPORT_REF void Syn_filt(
     Word16 a[],     /* (i)   : a[M+1] prediction coefficients   (M=10)  */
     Word16 x[],     /* (i)   : input signal                             */
     Word16 y[],     /* (o)   : output signal                            */

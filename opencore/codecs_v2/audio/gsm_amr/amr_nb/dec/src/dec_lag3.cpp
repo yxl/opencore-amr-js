@@ -31,30 +31,8 @@ terms listed above has been obtained from the copyright holder.
 
 
 
- Pathname: ./audio/gsm-amr/c/src/dec_lag3.c
+ Filename: dec_lag3.cpp
  Functions: Dec_lag3
-
-     Date: 01/31/2002
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description:
- (1) Updated to accept new parameter, Flag *pOverflow.
- (2) Placed file in the proper PV Software template.
-
- Description:
- (1) Removed "count.h" and "basic_op.h" and replaced with individual include
-     files (add.h, sub.h, etc.)
-
- Description:
- (1) Removed optimization -- mult(i, 3, pOverflow) is NOT the same as adding
-     i to itself 3 times.  The reason is because the mult function does a
-     right shift by 15, which will obliterate smaller numbers.
-
- Description:  Replaced "int" and/or "char" with OSCL defined types.
-
- Description:
 
  ------------------------------------------------------------------------------
  INPUT AND OUTPUT DEFINITIONS
@@ -112,28 +90,6 @@ terms listed above has been obtained from the copyright holder.
  PSEUDO-CODE
 
 
-
-------------------------------------------------------------------------------
- RESOURCES USED
-   When the code is written for a specific target processor the
-     the resources used should be documented below.
-
- STACK USAGE: [stack count for this module] + [variable to represent
-          stack usage for each subroutine called]
-
-     where: [stack usage variable] = stack usage for [subroutine
-         name] (see [filename].ext)
-
- DATA MEMORY USED: x words
-
- PROGRAM MEMORY USED: x words
-
- CLOCK CYCLES: [cycle count equation for this module] + [variable
-           used to represent cycle count for each subroutine
-           called]
-
-     where: [cycle count variable] = cycle count for [subroutine
-        name] (see [filename].ext)
 
 ------------------------------------------------------------------------------
 */
@@ -212,30 +168,18 @@ void Dec_lag3(Word16 index,     /* i : received pitch index                 */
                     10923,
                     pOverflow);
 
-            i =
-                add(
-                    tmp_lag,
-                    19,
-                    pOverflow);
+            i = tmp_lag + 19;
 
             *T0 = i;
 
             /* i = 3 * (*T0) */
 
-            i = add(i, i, pOverflow);
-            i = add(i, *T0, pOverflow);
+            i <<=  1;
+            i += *T0;
 
-            tmp_lag =
-                sub(
-                    index,
-                    i,
-                    pOverflow);
+            tmp_lag = index - i;
 
-            *T0_frac =
-                add(
-                    tmp_lag,
-                    58,
-                    pOverflow);
+            *T0_frac = tmp_lag + 58;
         }
         else
         {
@@ -253,44 +197,21 @@ void Dec_lag3(Word16 index,     /* i : received pitch index                 */
 
             /* 'normal' decoding: either with 5 or 6 bit resolution */
 
-            i =
-                add(
-                    index,
-                    2,
-                    pOverflow);
+            i = index + 2;
 
-            i =
-                mult(
-                    i,
-                    10923,
-                    pOverflow);
+            i = ((Word32) i * 10923) >> 15;
 
-            i =
-                sub(
-                    i,
-                    1,
-                    pOverflow);
 
-            *T0 =
-                add(
-                    i,
-                    t0_min,
-                    pOverflow);
+            i -= 1;
+
+            *T0 = i + t0_min;
 
             /* i = 3* (*T0) */
-            i = add(add(i, i, pOverflow), i, pOverflow);
+            i = i + (i << 1);
 
-            tmp_lag =
-                sub(
-                    index,
-                    2,
-                    pOverflow);
+            tmp_lag = index - 2;
 
-            *T0_frac =
-                sub(
-                    tmp_lag,
-                    i,
-                    pOverflow);
+            *T0_frac = tmp_lag - i;
         }
         else
         {
@@ -307,41 +228,21 @@ void Dec_lag3(Word16 index,     /* i : received pitch index                 */
 
             if (i > 5)
             {
-                tmp_lag =
-                    add(
-                        t0_min,
-                        5,
-                        pOverflow);
+                tmp_lag = t0_min + 5;
             }
 
-            i =
-                sub(
-                    t0_max,
-                    tmp_lag,
-                    pOverflow);
+            i = t0_max - tmp_lag;
 
             if (i > 4)
             {
-                tmp_lag =
-                    sub(
-                        t0_max,
-                        4,
-                        pOverflow);
+                tmp_lag = t0_max - 4;
             }
 
             if (index < 4)
             {
-                i =
-                    sub(
-                        tmp_lag,
-                        5,
-                        pOverflow);
+                i = tmp_lag - 5;
 
-                *T0 =
-                    add(
-                        i,
-                        index,
-                        pOverflow);
+                *T0 = i + index;
 
                 *T0_frac = 0;
             }
@@ -351,50 +252,26 @@ void Dec_lag3(Word16 index,     /* i : received pitch index                 */
                 if (index < 12)
                 {
                     i = index - 5;
+                    i = ((Word32) i * 10923) >> 15;
 
-                    i = mult(
-                            i,
-                            10923,
-                            pOverflow);
 
                     i--;
 
-                    *T0 = add(
-                              i,
-                              tmp_lag,
-                              pOverflow);
+                    *T0 =  i + tmp_lag;
 
-                    i = add(
-                            add(
-                                i,
-                                i,
-                                pOverflow),
-                            i,
-                            pOverflow);
+                    i = i + (i << 1);
 
                     tmp_lag = index - 9;
 
-                    *T0_frac =
-                        sub(
-                            tmp_lag,
-                            i,
-                            pOverflow);
+                    *T0_frac = tmp_lag - i;
                 }
                 else
                 {
                     i = index - 12;
 
-                    i =
-                        add(
-                            i,
-                            tmp_lag,
-                            pOverflow);
+                    i = i + tmp_lag;
 
-                    *T0 =
-                        add(
-                            i,
-                            1,
-                            pOverflow);
+                    *T0 = i + 1;
 
                     *T0_frac = 0;
                 }

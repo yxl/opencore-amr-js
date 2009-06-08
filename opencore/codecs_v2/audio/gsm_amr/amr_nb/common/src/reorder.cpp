@@ -27,22 +27,7 @@ Permission to distribute, modify and use this file under the standard license
 terms listed above has been obtained from the copyright holder.
 ****************************************************************************************/
 /*
- Filename: /audio/gsm_amr/c/src/reorder.c
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description:
-              1. Eliminated unused include file add.h.
-              2. Replaced array addressing by pointers
-              3. Eliminated math operations that unnecessary checked for
-                 saturation
-              4. Replaced loop counter with decrement loops
-
- Description:  Replaced "int" and/or "char" with OSCL defined types.
-
- Who:                       Date:
- Description:
+ Filename: reorder.cpp
 
 ------------------------------------------------------------------------------
 */
@@ -145,22 +130,6 @@ void Reorder_lsf (
 }
 
 ------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
-
-------------------------------------------------------------------------------
  CAUTION [optional]
  [State any special notes, constraints or cautions for users of this function]
 
@@ -170,7 +139,7 @@ void Reorder_lsf (
 /*----------------------------------------------------------------------------
 ; FUNCTION CODE
 ----------------------------------------------------------------------------*/
-void Reorder_lsf(
+OSCL_EXPORT_REF void Reorder_lsf(
     Word16 *lsf,        /* (i/o)    : vector of LSFs   (range: 0<=val<=0.5) */
     Word16 min_dist,    /* (i)      : minimum required distance             */
     Word16 n,           /* (i)      : LPC order                             */

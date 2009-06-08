@@ -28,26 +28,7 @@ terms listed above has been obtained from the copyright holder.
 ****************************************************************************************/
 /*
 
- Filename: /audio/gsm_amr/c/include/mult.h
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Created separate header file for mult function.
-
- Description: Changed prototype of the mult() function. Instead of using global
-			  a pointer to overflow flag is now passed into the function.
-
- Description: Updated copyright information.
-			  Updated variable name from "overflow" to "pOverflow" to match
-			  with original function declaration.
-
- Description: Moved _cplusplus #ifdef after Include section.
-
- Description: Providing support for ARM and Linux-ARM assembly instructions.
-
- Who:						Date:
- Description:
+ Filename: mult.h
 
 ------------------------------------------------------------------------------
  INCLUDE DESCRIPTION
@@ -58,14 +39,14 @@ terms listed above has been obtained from the copyright holder.
 ------------------------------------------------------------------------------
 */
 
-#ifndef	MULT_H
-#define	MULT_H
+#ifndef MULT_H
+#define MULT_H
 
 /*----------------------------------------------------------------------------
 ; INCLUDES
 ----------------------------------------------------------------------------*/
 
-#include	"basicop_malloc.h"
+#include    "basicop_malloc.h"
 
 /*--------------------------------------------------------------------------*/
 #ifdef __cplusplus
@@ -186,5 +167,5 @@ extern "C"
 }
 #endif
 
-#endif	/* _MULT_H_ */
+#endif  /* _MULT_H_ */
 

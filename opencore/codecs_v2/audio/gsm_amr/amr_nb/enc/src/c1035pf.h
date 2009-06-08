@@ -31,20 +31,7 @@ terms listed above has been obtained from the copyright holder.
 
 
 
- Filename: /audio/gsm_amr/c/include/c1035pf.h
-
-     Date: 09/28/2000
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Updated template. Updated function prototype for
-              code_10i40_35bits(). Added extern declaration for gray[] defined
-              in gray_tbl.c
-
- Description: Moved _cplusplus #ifdef after Include section.
-
- Description:
+ Filename: c1035pf.h
 
 ------------------------------------------------------------------------------
  INCLUDE DESCRIPTION
@@ -85,7 +72,7 @@ extern "C"
     ; EXTERNAL VARIABLES REFERENCES
     ; Declare variables used in this module but defined elsewhere
     ----------------------------------------------------------------------------*/
-    extern Word16 gray[];
+
     /*----------------------------------------------------------------------------
     ; SIMPLE TYPEDEF'S
     ----------------------------------------------------------------------------*/
@@ -111,6 +98,7 @@ extern "C"
         Word16 cod[],   /* (o)   : algebraic (fixed) codebook excitation        */
         Word16 y[],     /* (o)   : filtered fixed codebook excitation           */
         Word16 indx[],  /* (o)   : index of 10 pulses (sign + position)         */
+        const Word16* gray_ptr, /* (i) : ptr to read-only table                 */
         Flag *pOverflow /* (i/o) : overflow Flag                                */
     );
 

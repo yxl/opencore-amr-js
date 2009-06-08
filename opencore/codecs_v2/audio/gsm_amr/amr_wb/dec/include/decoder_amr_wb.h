@@ -27,9 +27,9 @@ Permission to distribute, modify and use this file under the standard license
 terms listed above has been obtained from the copyright holder.
 ****************************************************************************************/
 //////////////////////////////////////////////////////////////////////////////////
-//																				//
-//	File: decoder_amr_wb.h	                                                    //
-//																				//
+//                                                                              //
+//  File: decoder_amr_wb.h                                                      //
+//                                                                              //
 //////////////////////////////////////////////////////////////////////////////////
 
 #ifndef _DECODER_AMR_WB_H

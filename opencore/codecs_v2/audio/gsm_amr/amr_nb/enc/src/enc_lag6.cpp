@@ -31,25 +31,7 @@ terms listed above has been obtained from the copyright holder.
 
 
 
- Pathname: ./audio/gsm-amr/c/src/enc_lag6.c
- Functions:
-
-     Date: 02/05/2002
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Updated template used to PV coding template.
- Changed to accept the pOverflow flag for EPOC compatibility.
-
- Description:
- (1) Removed optimization -- mult(i, 6, pOverflow) is NOT the same as adding
-     i to itself 6 times.  The reason is because the mult function does a
-     right shift by 15, which will obliterate smaller numbers.
-
- Description:  Replaced "int" and/or "char" with OSCL defined types.
-
- Description:
+ Filename: enc_lag6.cpp
 
 ------------------------------------------------------------------------------
  MODULE DESCRIPTION
@@ -161,22 +143,6 @@ terms listed above has been obtained from the copyright holder.
 
 
 ------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
-
-------------------------------------------------------------------------------
  CAUTION [optional]
  [State any special notes, constraints or cautions for users of this function]
 
@@ -201,13 +167,13 @@ Word16 Enc_lag6(         /* o : Return index of encoding             */
         if (T0 <= 94)
         {
             /* index = T0*6 - 105 + T0_frac */
-            i = 6 * T0 - 105;
+            i = (T0 << 3) - (T0 << 1) - 105;
 
-            index = add(i, T0_frac, pOverflow);
+            index = i + T0_frac;
         }
         else
         {
-            index = add(T0, 368, pOverflow);
+            index = T0 + 368;
         }
 
     }
@@ -215,15 +181,12 @@ Word16 Enc_lag6(         /* o : Return index of encoding             */
         /* if second or fourth subframe */
     {
         /* index = 6*(T0-T0_min) + 3 + T0_frac  */
-        temp = sub(T0, T0_min, pOverflow);
+        temp = (T0 - T0_min);
 
-        i = add(temp, temp, pOverflow);
-        i = add(temp, i, pOverflow);
-        i = add(i, i, pOverflow);
+        i = (temp << 3) - (temp << 1);
+        i += 3;
 
-        i = add(i, 3, pOverflow);
-
-        index = add(i, T0_frac, pOverflow);
+        index = i + T0_frac;
     }
 
     return index;

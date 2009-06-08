@@ -33,14 +33,6 @@ terms listed above has been obtained from the copyright holder.
 
  Filename: get_amr_wb_bits.cpp
 
-     Date: 05/08/2007
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
-
- Description:
-
 ------------------------------------------------------------------------------
  INPUT AND OUTPUT DEFINITIONS
 

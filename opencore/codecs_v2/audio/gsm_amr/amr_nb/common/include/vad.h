@@ -51,8 +51,8 @@ terms listed above has been obtained from the copyright holder.
 ********************************************************************************
 */
 
-#include "vad1.h"	/* for VAD option 1 */
-#include "vad2.h"	/* for VAD option 2 */
+#include "vad1.h"   /* for VAD option 1 */
+#include "vad2.h"   /* for VAD option 2 */
 
 /*
 ********************************************************************************
@@ -66,7 +66,7 @@ terms listed above has been obtained from the copyright holder.
 ********************************************************************************
 */
 
-#ifndef	VAD2
+#ifndef VAD2
 #define vadState vadState1
 #else
 #define vadState vadState2

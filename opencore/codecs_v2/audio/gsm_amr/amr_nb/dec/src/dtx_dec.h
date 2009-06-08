@@ -31,18 +31,7 @@ terms listed above has been obtained from the copyright holder.
 
 
 
- Filename: /audio/gsm_amr/c/include/dtx_dec.h
-
-     Date: 02/06/2002
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description:  Replaced "int" and/or "char" with OSCL defined types.
-
- Description: Moved _cplusplus #ifdef after Include section.
-
- Description:
+ Filename: dtx_dec.h
 
 ------------------------------------------------------------------------------
  INCLUDE DESCRIPTION
@@ -162,6 +151,7 @@ extern "C"
         enum DTXStateType new_state,     /* i   : new DTX state                   */
         enum Mode mode,                  /* i   : AMR mode                        */
         Word16 parm[],                   /* i   : Vector of synthesis parameters  */
+        CommonAmrTbls* common_amr_tbls,  /* i   : Ptr to struct of table ptrs     */
         Word16 synth[],                  /* o   : synthesised speech              */
         Word16 A_t[],                    /* o   : decoded LP filter in 4 subframes*/
         Flag   *pOverflow

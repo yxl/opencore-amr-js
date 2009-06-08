@@ -31,16 +31,7 @@ terms listed above has been obtained from the copyright holder.
 
 
 
- Filename: /audio/gsm_amr/c/include/a_refl.h
-
-     Date: 08/11/2000
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Moved _cplusplus #ifdef after Include section.
-
- Description:
+ Filename: a_refl.h
 
 ------------------------------------------------------------------------------
  INCLUDE DESCRIPTION

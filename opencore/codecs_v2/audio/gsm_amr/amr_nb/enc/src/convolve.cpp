@@ -31,48 +31,7 @@ terms listed above has been obtained from the copyright holder.
 
 
 
- Pathname: ./audio/gsm-amr/c/src/convolve.c
-
-     Date: 06/19/2000
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Optimize for speed. Update to code template.
-
- Description: Added author name and date, fixed tabs, and added missing
-          sections. Updated Input/Output section.
-
- Description: Optimized code by calculating two convolution sums per iteration
-          of the outer loop, thereby, decreasing outer loop count by 2.
-          Updated input/output definitions to be the same as the assembly
-          file (convolve.asm). Left Pseudo-code section blank.
-
- Description: Deleted semi-colon in the Pointers modified section.
-
- Description: Synchronized file with UMTS version 3.2.0. Updated coding
-              template. Removed unnecessary include files.
-
- Description: Made the following changes per comments from Phase 2/3 review:
-              1. Fixed typecasting issue with TI C compiler.
-              2. Modified FOR loop to count down, wherever applicable.
-
- Description: Made the following changes
-              1. Unrolled the correlation loop.
-              2. Performed 2 correlation per pass per sample to avoid recalling
-                 the same data twice.
-              3. Eliminated math operations that check for saturation.
-
- Description:
-              1. Modified loop counter, extra unrolling did speed up code
-
- Description:  Replaced "int" and/or "char" with OSCL defined types.
-
- Description: Using inlines from fxp_arithmetic.h .
-
- Description: Replacing fxp_arithmetic.h with basic_op.h.
-
- Description:
+ Filename: convolve.cpp
 
 ------------------------------------------------------------------------------
 */
@@ -181,22 +140,6 @@ void Convolve (
 
     return;
 }
-
-------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
 
 ------------------------------------------------------------------------------
  CAUTION [optional]

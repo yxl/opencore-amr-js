@@ -31,35 +31,10 @@ terms listed above has been obtained from the copyright holder.
 
 
 
- Pathname: ./audio/gsm-amr/c/src/qgain795.c
+ Filename: qgain795.cpp
  Functions: MR795_gain_code_quant3
             MR795_gain_code_quant_mod
             MR795_gain_quant
-
-     Date: 02/04/2002
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Updated template used to PV coding template.
- Changed to accept the pOverflow flag for EPOC compatibility.
-
- Description:
- (1) Removed optimization -- mult(i, 3, pOverflow) is NOT the same as adding
-     i to itself 3 times.  The reason is because the mult function does a
-     right shift by 15, which will obliterate smaller numbers.
-
- Description:  Replaced OSCL mem type functions and eliminated include
-               files that now are chosen by OSCL definitions
-
- Description:  Replaced "int" and/or "char" with OSCL defined types.
-
- Description: Changed round function name to pv_round to avoid conflict with
-              round function in C standard library.
-
- Description: Added #ifdef __cplusplus around extern'ed table.
-
- Description:
 
 ------------------------------------------------------------------------------
  MODULE DESCRIPTION
@@ -115,8 +90,6 @@ extern "C"
     ; EXTERNAL GLOBAL STORE/BUFFER/POINTER REFERENCES
     ; Declare variables used in this module but defined elsewhere
     ----------------------------------------------------------------------------*/
-    extern const Word16 qua_gain_code[NB_QUA_CODE*3];
-
 
     /*--------------------------------------------------------------------------*/
 #ifdef __cplusplus
@@ -180,22 +153,6 @@ extern "C"
 
 
 ------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
-
-------------------------------------------------------------------------------
  CAUTION [optional]
  [State any special notes, constraints or cautions for users of this function]
 
@@ -219,6 +176,7 @@ MR795_gain_code_quant3(
     /*      (for MR122 MA predictor update)   */
     Word16 *qua_ener,         /* o  : quantized energy error,       Q10 */
     /*      (for other MA predictor update)   */
+    const Word16* qua_gain_code_ptr, /* i : ptr to read-only table      */
     Flag   *pOverflow         /* o  : overflow indicator                */
 )
 {
@@ -255,14 +213,14 @@ MR795_gain_code_quant3(
      */
 
     /* determine the scaling exponent for g_code: ec = ec0 - 10 */
-    exp_code = sub(exp_gcode0, 10, pOverflow);
+    exp_code = exp_gcode0 - 10;
 
     /* calculate exp_max[i] = s[i]-1 */
-    exp_max[0] = sub(exp_coeff[0], 13, pOverflow);
-    exp_max[1] = sub(exp_coeff[1], 14, pOverflow);
-    exp_max[2] = add(exp_coeff[2], add(15, shl(exp_code, 1, pOverflow), pOverflow), pOverflow);
-    exp_max[3] = add(exp_coeff[3], exp_code, pOverflow);
-    exp_max[4] = add(exp_coeff[4], add(exp_code, 1, pOverflow), pOverflow);
+    exp_max[0] = exp_coeff[0] - 13;
+    exp_max[1] = exp_coeff[1] - 14;
+    exp_max[2] = exp_coeff[2] + shl(exp_code, 1, pOverflow) + 15;
+    exp_max[3] = exp_coeff[3] + exp_code;
+    exp_max[4] = exp_coeff[4] + (exp_code + 1);
 
 
     /*-------------------------------------------------------------------*
@@ -288,12 +246,12 @@ MR795_gain_code_quant3(
         }
     }
 
-    e_max = add(e_max, 1, pOverflow);      /* To avoid overflow */
+    e_max = add_16(e_max, 1, pOverflow);      /* To avoid overflow */
 
     for (i = 0; i < 5; i++)
     {
-        j = sub(e_max, exp_max[i], pOverflow);
-        L_tmp = L_deposit_h(frac_coeff[i]);
+        j = e_max - exp_max[i];
+        L_tmp = ((Word32)frac_coeff[i] << 16);
         L_tmp = L_shr(L_tmp, j, pOverflow);
         L_Extract(L_tmp, &coeff[i], &coeff_lo[i], pOverflow);
     }
@@ -325,7 +283,7 @@ MR795_gain_code_quant3(
         L_tmp0 = Mpy_32_16(coeff[0], coeff_lo[0], g2_pitch, pOverflow);
         L_tmp0 = Mac_32_16(L_tmp0, coeff[1], coeff_lo[1], g_pitch, pOverflow);
 
-        p = &qua_gain_code[0];
+        p = &qua_gain_code_ptr[0];
         for (i = 0; i < NB_QUA_CODE; i++)
         {
             g_code = *p++;                   /* this is g_fac        Q11 */
@@ -365,8 +323,7 @@ MR795_gain_code_quant3(
      *------------------------------------------------------------------*/
 
     /* Read the quantized gains */
-    p = &qua_gain_code[
-            add(add(cod_ind, cod_ind, pOverflow), cod_ind, pOverflow)];
+    p = &qua_gain_code_ptr[(cod_ind<<2) - cod_ind];
 
     g_code = *p++;
     *qua_ener_MR122 = *p++;
@@ -380,8 +337,8 @@ MR795_gain_code_quant3(
      *------------------------------------------------------------------*/
 
     L_tmp = L_mult(g_code, gcode0, pOverflow);
-    L_tmp = L_shr(L_tmp, sub(9, exp_gcode0, pOverflow), pOverflow);
-    *gain_cod = extract_h(L_tmp);
+    L_tmp = L_shr(L_tmp, 9 - exp_gcode0, pOverflow);
+    *gain_cod = (Word16)(L_tmp >> 16);
     *gain_cod_ind = cod_ind;
     *gain_pit = g_pitch_cand[pit_ind];
     *gain_pit_ind = g_pitch_cind[pit_ind];
@@ -449,22 +406,6 @@ MR795_gain_code_quant3(
 
 
 ------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
-
-------------------------------------------------------------------------------
  CAUTION [optional]
  [State any special notes, constraints or cautions for users of this function]
 
@@ -488,6 +429,7 @@ MR795_gain_code_quant_mod(  /* o  : index of quantization.            */
     /*      (for MR122 MA predictor update)   */
     Word16 *qua_ener,       /* o  : quantized energy error,       Q10 */
     /*      (for other MA predictor update)   */
+    const Word16* qua_gain_code_ptr, /* i : ptr to read-only ptr      */
     Flag   *pOverflow       /* o  : overflow indicator                */
 )
 {
@@ -553,36 +495,36 @@ MR795_gain_code_quant_mod(  /* o  : index of quantization.            */
     /*
      * calculate scalings of the constant terms
      */
-    gain_code = shl(*gain_cod, sub(10, exp_gcode0, pOverflow), pOverflow);   /* Q1  -> Q11 (-ec0) */
+    gain_code = shl(*gain_cod, (10 - exp_gcode0), pOverflow);   /* Q1  -> Q11 (-ec0) */
     g2_pitch = mult(gain_pit, gain_pit, pOverflow);               /* Q14 -> Q13        */
     /* 0 < alpha <= 0.5 => 0.5 <= 1-alpha < 1, i.e one_alpha is normalized  */
-    one_alpha = add(sub(32767, alpha, pOverflow), 1, pOverflow);   /* 32768 - alpha */
+    one_alpha = add_16((32767 - alpha), 1, pOverflow);   /* 32768 - alpha */
 
 
     /*  alpha <= 0.5 -> mult. by 2 to keep precision; compensate in exponent */
     L_t1 = L_mult(alpha, frac_en[1], pOverflow);
     L_t1 = L_shl(L_t1, 1, pOverflow);
-    tmp = extract_h(L_t1);
+    tmp = (Word16)(L_t1 >> 16);
 
     /* directly store in 32 bit variable because no further mult. required */
     L_t1 = L_mult(tmp, g2_pitch, pOverflow);
-    exp_coeff[1] = sub(exp_en[1], 15, pOverflow);
+    exp_coeff[1] = exp_en[1] - 15;
 
 
-    tmp = extract_h(L_shl(L_mult(alpha, frac_en[2], pOverflow), 1, pOverflow));
+    tmp = (Word16)(L_shl(L_mult(alpha, frac_en[2], pOverflow), 1, pOverflow) >> 16);
     coeff[2] = mult(tmp, gain_pit, pOverflow);
-    exp = sub(exp_gcode0, 10, pOverflow);
-    exp_coeff[2] = add(exp_en[2], exp, pOverflow);
+    exp = exp_gcode0 - 10;
+    exp_coeff[2] = add_16(exp_en[2], exp, pOverflow);
 
 
     /* alpha <= 0.5 -> mult. by 2 to keep precision; compensate in exponent */
-    coeff[3] = extract_h(L_shl(L_mult(alpha, frac_en[3], pOverflow), 1, pOverflow));
-    exp = sub(shl(exp_gcode0, 1, pOverflow), 7, pOverflow);
-    exp_coeff[3] = add(exp_en[3], exp, pOverflow);
+    coeff[3] = (Word16)(L_shl(L_mult(alpha, frac_en[3], pOverflow), 1, pOverflow) >> 16);
+    exp = shl(exp_gcode0, 1, pOverflow) - 7;
+    exp_coeff[3] = add_16(exp_en[3], exp, pOverflow);
 
 
     coeff[4] = mult(one_alpha, frac_en[3], pOverflow);
-    exp_coeff[4] = add(exp_coeff[3], 1, pOverflow);
+    exp_coeff[4] = add_16(exp_coeff[3], 1, pOverflow);
 
 
     L_tmp = L_mult(alpha, frac_en[0], pOverflow);
@@ -591,8 +533,8 @@ MR795_gain_code_quant_mod(  /* o  : index of quantization.            */
        exp_coeff holds 2*exponent for c[0]            */
     /* directly store in 32 bit variable because no further mult. required */
     L_t0 = sqrt_l_exp(L_tmp, &exp, pOverflow);  /* normalization included in sqrt_l_exp */
-    exp = add(exp, 47, pOverflow);
-    exp_coeff[0] = sub(exp_en[0], exp, pOverflow);
+    exp += 47;
+    exp_coeff[0] = exp_en[0] - exp;
 
     /*
      * Determine the maximum exponent occuring in the distance calculation
@@ -601,7 +543,7 @@ MR795_gain_code_quant_mod(  /* o  : index of quantization.            */
      */
 
     /* find max(e[1..4],e[0]+31) */
-    e_max = add(exp_coeff[0], 31, pOverflow);
+    e_max = exp_coeff[0] + 31;
     for (i = 1; i <= 4; i++)
     {
         if (exp_coeff[i] > e_max)
@@ -611,21 +553,21 @@ MR795_gain_code_quant_mod(  /* o  : index of quantization.            */
     }
 
     /* scale c[1]         (requires no further multiplication) */
-    tmp = sub(e_max, exp_coeff[1], pOverflow);
+    tmp = e_max - exp_coeff[1];
     L_t1 = L_shr(L_t1, tmp, pOverflow);
 
     /* scale c[2..4] (used in Mpy_32_16 in the quantizer loop) */
     for (i = 2; i <= 4; i++)
     {
-        tmp = sub(e_max, exp_coeff[i], pOverflow);
-        L_tmp = L_deposit_h(coeff[i]);
+        tmp = e_max - exp_coeff[i];
+        L_tmp = ((Word32)coeff[i] << 16);
         L_tmp = L_shr(L_tmp, tmp, pOverflow);
         L_Extract(L_tmp, &coeff[i], &coeff_lo[i], pOverflow);
     }
 
     /* scale c[0]         (requires no further multiplication) */
-    exp = sub(e_max, 31, pOverflow);              /* new exponent */
-    tmp = sub(exp, exp_coeff[0], pOverflow);
+    exp = e_max - 31;              /* new exponent */
+    tmp = exp - exp_coeff[0];
     L_t0 = L_shr(L_t0, shr(tmp, 1, pOverflow), pOverflow);
     /* perform correction by 1/sqrt(2) if exponent difference is odd */
     if ((tmp & 0x1) != 0)
@@ -639,7 +581,7 @@ MR795_gain_code_quant_mod(  /* o  : index of quantization.            */
        of the search criterion                           */
     dist_min = MAX_32;
     index = 0;
-    p = &qua_gain_code[0];
+    p = &qua_gain_code_ptr[0];
 
     for (i = 0; i < NB_QUA_CODE; i++)
     {
@@ -692,7 +634,7 @@ MR795_gain_code_quant_mod(  /* o  : index of quantization.            */
      *------------------------------------------------------------------*/
 
     /* Read the quantized gains */
-    p = &qua_gain_code[add(add(index, index, pOverflow), index, pOverflow)];
+    p = &qua_gain_code_ptr[(index<<2) - index];
     g_code = *p++;
     *qua_ener_MR122 = *p++;
     *qua_ener = *p;
@@ -705,8 +647,8 @@ MR795_gain_code_quant_mod(  /* o  : index of quantization.            */
      *------------------------------------------------------------------*/
 
     L_tmp = L_mult(g_code, gcode0, pOverflow);
-    L_tmp = L_shr(L_tmp, sub(9, exp_gcode0, pOverflow), pOverflow);
-    *gain_cod = extract_h(L_tmp);
+    L_tmp = L_shr(L_tmp, 9 - exp_gcode0, pOverflow);
+    *gain_cod = (Word16)(L_tmp >> 16);
 
     return index;
 }
@@ -782,22 +724,6 @@ MR795_gain_quant(
 
 
 ------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
-
-------------------------------------------------------------------------------
  CAUTION [optional]
  [State any special notes, constraints or cautions for users of this function]
 
@@ -829,6 +755,7 @@ MR795_gain_quant(
     /*      (for other MA predictor update)    */
     Word16 **anap,            /* o  : Index of quantization              */
     /*      (first gain pitch, then code pitch)*/
+    CommonAmrTbls* common_amr_tbls, /* i : ptr to struct of table ptrs   */
     Flag   *pOverflow         /* o  : overflow indicator                */
 )
 {
@@ -847,7 +774,7 @@ MR795_gain_quant(
      * and corresponding quantization indices
      */
     gain_pit_index = q_gain_pitch(MR795, gp_limit, gain_pit,
-                                  g_pitch_cand, g_pitch_cind, pOverflow);
+                                  g_pitch_cand, g_pitch_cind, common_amr_tbls->qua_gain_pitch_ptr, pOverflow);
 
     /*-------------------------------------------------------------------*
      *  predicted codebook gain                                          *
@@ -866,7 +793,7 @@ MR795_gain_quant(
         exp_gcode0, gcode0, g_pitch_cand, g_pitch_cind,
         frac_coeff, exp_coeff,
         gain_pit, &gain_pit_index, gain_cod, &gain_cod_index,
-        qua_ener_MR122, qua_ener, pOverflow);
+        qua_ener_MR122, qua_ener, common_amr_tbls->qua_gain_code_ptr, pOverflow);
 
     /* calculation of energy coefficients and LTP coding gain */
     calc_unfilt_energies(res, exc, code, *gain_pit, L_subfr,
@@ -889,14 +816,15 @@ MR795_gain_quant(
         exp_en[3] = exp_code_en;
 
         /* store optimum codebook gain in Q(10-exp_gcode0) */
-        exp = add(sub(cod_gain_exp, exp_gcode0, pOverflow), 10, pOverflow);
+        exp = sub(cod_gain_exp, exp_gcode0, pOverflow) + 10;
         gain_cod_unq = shl(cod_gain_frac, exp, pOverflow);
 
         /* run quantization with modified criterion */
         gain_cod_index = MR795_gain_code_quant_mod(
                              *gain_pit, exp_gcode0, gcode0,
                              frac_en, exp_en, alpha, gain_cod_unq,
-                             gain_cod, qua_ener_MR122, qua_ener, pOverflow); /* function result */
+                             gain_cod, qua_ener_MR122, qua_ener, common_amr_tbls->qua_gain_code_ptr,
+                             pOverflow); /* function result */
     }
 
     *(*anap)++ = gain_pit_index;

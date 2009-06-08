@@ -28,13 +28,7 @@ terms listed above has been obtained from the copyright holder.
 ****************************************************************************************/
 /*
 
-  Pathname: ./include/basic_op_arm_gcc_v5.h
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Who:						Date:
- Description:
+ Filename: basic_op_arm_gcc_v5.h
 
 ------------------------------------------------------------------------------
  INCLUDE DESCRIPTION
@@ -47,8 +41,8 @@ terms listed above has been obtained from the copyright holder.
 /*----------------------------------------------------------------------------
 ; CONTINUE ONLY IF NOT ALREADY DEFINED
 ----------------------------------------------------------------------------*/
-#ifndef	BASIC_OP_ARM_GCC_V5_H
-#define	BASIC_OP_ARM_GCC_V5_H
+#ifndef BASIC_OP_ARM_GCC_V5_H
+#define BASIC_OP_ARM_GCC_V5_H
 
 /*----------------------------------------------------------------------------
 ; INCLUDES
@@ -103,19 +97,19 @@ extern "C"
      INPUT AND OUTPUT DEFINITIONS
 
      Inputs:
-    	L_var1 = 32 bit long signed integer (Word32) whose value falls
-    	         in the range : 0x8000 0000 <= L_var1 <= 0x7fff ffff.
+        L_var1 = 32 bit long signed integer (Word32) whose value falls
+                 in the range : 0x8000 0000 <= L_var1 <= 0x7fff ffff.
 
-    	L_var2 = 32 bit long signed integer (Word32) whose value falls
-    	         in the range : 0x8000 0000 <= L_var1 <= 0x7fff ffff.
+        L_var2 = 32 bit long signed integer (Word32) whose value falls
+                 in the range : 0x8000 0000 <= L_var1 <= 0x7fff ffff.
 
-    	pOverflow = pointer to overflow (Flag)
+        pOverflow = pointer to overflow (Flag)
 
      Outputs:
-    	pOverflow -> 1 if the 32 bit add operation resulted in overflow
+        pOverflow -> 1 if the 32 bit add operation resulted in overflow
 
      Returns:
-    	L_sum = 32-bit sum of L_var1 and L_var2 (Word32)
+        L_sum = 32-bit sum of L_var1 and L_var2 (Word32)
     */
 
     __inline Word32 L_add(register Word32 L_var1, register Word32 L_var2, Flag *pOverflow)
@@ -141,19 +135,19 @@ extern "C"
      INPUT AND OUTPUT DEFINITIONS
 
      Inputs:
-    	L_var1 = 32 bit long signed integer (Word32) whose value falls
-    	         in the range : 0x8000 0000 <= L_var1 <= 0x7fff ffff.
+        L_var1 = 32 bit long signed integer (Word32) whose value falls
+                 in the range : 0x8000 0000 <= L_var1 <= 0x7fff ffff.
 
-    	L_var2 = 32 bit long signed integer (Word32) whose value falls
-    	         in the range : 0x8000 0000 <= L_var1 <= 0x7fff ffff.
+        L_var2 = 32 bit long signed integer (Word32) whose value falls
+                 in the range : 0x8000 0000 <= L_var1 <= 0x7fff ffff.
 
-    	pOverflow = pointer to overflow (Flag)
+        pOverflow = pointer to overflow (Flag)
 
      Outputs:
-    	pOverflow -> 1 if the 32 bit add operation resulted in overflow
+        pOverflow -> 1 if the 32 bit add operation resulted in overflow
 
      Returns:
-    	L_diff = 32-bit difference of L_var1 and L_var2 (Word32)
+        L_diff = 32-bit difference of L_var1 and L_var2 (Word32)
     */
     __inline Word32 L_sub(Word32 L_var1, Word32 L_var2, Flag *pOverflow)
 {
@@ -223,19 +217,19 @@ extern "C"
      INPUT AND OUTPUT DEFINITIONS
 
      Inputs:
-    	L_var1 = 16 bit short signed integer (Word16) whose value falls in
-    	       the range : 0xffff 8000 <= var1 <= 0x0000 7fff.
+        L_var1 = 16 bit short signed integer (Word16) whose value falls in
+               the range : 0xffff 8000 <= var1 <= 0x0000 7fff.
 
-    	L_var2 = 16 bit short signed integer (Word16) whose value falls in
-    	       the range : 0xffff 8000 <= var1 <= 0x0000 7fff.
+        L_var2 = 16 bit short signed integer (Word16) whose value falls in
+               the range : 0xffff 8000 <= var1 <= 0x0000 7fff.
 
-    	pOverflow = pointer to overflow (Flag)
+        pOverflow = pointer to overflow (Flag)
 
      Outputs:
-    	pOverflow -> 1 if the 32 bit add operation resulted in overflow
+        pOverflow -> 1 if the 32 bit add operation resulted in overflow
 
      Returns:
-    	L_product = 32-bit product of L_var1 and L_var2 (Word32)
+        L_product = 32-bit product of L_var1 and L_var2 (Word32)
     */
 
     __inline Word32 L_mult(Word16 var1, Word16 var2, Flag *pOverflow)
@@ -460,19 +454,19 @@ extern "C"
      INPUT AND OUTPUT DEFINITIONS
 
      Inputs:
-    	var1 = 16 bit short signed integer (Word16) whose value falls in
-    	       the range : 0xffff 8000 <= var1 <= 0x0000 7fff.
+        var1 = 16 bit short signed integer (Word16) whose value falls in
+               the range : 0xffff 8000 <= var1 <= 0x0000 7fff.
 
-    	var2 = 16 bit short signed integer (Word16) whose value falls in
-    	       the range : 0xffff 8000 <= var2 <= 0x0000 7fff.
+        var2 = 16 bit short signed integer (Word16) whose value falls in
+               the range : 0xffff 8000 <= var2 <= 0x0000 7fff.
 
-    	pOverflow = pointer to overflow (Flag)
+        pOverflow = pointer to overflow (Flag)
 
      Outputs:
-    	pOverflow -> 1 if the add operation resulted in overflow
+        pOverflow -> 1 if the add operation resulted in overflow
 
      Returns:
-    	product = 16-bit limited product of var1 and var2 (Word16)
+        product = 16-bit limited product of var1 and var2 (Word16)
     */
     __inline Word16 mult(Word16 var1, Word16 var2, Flag *pOverflow)
 {

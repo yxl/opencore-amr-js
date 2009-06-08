@@ -31,44 +31,7 @@ terms listed above has been obtained from the copyright holder.
 
 
 
- Filename: /audio/gsm-amr/c/include/gsmamr_enc.h
-
-     Date: 09/26/2001
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Changing code as per review comments. These changes include
-              removing unnecessary tables and changing function descriptions.
-              The comments were changed to "slash-star" rather than double
-              slash, and some wordings of comments were corrected.
-
- Description: Replaced GSMEncodeFrame function prototype with that of
-              AMREncode. Updated copyright year.
-
- Description: Added #define for WMF and IF2, and updated function prototype
-              of AMREncode.
-
- Description: Renamed WMF and IF2 to AMR_WMF and AMR_IF2, respectively. Added
-              AMR_ETS, and changed output_type to output_format in the
-              function prototype of AMREncode(). Removed function prototypes
-              for frame_header_move() and reverse_bits() since they are not
-              needed anymore.
-
- Description: Moved WMFBytesUsed and IF2BytesUsed tables to
-              enc_output_format_tab.c.
-
- Description: Added function prototypes for init, reset, and exit functions
-              in amrencode.c. Renamed output format #defines so that it it
-              unique to the encoder.
-
- Description: Added comment to describe L_FRAME.
-
- Description: Added Frame_Type_3GPP type definition.
-
- Description: Moved _cplusplus #ifdef after Include section.
-
- Description:
+ Filename: gsmamr_enc.h
 
 ------------------------------------------------------------------------------
  INCLUDE DESCRIPTION

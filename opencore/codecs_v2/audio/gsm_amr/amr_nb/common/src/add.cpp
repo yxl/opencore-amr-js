@@ -28,23 +28,7 @@ terms listed above has been obtained from the copyright holder.
 ****************************************************************************************/
 /*
 
- Filename: /audio/gsm_amr/c/src/add.c
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Created separate file for add function. Sync'ed up with the
-	      current template and fixed tabs.
-
- Description: Changed all occurrences of L_sum with sum.
-
- Description: Changed function protype to pass in pointer to Overflow flag
-				as a parameter.
-
- Description: Removed code that updates MOPS counter
-
- Who: 						Date:
- Description:
+ Filename: add.cpp
 
 ------------------------------------------------------------------------------
  MODULE DESCRIPTION
@@ -58,7 +42,7 @@ terms listed above has been obtained from the copyright holder.
 /*----------------------------------------------------------------------------
 ; INCLUDES
 ----------------------------------------------------------------------------*/
-#include	"basic_op.h"
+#include    "basic_op.h"
 
 /*----------------------------------------------------------------------------
 ; MACROS
@@ -89,19 +73,19 @@ terms listed above has been obtained from the copyright holder.
  INPUT AND OUTPUT DEFINITIONS
 
  Inputs:
-	var1 = 16 bit short signed integer (Word16) whose value falls in
-	       the range : 0xffff 8000 <= var1 <= 0x0000 7fff.
+    var1 = 16 bit short signed integer (Word16) whose value falls in
+           the range : 0xffff 8000 <= var1 <= 0x0000 7fff.
 
-	var2 = 16 bit short signed integer (Word16) whose value falls in
-	       the range : 0xffff 8000 <= var2 <= 0x0000 7fff.
+    var2 = 16 bit short signed integer (Word16) whose value falls in
+           the range : 0xffff 8000 <= var2 <= 0x0000 7fff.
 
-	pOverflow = pointer to overflow (Flag)
+    pOverflow = pointer to overflow (Flag)
 
  Outputs:
-	pOverflow -> 1 if the add operation resulted in overflow
+    pOverflow -> 1 if the add operation resulted in overflow
 
  Returns:
-	sum = 16-bit limited sum of var1 and var2 (Word16)
+    sum = 16-bit limited sum of var1 and var2 (Word16)
 
  Global Variables Used:
     None
@@ -148,22 +132,6 @@ terms listed above has been obtained from the copyright holder.
 }
 
 ------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
-
-------------------------------------------------------------------------------
  CAUTION [optional]
  [State any special notes, constraints or cautions for users of this function]
 
@@ -173,7 +141,7 @@ terms listed above has been obtained from the copyright holder.
 /*----------------------------------------------------------------------------
 ; FUNCTION CODE
 ----------------------------------------------------------------------------*/
-Word16 add(Word16 var1, Word16 var2, Flag *pOverflow)
+OSCL_EXPORT_REF Word16 add_16(Word16 var1, Word16 var2, Flag *pOverflow)
 {
     /*----------------------------------------------------------------------------
     ; Define all local variables

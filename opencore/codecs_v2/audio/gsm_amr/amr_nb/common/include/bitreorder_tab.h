@@ -28,20 +28,7 @@ terms listed above has been obtained from the copyright holder.
 ****************************************************************************************/
 /*
 
- Pathname: .audio/gsm-amr/c/include/bitreorder.h
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Define "const Word16 *reorderBits[NUM_MODES-1]" as
-              "const Word16 *const reorderBits[NUM_MODES-1]".
-
- Description:  Replaced "int" and/or "char" with OSCL defined types.
-
- Description: Added #ifdef __cplusplus after Include section.
-
- Who:                       Date:
- Description:
+ Filename: bitreorder_tab.h
 
 ------------------------------------------------------------------------------
  INCLUDE DESCRIPTION

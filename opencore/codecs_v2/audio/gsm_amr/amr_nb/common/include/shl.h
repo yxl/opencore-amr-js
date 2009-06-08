@@ -28,23 +28,7 @@ terms listed above has been obtained from the copyright holder.
 ****************************************************************************************/
 /*
 
- Filename: /audio/gsm_amr/c/include/shl.h
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Created separate header file for shl function.
-
- Description: Changed prototype of the mult() function. Instead of using global
-			  a pointer to overflow flag is now passed into the function.
-
- Description: Updated template. Changed the parameter name from "overflow" to
-			  "pOverflow" in the function prototype declaration
-
- Description: Moved _cplusplus #ifdef after Include section.
-
- Who:						Date:
- Description:
+ Filename: shl.h
 
 ------------------------------------------------------------------------------
  INCLUDE DESCRIPTION
@@ -58,13 +42,13 @@ terms listed above has been obtained from the copyright holder.
 /*----------------------------------------------------------------------------
 ; CONTINUE ONLY IF NOT ALREADY DEFINED
 ----------------------------------------------------------------------------*/
-#ifndef	SHL_H
-#define	SHL_H
+#ifndef SHL_H
+#define SHL_H
 
 /*----------------------------------------------------------------------------
 ; INCLUDES
 ----------------------------------------------------------------------------*/
-#include	"basicop_malloc.h"
+#include    "basicop_malloc.h"
 
 /*--------------------------------------------------------------------------*/
 #ifdef __cplusplus
@@ -112,7 +96,7 @@ extern "C"
 }
 #endif
 
-#endif	/* _SHL_H_ */
+#endif  /* _SHL_H_ */
 
 
 

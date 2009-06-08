@@ -28,13 +28,7 @@ terms listed above has been obtained from the copyright holder.
 ****************************************************************************************/
 /*
 
- Pathname: .audio/gsm-amr/c/include/qua_gain_tbl.h
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Who:                        Date:
- Description:
+ Filename: qua_gain_tbl.h
 
 ------------------------------------------------------------------------------
  INCLUDE DESCRIPTION

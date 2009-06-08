@@ -27,29 +27,8 @@ Permission to distribute, modify and use this file under the standard license
 terms listed above has been obtained from the copyright holder.
 ****************************************************************************************/
 /*
- Pathname: ./audio/gsm-amr/c/src/int_lpc.c
+ Filename: int_lpc.cpp
  Functions:
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Updated template used to PV coding template.
- Changed to accept the pOverflow flag for EPOC compatibility.
-
- Description: Per review comments, replaced includes of "basic_op.h"
- and "count.h" with "shr.h", "sub.h", and "add.h"
-
- Description:  For Int_lpc_1and3()  and Int_lpc_1and3_2()
-              1. Replaced array addressing by pointers
-              2. Eliminated math operations that unnecessary checked for
-                 saturation
-              3. Unrolled loops to speed up processing
-
- Description:  Replaced "int" and/or "char" with OSCL defined types.
-
-
- Who:                           Date:
- Description:
 
 ------------------------------------------------------------------------------
  MODULE DESCRIPTION
@@ -149,29 +128,13 @@ terms listed above has been obtained from the copyright holder.
 
 
 ------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
-
-------------------------------------------------------------------------------
  CAUTION [optional]
  [State any special notes, constraints or cautions for users of this function]
 
 ------------------------------------------------------------------------------
 */
 
-void Int_lpc_1and3(
+OSCL_EXPORT_REF void Int_lpc_1and3(
     Word16 lsp_old[],  /* i : LSP vector at the 4th subfr. of past frame (M) */
     Word16 lsp_mid[],  /* i : LSP vector at the 2nd subfr. of
                               present frame (M)                              */
@@ -286,22 +249,6 @@ void Int_lpc_1and3(
 
 
 ------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
-
-------------------------------------------------------------------------------
  CAUTION [optional]
  [State any special notes, constraints or cautions for users of this function]
 
@@ -410,29 +357,13 @@ void Int_lpc_1and3_2(
 
 
 ------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
-
-------------------------------------------------------------------------------
  CAUTION [optional]
  [State any special notes, constraints or cautions for users of this function]
 
 ------------------------------------------------------------------------------
 */
 
-void Int_lpc_1to3(
+OSCL_EXPORT_REF void Int_lpc_1to3(
     Word16 lsp_old[], /* input : LSP vector at the 4th SF of past frame    */
     Word16 lsp_new[], /* input : LSP vector at the 4th SF of present frame */
     Word16 Az[],      /* output: interpolated LP parameters in all SFs     */
@@ -441,17 +372,13 @@ void Int_lpc_1to3(
 {
     Word16 i;
     Word16 temp;
-    Word16 temp2;
 
     Word16 lsp[M];
 
     for (i = 0; i < M; i++)
     {
-        temp = shr(lsp_old[i], 2, pOverflow);
-        temp = sub(lsp_old[i], temp, pOverflow);
-        temp2 = shr(lsp_new[i], 2, pOverflow);
-
-        lsp[i] = add(temp2, temp, pOverflow);
+        temp = lsp_old[i] - (lsp_old[i] >> 2);
+        lsp[i] = temp + (lsp_new[i] >> 2);
     }
 
     Lsp_Az(
@@ -464,38 +391,27 @@ void Int_lpc_1to3(
 
     for (i = 0; i < M; i++)
     {
-        temp = shr(lsp_new[i], 1, pOverflow);
-        temp2 = shr(lsp_old[i], 1, pOverflow);
-        lsp[i] = add(temp, temp2, pOverflow);
+        lsp[i] = (lsp_new[i] >> 1) + (lsp_old[i] >> 1);
+
     }
 
-    Lsp_Az(
-        lsp,
-        Az,
-        pOverflow);        /* Subframe 2 */
+    Lsp_Az(lsp, Az, pOverflow);        /* Subframe 2 */
 
     Az += MP1;
 
     for (i = 0; i < M; i++)
     {
-        temp = shr(lsp_new[i], 2, pOverflow);
-        temp = sub(lsp_new[i], temp, pOverflow);
-        temp2 = shr(lsp_old[i], 2, pOverflow);
 
-        lsp[i] = add(temp2, temp, pOverflow);
+        temp = lsp_new[i] - (lsp_new[i] >> 2);
+        lsp[i] = temp + (lsp_old[i] >> 2);
+
     }
 
-    Lsp_Az(
-        lsp,
-        Az,
-        pOverflow);       /* Subframe 3 */
+    Lsp_Az(lsp, Az, pOverflow);        /* Subframe 3 */
 
     Az += MP1;
 
-    Lsp_Az(
-        lsp_new,
-        Az,
-        pOverflow);        /* Subframe 4 */
+    Lsp_Az(lsp_new, Az, pOverflow);    /* Subframe 4 */
 
     return;
 }
@@ -547,22 +463,6 @@ void Int_lpc_1to3(
 
 
 ------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
-
-------------------------------------------------------------------------------
  CAUTION [optional]
  [State any special notes, constraints or cautions for users of this function]
 
@@ -578,55 +478,37 @@ void Int_lpc_1to3_2(
 {
     Word16 i;
     Word16 temp;
-    Word16 temp2;
     Word16 lsp[M];
 
     for (i = 0; i < M; i++)
     {
-        temp = shr(lsp_old[i], 2, pOverflow);
+        temp = lsp_old[i] - (lsp_old[i] >> 2);
+        lsp[i] = temp + (lsp_new[i] >> 2);
 
-        temp = sub(lsp_old[i], temp, pOverflow);
-
-        temp2 = shr(lsp_new[i], 2, pOverflow);
-
-        lsp[i] = add(temp2, temp, pOverflow);
     }
 
-    Lsp_Az(
-        lsp,
-        Az,
-        pOverflow);        /* Subframe 1 */
+    Lsp_Az(lsp, Az, pOverflow);         /* Subframe 1 */
 
     Az += MP1;
 
     for (i = 0; i < M; i++)
     {
-        temp = shr(lsp_new[i], 1, pOverflow);
-        temp2 = shr(lsp_old[i], 1, pOverflow);
+        lsp[i] = (lsp_new[i] >> 1) + (lsp_old[i] >> 1);
 
-        lsp[i] = add(temp2, temp, pOverflow);
     }
 
-    Lsp_Az(
-        lsp,
-        Az,
-        pOverflow);        /* Subframe 2 */
+    Lsp_Az(lsp, Az, pOverflow);         /* Subframe 2 */
 
     Az += MP1;
 
     for (i = 0; i < M; i++)
     {
-        temp = shr(lsp_new[i], 2, pOverflow);
-        temp = sub(lsp_new[i], temp, pOverflow);
-        temp2 = shr(lsp_old[i], 2, pOverflow);
+        temp = lsp_new[i] - (lsp_new[i] >> 2);
+        lsp[i] = temp + (lsp_old[i] >> 2);
 
-        lsp[i] = add(temp, temp2, pOverflow);
     }
 
-    Lsp_Az(
-        lsp,
-        Az,
-        pOverflow);        /* Subframe 3 */
+    Lsp_Az(lsp, Az, pOverflow);         /* Subframe 3 */
 
     return;
 }

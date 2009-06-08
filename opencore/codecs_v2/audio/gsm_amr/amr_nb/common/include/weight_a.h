@@ -68,7 +68,7 @@ extern "C"
     *                         DECLARATION OF PROTOTYPES
     ********************************************************************************
     */
-    void Weight_Ai(
+    OSCL_IMPORT_REF void Weight_Ai(
         Word16 a[],        /* (i)  : a[m+1]  LPC coefficients   (m=10)          */
         const Word16 fac[],/* (i)  : Spectral expansion factors.                */
         Word16 a_exp[]     /* (o)  : Spectral expanded LPC coefficients         */

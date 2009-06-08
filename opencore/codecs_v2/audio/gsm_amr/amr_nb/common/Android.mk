@@ -6,25 +6,17 @@ LOCAL_SRC_FILES := \
  	src/az_lsp.cpp \
  	src/bitno_tab.cpp \
  	src/bitreorder_tab.cpp \
- 	src/bits2prm.cpp \
- 	src/bytesused.cpp \
  	src/c2_9pf_tab.cpp \
- 	src/copy.cpp \
- 	src/div_32.cpp \
  	src/div_s.cpp \
- 	src/extract_h.cpp \
- 	src/extract_l.cpp \
  	src/gains_tbl.cpp \
  	src/gc_pred.cpp \
+ 	src/get_const_tbls.cpp \
  	src/gmed_n.cpp \
  	src/grid_tbl.cpp \
  	src/gray_tbl.cpp \
  	src/int_lpc.cpp \
  	src/inv_sqrt.cpp \
  	src/inv_sqrt_tbl.cpp \
- 	src/l_abs.cpp \
- 	src/l_deposit_h.cpp \
- 	src/l_deposit_l.cpp \
  	src/l_shr_r.cpp \
  	src/log2.cpp \
  	src/log2_norm.cpp \
@@ -52,14 +44,12 @@ LOCAL_SRC_FILES := \
  	src/reorder.cpp \
  	src/residu.cpp \
  	src/round.cpp \
- 	src/set_zero.cpp \
  	src/shr.cpp \
  	src/shr_r.cpp \
  	src/sqrt_l.cpp \
  	src/sqrt_l_tbl.cpp \
  	src/sub.cpp \
  	src/syn_filt.cpp \
- 	src/vad1.cpp \
  	src/weight_a.cpp \
  	src/window_tab.cpp
 

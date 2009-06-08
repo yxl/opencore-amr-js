@@ -20,6 +20,7 @@ LOCAL_SRC_FILES := \
  	src/cor_h_x.cpp \
  	src/cor_h_x2.cpp \
  	src/corrwght_tab.cpp \
+ 	src/div_32.cpp \
  	src/dtx_enc.cpp \
  	src/enc_lag3.cpp \
  	src/enc_lag6.cpp \
@@ -30,9 +31,11 @@ LOCAL_SRC_FILES := \
  	src/g_code.cpp \
  	src/g_pitch.cpp \
  	src/gain_q.cpp \
+ 	src/gsmamr_encoder_wrapper.cpp \
  	src/hp_max.cpp \
  	src/inter_36.cpp \
  	src/inter_36_tab.cpp \
+ 	src/l_abs.cpp \
  	src/l_comp.cpp \
  	src/l_extract.cpp \
  	src/l_negate.cpp \
@@ -59,7 +62,7 @@ LOCAL_SRC_FILES := \
  	src/spreproc.cpp \
  	src/spstproc.cpp \
  	src/ton_stab.cpp \
- 	src/gsmamr_encoder_wrapper.cpp
+ 	src/vad1.cpp
 
 
 LOCAL_MODULE := libpvencoder_gsmamr

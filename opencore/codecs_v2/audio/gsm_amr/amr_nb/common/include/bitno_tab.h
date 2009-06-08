@@ -28,19 +28,7 @@ terms listed above has been obtained from the copyright holder.
 ****************************************************************************************/
 /*
 
-  Pathname: .audio/gsm-amr/c/include/bitno_tab.h
-
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Define "const Word16 *bitno[N_MODES]" as "const Word16 *const
-                      bitno[N_MODES]"
-
- Description: Added #ifdef __cplusplus after Include section.
-
- Who:                       Date:
- Description:
+ Filename: bitno_tab.h
 
 ------------------------------------------------------------------------------
  INCLUDE DESCRIPTION

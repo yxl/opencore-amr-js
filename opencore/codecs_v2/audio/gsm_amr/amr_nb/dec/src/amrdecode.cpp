@@ -30,66 +30,7 @@ terms listed above has been obtained from the copyright holder.
 ------------------------------------------------------------------------------
 
 
- Pathname: ./audio/gsm-amr/c/src/amrdecode.c
-
-     Date: 05/23/2001
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description:       AMRDecode now doesn't call getbits() or put_header_in().
-                    It also now obtains a new bit_offset value from a constant
-                    rather than from the returned value of getbits().
-
- Description:       AMRDecode now returns byte_offset rather than bit_offset,
-                    so the program can access the next frame that is byte
-                    aligned rather than packed without padding.
-
- Description:       The structure types Speech_Decode_FrameState are now
-                    passed into amrdecode( ) using void pointers, so that
-                    higher level functions don't need to know anything about
-                    this structure type.
-
- Description: Changed input argument list. Added code to handle incoming DTX
-              frames, and added call to wmf_to_ets function prior to calling
-              GSMFrameDecode.
-
- Description: Made the following changes per comments from Phase 2/3 review:
-              1. Changed all references to bit_offset to byte_offset.
-
- Description: Added input_type to the function interface and modified code
-              to check type of conversion that needs to be made.
-
- Description: Modified pseudo-code to include IF2 and ETS input formats.
-              Removed byte_offset from input list. Renamed speech_bits
-              to speech_bits_ptr.
-
- Description: Added dec_input_format_tab.h in Include section. Modified
-              pseudo-code to use correct table names. Renamed input_type to
-              input_format and speech_bits to speech_bits_ptr.
-
- Description: Removed *prev_mode_ptr in the input argument list.
-
- Description: Made the following changes per comments from Phase 2/3 review:
-              1. Removed dec_input_format_tab.h from Include section.
-              2. Changed type definition of raw_pcm_buffer in the I/O
-                 definition section.
-
- Description: Renamed WmfBytesPerFrame to WmfDecBytesPerFrame, and
-              If2BytesPerFrame to If2DecBytesPerFrame.
-
- Description: Modified code so that the ETS testvectors could be fed directly
-              to this function.
-
- Description: Changed '&' to '&&' in the setting of rx_type and mode for
-              AMR_SID < frame_type < NO_DATA case.
-
- Description: Added code comments and made some code optimizations per Phase
-              2/3 review comments.
-
- Description: Added conditional compile around the call to GSMFrameDecode to
-              allow amrdecode.c to be used in the ETS reference console.
-
- Description:
+ Filename: amrdecode.cpp
 
 ------------------------------------------------------------------------------
 */
@@ -363,22 +304,6 @@ terms listed above has been obtained from the copyright holder.
  RETURN (byte_offset)
 
 ------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
-
-------------------------------------------------------------------------------
  CAUTION [optional]
  [State any special notes, constraints or cautions for users of this function]
 
@@ -416,7 +341,7 @@ Word16 AMRDecode(
         if (input_format == MIME_IETF)
         {
             /* Convert incoming packetized raw WMF data to ETS format */
-            wmf_to_ets(frame_type, speech_bits_ptr, dec_ets_input_bfr);
+            wmf_to_ets(frame_type, speech_bits_ptr, dec_ets_input_bfr, &(decoder_state->decoder_amrState.common_amr_tbls));
 
             /* Address offset of the start of next frame */
             byte_offset = WmfDecBytesPerFrame[frame_type];
@@ -424,7 +349,7 @@ Word16 AMRDecode(
         else   /* else has to be input_format  IF2 */
         {
             /* Convert incoming packetized raw IF2 data to ETS format */
-            if2_to_ets(frame_type, speech_bits_ptr, dec_ets_input_bfr);
+            if2_to_ets(frame_type, speech_bits_ptr, dec_ets_input_bfr, &(decoder_state->decoder_amrState.common_amr_tbls));
 
             /* Address offset of the start of next frame */
             byte_offset = If2DecBytesPerFrame[frame_type];

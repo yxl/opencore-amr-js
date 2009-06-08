@@ -28,27 +28,7 @@ terms listed above has been obtained from the copyright holder.
 ****************************************************************************************/
 /*
 
- Pathname: ./audio/gsm-amr/c/src/log2_norm.c
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Created separate file for Log2_norm function.
-
- Description: Synchronized file with UMTS version 3.2.0. Updated coding
-              template. Removed unnecessary include file.
-
- Description: Made the following changes per comments from Phase 2/3 review:
-              1. Modified code to improve performance.
-              2. Fixed typecasting issue with TI C compiler.
-              3. Added more comments to the code.
-
- Description: Removed unnecessary line of code (line 208).
-
- Description: Removed inclusion of "log2.tab"
-
- Who:                           Date:
- Description:
+ Filename: log2_norm.cpp
 
 ------------------------------------------------------------------------------
 */
@@ -169,22 +149,6 @@ void Log2_norm (
 
     return;
 }
-
-------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
 
 ------------------------------------------------------------------------------
  CAUTION [optional]

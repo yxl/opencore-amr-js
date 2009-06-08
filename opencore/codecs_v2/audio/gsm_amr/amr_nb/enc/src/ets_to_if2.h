@@ -31,19 +31,7 @@ terms listed above has been obtained from the copyright holder.
 
 
 
- Pathname: ./audio/gsm-amr/include/src/ets_to_if2.h
-
-     Date: 01/23/2002
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Updated template to make it build in Symbian. Updated copyright
-              year.
-
- Description: Moved _cplusplus #ifdef after Include section.
-
- Description:
+ Filename: ets_to_if2.h
 
 ------------------------------------------------------------------------------
  INCLUDE DESCRIPTION
@@ -65,6 +53,7 @@ terms listed above has been obtained from the copyright holder.
 ----------------------------------------------------------------------------*/
 #include "mode.h"
 #include "typedef.h"
+#include "get_const_tbls.h"
 
 /*--------------------------------------------------------------------------*/
 #ifdef __cplusplus
@@ -106,8 +95,9 @@ extern "C"
     ----------------------------------------------------------------------------*/
 
     void ets_to_if2(enum Frame_Type_3GPP mode,
-                    Word16   *ets_input_ptr,
-                    UWord8   *if2_output_ptr);
+    Word16   *ets_input_ptr,
+    UWord8   *if2_output_ptr,
+    CommonAmrTbls* common_amr_tbls);
 
 
 

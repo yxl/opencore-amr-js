@@ -51,6 +51,7 @@ terms listed above has been obtained from the copyright holder.
 */
 #include "typedef.h"
 #include "mode.h"
+#include "get_const_tbls.h"
 
 #ifdef __cplusplus
 extern "C"
@@ -71,7 +72,8 @@ extern "C"
     void Prm2bits(
         enum Mode mode,    /* i : AMR mode */
         Word16 prm[],      /* input : analysis parameters                       */
-        Word16 bits[]      /* output: serial bits                               */
+        Word16 bits[],      /* output: serial bits                              */
+        CommonAmrTbls* common_amr_tbls /* i : ptr to strcut of table ptrs       */
     );
 
 #ifdef __cplusplus

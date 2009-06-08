@@ -31,26 +31,8 @@ terms listed above has been obtained from the copyright holder.
 
 
 
- Pathname: ./audio/gsm-amr/c/src/d4_17pf.c
+ Filename: d4_17pf.cpp
  Functions: decode_4i40_17bits
-
-     Date: 01/28/2002
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Modified to place file in the correct template format. Eliminated
- use of special functions to perform simple mathematical operations.
-
- Description: An incorrect comment in the original source lead me to implement
- the calculation of pos[2] incorrectly.  The correct formula is pos2 =i*5+2,
- not pos2 = i*5 + 1.
-
- Description:  Replaced "int" and/or "char" with OSCL defined types.
-
- Description: Added #ifdef __cplusplus around extern'ed table.
-
- Description:
 
 ------------------------------------------------------------------------------
  MODULE DESCRIPTION
@@ -103,7 +85,6 @@ extern "C"
     ; EXTERNAL GLOBAL STORE/BUFFER/POINTER REFERENCES
     ; Declare variables used in this module but defined elsewhere
     ----------------------------------------------------------------------------*/
-    extern const Word16 dgray[];
 
     /*--------------------------------------------------------------------------*/
 #ifdef __cplusplus
@@ -151,22 +132,6 @@ extern "C"
 
 
 ------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
-
-------------------------------------------------------------------------------
  CAUTION [optional]
  [State any special notes, constraints or cautions for users of this function]
 
@@ -176,6 +141,7 @@ extern "C"
 void decode_4i40_17bits(
     Word16 sign,   /* i : signs of 4 pulses.                       */
     Word16 index,  /* i : Positions of the 4 pulses.               */
+    const Word16* dgray_ptr, /* i : Pointer to read-only table         */
     Word16 cod[]   /* o : algebraic (fixed) codebook excitation    */
 )
 {
@@ -198,7 +164,7 @@ void decode_4i40_17bits(
 
     i = index & 0x7;
 
-    i = dgray[i];
+    i = dgray_ptr[i];
 
     pos[0] = i * 5; /* pos0 =i*5 */
 
@@ -207,7 +173,7 @@ void decode_4i40_17bits(
 
     i = index & 0x7;
 
-    i = dgray[i];
+    i = dgray_ptr[i];
 
     pos[1] = i * 5 + 1;  /* pos1 =i*5+1 */
 
@@ -217,7 +183,7 @@ void decode_4i40_17bits(
 
     i = index & 0x7;
 
-    i = dgray[i];
+    i = dgray_ptr[i];
 
     pos[2] = i * 5 + 2; /* pos2 =i*5+2 */
 
@@ -233,7 +199,7 @@ void decode_4i40_17bits(
 
     i = index & 0x7;
 
-    i = dgray[i];
+    i = dgray_ptr[i];
 
     pos[3] = i * 5 + 3 + j; /* pos3 =i*5+3+j */
 

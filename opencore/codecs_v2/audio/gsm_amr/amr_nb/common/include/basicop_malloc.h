@@ -28,15 +28,7 @@ terms listed above has been obtained from the copyright holder.
 ****************************************************************************************/
 /*
 
- Pathname: ./gsm-amr/c/include/basicop_malloc.h
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Added #ifdef __cplusplus after Include section.
-
- Who:						Date:
- Description:
+ Filename: basicop_malloc.h
 
 ------------------------------------------------------------------------------
  INCLUDE DESCRIPTION
@@ -50,8 +42,8 @@ terms listed above has been obtained from the copyright holder.
 /*----------------------------------------------------------------------------
 ; CONTINUE ONLY IF NOT ALREADY DEFINED
 ----------------------------------------------------------------------------*/
-#ifndef	BASICOP_MALLOC_H
-#define	BASICOP_MALLOC_H
+#ifndef BASICOP_MALLOC_H
+#define BASICOP_MALLOC_H
 
 /*----------------------------------------------------------------------------
 ; INCLUDES
@@ -83,8 +75,8 @@ extern "C"
     ; EXTERNAL VARIABLES REFERENCES
     ; Declare variables used in this module but defined elsewhere
     ----------------------------------------------------------------------------*/
-    extern	Flag Overflow;
-    extern	Flag Carry;
+    extern  Flag Overflow;
+    extern  Flag Carry;
 
     /*----------------------------------------------------------------------------
     ; SIMPLE TYPEDEF'S

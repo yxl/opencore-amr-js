@@ -31,46 +31,8 @@ terms listed above has been obtained from the copyright holder.
 
 
 
- Pathname: ./audio/gsm-amr/c/src/pitch_fr.c
- Functions:
+ Filename: pitch_fr.cpp
 
-
-     Date: 02/04/2002
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Added pOverflow as a passed in value to searchFrac and made
-              other fixes to the code regarding simple syntax fixes. Removed
-              the include of stio.h.
-
- Description: *lag-- decrements the pointer.  (*lag)-- decrements what is
- pointed to.  The latter is what the coder intended, but the former is
- the coding instruction that was used.
-
- Description: A common problem -- a comparison != 0 was inadvertantly replaced
- by a comparison == 0.
-
-
- Description:  For Norm_Corr() and getRange()
-              1. Eliminated unused include files.
-              2. Replaced array addressing by pointers
-              3. Eliminated math operations that unnecessary checked for
-                 saturation, in some cases this by shifting before adding and
-                 in other cases by evaluating the operands
-              4. Unrolled loops to speed up processing, use decrement loops
-              5. Replaced extract_l() call with equivalent code
-              6. Modified scaling threshold and group all shifts (avoiding
-                 successive shifts)
-
- Description:  Replaced OSCL mem type functions and eliminated include
-               files that now are chosen by OSCL definitions
-
- Description:  Replaced "int" and/or "char" with OSCL defined types.
-
- Description: Removed compiler warnings.
-
- Description:
 ------------------------------------------------------------------------------
  MODULE DESCRIPTION
 
@@ -284,22 +246,6 @@ static void Norm_Corr (Word16 exc[], Word16 xn[], Word16 h[], Word16 L_subfr,
     }
     return;
 }
-
-------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
 
 ------------------------------------------------------------------------------
  CAUTION [optional]
@@ -539,22 +485,6 @@ static void searchFrac (
 }
 
 ------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
-
-------------------------------------------------------------------------------
  CAUTION [optional]
  [State any special notes, constraints or cautions for users of this function]
 
@@ -694,22 +624,6 @@ static void getRange (
 }
 
 ------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
-
-------------------------------------------------------------------------------
  CAUTION [optional]
  [State any special notes, constraints or cautions for users of this function]
 
@@ -814,22 +728,6 @@ int Pitch_fr_init (Pitch_frState **state)
 }
 
 ------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
-
-------------------------------------------------------------------------------
  CAUTION [optional]
  [State any special notes, constraints or cautions for users of this function]
 
@@ -917,22 +815,6 @@ int Pitch_fr_reset (Pitch_frState *state)
 }
 
 ------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
-
-------------------------------------------------------------------------------
  CAUTION [optional]
  [State any special notes, constraints or cautions for users of this function]
 
@@ -1007,22 +889,6 @@ void Pitch_fr_exit (Pitch_frState **state)
 
     return;
 }
-
-------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
 
 ------------------------------------------------------------------------------
  CAUTION [optional]
@@ -1338,22 +1204,6 @@ Word16 Pitch_fr (        // o   : pitch period (integer)
 
 
 ------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
-
-------------------------------------------------------------------------------
  CAUTION [optional]
  [State any special notes, constraints or cautions for users of this function]
 
@@ -1468,8 +1318,8 @@ Word16 Pitch_fr(         /* o   : pitch period (integer)                    */
      *           Find interval to compute normalized correlation             *
      *-----------------------------------------------------------------------*/
 
-    t_min = sub(t0_min, L_INTER_SRCH, pOverflow);
-    t_max = add(t0_max, L_INTER_SRCH, pOverflow);
+    t_min = t0_min - L_INTER_SRCH;
+    t_max = t0_max + L_INTER_SRCH;
 
     corr = &corr_v[-t_min];
 
@@ -1522,10 +1372,14 @@ Word16 Pitch_fr(         /* o   : pitch period (integer)                    */
             /* or only on left or right side */
 
             tmp_lag = st->T0_prev_subframe;
-            if (sub(sub(tmp_lag, t0_min, pOverflow), 5, pOverflow) > 0)
-                tmp_lag = add(t0_min, 5, pOverflow);
-            if (sub(sub(t0_max, tmp_lag, pOverflow), 4, pOverflow) > 0)
-                tmp_lag = sub(t0_max, 4, pOverflow);
+            if ((tmp_lag - t0_min) > 5)
+            {
+                tmp_lag = t0_min + 5;
+            }
+            if ((t0_max - tmp_lag) > 4)
+            {
+                tmp_lag = t0_max - 4;
+            }
 
             if ((lag == tmp_lag) || (lag == (tmp_lag - 1)))
             {

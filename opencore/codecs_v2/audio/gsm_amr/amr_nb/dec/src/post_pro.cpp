@@ -31,58 +31,10 @@ terms listed above has been obtained from the copyright holder.
 
 
 
- Pathname: ./audio/gsm-amr/c/src/post_pro.c
+ Filename: post_pro.cpp
  Functions:
            Post_Process_reset
            Post_Process
-
-     Date: 04/03/2000
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Updated template used to PV coding template. First attempt at
-          optimizing C code.
-
- Description: Deleted variables listed in the Local Stores Needed/Modified
-          sections. Optimized the "else" portion of the first "if"
-          statement in Post_Process function.
-
- Description: Made grouping more explicit in the calculation of
-          signal[i] << 1 in the Post_Process function.
-
- Description: Added setting of Overflow flag in inlined code.
-
- Description: Synchronized file with UMTS version 3.2.0. Updated coding
-              template. Removed unnecessary include files.
-
- Description: Replaced basic_op.h with the header file of the math functions
-              used in the file.
-
- Description: Made the following changes per comments from Phase 2/3 review:
-              1. Updated copyright year.
-              2. Fixed typecasting issue with TI C compiler.
-              3. Used short-hand notation for math operations, e.g., "+=",
-                 in the code.
-
- Description: Removed the functions post_pro_init and post_pro_exit.
- The post_pro related structure is no longer dynamically allocated.
-
- Description: Added pOverflow as a passed in variable as per changes needed
-              for the EPOC release.
-
- Description: Optimized file to reduce clock cycle usage. Updated copyright
-              year and removed unused files in Include section.
-
- Description:  Replaced OSCL mem type functions and eliminated include
-               files that now are chosen by OSCL definitions
-
- Description:  Replaced "int" and/or "char" with OSCL defined types.
-
- Description: Changed round function name to pv_round to avoid conflict with
-              round function in C standard library.
-
- Description:
 
 ------------------------------------------------------------------------------
  MODULE DESCRIPTION
@@ -187,22 +139,6 @@ int Post_Process_reset (Post_ProcessState *state)
 
   return 0;
 }
-------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
-
 ------------------------------------------------------------------------------
  CAUTION [optional]
  [State any special notes, constraints or cautions for users of this function]
@@ -317,22 +253,6 @@ int Post_Process (
 
     return 0;
 }
-
-------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
 
 ------------------------------------------------------------------------------
  CAUTION [optional]

@@ -31,38 +31,7 @@ terms listed above has been obtained from the copyright holder.
 
 
 
- Pathname: ./audio/gsm-amr/c/src/cor_h_x.c
-
-     Date: 09/07/2000
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Created a separate file for cor_h_x function.
-
- Description: Synchronized file with UMTS versin 3.2.0. Updated coding
-              template.
-
- Description: Made the following changes per comments from Phase 2/3 review:
-              1. Modified FOR loop in the code to count down.
-              2. Fixed typecasting issue with TI C compiler.
-
- Description: Added call to round() and L_shl() functions in the last FOR
-              loop to make code bit-exact. Updated copyright year.
-
- Description: Modified to pass pOverflow in via a pointer, rather than
- invoking it as a global variable.
-
- Description: Made the following changes
-              1. Unrolled the correlation loop and add mechanism control
-                 to compute odd or even number of computations.
-              2. Use pointer to avoid continuos addresses calculation
-              2. Eliminated math operations that check for saturation.
-
- Description: Changed round function name to pv_round to avoid conflict with
-              round function in C standard library.
-
- Description:
+ Filename: cor_h_x.cpp
 
 ------------------------------------------------------------------------------
 */
@@ -217,22 +186,6 @@ void cor_h_x2 (
         dn[i] = pv_round (L_shl (y32[i], j));
     }
 }
-
-------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
 
 ------------------------------------------------------------------------------
  CAUTION [optional]

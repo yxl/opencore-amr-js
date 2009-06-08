@@ -31,26 +31,7 @@ terms listed above has been obtained from the copyright holder.
 
 
 
- Filename: /audio/gsm_amr/c/src/include/sp_enc.h
-
-     Date: 02/07/2002
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Updated template. Changed the function names of
-              Speech_Encode_Frame_reset and Speech_Encode_Frame_first to
-              GSMEncodeFrameReset and GSMEncodeFrameFirst respectively for
-              consistency.
-
- Description: Reverted back to old function names Speech_Encode_Frame_reset()
-              and Speech_Encode_Frame_First()
-
- Description:  Replaced "int" and/or "char" with OSCL defined types.
-
- Description: Moved _cplusplus #ifdef after Include section.
-
- Description:
+ Filename: sp_enc.h
 
 ------------------------------------------------------------------------------
  INCLUDE DESCRIPTION

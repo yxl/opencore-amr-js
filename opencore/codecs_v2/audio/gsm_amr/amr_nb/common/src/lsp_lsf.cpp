@@ -27,43 +27,9 @@ Permission to distribute, modify and use this file under the standard license
 terms listed above has been obtained from the copyright holder.
 ****************************************************************************************/
 /*
- Pathname: ./audio/gsm-amr/c/src/lsp_lsf.c
+ Filename: lsp_lsf.cpp
  Functions: Lsp_lsf
             Lsf_lsp
-
-------------------------------------------------------------------------------
- REVISION HISTORY
-
- Description: Updated template used to PV coding template.
-
- Description: Deleted variables listed in the Local Stores Needed/Modified
-              section.
-
- Description: Synchronized file with UMTS version 3.2.0. Updated coding
-              template and removed unnecessary include files.
-
- Description: Replaced basic_op.h with the header file of the math functions
-              used in the file.
-
- Description: Changed to accept the pOverflow flag for EPOC compatibility.
-
- Description: Placed table declarations in a .c file, rather than an included
- .tab.  The tables are now referenced via an extern in this file.
-
- Description:  For Lsp_lsf()
-              1. Eliminated unused include file typedef.h.
-              2. Replaced array addressing by pointers
-
- Description:  Replaced "int" and/or "char" with defined types.
-               Added proper casting (Word32) to some left shifting operations
-
- Description: Changed round function name to pv_round to avoid conflict with
-              round function in C standard library.
-
- Description: Added #ifdef __cplusplus around extern'ed table.
-
- Who:                           Date:
- Description:
 
 ------------------------------------------------------------------------------
  MODULE DESCRIPTION
@@ -189,29 +155,13 @@ void Lsf_lsp (
 }
 
 ------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
-
-------------------------------------------------------------------------------
  CAUTION [optional]
  [State any special notes, constraints or cautions for users of this function]
 
 ------------------------------------------------------------------------------
 */
 
-void Lsf_lsp(
+OSCL_EXPORT_REF void Lsf_lsp(
     Word16 lsf[],       /* (i) : lsf[m] normalized (range: 0.0<=val<=0.5) */
     Word16 lsp[],       /* (o) : lsp[m] (range: -1<=val<1)                */
     Word16 m,           /* (i) : LPC order                                */
@@ -229,7 +179,7 @@ void Lsf_lsp(
         /* lsp[i] = table[ind]+ ((table[ind+1]-table[ind])*offset) / 256 */
 
         L_tmp = ((Word32)(table[ind + 1] - table[ind]) * offset) >> 8;
-        lsp[i] = add(table[ind], (Word16) L_tmp, pOverflow);
+        lsp[i] = table[ind] + (Word16) L_tmp;
 
     }
 
@@ -321,29 +271,13 @@ void Lsp_lsf (
 }
 
 ------------------------------------------------------------------------------
- RESOURCES USED [optional]
-
- When the code is written for a specific target processor the
- the resources used should be documented below.
-
- HEAP MEMORY USED: x bytes
-
- STACK MEMORY USED: x bytes
-
- CLOCK CYCLES: (cycle count equation for this function) + (variable
-                used to represent cycle count for each subroutine
-                called)
-     where: (cycle count variable) = cycle count for [subroutine
-                                     name]
-
-------------------------------------------------------------------------------
  CAUTION [optional]
  [State any special notes, constraints or cautions for users of this function]
 
 ------------------------------------------------------------------------------
 */
 
-void Lsp_lsf(
+OSCL_EXPORT_REF void Lsp_lsf(
     Word16 lsp[],       /* (i)  : lsp[m] (range: -1<=val<1)                */
     Word16 lsf[],       /* (o)  : lsf[m] normalized (range: 0.0<=val<=0.5) */
     Word16 m,           /* (i)  : LPC order                                */
