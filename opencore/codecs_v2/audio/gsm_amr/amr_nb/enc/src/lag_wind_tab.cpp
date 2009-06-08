@@ -133,7 +133,7 @@ extern "C"
     ; LOCAL STORE/BUFFER/POINTER DEFINITIONS
     ; Variable declaration - defined here and used outside this module
     ----------------------------------------------------------------------------*/
-    extern const Word16 lag_h[10] =
+    const Word16 lag_h[10] =
     {
         32728,
         32619,
@@ -147,7 +147,7 @@ extern "C"
         29321
     };
 
-    extern const Word16 lag_l[10] =
+    const Word16 lag_l[10] =
     {
         11904,
         17280,
