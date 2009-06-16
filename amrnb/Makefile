@@ -8,6 +8,7 @@ ifneq (, $(BUILD_AS_C))
     CXX = $(CC)
     CXXFLAGS += -x c -std=c99
 endif
+CXXFLAGS += -fPIC -DPIC
 
 ifeq (, $(PREFIX))
     PREFIX = /usr/local
