@@ -1,6 +1,6 @@
 #!/usr/bin/make -f
 
-CXXFLAGS = -Wall -g -fPIC -DPIC $(DEB_CXXFLAGS)
+CXXFLAGS = -Wall -g $(DEB_CXXFLAGS)
 ifeq (,$(findstring noopt,$(DEB_BUILD_OPTIONS)))
     CXXFLAGS += -O2
 else
