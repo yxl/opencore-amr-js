@@ -1,0 +1,11 @@
+*.debhelper
+*.debhelper.log
+*.substvars
+files
+tmp
+libopencore-amrnb0
+libopencore-amrnb0-dbg
+libopencore-amrnb-dev
+libopencore-amrwb0
+libopencore-amrwb0-dbg
+libopencore-amrwb-dev
