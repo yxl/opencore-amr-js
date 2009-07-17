@@ -2,6 +2,7 @@
 # a detached gsm_amr directory
 OC_BASE = ../opencore
 AMR_BASE = $(OC_BASE)/codecs_v2/audio/gsm_amr
+LIBDIR=lib
 
 # To compile as C instead of C++, define BUILD_AS_C
 ifneq (, $(BUILD_AS_C))
@@ -77,12 +78,12 @@ libopencore-amrnb.a: $(OBJS)
 	ar rcs $@ $+
 
 install: libopencore-amrnb.a $(SHLIB)
-	install -d $(DESTDIR)$(PREFIX)/lib
-	install -m 644 libopencore-amrnb.a $(DESTDIR)$(PREFIX)/lib
-	install $(SHLIB) $(DESTDIR)$(PREFIX)/lib
+	install -d $(DESTDIR)$(PREFIX)/$(LIBDIR)
+	install -m 644 libopencore-amrnb.a $(DESTDIR)$(PREFIX)/$(LIBDIR)
+	install $(SHLIB) $(DESTDIR)$(PREFIX)/$(LIBDIR)
 ifneq ($(shell uname), Darwin)
-	ln -sf $(SHLIB) $(DESTDIR)$(PREFIX)/lib/$(SONAME)
-	ln -sf $(SONAME) $(DESTDIR)$(PREFIX)/lib/libopencore-amrnb.so
+	ln -sf $(SHLIB) $(DESTDIR)$(PREFIX)/$(LIBDIR)/$(SONAME)
+	ln -sf $(SONAME) $(DESTDIR)$(PREFIX)/$(LIBDIR)/libopencore-amrnb.so
 endif
 	install -d $(DESTDIR)$(PREFIX)/include/opencore-amrnb
 	install -m 644 interf_dec.h $(DESTDIR)$(PREFIX)/include/opencore-amrnb
