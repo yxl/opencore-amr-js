@@ -9,7 +9,6 @@ ifneq (, $(BUILD_AS_C))
     CXX = $(CC)
     CXXFLAGS += -x c -std=c99
 endif
-CXXFLAGS += -fPIC -DPIC
 
 ifeq (, $(PREFIX))
     PREFIX = /usr/local
@@ -49,6 +48,7 @@ COMMON_OBJS := $(COMMON_SRC:.cpp=.o)
 COMMON_OBJS := $(patsubst %,$(COMMON_SRC_DIR)/%, $(COMMON_OBJS))
 
 OBJS = wrapper.o $(DEC_OBJS) $(ENC_OBJS) $(COMMON_OBJS)
+SOBJS = $(OBJS:%.o=%.lo)
 
 #Versioning
 MAJOR = 0
@@ -67,12 +67,18 @@ SHLIB = libopencore-amrnb.$(SHLIB_EXT)
 
 all: libopencore-amrnb.a $(SHLIB)
 
-$(SHLIB): $(OBJS)
+$(SHLIB): $(SOBJS)
 ifeq ($(shell uname), Darwin)
 	$(CXX) $(SHLIB_FLAGS) -o $@ $+ $(LDFLAGS)
 else
 	$(CXX) $(SHLIB_FLAGS) -o $@ $+ -Wl,-soname,$(SONAME) $(LDFLAGS)
 endif
+
+%.lo: %.c
+	$(CC) $(CPPFLAGS) $(CFLAGS) -fPIC -DPIC -c $< -o $@
+
+%.lo: %.cpp
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -fPIC -DPIC -c $< -o $@
 
 libopencore-amrnb.a: $(OBJS)
 	ar rcs $@ $+
@@ -90,5 +96,5 @@ endif
 	install -m 644 interf_enc.h $(DESTDIR)$(PREFIX)/include/opencore-amrnb
 
 clean:
-	rm -f $(SHLIB) libopencore-amrnb.a *.o $(OBJS)
+	rm -f $(SHLIB) libopencore-amrnb.a *.o *.lo $(OBJS) $(SOBJS)
 

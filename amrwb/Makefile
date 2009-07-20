@@ -9,7 +9,6 @@ ifneq (, $(BUILD_AS_C))
     CXX = $(CC)
     CXXFLAGS += -x c -std=c99
 endif
-CXXFLAGS += -fPIC -DPIC
 
 ifeq (, $(PREFIX))
     PREFIX = /usr/local
@@ -29,6 +28,7 @@ DEC_OBJS := $(DEC_SRC:.cpp=.o)
 DEC_OBJS := $(patsubst %,$(DEC_SRC_DIR)/%, $(DEC_OBJS))
 
 OBJS = wrapper.o $(DEC_OBJS)
+SOBJS = $(OBJS:%.o=%.lo)
 
 #Versioning
 MAJOR = 0
@@ -47,12 +47,18 @@ SHLIB = libopencore-amrwb.$(SHLIB_EXT)
 
 all: libopencore-amrwb.a $(SHLIB)
 
-$(SHLIB): $(OBJS)
+$(SHLIB): $(SOBJS)
 ifeq ($(shell uname), Darwin)
 	$(CXX) $(SHLIB_FLAGS) -o $@ $+ $(LDFLAGS)
 else
 	$(CXX) $(SHLIB_FLAGS) -o $@ $+ -Wl,-soname,$(SONAME) $(LDFLAGS)
 endif
+
+%.lo: %.c
+	$(CC) $(CPPFLAGS) $(CFLAGS) -fPIC -DPIC -c $< -o $@
+
+%.lo: %.cpp
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -fPIC -DPIC -c $< -o $@
 
 libopencore-amrwb.a: $(OBJS)
 	ar rcs $@ $+
@@ -70,5 +76,5 @@ endif
 	install -m 644 if_rom.h $(DESTDIR)$(PREFIX)/include/opencore-amrwb
 
 clean:
-	rm -f $(SHLIB) libopencore-amrwb.a *.o $(OBJS)
+	rm -f $(SHLIB) libopencore-amrwb.a *.o *.lo $(OBJS) $(SOBJS)
 
