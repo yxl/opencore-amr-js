@@ -54,6 +54,7 @@ SOBJS = $(OBJS:%.o=%.lo)
 MAJOR = 0
 MINOR = 1
 REVISION = 1
+VERSION = $(MAJOR).$(MINOR).$(REVISION)
 
 ifeq ($(shell uname), Darwin)
     SHLIB_EXT = dylib
@@ -94,6 +95,8 @@ endif
 	install -d $(DESTDIR)$(PREFIX)/include/opencore-amrnb
 	install -m 644 interf_dec.h $(DESTDIR)$(PREFIX)/include/opencore-amrnb
 	install -m 644 interf_enc.h $(DESTDIR)$(PREFIX)/include/opencore-amrnb
+	install -d $(DESTDIR)$(PREFIX)/$(LIBDIR)/pkgconfig
+	cat opencore-amrnb.pc | sed s,PREFIX,$(PREFIX), | sed s,LIBDIR,$(LIBDIR), | sed s,VERSION,$(VERSION), > $(DESTDIR)$(PREFIX)/$(LIBDIR)/pkgconfig/opencore-amrnb.pc
 
 clean:
 	rm -f $(SHLIB) libopencore-amrnb.a *.o *.lo $(OBJS) $(SOBJS)
