@@ -1,3 +1,4 @@
 usr/include/opencore-amrnb
 usr/lib/libopencore-amrnb.a
 usr/lib/libopencore-amrnb.so
+usr/lib/pkgconfig/opencore-amrnb.pc

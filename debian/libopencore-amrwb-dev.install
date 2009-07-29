@@ -1,3 +1,4 @@
 usr/include/opencore-amrwb
 usr/lib/libopencore-amrwb.a
 usr/lib/libopencore-amrwb.so
+usr/lib/pkgconfig/opencore-amrwb.pc
