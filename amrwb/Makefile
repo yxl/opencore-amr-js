@@ -3,6 +3,7 @@
 OC_BASE = ../opencore
 AMR_BASE = $(OC_BASE)/codecs_v2/audio/gsm_amr
 LIBDIR=lib
+BINDIR=bin
 
 # To compile as C instead of C++, define BUILD_AS_C
 ifneq (, $(BUILD_AS_C))
@@ -40,9 +41,15 @@ ifeq ($(shell uname), Darwin)
     SHLIB_EXT = dylib
     SHLIB_FLAGS = -dynamiclib
 else
-    SHLIB_EXT = so.$(MAJOR).$(MINOR).$(REVISION)
-    SHLIB_FLAGS = -shared
-    SONAME = libopencore-amrwb.so.$(MAJOR)
+    ifeq ($(shell uname | sed -e 's/\(MINGW32_NT\)\(.*\)/\1/'), MINGW32_NT)
+        SHLIB_EXT = $(MAJOR).$(MINOR).$(REVISION).dll
+        SHLIB_FLAGS = -shared
+        SONAME = libopencore-amrwb-$(MAJOR).dll
+    else
+        SHLIB_EXT = so.$(MAJOR).$(MINOR).$(REVISION)
+        SHLIB_FLAGS = -shared
+        SONAME = libopencore-amrwb.so.$(MAJOR)
+    endif
 endif
 SHLIB = libopencore-amrwb.$(SHLIB_EXT)
 
@@ -67,10 +74,20 @@ libopencore-amrwb.a: $(OBJS)
 install: libopencore-amrwb.a $(SHLIB)
 	install -d $(DESTDIR)$(PREFIX)/$(LIBDIR)
 	install -m 644 libopencore-amrwb.a $(DESTDIR)$(PREFIX)/$(LIBDIR)
+ifeq ($(shell uname | sed -e 's/\(MINGW32_NT\)\(.*\)/\1/'), MINGW32_NT)
+	install -d $(DESTDIR)$(PREFIX)/$(BINDIR)
+	install $(SHLIB) $(DESTDIR)$(PREFIX)/$(BINDIR)
+else
 	install $(SHLIB) $(DESTDIR)$(PREFIX)/$(LIBDIR)
+endif
 ifneq ($(shell uname), Darwin)
+ifeq ($(shell uname | sed -e 's/\(MINGW32_NT\)\(.*\)/\1/'), MINGW32_NT)
+	ln -sf $(SHLIB) $(DESTDIR)$(PREFIX)/$(BINDIR)/$(SONAME)
+	ln -sf $(DESTDIR)$(PREFIX)/$(BINDIR)/$(SONAME) $(DESTDIR)$(PREFIX)/$(BINDIR)/libopencore-amrwb.dll
+else
 	ln -sf $(SHLIB) $(DESTDIR)$(PREFIX)/$(LIBDIR)/$(SONAME)
 	ln -sf $(SONAME) $(DESTDIR)$(PREFIX)/$(LIBDIR)/libopencore-amrwb.so
+endif
 endif
 	install -d $(DESTDIR)$(PREFIX)/include/opencore-amrwb
 	install -m 644 dec_if.h $(DESTDIR)$(PREFIX)/include/opencore-amrwb
