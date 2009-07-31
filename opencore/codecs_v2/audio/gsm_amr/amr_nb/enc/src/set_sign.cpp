@@ -492,6 +492,7 @@ void set_sign12k2(
     }
 
     max_of_all = -1;
+    ipos[0] = 0;
     for (i = 0; i < nb_track; i++)
     {
         max = -1;
