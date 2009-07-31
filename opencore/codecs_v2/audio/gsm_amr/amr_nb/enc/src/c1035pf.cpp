@@ -358,7 +358,7 @@ static void build_code(
     OSCL_UNUSED_ARG(pOverflow);
 
     oscl_memset(cod, 0, L_CODE*sizeof(*cod));
-    oscl_memset(indx, 0xFF, NB_TRACK*sizeof(*indx));
+    oscl_memset(indx, 0xFF, NB_PULSE*sizeof(*indx));
 
     p__sign = _sign;
 
