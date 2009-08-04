@@ -6,7 +6,7 @@ Uploaders: Martin Storsjö <martin@martin.st>,
            Andres Mejia <mcitadel@gmail.com>
 DM-Upload-Allowed: yes
 Build-Depends: debhelper (>= 7)
-Standards-Version: 3.8.1
+Standards-Version: 3.8.2
 Vcs-Git: git://git.debian.org/git/pkg-multimedia/opencore-amr.git
 Vcs-Browser: http://git.debian.org/?p=pkg-multimedia/opencore-amr.git;a=summary
 
