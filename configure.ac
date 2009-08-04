@@ -1,7 +1,7 @@
 #                                               -*- Autoconf -*-
 # Process this file with autoconf to produce a configure script.
 
-AC_INIT([opencore-amr], [0.1.2], [https://sourceforge.net/apps/trac/opencore-amr/])
+AC_INIT([opencore-amr], [0.0.2], [https://sourceforge.net/apps/trac/opencore-amr/])
 AC_CONFIG_AUX_DIR(.)
 AC_CONFIG_MACRO_DIR([m4])
 AM_INIT_AUTOMAKE
@@ -64,5 +64,7 @@ AC_SUBST(OPENCORE_AMRWB_VERSION)
 
 AC_CONFIG_FILES([Makefile
                  amrnb/Makefile
-                 amrwb/Makefile])
+                 amrwb/Makefile
+                 amrnb/opencore-amrnb.pc
+                 amrwb/opencore-amrwb.pc])
 AC_OUTPUT
