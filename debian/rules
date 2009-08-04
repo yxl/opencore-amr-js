@@ -1,16 +1,27 @@
 #!/usr/bin/make -f
 
-CXXFLAGS = -Wall -g $(DEB_CXXFLAGS)
-ifeq (,$(findstring noopt,$(DEB_BUILD_OPTIONS)))
-    CXXFLAGS += -O2
+CFLAGS =
+CXXFLAGS = $(CFLAGS)
+
+# These are from the autotools-dev package documentation.
+# /usr/share/doc/autotools-dev/README.Debian.gz
+# from the section titled "Calling GNU configure properly"
+export DEB_HOST_GNU_TYPE  ?= $(shell dpkg-architecture -qDEB_HOST_GNU_TYPE)
+export DEB_BUILD_GNU_TYPE ?= $(shell dpkg-architecture -qDEB_BUILD_GNU_TYPE)
+
+# FOR AUTOCONF 2.52 AND NEWER ONLY
+ifeq ($(DEB_BUILD_GNU_TYPE), $(DEB_HOST_GNU_TYPE))
+  confflags += --build $(DEB_HOST_GNU_TYPE)
 else
-    CXXFLAGS += -O0
+  confflags += --build $(DEB_BUILD_GNU_TYPE) --host $(DEB_HOST_GNU_TYPE)
 endif
-$(info DEB_BUILD_OPTIONS = $(DEB_BUILD_OPTIONS))
-$(info CXXFLAGS = $(CXXFLAGS))
 
 %:
 	dh $@
+
+override_dh_auto_configure:
+	autoreconf -fi
+	./configure --prefix=/usr $(confflags)
 
 override_dh_auto_install:
 	$(MAKE) install DESTDIR=$(CURDIR)/debian/tmp PREFIX=/usr
