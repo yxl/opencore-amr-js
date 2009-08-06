@@ -10,3 +10,6 @@ clean:
 install:
 	$(MAKE) -f Makefile.alt -C amrnb install BUILD_AS_C=1
 	$(MAKE) -f Makefile.alt -C amrwb install BUILD_AS_C=1
+
+.PHONY: install
+
