@@ -29,6 +29,7 @@ libopencore_amrwb_la_LDFLAGS = -version-info @OPENCORE_AMRWB_VERSION@
 # Our sources to include. There are certain sources we exclude and they are
 # $(DEC_SRC_DIR)/decoder_amr_wb.cpp
 libopencore_amrwb_la_SOURCES = \
+    wrapper.cpp \
     $(DEC_SRC_DIR)/agc2_amr_wb.cpp \
         $(DEC_SRC_DIR)/band_pass_6k_7k.cpp \
         $(DEC_SRC_DIR)/dec_acelp_2p_in_64.cpp \
