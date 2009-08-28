@@ -66,6 +66,7 @@ AC_SUBST(OPENCORE_AMRWB_VERSION)
 AC_CONFIG_FILES([Makefile
                  amrnb/Makefile
                  amrwb/Makefile
+                 debian/Makefile
                  amrnb/opencore-amrnb.pc
                  amrwb/opencore-amrwb.pc])
 AC_OUTPUT
