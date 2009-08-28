@@ -14939,7 +14939,7 @@ OPENCORE_AMRWB_VERSION=0:2:0
 
 
 
-ac_config_files="$ac_config_files Makefile amrnb/Makefile amrwb/Makefile debian/Makefile amrnb/opencore-amrnb.pc amrwb/opencore-amrwb.pc"
+ac_config_files="$ac_config_files Makefile amrnb/Makefile amrwb/Makefile debian/Makefile test/Makefile amrnb/opencore-amrnb.pc amrwb/opencore-amrwb.pc"
 
 cat >confcache <<\_ACEOF
 # This file is a shell script that caches the results of configure
@@ -16013,6 +16013,7 @@ do
     "amrnb/Makefile") CONFIG_FILES="$CONFIG_FILES amrnb/Makefile" ;;
     "amrwb/Makefile") CONFIG_FILES="$CONFIG_FILES amrwb/Makefile" ;;
     "debian/Makefile") CONFIG_FILES="$CONFIG_FILES debian/Makefile" ;;
+    "test/Makefile") CONFIG_FILES="$CONFIG_FILES test/Makefile" ;;
     "amrnb/opencore-amrnb.pc") CONFIG_FILES="$CONFIG_FILES amrnb/opencore-amrnb.pc" ;;
     "amrwb/opencore-amrwb.pc") CONFIG_FILES="$CONFIG_FILES amrwb/opencore-amrwb.pc" ;;
 
