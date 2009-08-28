@@ -21,7 +21,7 @@
 #include <string.h>
 #include "wav.h"
 extern "C" {
-#include <opencore-amrwb/dec_if.h>
+#include <dec_if.h>
 }
 
 /* From pvamrwbdecoder_api.h, by dividing by 8 and rounding up */

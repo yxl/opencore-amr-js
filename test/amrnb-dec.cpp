@@ -21,7 +21,7 @@
 #include <string.h>
 #include "wav.h"
 extern "C" {
-#include <opencore-amrnb/interf_dec.h>
+#include <interf_dec.h>
 }
 
 /* From WmfDecBytesPerFrame in dec_input_format_tab.cpp */

@@ -19,7 +19,7 @@
 #include <stdio.h>
 #include <stdint.h>
 #include <math.h>
-#include <opencore-amrnb/interf_enc.h>
+#include <interf_enc.h>
 
 int main(int argc, char *argv[]) {
 	int i, j;

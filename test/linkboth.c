@@ -19,9 +19,9 @@
 #include <stdio.h>
 #include <stdint.h>
 #include <string.h>
-#include <opencore-amrnb/interf_dec.h>
-#include <opencore-amrnb/interf_enc.h>
-#include <opencore-amrwb/dec_if.h>
+#include <interf_dec.h>
+#include <interf_enc.h>
+#include <dec_if.h>
 
 int main(int argc, char *argv[]) {
 	void* amrnb = Decoder_Interface_init();

@@ -1,6 +1,6 @@
-CFLAGS = -Wall -pedantic
+CFLAGS = -Wall -pedantic -I../amrnb -I../amrwb
 CXXFLAGS = $(CFLAGS)
-LDFLAGS =
+LDFLAGS = -L../amrnb -L../amrwb
 
 all: amrnb-dec amrnb-enc amrwb-dec
 
