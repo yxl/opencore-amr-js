@@ -13,6 +13,7 @@
 # PARTICULAR PURPOSE.
 
 @SET_MAKE@
+
 VPATH = @srcdir@
 pkgdatadir = $(datadir)/@PACKAGE@
 pkglibdir = $(libdir)/@PACKAGE@
@@ -32,10 +33,11 @@ POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
 subdir = .
-DIST_COMMON = README $(am__configure_deps) $(srcdir)/Makefile.am \
-	$(srcdir)/Makefile.in $(srcdir)/config.h.in \
-	$(top_srcdir)/configure AUTHORS COPYING ChangeLog INSTALL NEWS \
-	config.guess config.sub depcomp install-sh ltmain.sh missing
+DIST_COMMON = README $(am__configure_deps) $(noinst_HEADERS) \
+	$(srcdir)/Makefile.am $(srcdir)/Makefile.in \
+	$(srcdir)/config.h.in $(top_srcdir)/configure AUTHORS COPYING \
+	ChangeLog INSTALL NEWS config.guess config.sub depcomp \
+	install-sh ltmain.sh missing
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/m4/libtool.m4 \
 	$(top_srcdir)/m4/ltoptions.m4 $(top_srcdir)/m4/ltsugar.m4 \
@@ -57,6 +59,7 @@ RECURSIVE_TARGETS = all-recursive check-recursive dvi-recursive \
 	install-pdf-recursive install-ps-recursive install-recursive \
 	installcheck-recursive installdirs-recursive pdf-recursive \
 	ps-recursive uninstall-recursive
+HEADERS = $(noinst_HEADERS)
 RECURSIVE_CLEAN_TARGETS = mostlyclean-recursive clean-recursive	\
   distclean-recursive maintainer-clean-recursive
 ETAGS = etags
@@ -193,8 +196,35 @@ target_alias = @target_alias@
 top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
-SUBDIRS = amrnb amrwb
+SUBDIRS = amrnb amrwb debian
 ACLOCAL_AMFLAGS = -I m4
+noinst_HEADERS = oscl/oscl_base.h oscl/oscl_mem.h
+EXTRA_DIST = LICENSE Makefile.alt build_osx.sh test \
+             opencore/README opencore/NOTICE opencore/ChangeLog \
+             opencore/codecs_v2/audio/gsm_amr/patent_disclaimer.txt \
+             opencore/codecs_v2/audio/gsm_amr/common/dec/include \
+             opencore/codecs_v2/audio/gsm_amr/common/dec/build \
+             opencore/codecs_v2/audio/gsm_amr/common/dec/Android.mk \
+             opencore/codecs_v2/audio/gsm_amr/amr_nb/common/Android.mk \
+             opencore/codecs_v2/audio/gsm_amr/amr_nb/common/build \
+             opencore/codecs_v2/audio/gsm_amr/amr_nb/common/include \
+             opencore/codecs_v2/audio/gsm_amr/amr_nb/common/src/*.cpp \
+             opencore/codecs_v2/audio/gsm_amr/amr_nb/dec/Android.mk \
+             opencore/codecs_v2/audio/gsm_amr/amr_nb/dec/build \
+             opencore/codecs_v2/audio/gsm_amr/amr_nb/dec/include \
+             opencore/codecs_v2/audio/gsm_amr/amr_nb/dec/src/*.cpp \
+             opencore/codecs_v2/audio/gsm_amr/amr_nb/dec/src/*.h \
+             opencore/codecs_v2/audio/gsm_amr/amr_nb/enc/Android.mk \
+             opencore/codecs_v2/audio/gsm_amr/amr_nb/enc/build \
+             opencore/codecs_v2/audio/gsm_amr/amr_nb/enc/include \
+             opencore/codecs_v2/audio/gsm_amr/amr_nb/enc/src/*.cpp \
+             opencore/codecs_v2/audio/gsm_amr/amr_nb/enc/src/*.h \
+             opencore/codecs_v2/audio/gsm_amr/amr_wb/dec/Android.mk \
+             opencore/codecs_v2/audio/gsm_amr/amr_wb/dec/build \
+             opencore/codecs_v2/audio/gsm_amr/amr_wb/dec/include \
+             opencore/codecs_v2/audio/gsm_amr/amr_wb/dec/src/*.cpp \
+             opencore/codecs_v2/audio/gsm_amr/amr_wb/dec/src/*.h
+
 all: config.h
 	$(MAKE) $(AM_MAKEFLAGS) all-recursive
 
@@ -539,7 +569,7 @@ distcleancheck: distclean
 	       exit 1; } >&2
 check-am: all-am
 check: check-recursive
-all-am: Makefile config.h
+all-am: Makefile $(HEADERS) config.h
 installdirs: installdirs-recursive
 installdirs-am:
 install: install-recursive
