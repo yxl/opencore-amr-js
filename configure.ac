@@ -67,6 +67,7 @@ AC_CONFIG_FILES([Makefile
                  amrnb/Makefile
                  amrwb/Makefile
                  debian/Makefile
+                 test/Makefile
                  amrnb/opencore-amrnb.pc
                  amrwb/opencore-amrwb.pc])
 AC_OUTPUT

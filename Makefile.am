@@ -1,10 +1,10 @@
-SUBDIRS = amrnb amrwb debian
+SUBDIRS = amrnb amrwb debian test
 
 ACLOCAL_AMFLAGS = -I m4
 
 noinst_HEADERS = oscl/oscl_base.h oscl/oscl_mem.h
 
-EXTRA_DIST = LICENSE Makefile.alt build_osx.sh test \
+EXTRA_DIST = LICENSE Makefile.alt build_osx.sh \
              opencore/README opencore/NOTICE opencore/ChangeLog \
              opencore/codecs_v2/audio/gsm_amr/patent_disclaimer.txt \
              opencore/codecs_v2/audio/gsm_amr/common/dec/include \
