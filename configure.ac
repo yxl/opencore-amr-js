@@ -4,7 +4,7 @@
 AC_INIT([opencore-amr], [0.1.2], [https://sourceforge.net/apps/trac/opencore-amr/])
 AC_CONFIG_AUX_DIR(.)
 AC_CONFIG_MACRO_DIR([m4])
-AM_INIT_AUTOMAKE
+AM_INIT_AUTOMAKE([tar-ustar])
 AC_CONFIG_HEADERS([config.h])
 AM_MAINTAINER_MODE
 
