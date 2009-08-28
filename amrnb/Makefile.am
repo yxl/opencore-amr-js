@@ -196,3 +196,5 @@ libopencore_amrnb_la_SOURCES = \
         $(COMMON_SRC_DIR)/syn_filt.cpp \
         $(COMMON_SRC_DIR)/weight_a.cpp \
         $(COMMON_SRC_DIR)/window_tab.cpp
+
+EXTRA_DIST = Makefile.alt
