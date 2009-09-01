@@ -60,8 +60,8 @@ void Encoder_Interface_exit(void* s) {
 int Encoder_Interface_Encode(void* s, enum Mode mode, const short* speech, unsigned char* out, int forceSpeech) {
 	struct encoder_state* state = (struct encoder_state*) s;
 	enum Frame_Type_3GPP frame_type = (enum Frame_Type_3GPP) mode;
-	int ret = AMREncode(state->encCtx, state->pidSyncCtx, mode, (Word16*) speech, out, &frame_type, AMR_TX_WMF);
-	out[0] = ((frame_type & 0x0f) << 3) | 0x04;
+	int ret = AMREncode(state->encCtx, state->pidSyncCtx, mode, (Word16*) speech, out, &frame_type, AMR_TX_IETF);
+	out[0] |= 0x04;
 	return ret;
 }
 
