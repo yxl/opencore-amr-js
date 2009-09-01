@@ -665,7 +665,8 @@ Word16 AMREncode(
     enum Mode usedMode = MR475;
 
     /* Encode WMF or IF2 frames */
-    if ((output_format == AMR_TX_WMF) | (output_format == AMR_TX_IF2))
+    if ((output_format == AMR_TX_WMF) | (output_format == AMR_TX_IF2)
+            | (output_format == AMR_TX_IETF))
     {
         /* Encode one speech frame (20 ms) */
 
@@ -717,7 +718,16 @@ Word16 AMREncode(
 
         /* At this point, output format is ETS */
         /* Determine the output format to use */
-        if (output_format == AMR_TX_WMF)
+        if (output_format == AMR_TX_IETF)
+        {
+            /* Change output data format to WMF */
+            ets_to_ietf(*p3gpp_frame_type, ets_output_bfr, pEncOutput, &(((Speech_Encode_FrameState*)pEncState)->cod_amr_state->common_amr_tbls));
+
+            /* Set up the number of encoded WMF bytes */
+            num_enc_bytes = WmfEncBytesPerFrame[(Word16) *p3gpp_frame_type];
+
+        }
+        else if (output_format == AMR_TX_WMF)
         {
             /* Change output data format to WMF */
             ets_to_wmf(*p3gpp_frame_type, ets_output_bfr, pEncOutput, &(((Speech_Encode_FrameState*)pEncState)->cod_amr_state->common_amr_tbls));

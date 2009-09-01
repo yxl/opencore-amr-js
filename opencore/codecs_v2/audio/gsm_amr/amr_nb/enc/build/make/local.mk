@@ -8,7 +8,6 @@ include $(MK)/clear.mk
 
 TARGET := pvencoder_gsmamr
 
-XCXXFLAGS += $(FLAG_COMPILE_WARNINGS_AS_ERRORS)
 
 OPTIMIZE_FOR_PERFORMANCE_OVER_SIZE := true
 

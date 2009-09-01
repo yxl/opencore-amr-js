@@ -52,7 +52,7 @@ terms listed above has been obtained from the copyright holder.
 #if defined(PV_ARM_V5)
 #include "basic_op_arm_v5.h"
 
-#elif defined(xxPV_ARM_GCC_V5) // @TODO: Enable gcc-arm assembly
+#elif defined(PV_ARM_GCC_V5)
 #include "basic_op_arm_gcc_v5.h"
 
 #else

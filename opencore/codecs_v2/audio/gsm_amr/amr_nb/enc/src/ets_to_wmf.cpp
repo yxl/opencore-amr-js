@@ -143,9 +143,10 @@ void ets_to_wmf(
     const Word16* const* reorderBits_ptr = common_amr_tbls->reorderBits_ptr;
     const Word16* numOfBits_ptr = common_amr_tbls->numOfBits_ptr;
 
+    wmf_output_ptr[j++] = (UWord8)(frame_type_3gpp) & 0x0f;
+
     if (frame_type_3gpp < AMR_SID)
     {
-        wmf_output_ptr[j++] = (UWord8)(frame_type_3gpp) & 0x0f;
 
         for (i = 0; i < numOfBits_ptr[frame_type_3gpp] - 7;)
         {
@@ -181,7 +182,6 @@ void ets_to_wmf(
     }
     else
     {
-        wmf_output_ptr[j++] = (UWord8)(frame_type_3gpp) & 0x0f;
 
         ptr_temp = &ets_input_ptr[0];
 
@@ -207,6 +207,92 @@ void ets_to_wmf(
         for (i = 0; i < bits_left; i++)
         {
             wmf_output_ptr[j] |= *(ptr_temp++) << (7 - i);
+        }
+    }
+
+    return;
+}
+
+
+
+void ets_to_ietf(
+    enum Frame_Type_3GPP frame_type_3gpp,
+    Word16 *ets_input_ptr,
+    UWord8 *ietf_output_ptr,
+    CommonAmrTbls* common_amr_tbls)
+{
+    Word16  i;
+    Word16  k = 0;
+    Word16  j = 0;
+    Word16 *ptr_temp;
+    Word16  bits_left;
+    UWord8  accum;
+    const Word16* const* reorderBits_ptr = common_amr_tbls->reorderBits_ptr;
+    const Word16* numOfBits_ptr = common_amr_tbls->numOfBits_ptr;
+
+    ietf_output_ptr[j++] = (UWord8)(frame_type_3gpp << 3);
+
+    if (frame_type_3gpp < AMR_SID)
+    {
+        for (i = 0; i < numOfBits_ptr[frame_type_3gpp] - 7;)
+        {
+            ietf_output_ptr[j]  =
+                (UWord8) ets_input_ptr[reorderBits_ptr[frame_type_3gpp][i++]] << 7;
+            ietf_output_ptr[j] |=
+                (UWord8) ets_input_ptr[reorderBits_ptr[frame_type_3gpp][i++]] << 6;
+            ietf_output_ptr[j] |=
+                (UWord8) ets_input_ptr[reorderBits_ptr[frame_type_3gpp][i++]] << 5;
+            ietf_output_ptr[j] |=
+                (UWord8) ets_input_ptr[reorderBits_ptr[frame_type_3gpp][i++]] << 4;
+            ietf_output_ptr[j] |=
+                (UWord8) ets_input_ptr[reorderBits_ptr[frame_type_3gpp][i++]] << 3;
+            ietf_output_ptr[j] |=
+                (UWord8) ets_input_ptr[reorderBits_ptr[frame_type_3gpp][i++]] << 2;
+            ietf_output_ptr[j] |=
+                (UWord8) ets_input_ptr[reorderBits_ptr[frame_type_3gpp][i++]] << 1;
+            ietf_output_ptr[j++] |=
+                (UWord8) ets_input_ptr[reorderBits_ptr[frame_type_3gpp][i++]];
+        }
+
+        bits_left = numOfBits_ptr[frame_type_3gpp] -
+                    (numOfBits_ptr[frame_type_3gpp] & 0xFFF8);
+
+        ietf_output_ptr[j] = 0;
+
+        for (k = 0; k < bits_left; k++)
+        {
+            ietf_output_ptr[j] |=
+                (UWord8) ets_input_ptr[reorderBits_ptr[frame_type_3gpp][i++]] << (7 - k);
+
+        }
+    }
+    else
+    {
+
+        ptr_temp = &ets_input_ptr[0];
+
+        for (i = numOfBits_ptr[frame_type_3gpp] - 7; i > 0; i -= 8)
+        {
+            accum  = (UWord8) * (ptr_temp++) << 7;
+            accum |= (UWord8) * (ptr_temp++) << 6;
+            accum |= (UWord8) * (ptr_temp++) << 5;
+            accum |= (UWord8) * (ptr_temp++) << 4;
+            accum |= (UWord8) * (ptr_temp++) << 3;
+            accum |= (UWord8) * (ptr_temp++) << 2;
+            accum |= (UWord8) * (ptr_temp++) << 1;
+            accum |= (UWord8) * (ptr_temp++);
+
+            ietf_output_ptr[j++] = accum;
+        }
+
+        bits_left = numOfBits_ptr[frame_type_3gpp] -
+                    (numOfBits_ptr[frame_type_3gpp] & 0xFFF8);
+
+        ietf_output_ptr[j] = 0;
+
+        for (i = 0; i < bits_left; i++)
+        {
+            ietf_output_ptr[j] |= *(ptr_temp++) << (7 - i);
         }
     }
 

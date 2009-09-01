@@ -67,7 +67,7 @@ LOCAL_SRC_FILES := \
 
 LOCAL_MODULE := libpvencoder_gsmamr
 
-LOCAL_CFLAGS :=  $(PV_CFLAGS)
+LOCAL_CFLAGS :=   $(PV_CFLAGS)
 
 LOCAL_ARM_MODE := arm
 

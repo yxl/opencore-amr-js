@@ -44,8 +44,6 @@ terms listed above has been obtained from the copyright holder.
 #ifndef LOG2_NORM_H
 #define LOG2_NORM_H
 
-#define log2_h "$Id $"              /* Used by legacy code */
-
 /*----------------------------------------------------------------------------
 ; INCLUDES
 ----------------------------------------------------------------------------*/

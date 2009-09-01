@@ -42,7 +42,7 @@ terms listed above has been obtained from the copyright holder.
 ; CONTINUE ONLY IF NOT ALREADY DEFINED
 ----------------------------------------------------------------------------*/
 #ifndef lsp_lsf_h
-#define lsp_lsf_h "$Id $"
+#define lsp_lsf_h
 
 /*----------------------------------------------------------------------------
 ; INCLUDES

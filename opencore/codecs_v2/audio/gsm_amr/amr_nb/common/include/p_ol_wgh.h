@@ -40,7 +40,7 @@ terms listed above has been obtained from the copyright holder.
 */
 
 #ifndef P_OL_WGH_H
-#define P_OL_WGH_H "$Id $"
+#define P_OL_WGH_H
 
 /*----------------------------------------------------------------------------
 ; INCLUDES

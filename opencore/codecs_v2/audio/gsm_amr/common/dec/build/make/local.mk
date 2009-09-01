@@ -6,7 +6,6 @@ include $(MK)/clear.mk
 
 TARGET :=
 
-XCXXFLAGS := $(FLAG_COMPILE_WARNINGS_AS_ERRORS)
 
 INCSRCDIR := ../../include
 

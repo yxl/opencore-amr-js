@@ -1,5 +1,190 @@
 ===============================================================================
-2009-05-10  OpenCORE 2.04
+2009-08-06  OpenCORE 2.05
+
+New Features
+- Helper function to retrieve extended messages from command responses.
+
+- Support for eAAC+ encode in the pvAuthor engine.
+
+- Add conversion operations to OSCL_String classes.
+
+- RTSPT support (3GPP streaming over TCP). To test, replace "rtsp" with "rtspt"
+in the control URL (in source URL or SDP file). It is assumed that the user has
+access to a server with TCP streaming capability.
+
+- PV Metadata Engine (ME). This engine is targeted at applications that want
+to retrieve metadata for any given clip in a generic manner. Typically, a lot
+of these applications would like to scan large batches of content. Since ME 
+is mainly targeted at apps like mediascanner, where speed is the most important
+factor, thumbnail extraction is not supported. For applications that do want 
+to extract thumbnails in a generic manner along with the metadata, PV's 
+FrameAndMetadata Utility (FMU) is recommended instead.
+
+- 2way Lip-Sync unit test cases.
+
+
+Improvement
+- A new base node implementation is introduced for the purpose of 
+  refactoring and consolidating common logic in the nodes. The changes
+  will improve maintainability and make it easier to create new nodes.
+  Further documentation will be released in the future providing guidelines
+  for authoring nodes.
+- The following existing nodes were refactored to utilize the base node 
+  implementation mentioned above: AAC, AMR, and WAV parser nodes.
+- Replace CodecSpecifier with PVMFFormatType.
+- Move EventHandlerProcessing method to PVMFOMXBaseDecNode class.
+- Change method type from "protected" to "private" in OMX derived classes
+(videodec node and audiodec node).
+- Adding robustness to avcdecoder to verify PPS and SPS parameters.
+- Display status of every test case after it finishes in 2way unit test app.
+- Add support to H.245 version 10.
+- OMX node - Implement interleaved NAL sizes (to replace NAL start codes) in 
+omx buffers carrying AVC frames.
+- AMR-WB contributions to enable building in "C":
+https://review.source.android.com/10014 
+https://review.source.android.com/10015
+https://review.source.android.com/10016 
+https://review.source.android.com/10017 
+https://review.source.android.com/10018 
+- AMR-NB contributions to enable building in "C":
+https://review.source.android.com/10297 
+https://review.source.android.com/10301 
+https://review.source.android.com/10302 
+https://review.source.android.com/10303 
+- Update OsclFileStats to track total time taken instead of only the 
+maximum time per operation.
+- Rename OMX master core methods to avoid linking conflicts.
+- Pass key MOUT_VIDEO_SUBFORMAT_KEY to the video MIO of FMU.
+- Remove Direct Render Mode from mp4 composer library. 
+- AMR-NB and AMR-WB inline assembly is being re-enabled after a bug
+in the QEMU assembly translation has been fixed.
+- Modification of MIOs to take all configuration parameters at once.
+- Move OMX input and output buffer ctrl structure away from data buffers.
+- Enable byte-stream (H264-RAW) format decoding in OMX dec node.
+- PVMFInfoTrackDisable information event should be report to java application.
+- Retrieve the PLATFORM version at run time for the Android UserAgent string.
+- OMX audio and video dec nodes need to be able to handle PortSettingsChanged
+event with argument OMX_ALL.
+- PVMFMediaClock latency handling improvement.
+- AAC decoder creates artifacts when decoding clip.
+- Modify MP4 composer node to do sample adds to mp4 composer lib in a separate
+thread.
+- Add support for VIDEO_ENCODER_H264 in authordriver.
+- Author major brand "3gp5" if 3gp clip has TIMED-TEXT track.
+- No interleaving of mp4 files for just one track.
+https://review.source.android.com/10510 
+- Return non-zero code when we detect a memory leak during unit tests.
+- Add "3g2a", "3g2b" and "3g2c" as compatible branch in all content authored
+by PvAuthor SDK.
+- Add support for OMX_COLOR_FormatYCbYCr.
+- Remove unneeded libraries being linked against individual shared libraries.
+- Exclude empty directories and unncessary build files from OpenCORE.
+- In OMX base node, turn the InputBufCtrlStruct from a struct into a class
+- Updates to pvmf_return_codes.pdf, pvplayer_developers_guide.pdf,
+omx_decoder_test_app_guide.pdf, and omx_encoder_test_app_guide.pdf.
+
+Bugs Fixed
+- Repositioning takes a long time for YouTube videos after a few
+repositions.
+- Crash in CPVH223Multiplex::Stop().
+- PlayerEngine cannot finish a playback session after repeated pause
+and resume near EndOfStream.
+- Allow file path to be passed to the pvPlayer SDK on Android.
+- Add a new constructor for the AVCSampleEntry to be used when parsing the 
+encv atom
+https://review.source.android.com/9683
+- MP3 DurationCalcAO logic needs to moved to a place during Prepare and not 
+Init.
+- Change PV_GET_ROW definition in M4V decoder. 
+- Player Engine unit test TC 55 and 56 has memory leaks
+- Crash in authordriver if InitializeForThread fails.
+- Crash in playerdriver if InitializeForThread fails.
+- Potential memory leak in OMX encoder node.
+- Memory leaks in AAC file parser node & lib
+- FindFirst returns wrong element type when find a directory in android
+- Intermittent timeouts on 2way unit tests
+- Incorrect DeBlocking logic
+- AVC Clip Specific Issue: (Play till EOS) OR (Reposition to near EOS) The 
+video gets stuck at near EOS 
+- iTunes genre is not parsed correctly
+- Youtube : AV sync is lost after a seek when playing youtube contents
+- Crash after recording one minute of Video when duration is specified
+- Tracknumber metadata key string should be consistent through out all nodes
+- Possible race condition in singleton lock in omx_init 
+- CPV2WayDatapath::GetPortFormatType() selects least preferred type 
+- AAC OMX decoder component needs to process whole audio config buffer
+- Modify MP3Parser to make seek to 0 a special case and do not use XING header
+for calculating file offset
+- AAC Decoder should not try decode any AAC+ clip whose final sampling freq 
+is > 48 KHz. Should default to AAC in these cases.
+- Update OMX encoder node to calculate the correct output buffer size in case
+the encoder has multiple roles.
+- OMX Encoder MPEG4 unit test fix
+- Setting AMR_NB bitrate to GSM_AMR_4_75 will fail prepare. 
+- AuthorEngine should return Success incase Stop is called in
+PVAE_STATE_INITIALIZED state.
+- OMX M4V encoding drops the first I-frame
+- VIDEO_INTERLEAVE_BUFFER_SIZE is too short for some buffers when encoding 
+D1 resolutions 
+- Occasional audio glitch in MP3 parser during repositioning
+- OMX tests for AMR give seg fault on android
+- pvPlayer sends incorrect HTTP Range header
+http://code.google.com/p/android/issues/detail?id=3031
+- PDL/PS - Fix the Mp4 Parser node to pass the correct timestamp to PE node 
+in RequestResumeNotification during Underflow condition 
+- H.245 TerminalCapabilitySet (TCS) and MasterSlaveDetermination (MSD) 
+requests must be sent before any other H.245 messages. 
+- Logic to set iKeepDroppingMsgsUntilMarkerBit to false in AMR RTSP streaming 
+- 2way tests hanging when run in Android emulator
+- Sound Recorder: Incorrect Duration of clip sometimes observed when sdcard is
+full
+- Memory leak in PV2WayMIO
+- Playerengine needs to be updated to return success even if there are no keys
+for GetMetadataValue
+- Correct the Android RTSP UserAgent string
+- Author Engine : Don't access the queue element without checking its queue
+size
+- If SSRC is not provided in setup response, then pvplayer cleint doesn't send
+firewall packets to the server
+- GetMetadataValues returns invalid number of entries
+- Modify AUT to parse authored files and validate the files as much as possible
+- Eliminate media layer node in case of RTSP streaming
+- AAC timestamps provided to OMX component may be wrong
+- Clean up warnings and some negotiate parameter changes from omx dec & enc
+test apps
+- Fix valgrind issue reported with android simulator in omx base node
+- Add more supported rate control types in pvmp4h263encextension.h
+- Memory leak in player engine test case 807
+- Addressed compiler warnings in PVME
+- nBufferAlignment of OMX_PARAM_PORTDEFINITIONTYPE is initialized to negative
+value when playing clip on android using qcom decoders
+- MP3 parser crash
+- pvplayer_engine_test is detecting 'rtspt_test.sdp' as a url instead a local
+file
+- Count of command line arguments being read in PVME Test App is incorrect
+- Player engine test case 1307 fails when run with a mp4 file containing 3GPP timed text track 
+- PVMFInfoDataReady event being sent to the engine after the unit test calls
+stop
+- PlayerEngine doesn't free reference to PVMFDataSourceNodeRegistryInitInterface
+- Combine the AMR if statement in pv_omxmastercore.cpp
+- Player Engine unit test case 154 fails on execution 
+- Author Engine unit test cases 101-105 fail
+- Add new return code PVMFErrContentInvalidForProgressivePlayback for a
+NOT_PROGRESSIVE_STREAMABLE content 
+- Add USE (AL2, AL3) to 2way test files
+- H223 2way test not being run 
+- Avoid calling CCYUV422toYUV420::New() for each thumbnail
+- Author engine unit test case 101 fails
+- Ignore encoding flaw, which generates aspec_ratio of value 0 in file
+codecs_v2\video\m4v_h263\dec\src
+- Memory leaks in pvmf_mio_fileinput.cpp and performance improvement in mp4
+composer node
+- Do not cancel Init() immediately in case of 3gpp streaming 
+- Transferring MP3 with invalid ID2 tags crashes mediaScanner
+
+
+===============================================================================
+2009-05-17  OpenCORE 2.04
 
 New Features
 - Create external download datastream An external download datastream is

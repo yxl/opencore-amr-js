@@ -122,6 +122,10 @@ OSCL_EXPORT_REF int32 CPvGsmAmrEncoder::InitializeEncoder(int32 aMaxOutputBuffer
         {
             iBitStreamFormat = AMR_TX_IF2;
         }
+        else if (aProps->iBitStreamFormat == AMR_TX_IETF)
+        {
+            iBitStreamFormat = AMR_TX_IETF;
+        }
         else
         {
             iBitStreamFormat = AMR_TX_ETS;

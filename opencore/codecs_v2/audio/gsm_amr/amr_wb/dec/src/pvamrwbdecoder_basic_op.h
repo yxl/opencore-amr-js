@@ -75,7 +75,7 @@ terms listed above has been obtained from the copyright holder.
                range : 0x8000 <= var_out <= 0x7fff.
  ----------------------------------------------------------------------------*/
 
-static inline int16 negate_int16(int16 var1)
+__inline int16 negate_int16(int16 var1)
 {
     return (((var1 == MIN_16) ? MAX_16 : -var1));
 }
@@ -105,7 +105,7 @@ static inline int16 negate_int16(int16 var1)
                range : 0x8000 <= var_out <= 0x7fff.
  ----------------------------------------------------------------------------*/
 
-static inline int16 shl_int16(int16 var1, int16 var2)
+__inline int16 shl_int16(int16 var1, int16 var2)
 {
     int16 var_out;
 
@@ -149,7 +149,7 @@ static inline int16 shl_int16(int16 var1, int16 var2)
 
  ----------------------------------------------------------------------------*/
 
-static inline int32 shl_int32(int32 L_var1, int16 var2)
+__inline int32 shl_int32(int32 L_var1, int16 var2)
 {
     int32 L_var_out;
 
@@ -193,7 +193,7 @@ static inline int32 shl_int32(int32 L_var1, int16 var2)
 
  ----------------------------------------------------------------------------*/
 
-static inline int32 shr_int32(int32 L_var1, int16 var2)
+__inline int32 shr_int32(int32 L_var1, int16 var2)
 {
     int32 L_var_out;
 
@@ -224,7 +224,7 @@ static inline int32 shr_int32(int32 L_var1, int16 var2)
 
 #include "pvamrwbdecoder_basic_op_armv5.h"
 
-#elif defined(xxPV_ARM_GCC_V5) //@TODO: Enable gcc-arm assembly
+#elif defined(PV_ARM_GCC_V5)
 
 #include "pvamrwbdecoder_basic_op_gcc_armv5.h"
 

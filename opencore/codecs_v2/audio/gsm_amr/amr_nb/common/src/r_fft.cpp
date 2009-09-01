@@ -36,11 +36,21 @@ terms listed above has been obtained from the copyright holder.
 /*----------------------------------------------------------------------------
 ; INCLUDES
 ----------------------------------------------------------------------------*/
-
 #include "typedef.h"
-#include "basic_op.h"
+#include "cnst.h"
+#include "oper_32b.h"
 #include "vad2.h"
-
+#include "sub.h"
+#include "add.h"
+#include "shr.h"
+#include "shl.h"
+#include "l_mult.h"
+#include "l_mac.h"
+#include "l_msu.h"
+#include "round.h"
+#include "l_negate.h"
+#include "l_deposit_h.h"
+#include "l_shr.h"
 
 /*----------------------------------------------------------------------------
 ; MACROS
@@ -306,7 +316,7 @@ void c_fft(Word16 * farray_ptr, Flag *pOverflow)
             j = sub(j, k, pOverflow);
             k = shr(k, 1, pOverflow);
         }
-        j = add_16(j, k, pOverflow);
+        j = add(j, k, pOverflow);
     }
 
     /* The FFT part */
@@ -323,7 +333,7 @@ void c_fft(Word16 * farray_ptr, Flag *pOverflow)
 
             for (k = j; k < SIZE; k = k + kk)
             {               /* k is butterfly top */
-                kj = add_16(k, jj, pOverflow);    /* kj is butterfly bottom */
+                kj = add(k, jj, pOverflow);    /* kj is butterfly bottom */
 
                 /* Butterfly computations */
                 ftmp_real = L_mult(*(farray_ptr + kj), phs_tbl[ji], pOverflow);
@@ -344,14 +354,14 @@ void c_fft(Word16 * farray_ptr, Flag *pOverflow)
                 tmp = sub(*(farray_ptr + k + 1), tmp2, pOverflow);
                 *(farray_ptr + kj + 1) = shr(tmp, 1, pOverflow);
 
-                tmp = add_16(*(farray_ptr + k), tmp1, pOverflow);
+                tmp = add(*(farray_ptr + k), tmp1, pOverflow);
                 *(farray_ptr + k) = shr(tmp, 1, pOverflow);
 
-                tmp = add_16(*(farray_ptr + k + 1), tmp2, pOverflow);
+                tmp = add(*(farray_ptr + k + 1), tmp2, pOverflow);
                 *(farray_ptr + k + 1) = shr(tmp, 1, pOverflow);
             }
 
-            ji =  add_16(ji, ii2, pOverflow);
+            ji =  add(ji, ii2, pOverflow);
         }
     }
 }                               /* end of c_fft () */
@@ -522,22 +532,22 @@ void r_fft(Word16 * farray_ptr, Flag *pOverflow)
     /* First, handle the DC and foldover frequencies */
     ftmp1_real = *farray_ptr;
     ftmp2_real = *(farray_ptr + 1);
-    *farray_ptr = add_16(ftmp1_real, ftmp2_real, pOverflow);
+    *farray_ptr = add(ftmp1_real, ftmp2_real, pOverflow);
     *(farray_ptr + 1) = sub(ftmp1_real, ftmp2_real, pOverflow);
 
     /* Now, handle the remaining positive frequencies */
     for (i = 2, j = SIZE - i; i <= SIZE_BY_TWO; i = i + 2, j = SIZE - i)
     {
-        ftmp1_real = add_16(*(farray_ptr + i), *(farray_ptr + j), pOverflow);
+        ftmp1_real = add(*(farray_ptr + i), *(farray_ptr + j), pOverflow);
         ftmp1_imag = sub(*(farray_ptr + i + 1),
                          *(farray_ptr + j + 1), pOverflow);
-        ftmp2_real = add_16(*(farray_ptr + i + 1),
-                            *(farray_ptr + j + 1), pOverflow);
+        ftmp2_real = add(*(farray_ptr + i + 1),
+                         *(farray_ptr + j + 1), pOverflow);
         ftmp2_imag = sub(*(farray_ptr + j),
                          *(farray_ptr + i), pOverflow);
 
-        Lftmp1_real = ((Word32) ftmp1_real << 16);
-        Lftmp1_imag = ((Word32) ftmp1_imag << 16);
+        Lftmp1_real = L_deposit_h(ftmp1_real);
+        Lftmp1_imag = L_deposit_h(ftmp1_imag);
 
         Ltmp1 = L_mac(Lftmp1_real, ftmp2_real, phs_tbl[i], pOverflow);
         Ltmp1 = L_msu(Ltmp1, ftmp2_imag, phs_tbl[i + 1], pOverflow);

@@ -157,9 +157,9 @@ extern "C"
 
 #else /* C_EQUIVALENT */
     static inline Word32 Mpy_32_16(Word16 L_var1_hi,
-                              Word16 L_var1_lo,
-                              Word16 var2,
-                              Flag *pOverflow)
+                                   Word16 L_var1_lo,
+                                   Word16 var2,
+                                   Flag *pOverflow)
     {
 
         Word32 L_product;

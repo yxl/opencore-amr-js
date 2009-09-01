@@ -99,6 +99,10 @@ extern "C"
     UWord8   *wmf_output_ptr,
     CommonAmrTbls* common_amr_tbls);
 
+    void ets_to_ietf(enum Frame_Type_3GPP frame_type_3gpp,
+                     Word16 *ets_input_ptr,
+                     UWord8 *ietf_output_ptr,
+                     CommonAmrTbls* common_amr_tbls);
 
 
     /*----------------------------------------------------------------------------

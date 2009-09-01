@@ -72,6 +72,7 @@ extern "C"
 #define AMR_TX_WMF  0
 #define AMR_TX_IF2  1
 #define AMR_TX_ETS  2
+#define AMR_TX_IETF 3
 
     /*----------------------------------------------------------------------------
     ; EXTERNAL VARIABLES REFERENCES

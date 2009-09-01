@@ -102,8 +102,7 @@ terms listed above has been obtained from the copyright holder.
 /*----------------------------------------------------------------------------
 ; INCLUDES
 ----------------------------------------------------------------------------*/
-#include    "typedef.h"
-#include    "lag_wind_tab.h"
+#include "lag_wind_tab.h"
 
 /*--------------------------------------------------------------------------*/
 #ifdef __cplusplus

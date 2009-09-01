@@ -46,7 +46,7 @@ LOCAL_SRC_FILES := \
 
 LOCAL_MODULE := libpvamrwbdecoder
 
-LOCAL_CFLAGS :=  $(PV_CFLAGS)
+LOCAL_CFLAGS :=   $(PV_CFLAGS)
 
 LOCAL_ARM_MODE := arm
 

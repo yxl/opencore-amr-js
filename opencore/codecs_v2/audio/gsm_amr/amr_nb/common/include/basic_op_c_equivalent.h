@@ -313,10 +313,10 @@ extern "C"
         L_product = 32-bit product of L_var1 and L_var2 (Word32)
     */
     static inline Word32 Mpy_32(Word16 L_var1_hi,
-                           Word16 L_var1_lo,
-                           Word16 L_var2_hi,
-                           Word16 L_var2_lo,
-                           Flag   *pOverflow)
+                                Word16 L_var1_lo,
+                                Word16 L_var2_hi,
+                                Word16 L_var2_lo,
+                                Flag   *pOverflow)
     {
         Word32 L_product;
         Word32 L_sum;
@@ -387,9 +387,9 @@ extern "C"
     */
 
     static inline Word32 Mpy_32_16(Word16 L_var1_hi,
-                              Word16 L_var1_lo,
-                              Word16 var2,
-                              Flag *pOverflow)
+                                   Word16 L_var1_lo,
+                                   Word16 var2,
+                                   Flag *pOverflow)
     {
 
         Word32 L_product;

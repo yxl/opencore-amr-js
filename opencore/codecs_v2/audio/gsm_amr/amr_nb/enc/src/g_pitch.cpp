@@ -346,9 +346,10 @@ Word16 G_pitch(         /* o : Gain of pitch lag saturated to 1.2       */
     }
     else
     {
-        s = 0;                      /* Avoid case of all zeros */
+        s = 0;  /* re-initialize calculations */
         p_y1 = &y1[0];
         p_xn = &xn[0];
+
         for (i = (L_subfr >> 2); i != 0; i--)
         {
             L_temp = (Word32)(*(p_y1++) >> 2);
