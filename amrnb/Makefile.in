@@ -77,9 +77,9 @@ am_libopencore_amrnb_la_OBJECTS = wrapper.lo agc.lo amrdecode.lo \
 	lag_wind_tab.lo l_comp.lo levinson.lo l_extract.lo lflg_upd.lo \
 	l_negate.lo lpc.lo ol_ltp.lo pitch_fr.lo pitch_ol.lo \
 	p_ol_wgh.lo pre_big.lo pre_proc.lo prm2bits.lo qgain475.lo \
-	qgain795.lo q_gain_c.lo q_gain_p.lo qua_gain.lo r_fft.lo \
-	s10_8pf.lo set_sign.lo sid_sync.lo sp_enc.lo spreproc.lo \
-	spstproc.lo ton_stab.lo vad1.lo add.lo az_lsp.lo bitno_tab.lo \
+	qgain795.lo q_gain_c.lo q_gain_p.lo qua_gain.lo s10_8pf.lo \
+	set_sign.lo sid_sync.lo sp_enc.lo spreproc.lo spstproc.lo \
+	ton_stab.lo vad1.lo add.lo az_lsp.lo bitno_tab.lo \
 	bitreorder_tab.lo bytesused.lo c2_9pf_tab.lo div_s.lo \
 	extract_h.lo extract_l.lo gains_tbl.lo gc_pred.lo \
 	get_const_tbls.lo gmed_n.lo gray_tbl.lo grid_tbl.lo int_lpc.lo \
@@ -264,12 +264,13 @@ libopencore_amrnb_la_LDFLAGS = -version-info @OPENCORE_AMRNB_VERSION@
 # $(DEC_SRC_DIR)/decoder_gsm_amr.cpp
 # $(DEC_SRC_DIR)/pvgsmamrdecoder.cpp
 # $(ENC_SRC_DIR)/gsmamr_encoder_wrapper.cpp
-# $(ENC_SRC_DIR)/vad2.cpp
 # $(COMMON_SRC_DIR)/bits2prm.cpp
 # $(COMMON_SRC_DIR)/copy.cpp
 # $(COMMON_SRC_DIR)/div_32.cpp
 # $(COMMON_SRC_DIR)/l_abs.cpp
+# $(COMMON_SRC_DIR)/r_fft.cpp
 # $(COMMON_SRC_DIR)/vad1.cpp
+# $(COMMON_SRC_DIR)/vad2.cpp
 libopencore_amrnb_la_SOURCES = \
     wrapper.cpp \
     $(DEC_SRC_DIR)/agc.cpp \
@@ -360,7 +361,6 @@ libopencore_amrnb_la_SOURCES = \
         $(ENC_SRC_DIR)/q_gain_c.cpp \
         $(ENC_SRC_DIR)/q_gain_p.cpp \
         $(ENC_SRC_DIR)/qua_gain.cpp \
-        $(ENC_SRC_DIR)/r_fft.cpp \
         $(ENC_SRC_DIR)/s10_8pf.cpp \
         $(ENC_SRC_DIR)/set_sign.cpp \
         $(ENC_SRC_DIR)/sid_sync.cpp \
@@ -630,7 +630,6 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/qgain795.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/qua_gain.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/qua_gain_tbl.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/r_fft.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/reorder.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/residu.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/round.Plo@am__quote@
@@ -1291,13 +1290,6 @@ qua_gain.lo: $(ENC_SRC_DIR)/qua_gain.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='$(ENC_SRC_DIR)/qua_gain.cpp' object='qua_gain.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o qua_gain.lo `test -f '$(ENC_SRC_DIR)/qua_gain.cpp' || echo '$(srcdir)/'`$(ENC_SRC_DIR)/qua_gain.cpp
-
-r_fft.lo: $(ENC_SRC_DIR)/r_fft.cpp
-@am__fastdepCXX_TRUE@	$(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT r_fft.lo -MD -MP -MF $(DEPDIR)/r_fft.Tpo -c -o r_fft.lo `test -f '$(ENC_SRC_DIR)/r_fft.cpp' || echo '$(srcdir)/'`$(ENC_SRC_DIR)/r_fft.cpp
-@am__fastdepCXX_TRUE@	mv -f $(DEPDIR)/r_fft.Tpo $(DEPDIR)/r_fft.Plo
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='$(ENC_SRC_DIR)/r_fft.cpp' object='r_fft.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o r_fft.lo `test -f '$(ENC_SRC_DIR)/r_fft.cpp' || echo '$(srcdir)/'`$(ENC_SRC_DIR)/r_fft.cpp
 
 s10_8pf.lo: $(ENC_SRC_DIR)/s10_8pf.cpp
 @am__fastdepCXX_TRUE@	$(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT s10_8pf.lo -MD -MP -MF $(DEPDIR)/s10_8pf.Tpo -c -o s10_8pf.lo `test -f '$(ENC_SRC_DIR)/s10_8pf.cpp' || echo '$(srcdir)/'`$(ENC_SRC_DIR)/s10_8pf.cpp
