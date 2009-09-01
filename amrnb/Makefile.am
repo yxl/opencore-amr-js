@@ -34,12 +34,13 @@ libopencore_amrnb_la_LDFLAGS = -version-info @OPENCORE_AMRNB_VERSION@
 # $(DEC_SRC_DIR)/decoder_gsm_amr.cpp
 # $(DEC_SRC_DIR)/pvgsmamrdecoder.cpp
 # $(ENC_SRC_DIR)/gsmamr_encoder_wrapper.cpp
-# $(ENC_SRC_DIR)/vad2.cpp
 # $(COMMON_SRC_DIR)/bits2prm.cpp
 # $(COMMON_SRC_DIR)/copy.cpp
 # $(COMMON_SRC_DIR)/div_32.cpp
 # $(COMMON_SRC_DIR)/l_abs.cpp
+# $(COMMON_SRC_DIR)/r_fft.cpp
 # $(COMMON_SRC_DIR)/vad1.cpp
+# $(COMMON_SRC_DIR)/vad2.cpp
 libopencore_amrnb_la_SOURCES = \
     wrapper.cpp \
     $(DEC_SRC_DIR)/agc.cpp \
@@ -130,7 +131,6 @@ libopencore_amrnb_la_SOURCES = \
         $(ENC_SRC_DIR)/q_gain_c.cpp \
         $(ENC_SRC_DIR)/q_gain_p.cpp \
         $(ENC_SRC_DIR)/qua_gain.cpp \
-        $(ENC_SRC_DIR)/r_fft.cpp \
         $(ENC_SRC_DIR)/s10_8pf.cpp \
         $(ENC_SRC_DIR)/set_sign.cpp \
         $(ENC_SRC_DIR)/sid_sync.cpp \
