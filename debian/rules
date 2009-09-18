@@ -17,7 +17,7 @@ else
 endif
 
 %:
-	dh $@
+	dh --with quilt $@
 
 override_dh_auto_configure:
 	./configure --prefix=/usr $(confflags)

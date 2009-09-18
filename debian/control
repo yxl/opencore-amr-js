@@ -5,7 +5,7 @@ Maintainer: Debian multimedia packages maintainers <pkg-multimedia-maintainers@l
 Uploaders: Martin Storsjö <martin@martin.st>,
            Andres Mejia <mcitadel@gmail.com>
 DM-Upload-Allowed: yes
-Build-Depends: debhelper (>= 7.0.50~)
+Build-Depends: debhelper (>= 7.0.50~), quilt (>= 0.46-7)
 Standards-Version: 3.8.3
 Vcs-Git: git://git.debian.org/git/pkg-multimedia/opencore-amr.git
 Vcs-Browser: http://git.debian.org/?p=pkg-multimedia/opencore-amr.git;a=summary
