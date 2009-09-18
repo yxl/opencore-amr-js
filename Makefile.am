@@ -1,4 +1,4 @@
-SUBDIRS = amrnb amrwb debian test
+SUBDIRS = amrnb amrwb test
 
 ACLOCAL_AMFLAGS = -I m4
 
