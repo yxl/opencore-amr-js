@@ -20,7 +20,6 @@ endif
 	dh $@
 
 override_dh_auto_configure:
-	autoreconf -fi
 	./configure --prefix=/usr $(confflags)
 
 override_dh_auto_install:
