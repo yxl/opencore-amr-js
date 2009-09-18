@@ -1,4 +1,4 @@
-opencore-amr (0.1.1) UNRELEASED; urgency=low
+opencore-amr (0.1.2) UNRELEASED; urgency=low
 
   [ Martin Storsjo ]
   * Initial Release.
@@ -6,4 +6,4 @@ opencore-amr (0.1.1) UNRELEASED; urgency=low
   [ Andres Mejia ]
   * Change versioning.
 
- -- Andres Mejia <mcitadel@gmail.com>  Mon, 03 Aug 2009 22:08:47 -0400
+ -- Andres Mejia <mcitadel@gmail.com>  Fri, 18 Sep 2009 13:40:57 -0400
