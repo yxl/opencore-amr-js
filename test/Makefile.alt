@@ -2,12 +2,12 @@ CFLAGS = -Wall -pedantic -I../amrnb -I../amrwb
 CXXFLAGS = $(CFLAGS)
 LDFLAGS = -L../amrnb -L../amrwb
 
-all: amrnb-dec amrnb-enc amrwb-dec
+all: amrnb-dec amrnb-enc-sine amrwb-dec
 
 amrnb-dec: amrnb-dec.o wav.o
 	$(CXX) -o $@ $+ $(LDFLAGS) -lopencore-amrnb
 
-amrnb-enc: amrnb-enc.o
+amrnb-enc-sine: amrnb-enc-sine.o
 	$(CC) -o $@ $+ $(LDFLAGS) -lm -lopencore-amrnb
 
 amrwb-dec: amrwb-dec.o wav.o
@@ -19,5 +19,5 @@ linkboth: linkboth.o
 	$(CC) -static -o $@ $+ $(LDFLAGS) -lopencore-amrnb -lopencore-amrwb
 
 clean:
-	rm -f amrnb-dec amrnb-enc amrwb-dec linkboth *.o
+	rm -f amrnb-dec amrnb-enc-sine amrwb-dec linkboth *.o
 
