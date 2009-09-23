@@ -4,13 +4,13 @@ LDFLAGS = -L../amrnb -L../amrwb
 
 all: amrnb-dec amrnb-enc-sine amrwb-dec
 
-amrnb-dec: amrnb-dec.o wav.o
+amrnb-dec: amrnb-dec.o wavwriter.o
 	$(CXX) -o $@ $+ $(LDFLAGS) -lopencore-amrnb
 
 amrnb-enc-sine: amrnb-enc-sine.o
 	$(CC) -o $@ $+ $(LDFLAGS) -lm -lopencore-amrnb
 
-amrwb-dec: amrwb-dec.o wav.o
+amrwb-dec: amrwb-dec.o wavwriter.o
 	$(CXX) -o $@ $+ $(LDFLAGS) -lopencore-amrwb
 
 # To check that both libraries can be linked in statically at the same

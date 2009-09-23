@@ -16,8 +16,8 @@
  * -------------------------------------------------------------------
  */
 
-#ifndef WAV_H
-#define WAV_H
+#ifndef WAVWRITER_H
+#define WAVWRITER_H
 
 #include <stdio.h>
 

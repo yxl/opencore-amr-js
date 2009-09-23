@@ -16,7 +16,7 @@
  * -------------------------------------------------------------------
  */
 
-#include "wav.h"
+#include "wavwriter.h"
 
 void WavWriter::writeString(const char *str) {
 	fputc(str[0], wav);

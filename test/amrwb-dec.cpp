@@ -19,7 +19,7 @@
 #include <stdio.h>
 #include <stdint.h>
 #include <string.h>
-#include "wav.h"
+#include "wavwriter.h"
 extern "C" {
 #include <dec_if.h>
 }
