@@ -19,5 +19,5 @@ linkboth: linkboth.o
 	$(CC) -static -o $@ $+ $(LDFLAGS) -lopencore-amrnb -lopencore-amrwb
 
 clean:
-	rm -f amrnb-dec amrnb-enc amrwb-dec linkboth *.o out.wav out.amr
+	rm -f amrnb-dec amrnb-enc amrwb-dec linkboth *.o
 

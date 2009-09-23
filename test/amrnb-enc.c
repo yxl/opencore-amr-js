@@ -27,10 +27,15 @@ int main(int argc, char *argv[]) {
 	FILE* out;
 	int sample_pos = 0;
 
+	if (argc < 2) {
+		fprintf(stderr, "%s out.amr\n", argv[0]);
+		return 1;
+	}
+
 	amr = Encoder_Interface_init(0);
-	out = fopen("out.amr", "wb");
+	out = fopen(argv[1], "wb");
 	if (!out) {
-		perror("out.amr");
+		perror(argv[1]);
 		return 1;
 	}
 

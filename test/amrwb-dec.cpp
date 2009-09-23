@@ -28,8 +28,8 @@ extern "C" {
 const int sizes[] = { 17, 23, 32, 36, 40, 46, 50, 58, 60, 5, -1, -1, -1, -1, -1, -1 };
 
 int main(int argc, char *argv[]) {
-	if (argc < 2) {
-		fprintf(stderr, "%s in.amr\n", argv[0]);
+	if (argc < 3) {
+		fprintf(stderr, "%s in.amr out.wav\n", argv[0]);
 		return 1;
 	}
 
@@ -45,7 +45,7 @@ int main(int argc, char *argv[]) {
 		return 1;
 	}
 
-	WavWriter wav("out.wav", 16000, 16, 1);
+	WavWriter wav(argv[2], 16000, 16, 1);
 	void* amr = D_IF_init();
 	while (true) {
 		uint8_t buffer[500];

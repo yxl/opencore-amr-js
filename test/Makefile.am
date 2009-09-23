@@ -5,8 +5,6 @@ EXTRA_DIST = Makefile.alt
 
 INCLUDES = -I$(top_srcdir)/amrnb -I$(top_srcdir)/amrwb
 
-CLEANFILES = out.amr out.wav
-
 amrnb_dec_LDADD = $(top_builddir)/amrnb/libopencore-amrnb.la
 amrnb_enc_LDADD = $(top_builddir)/amrnb/libopencore-amrnb.la
 amrnb_enc_LDFLAGS = -lm

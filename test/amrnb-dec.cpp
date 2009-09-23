@@ -29,8 +29,8 @@ const int sizes[] = { 12, 13, 15, 17, 19, 20, 26, 31, 5, 6, 5, 5, 0, 0, 0, 0 };
 
 
 int main(int argc, char *argv[]) {
-	if (argc < 2) {
-		fprintf(stderr, "%s in.amr\n", argv[0]);
+	if (argc < 3) {
+		fprintf(stderr, "%s in.amr out.wav\n", argv[0]);
 		return 1;
 	}
 
@@ -46,7 +46,7 @@ int main(int argc, char *argv[]) {
 		return 1;
 	}
 
-	WavWriter wav("out.wav", 8000, 16, 1);
+	WavWriter wav(argv[2], 8000, 16, 1);
 
 	void* amr = Decoder_Interface_init();
 	while (true) {
