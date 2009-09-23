@@ -49,17 +49,22 @@ mkinstalldirs = $(install_sh) -d
 CONFIG_HEADER = $(top_builddir)/config.h
 CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
-PROGRAMS = $(noinst_PROGRAMS)
-am_amrnb_dec_OBJECTS = amrnb-dec.$(OBJEXT) wav.$(OBJEXT)
+am__installdirs = "$(DESTDIR)$(bindir)"
+PROGRAMS = $(bin_PROGRAMS) $(noinst_PROGRAMS)
+am_amrnb_dec_OBJECTS = amrnb-dec.$(OBJEXT) wavwriter.$(OBJEXT)
 amrnb_dec_OBJECTS = $(am_amrnb_dec_OBJECTS)
 amrnb_dec_DEPENDENCIES = $(top_builddir)/amrnb/libopencore-amrnb.la
-am_amrnb_enc_OBJECTS = amrnb-enc.$(OBJEXT)
+am_amrnb_enc_OBJECTS = amrnb-enc.$(OBJEXT) wavreader.$(OBJEXT)
 amrnb_enc_OBJECTS = $(am_amrnb_enc_OBJECTS)
 amrnb_enc_DEPENDENCIES = $(top_builddir)/amrnb/libopencore-amrnb.la
-amrnb_enc_LINK = $(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) \
+am_amrnb_enc_sine_OBJECTS = amrnb-enc-sine.$(OBJEXT)
+amrnb_enc_sine_OBJECTS = $(am_amrnb_enc_sine_OBJECTS)
+amrnb_enc_sine_DEPENDENCIES =  \
+	$(top_builddir)/amrnb/libopencore-amrnb.la
+amrnb_enc_sine_LINK = $(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) \
-	$(amrnb_enc_LDFLAGS) $(LDFLAGS) -o $@
-am_amrwb_dec_OBJECTS = amrwb-dec.$(OBJEXT) wav.$(OBJEXT)
+	$(amrnb_enc_sine_LDFLAGS) $(LDFLAGS) -o $@
+am_amrwb_dec_OBJECTS = amrwb-dec.$(OBJEXT) wavwriter.$(OBJEXT)
 amrwb_dec_OBJECTS = $(am_amrwb_dec_OBJECTS)
 amrwb_dec_DEPENDENCIES = $(top_builddir)/amrwb/libopencore-amrwb.la
 am_linkboth_OBJECTS = linkboth.$(OBJEXT)
@@ -92,9 +97,11 @@ CXXLINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) \
 	--mode=link $(CXXLD) $(AM_CXXFLAGS) $(CXXFLAGS) $(AM_LDFLAGS) \
 	$(LDFLAGS) -o $@
 SOURCES = $(amrnb_dec_SOURCES) $(amrnb_enc_SOURCES) \
-	$(amrwb_dec_SOURCES) $(linkboth_SOURCES)
+	$(amrnb_enc_sine_SOURCES) $(amrwb_dec_SOURCES) \
+	$(linkboth_SOURCES)
 DIST_SOURCES = $(amrnb_dec_SOURCES) $(amrnb_enc_SOURCES) \
-	$(amrwb_dec_SOURCES) $(linkboth_SOURCES)
+	$(amrnb_enc_sine_SOURCES) $(amrwb_dec_SOURCES) \
+	$(linkboth_SOURCES)
 HEADERS = $(noinst_HEADERS)
 ETAGS = etags
 CTAGS = ctags
@@ -219,21 +226,23 @@ target_alias = @target_alias@
 top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
-noinst_PROGRAMS = amrnb-dec$(EXEEXT) amrnb-enc$(EXEEXT) amrwb-dec$(EXEEXT) linkboth$(EXEEXT)
+bin_PROGRAMS = amrnb-dec$(EXEEXT) amrnb-enc$(EXEEXT) amrwb-dec$(EXEEXT)
+noinst_PROGRAMS = amrnb-enc-sine$(EXEEXT) linkboth$(EXEEXT)
 EXTRA_DIST = Makefile.alt
 INCLUDES = -I$(top_srcdir)/amrnb -I$(top_srcdir)/amrwb
-CLEANFILES = out.amr out.wav
 amrnb_dec_LDADD = $(top_builddir)/amrnb/libopencore-amrnb.la
 amrnb_enc_LDADD = $(top_builddir)/amrnb/libopencore-amrnb.la
-amrnb_enc_LDFLAGS = -lm
+amrnb_enc_sine_LDADD = $(top_builddir)/amrnb/libopencore-amrnb.la
+amrnb_enc_sine_LDFLAGS = -lm
 amrwb_dec_LDADD = $(top_builddir)/amrwb/libopencore-amrwb.la
 linkboth_LDFLAGS = -static
 linkboth_LDADD = $(top_builddir)/amrnb/libopencore-amrnb.la $(top_builddir)/amrwb/libopencore-amrwb.la
-amrnb_dec_SOURCES = amrnb-dec.cpp wav.cpp
-amrnb_enc_SOURCES = amrnb-enc.c
-amrwb_dec_SOURCES = amrwb-dec.cpp wav.cpp
+amrnb_dec_SOURCES = amrnb-dec.cpp wavwriter.cpp
+amrnb_enc_SOURCES = amrnb-enc.cpp wavreader.cpp
+amrnb_enc_sine_SOURCES = amrnb-enc-sine.c
+amrwb_dec_SOURCES = amrwb-dec.cpp wavwriter.cpp
 linkboth_SOURCES = linkboth.c
-noinst_HEADERS = wav.h
+noinst_HEADERS = wavwriter.h wavreader.h
 all: all-am
 
 .SUFFIXES:
@@ -268,6 +277,49 @@ $(top_srcdir)/configure: @MAINTAINER_MODE_TRUE@ $(am__configure_deps)
 $(ACLOCAL_M4): @MAINTAINER_MODE_TRUE@ $(am__aclocal_m4_deps)
 	cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh
 $(am__aclocal_m4_deps):
+install-binPROGRAMS: $(bin_PROGRAMS)
+	@$(NORMAL_INSTALL)
+	test -z "$(bindir)" || $(MKDIR_P) "$(DESTDIR)$(bindir)"
+	@list='$(bin_PROGRAMS)'; test -n "$(bindir)" || list=; \
+	for p in $$list; do echo "$$p $$p"; done | \
+	sed 's/$(EXEEXT)$$//' | \
+	while read p p1; do if test -f $$p || test -f $$p1; \
+	  then echo "$$p"; echo "$$p"; else :; fi; \
+	done | \
+	sed -e 'p;s,.*/,,;n;h' -e 's|.*|.|' \
+	    -e 'p;x;s,.*/,,;s/$(EXEEXT)$$//;$(transform);s/$$/$(EXEEXT)/' | \
+	sed 'N;N;N;s,\n, ,g' | \
+	$(AWK) 'BEGIN { files["."] = ""; dirs["."] = 1 } \
+	  { d=$$3; if (dirs[d] != 1) { print "d", d; dirs[d] = 1 } \
+	    if ($$2 == $$4) files[d] = files[d] " " $$1; \
+	    else { print "f", $$3 "/" $$4, $$1; } } \
+	  END { for (d in files) print "f", d, files[d] }' | \
+	while read type dir files; do \
+	    if test "$$dir" = .; then dir=; else dir=/$$dir; fi; \
+	    test -z "$$files" || { \
+	    echo " $(INSTALL_PROGRAM_ENV) $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=install $(INSTALL_PROGRAM) $$files '$(DESTDIR)$(bindir)$$dir'"; \
+	    $(INSTALL_PROGRAM_ENV) $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=install $(INSTALL_PROGRAM) $$files "$(DESTDIR)$(bindir)$$dir" || exit $$?; \
+	    } \
+	; done
+
+uninstall-binPROGRAMS:
+	@$(NORMAL_UNINSTALL)
+	@list='$(bin_PROGRAMS)'; test -n "$(bindir)" || list=; \
+	files=`for p in $$list; do echo "$$p"; done | \
+	  sed -e 'h;s,^.*/,,;s/$(EXEEXT)$$//;$(transform)' \
+	      -e 's/$$/$(EXEEXT)/' `; \
+	test -n "$$list" || exit 0; \
+	echo " ( cd '$(DESTDIR)$(bindir)' && rm -f" $$files ")"; \
+	cd "$(DESTDIR)$(bindir)" && rm -f $$files
+
+clean-binPROGRAMS:
+	@list='$(bin_PROGRAMS)'; test -n "$$list" || exit 0; \
+	echo " rm -f" $$list; \
+	rm -f $$list || exit $$?; \
+	test -n "$(EXEEXT)" || exit 0; \
+	list=`for p in $$list; do echo "$$p"; done | sed 's/$(EXEEXT)$$//'`; \
+	echo " rm -f" $$list; \
+	rm -f $$list
 
 clean-noinstPROGRAMS:
 	@list='$(noinst_PROGRAMS)'; test -n "$$list" || exit 0; \
@@ -282,7 +334,10 @@ amrnb-dec$(EXEEXT): $(amrnb_dec_OBJECTS) $(amrnb_dec_DEPENDENCIES)
 	$(CXXLINK) $(amrnb_dec_OBJECTS) $(amrnb_dec_LDADD) $(LIBS)
 amrnb-enc$(EXEEXT): $(amrnb_enc_OBJECTS) $(amrnb_enc_DEPENDENCIES) 
 	@rm -f amrnb-enc$(EXEEXT)
-	$(amrnb_enc_LINK) $(amrnb_enc_OBJECTS) $(amrnb_enc_LDADD) $(LIBS)
+	$(CXXLINK) $(amrnb_enc_OBJECTS) $(amrnb_enc_LDADD) $(LIBS)
+amrnb-enc-sine$(EXEEXT): $(amrnb_enc_sine_OBJECTS) $(amrnb_enc_sine_DEPENDENCIES) 
+	@rm -f amrnb-enc-sine$(EXEEXT)
+	$(amrnb_enc_sine_LINK) $(amrnb_enc_sine_OBJECTS) $(amrnb_enc_sine_LDADD) $(LIBS)
 amrwb-dec$(EXEEXT): $(amrwb_dec_OBJECTS) $(amrwb_dec_DEPENDENCIES) 
 	@rm -f amrwb-dec$(EXEEXT)
 	$(CXXLINK) $(amrwb_dec_OBJECTS) $(amrwb_dec_LDADD) $(LIBS)
@@ -297,10 +352,12 @@ distclean-compile:
 	-rm -f *.tab.c
 
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/amrnb-dec.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/amrnb-enc-sine.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/amrnb-enc.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/amrwb-dec.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/linkboth.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/wav.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/wavreader.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/wavwriter.Po@am__quote@
 
 .c.o:
 @am__fastdepCC_TRUE@	$(COMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
@@ -436,6 +493,9 @@ check-am: all-am
 check: check-am
 all-am: Makefile $(PROGRAMS) $(HEADERS)
 installdirs:
+	for dir in "$(DESTDIR)$(bindir)"; do \
+	  test -z "$$dir" || $(MKDIR_P) "$$dir"; \
+	done
 install: install-am
 install-exec: install-exec-am
 install-data: install-data-am
@@ -453,7 +513,6 @@ install-strip:
 mostlyclean-generic:
 
 clean-generic:
-	-test -z "$(CLEANFILES)" || rm -f $(CLEANFILES)
 
 distclean-generic:
 	-test -z "$(CONFIG_CLEAN_FILES)" || rm -f $(CONFIG_CLEAN_FILES)
@@ -464,8 +523,8 @@ maintainer-clean-generic:
 	@echo "it deletes files that may require special tools to rebuild."
 clean: clean-am
 
-clean-am: clean-generic clean-libtool clean-noinstPROGRAMS \
-	mostlyclean-am
+clean-am: clean-binPROGRAMS clean-generic clean-libtool \
+	clean-noinstPROGRAMS mostlyclean-am
 
 distclean: distclean-am
 	-rm -rf ./$(DEPDIR)
@@ -491,7 +550,7 @@ install-dvi: install-dvi-am
 
 install-dvi-am:
 
-install-exec-am:
+install-exec-am: install-binPROGRAMS
 
 install-html: install-html-am
 
@@ -531,22 +590,23 @@ ps: ps-am
 
 ps-am:
 
-uninstall-am:
+uninstall-am: uninstall-binPROGRAMS
 
 .MAKE: install-am install-strip
 
-.PHONY: CTAGS GTAGS all all-am check check-am clean clean-generic \
-	clean-libtool clean-noinstPROGRAMS ctags distclean \
-	distclean-compile distclean-generic distclean-libtool \
-	distclean-tags distdir dvi dvi-am html html-am info info-am \
-	install install-am install-data install-data-am install-dvi \
-	install-dvi-am install-exec install-exec-am install-html \
-	install-html-am install-info install-info-am install-man \
-	install-pdf install-pdf-am install-ps install-ps-am \
-	install-strip installcheck installcheck-am installdirs \
-	maintainer-clean maintainer-clean-generic mostlyclean \
-	mostlyclean-compile mostlyclean-generic mostlyclean-libtool \
-	pdf pdf-am ps ps-am tags uninstall uninstall-am
+.PHONY: CTAGS GTAGS all all-am check check-am clean clean-binPROGRAMS \
+	clean-generic clean-libtool clean-noinstPROGRAMS ctags \
+	distclean distclean-compile distclean-generic \
+	distclean-libtool distclean-tags distdir dvi dvi-am html \
+	html-am info info-am install install-am install-binPROGRAMS \
+	install-data install-data-am install-dvi install-dvi-am \
+	install-exec install-exec-am install-html install-html-am \
+	install-info install-info-am install-man install-pdf \
+	install-pdf-am install-ps install-ps-am install-strip \
+	installcheck installcheck-am installdirs maintainer-clean \
+	maintainer-clean-generic mostlyclean mostlyclean-compile \
+	mostlyclean-generic mostlyclean-libtool pdf pdf-am ps ps-am \
+	tags uninstall uninstall-am uninstall-binPROGRAMS
 
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
