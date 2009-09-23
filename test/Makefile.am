@@ -1,5 +1,6 @@
 
-noinst_PROGRAMS = amrnb-dec$(EXEEXT) amrnb-enc$(EXEEXT) amrnb-enc-sine$(EXEEXT) amrwb-dec$(EXEEXT) linkboth$(EXEEXT)
+bin_PROGRAMS = amrnb-dec$(EXEEXT) amrnb-enc$(EXEEXT) amrwb-dec$(EXEEXT)
+noinst_PROGRAMS = amrnb-enc-sine$(EXEEXT) linkboth$(EXEEXT)
 
 EXTRA_DIST = Makefile.alt
 
