@@ -29,6 +29,10 @@ int main(int argc, char *argv[]) {
 
 	amr = Encoder_Interface_init(0);
 	out = fopen("out.amr", "wb");
+	if (!out) {
+		perror("out.amr");
+		return 1;
+	}
 
 	fwrite("#!AMR\n", 1, 6, out);
 	for (i = 0; i < 1000; i++) {
