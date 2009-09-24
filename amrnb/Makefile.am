@@ -143,7 +143,6 @@ libopencore_amrnb_la_SOURCES = \
         $(COMMON_SRC_DIR)/az_lsp.cpp \
         $(COMMON_SRC_DIR)/bitno_tab.cpp \
         $(COMMON_SRC_DIR)/bitreorder_tab.cpp \
-        $(COMMON_SRC_DIR)/bytesused.cpp \
         $(COMMON_SRC_DIR)/c2_9pf_tab.cpp \
         $(COMMON_SRC_DIR)/div_s.cpp \
         $(COMMON_SRC_DIR)/extract_h.cpp \
