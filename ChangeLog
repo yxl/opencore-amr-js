@@ -1,2 +1,11 @@
+0.1.2
+ - Fixed AMR-NB encoding on 64-bit architectures
+ - Switch to using automake/autoconf/libtool
+ - Update to the latest upstream opencore source as of September 1, 2009 
+
+0.1.1
+ - Rename the libraries from libamr* to libopencore-amr*
+ - Fix a bunch of compiler warnings
+
 0.1.0
  - Start of opencore-amr project.
