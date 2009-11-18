@@ -37,7 +37,8 @@ pkgconfig_DATA = opencore-amrnb.pc
 
 lib_LTLIBRARIES = libopencore-amrnb.la
 
-libopencore_amrnb_la_LDFLAGS = -version-info @OPENCORE_AMRNB_VERSION@ -no-undefined
+libopencore_amrnb_la_LDFLAGS = -version-info @OPENCORE_AMRNB_VERSION@ -no-undefined -export-symbols $(top_srcdir)/amrnb/opencore-amrnb.sym
+EXTRA_DIST = $(top_srcdir)/amrnb/opencore-amrnb.sym
 
 # Our sources to include. There are certain sources we exclude and they are
 # $(DEC_SRC_DIR)/decoder_gsm_amr.cpp

@@ -33,7 +33,8 @@ pkgconfig_DATA = opencore-amrwb.pc
 
 lib_LTLIBRARIES = libopencore-amrwb.la
 
-libopencore_amrwb_la_LDFLAGS = -version-info @OPENCORE_AMRWB_VERSION@ -no-undefined
+libopencore_amrwb_la_LDFLAGS = -version-info @OPENCORE_AMRWB_VERSION@ -no-undefined -export-symbols $(top_srcdir)/amrwb/opencore-amrwb.sym
+EXTRA_DIST = $(top_srcdir)/amrwb/opencore-amrwb.sym
 
 # Our sources to include. There are certain sources we exclude and they are
 # $(DEC_SRC_DIR)/decoder_amr_wb.cpp
