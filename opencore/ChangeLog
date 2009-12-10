@@ -1,4 +1,108 @@
 ===============================================================================
+2009-12-08  OpenCORE 2.07
+
+New Features
+- Support 3GPP fast content switch
+- Player engine changes and new interfaces for gapless playback
+- Player unit test additions
+- Add KVP mechanism to set max/min UDP port number
+- Support PE node feature selection for static builds
+- SetFSIParam( ) extension interface is implemented. It was previously stubbed 
+out. FSI (VOL header or SPS/PPS) is sent to the encoder as preferred encoding 
+parameters.
+- Introduce ASM and condition support for arm in tool generated project files.
+- GetActualAACConfig - add mime type as input to process properly RFC 3016 type 
+streams
+- Updates to player engine and media output node for gapless playback
+- Minor bug fix to support movie fragments MP4 files with empty sample 
+description tables and common PE Node code refactoring
+- Implement support for I-frame request in OMX encoder node
+- Add support for AAC Dual Mono
+- Add a new KVP to control audio output in trickplay mode.
+- CPM changes and new player engine unit test cases.
+- Add Track ID as input parameter to the addTrack mp4 composer API
+
+Improvements
+- Added pvlogger_empty_layout.h as an optional logger output string format that 
+appends nothing to the output string.
+- Cleanup of codecs_v2/video/m4v_h263/dec/src/vop.cpp
+- AAC lib - improve ADTS searching capabilities - needed for applications not 
+using aac parser
+- Change to use audio output buffer size calculation to be based on time as in 
+the OMX audio dec node rather than based on a fixed number of samples as in the 
+OMX components default.
+- Handle more non-standard OMX component state transition errors
+- Removal of 2way VideoParser Node
+- Update MediaIONodeRepositionDuringPreparedTest test case to run till EOS
+- Improve FillBufferDoneProcessing and ParseAVCFullFrameIntoNALs in OMX encoder 
+nodes
+- Add support for linking against eclair-specific libraries
+- Adding a new api to turn silence insertion logic on or off (engine->omx 
+decoder node->omx audio component).
+- Introduce -Wno-psabi into android makefiles
+- Modify logging in PVME Test so that it's consistent with the other logging
+- Cleanup in the android folder (logging, whitespace, etc)
+- Changes in android folder to sync-up with eclair changes
+- Removed unused code oscl_mempool_allocator.h/.cpp
+- Include pvlogger library in oscl build
+- Updating run_ae_test make target for logging
+
+Bugs Fixed
+- Video and timer gets stuck on repositioning while the audio continues
+- A/V Sync Issue on Simple playback and timer goes beyond the limit with Video 
+playback only (Audio Stops)
+- Fix for redundant rule to copy getactualaacconfig.h
+- MP4 file parser and parser node modified to support a very large value of 
+timescale
+- Improvements in AAC file parser for ADTS recognition
+- Code cleanup in pvmf_node_interface
+- Failures in Java-based mediaframework unit test cases.
+- Fix for failure on resumption from long pauses during RTSP streaming.
+- Remove an extra call of ResetData from ThreadLogoff in AndroidSurfaceOutput
+- Mp4 composer node File writer hang issue
+- Typo in the OMX node log statements
+- Uninitialized variable iPlayElementIndex of structure PVPPlaybackPosition 
+causing repositioning problems
+- In AAC and AMR parser nodes, UsageComplete should be called only when the 
+content is protected
+- MP4 parser node returning the same command twice
+- Hang in Player engine when cancel called in prepare
+- Use clock_gettime(MONOTONIC) instead of gettimeofday() on linux platform to 
+have a consistent clock
+- In PVPlayerEngine::DoVerifyAndSetPlayerParameter, hard-coded enum value is 
+wrong
+- OMX encoder node bug in processing SPS PPS for components that produce NAL 
+start codes
+- Classes with virtual methods should have virtual destructors too
+- AACDecoder Unit Test App crashing in Nightly Build
+- Map key 'track-info/track-number' to 'tracknumber' for Android MediaScanner 
+to recognize the key.
+- MP3 FF parser should not pass the Xing/LAME header frame to dec node
+- AMR file parser improvements
+- Removed parsing support for WMF AMR tracks from MP4 file parser.
+- Improvements in OMX test application
+- Fix crash in 2way stack unit test
+- Change in oscl statfs to accomodate blank paths
+- Add Error handling at buffer memory allocation error
+- Fix rebuffering after PVMFInfoBufferingComplete at mp4 PPB
+- AVC configuration modifications
+- Using sample duration in addition to timestamp for syncronization
+- FMU video MIO does not set video subformat type correctly
+- Fix uninitialized memory in 2way engine unit tests
+- Updated PVPlayerEngine::ReleaseMetadataValues to properly handle clip index 
+argument
+- Fix for running a test number multiple times in makefile target for running 
+parallel player engine tests
+- OMX Encoder node returns failure if OMX components returns Failure for 
+"OMX_IndexConfigCommonRotate" parameter
+- Remove tests not applicable for OpenCORE
+- MediaScanner has some API calls which are missing the interface
+- Unplugging headphones pauses, but after some time, resume is muted
+- Enable File-writer for Mp4 composer node
+- Early and Late Sync Margins changed for better AV Sync
+
+
+===============================================================================
 2009-11-08  OpenCORE 2.06
 
 New Features
@@ -172,15 +276,11 @@ rtp-info in PLAY response.
 
 New Features
 - Helper function to retrieve extended messages from command responses.
-
 - Support for eAAC+ encode in the pvAuthor engine.
-
 - Add conversion operations to OSCL_String classes.
-
 - RTSPT support (3GPP streaming over TCP). To test, replace "rtsp" with "rtspt"
 in the control URL (in source URL or SDP file). It is assumed that the user has
 access to a server with TCP streaming capability.
-
 - PV Metadata Engine (ME). This engine is targeted at applications that want
 to retrieve metadata for any given clip in a generic manner. Typically, a lot
 of these applications would like to scan large batches of content. Since ME 
@@ -188,11 +288,9 @@ is mainly targeted at apps like mediascanner, where speed is the most important
 factor, thumbnail extraction is not supported. For applications that do want 
 to extract thumbnails in a generic manner along with the metadata, PV's 
 FrameAndMetadata Utility (FMU) is recommended instead.
-
 - 2way Lip-Sync unit test cases.
 
-
-Improvement
+Improvements
 - A new base node implementation is introduced for the purpose of 
   refactoring and consolidating common logic in the nodes. The changes
   will improve maintainability and make it easier to create new nodes.
@@ -331,7 +429,8 @@ value when playing clip on android using qcom decoders
 - pvplayer_engine_test is detecting 'rtspt_test.sdp' as a url instead a local
 file
 - Count of command line arguments being read in PVME Test App is incorrect
-- Player engine test case 1307 fails when run with a mp4 file containing 3GPP timed text track 
+- Player engine test case 1307 fails when run with a mp4 file containing 3GPP 
+timed text track 
 - PVMFInfoDataReady event being sent to the engine after the unit test calls
 stop
 - PlayerEngine doesn't free reference to PVMFDataSourceNodeRegistryInitInterface
@@ -361,11 +460,9 @@ introduced to allow for an external entity to pass a datastream interface
 to the player SDK.  The external entity is responsible for doing the actual 
 download of the media data.  Full support in Android is not complete until 
 playerdriver changes and more unit testing is done.
-
 - Fixed cache option in Oscl_File
 Adding an option to configure the Oscl file cache to use one or more fixed
 caches in addition to the movable cache.
-
 - Modify author engine to contain a notion of "authoring clock"
 Author engine has the option to pass an "authoring clock" to media input
 components so that they can use this to sync audio and video timestamps.  
@@ -377,23 +474,16 @@ used in author engine unit test currently operate from a file and have no
 need for such a clock, but some device media input components can make use 
 of the clock if needed in the future, since author engine will pass the 
 clock pointer all the time to data sources.
-
 - Shoutcast (of MP3) support
 Shoutcast support of MP3 and internet radio streaming is added.
-
 - Enable AAC PDL Support 
 More robust support of PDL of AAC content, including underflow handling.
-
 - Add support for 3GPP2 speech (EVRC, QCELP etc) in MP4 FF library
 Support for the 3GPP2 speech codecs is added at the file format library
 level.  No 3GPP2 speech codecs are added.
-
 - OpenMAX encoder and decoder unit test suite
-
 - Use external filehandle in Android
-
 - Introduce new macro to android makefiles to enable 2way
-
 
 Improvements
 - Add support for "all" metadata key in CPM plugins.  This feature provides 
@@ -441,7 +531,6 @@ H264
 config data is missing (but is required by the format)
 - Update playerdriver.cpp to send "disable-firewall-packets" KVP key based 
 on system Android property
-
 
 Bugs Fixed
 - Moov atom is not being written into .3gp file if Author driver does not 
@@ -497,12 +586,12 @@ Bugs Fixed
 string has a CR at the end
 - Sequence number rollover in RTP info param during prolonged RTSP streaming
 
+
 ===============================================================================
 2009-03-31  OpenCORE 2.03
 
 Improvements
 - Enable OpenCORE on master - part 2
-
 
 ===============================================================================
 2009-03-10  OpenCORE 2.02
@@ -543,7 +632,6 @@ Improvements
 - Update of tests for support for progressive download of AMR
 - OMX Khronos header files (Omx_Core.h, Omx_Component.h) capitalization 
   changed to match that from the Khronos (previously they were all lowercase).
-
 
 Bugs Fixed
 - Memory leak when running GCF TC212 (2way-related)
@@ -633,6 +721,7 @@ New APIs / Behaviors
   Since the CPM pluginsare dynamically loaded, the flag is not 
   needed and was removed.  See the playerdriver.cpp for details
   of the change. 
+
 
 ===============================================================================
 2009-01-26  OpenCORE 2.0 (2.00)
@@ -746,4 +835,3 @@ Known Issues
   OMX_AUDIO_AMRFrameFormatFSF.
 - The OpenMAX encoder node is not handling Reset correctly in all
   cases. 
-
