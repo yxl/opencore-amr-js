@@ -14,8 +14,6 @@ parameters.
 - GetActualAACConfig - add mime type as input to process properly RFC 3016 type 
 streams
 - Updates to player engine and media output node for gapless playback
-- Minor bug fix to support movie fragments MP4 files with empty sample 
-description tables and common PE Node code refactoring
 - Implement support for I-frame request in OMX encoder node
 - Add support for AAC Dual Mono
 - Add a new KVP to control audio output in trickplay mode.
@@ -25,7 +23,7 @@ description tables and common PE Node code refactoring
 Improvements
 - Added pvlogger_empty_layout.h as an optional logger output string format that 
 appends nothing to the output string.
-- Cleanup of codecs_v2/video/m4v_h263/dec/src/vop.cpp
+- Code cleanup in MP4 decoder vop code 
 - AAC lib - improve ADTS searching capabilities - needed for applications not 
 using aac parser
 - Change to use audio output buffer size calculation to be based on time as in 
@@ -46,6 +44,8 @@ decoder node->omx audio component).
 - Removed unused code oscl_mempool_allocator.h/.cpp
 - Include pvlogger library in oscl build
 - Updating run_ae_test make target for logging
+- Minor bug fix to support movie fragments MP4 files with empty sample 
+description tables and common PE Node code refactoring
 
 Bugs Fixed
 - Video and timer gets stuck on repositioning while the audio continues
@@ -74,7 +74,7 @@ wrong
 - OMX encoder node bug in processing SPS PPS for components that produce NAL 
 start codes
 - Classes with virtual methods should have virtual destructors too
-- AACDecoder Unit Test App crashing in Nightly Build
+- Fix for crash in AAC Decoder unit test app
 - Map key 'track-info/track-number' to 'tracknumber' for Android MediaScanner 
 to recognize the key.
 - MP3 FF parser should not pass the Xing/LAME header frame to dec node
@@ -91,13 +91,13 @@ to recognize the key.
 - Fix uninitialized memory in 2way engine unit tests
 - Updated PVPlayerEngine::ReleaseMetadataValues to properly handle clip index 
 argument
-- Fix for running a test number multiple times in makefile target for running 
+- Fix for running a test number multiple times in makefile target for running
 parallel player engine tests
 - OMX Encoder node returns failure if OMX components returns Failure for 
 "OMX_IndexConfigCommonRotate" parameter
 - Remove tests not applicable for OpenCORE
 - MediaScanner has some API calls which are missing the interface
-- Unplugging headphones pauses, but after some time, resume is muted
+- Cap lower bound player engine watchdog timer duration to default value
 - Enable File-writer for Mp4 composer node
 - Early and Late Sync Margins changed for better AV Sync
 
