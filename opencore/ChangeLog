@@ -420,7 +420,7 @@ firewall packets to the server
 - Clean up warnings and some negotiate parameter changes from omx dec & enc
 test apps
 - Fix valgrind issue reported with android simulator in omx base node
-- Add more supported rate control types in pvmp4h263encextension.h
+- Add more supported rate control types in pv_video_encnode_extension.h
 - Memory leak in player engine test case 807
 - Addressed compiler warnings in PVME
 - nBufferAlignment of OMX_PARAM_PORTDEFINITIONTYPE is initialized to negative
@@ -835,3 +835,9 @@ Known Issues
   OMX_AUDIO_AMRFrameFormatFSF.
 - The OpenMAX encoder node is not handling Reset correctly in all
   cases. 
+
+===============================================================================
+2008-10-21  OpenCORE 1.0 (1.00)
+
+OpenCORE 1.0 is the initial contribution to AOSP.  It has both release-1.0
+and android-1.0 tags.
