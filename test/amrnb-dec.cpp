@@ -57,8 +57,6 @@ int main(int argc, char *argv[]) {
 			break;
 		/* Find the packet size */
 		int size = sizes[(buffer[0] >> 3) & 0x0f];
-		if (size <= 0)
-			break;
 		n = fread(buffer + 1, 1, size, in);
 		if (n != size)
 			break;
