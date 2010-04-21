@@ -97,6 +97,7 @@ WavReader::WavReader(const char *filename) {
 			} else if (subtag == TAG('d', 'a', 't', 'a')) {
 				dataPos = ftell(wav);
 				dataLength = sublength;
+				fseek(wav, sublength, SEEK_CUR);
 			} else {
 				fseek(wav, sublength, SEEK_CUR);
 			}
