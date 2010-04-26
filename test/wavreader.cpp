@@ -69,8 +69,8 @@ WavReader::WavReader(const char *filename) {
 			continue;
 		}
 		uint32_t tag2 = readTag();
+		length -= 4;
 		if (tag2 != TAG('W', 'A', 'V', 'E')) {
-			length -= 4;
 			fseek(wav, length, SEEK_CUR);
 			continue;
 		}
