@@ -89,7 +89,6 @@ extern "C"
 
 
 #if   ((PV_CPU_ARCH_VERSION >=5) && (PV_COMPILER == EPV_ARM_GNUC))
-
     static inline Word16 norm_l(Word32 L_var1)
     {
         register Word32 var_out = 0;
@@ -105,11 +104,11 @@ extern "C"
         }
         return (var_out);
     }
-#else/*#else for ((PV_CPU_ARCH_VERSION >=5) && (PV_COMPILER == EPV_ARM_RVCT))*/
+#else
     /* C EQUIVALENT */
     OSCL_IMPORT_REF Word16 norm_l(Word32 L_var1);
 
-#endif/*#endif for ((PV_CPU_ARCH_VERSION >=5) && (PV_COMPILER == EPV_ARM_RVCT))*/
+#endif
     /*----------------------------------------------------------------------------
     ; END
     ----------------------------------------------------------------------------*/
