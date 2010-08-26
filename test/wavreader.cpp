@@ -126,7 +126,7 @@ bool WavReader::getHeader(int* format, int* channels, int* sampleRate, int* bits
 		*bitsPerSample = this->bitsPerSample;
 	if (dataLength)
 		*dataLength = this->dataLength;
-	return format && sampleRate;
+	return this->format && this->sampleRate;
 }
 
 int WavReader::readData(unsigned char* data, unsigned int length) {
