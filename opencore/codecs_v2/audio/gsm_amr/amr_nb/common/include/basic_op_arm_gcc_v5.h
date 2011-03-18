@@ -120,7 +120,7 @@ extern "C"
 
         OSCL_UNUSED_ARG(pOverflow);
 
-        asm volatile("qadd %0, %1, %2"
+        __asm__ volatile("qadd %0, %1, %2"
              : "=r"(result)
                              : "r"(ra), "r"(rb)
                             );
@@ -157,7 +157,7 @@ extern "C"
 
         OSCL_UNUSED_ARG(pOverflow);
 
-        asm volatile("qsub %0, %1, %2"
+        __asm__ volatile("qsub %0, %1, %2"
              : "=r"(result)
                              : "r"(ra), "r"(rb)
                             );
@@ -197,12 +197,12 @@ extern "C"
 
         OSCL_UNUSED_ARG(pOverflow);
 
-        asm volatile("smulbb %0, %1, %2"
+        __asm__ volatile("smulbb %0, %1, %2"
              : "=r"(result)
                              : "r"(rb), "r"(rc)
                             );
 
-        asm volatile("qdadd %0, %1, %2"
+        __asm__ volatile("qdadd %0, %1, %2"
              : "=r"(rc)
                              : "r"(ra), "r"(result)
                             );
@@ -241,12 +241,12 @@ extern "C"
 
         OSCL_UNUSED_ARG(pOverflow);
 
-        asm volatile("smulbb %0, %1, %2"
+        __asm__ volatile("smulbb %0, %1, %2"
              : "=r"(product)
                              : "r"(ra), "r"(rb)
                             );
 
-        asm volatile("qadd %0, %1, %2"
+        __asm__ volatile("qadd %0, %1, %2"
              : "=r"(result)
                              : "r"(product), "r"(product)
                             );
@@ -287,12 +287,12 @@ extern "C"
 
         OSCL_UNUSED_ARG(pOverflow);
 
-        asm volatile("smulbb %0, %1, %2"
+        __asm__ volatile("smulbb %0, %1, %2"
              : "=r"(product)
                              : "r"(rb), "r"(rc)
                             );
 
-        asm volatile("qdsub %0, %1, %2"
+        __asm__ volatile("qdsub %0, %1, %2"
              : "=r"(result)
                              : "r"(ra), "r"(product)
                             );
@@ -338,44 +338,44 @@ extern "C"
 
         OSCL_UNUSED_ARG(pOverflow);
 
-        asm volatile("smulbb %0, %1, %2"
+        __asm__ volatile("smulbb %0, %1, %2"
              : "=r"(L_product)
                              : "r"(ra), "r"(rc)
                             );
-        asm volatile("mov %0, #0"
+        __asm__ volatile("mov %0, #0"
              : "=r"(result)
                     );
 
-        asm volatile("qdadd %0, %1, %2"
+        __asm__ volatile("qdadd %0, %1, %2"
              : "=r"(L_sum)
                              : "r"(result), "r"(L_product)
                             );
 
-        asm volatile("smulbb %0, %1, %2"
+        __asm__ volatile("smulbb %0, %1, %2"
              : "=r"(product32)
                              : "r"(ra), "r"(rd)
                             );
 
-        asm volatile("mov %0, %1, ASR #15"
+        __asm__ volatile("mov %0, %1, ASR #15"
              : "=r"(ra)
                              : "r"(product32)
                             );
-        asm volatile("qdadd %0, %1, %2"
+        __asm__ volatile("qdadd %0, %1, %2"
              : "=r"(L_product)
                              : "r"(L_sum), "r"(ra)
                             );
 
-        asm volatile("smulbb %0, %1, %2"
+        __asm__ volatile("smulbb %0, %1, %2"
              : "=r"(product32)
                              : "r"(rb), "r"(rc)
                             );
 
-        asm volatile("mov %0, %1, ASR #15"
+        __asm__ volatile("mov %0, %1, ASR #15"
              : "=r"(rb)
                              : "r"(product32)
                             );
 
-        asm volatile("qdadd %0, %1, %2"
+        __asm__ volatile("qdadd %0, %1, %2"
              : "=r"(L_sum)
                              : "r"(L_product), "r"(rb)
                             );
@@ -417,29 +417,29 @@ extern "C"
 
         OSCL_UNUSED_ARG(pOverflow);
 
-        asm volatile("smulbb %0, %1, %2"
+        __asm__ volatile("smulbb %0, %1, %2"
              : "=r"(L_product)
                              : "r"(ra), "r"(rc)
                             );
-        asm volatile("mov %0, #0"
+        __asm__ volatile("mov %0, #0"
              : "=r"(result)
                     );
 
-        asm volatile("qdadd %0, %1, %2"
+        __asm__ volatile("qdadd %0, %1, %2"
              : "=r"(L_product)
                              : "r"(result), "r"(L_product)
                             );
 
-        asm volatile("smulbb %0, %1, %2"
+        __asm__ volatile("smulbb %0, %1, %2"
              : "=r"(result)
                              : "r"(rb), "r"(rc)
                             );
 
-        asm volatile("mov %0, %1, ASR #15"
+        __asm__ volatile("mov %0, %1, ASR #15"
              : "=r"(ra)
                              : "r"(result)
                             );
-        asm volatile("qdadd %0, %1, %2"
+        __asm__ volatile("qdadd %0, %1, %2"
              : "=r"(result)
                              : "r"(L_product), "r"(ra)
                             );
@@ -477,12 +477,12 @@ extern "C"
 
         OSCL_UNUSED_ARG(pOverflow);
 
-        asm volatile(
+        __asm__ volatile(
             "smulbb %0, %1, %2"
     : "=r"(temp)
                     : "r"(ra), "r"(rb)
                 );
-        asm volatile(
+        __asm__ volatile(
             "qadd %0, %1, %2\n\t"
             "mov %0, %0, asr #16"
     : "=&r*i"(product)
@@ -499,7 +499,7 @@ extern "C"
         register Word32 rc = L_var3;
         Word32 result;
 
-        asm volatile("smlabb %0, %1, %2, %3"
+        __asm__ volatile("smlabb %0, %1, %2, %3"
              : "=r"(result)
                              : "r"(ra), "r"(rb), "r"(rc)
                             );
@@ -513,12 +513,12 @@ extern "C"
         register Word32 rc = L_var3;
         Word32 result;
 
-        asm volatile("rsb %0, %1, #0"
+        __asm__ volatile("rsb %0, %1, #0"
              : "=r"(ra)
                              : "r"(ra)
                             );
 
-        asm volatile("smlabb %0, %1, %2, %3"
+        __asm__ volatile("smlabb %0, %1, %2, %3"
              : "=r"(result)
                              : "r"(ra), "r"(rb), "r"(rc)
                             );

@@ -103,29 +103,29 @@ extern "C"
 
         OSCL_UNUSED_ARG(pOverflow);
 
-        asm volatile("smulbb %0, %1, %2"
+        __asm__ volatile("smulbb %0, %1, %2"
              : "=r"(L_product)
                              : "r"(ra), "r"(rc)
                             );
-        asm volatile("mov %0, #0"
+        __asm__ volatile("mov %0, #0"
              : "=r"(result)
                     );
 
-        asm volatile("qdadd %0, %1, %2"
+        __asm__ volatile("qdadd %0, %1, %2"
              : "=r"(L_product)
                              : "r"(result), "r"(L_product)
                             );
 
-        asm volatile("smulbb %0, %1, %2"
+        __asm__ volatile("smulbb %0, %1, %2"
              : "=r"(result)
                              : "r"(rb), "r"(rc)
                             );
 
-        asm volatile("mov %0, %1, ASR #15"
+        __asm__ volatile("mov %0, %1, ASR #15"
              : "=r"(ra)
                              : "r"(result)
                             );
-        asm volatile("qdadd %0, %1, %2"
+        __asm__ volatile("qdadd %0, %1, %2"
              : "=r"(result)
                              : "r"(L_product), "r"(ra)
                             );

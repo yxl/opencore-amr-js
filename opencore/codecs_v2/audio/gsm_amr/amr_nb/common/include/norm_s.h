@@ -96,7 +96,7 @@ extern "C"
         if (ra)
         {
             ra ^= (ra << 1);
-            asm volatile(
+            __asm__ volatile(
                 "clz %0, %1"
     : "=r"(var_out)
                         : "r"(ra)
