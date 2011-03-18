@@ -19,4 +19,7 @@
 #ifndef OSCL_BASE_MACROS_H
 #define OSCL_BASE_MACROS_H
 
+#define EPV_ARM_GNUC 1
+#define EPV_ARM_RVCT 2
+
 #endif

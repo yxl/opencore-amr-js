@@ -18,9 +18,14 @@ AC_ARG_ENABLE([compile-c],
                [enable compiling as C program (default is yes)])],
             [compile_as_c=$enableval],
             [compile_as_c=yes])
+AC_ARG_ENABLE([gcc-armv5],
+            [AS_HELP_STRING([--enable-gcc-armv5],
+               [enable GCC specific ARMv5 assembler (default is no)])],
+            [gcc_armv5=$enableval], [gcc_armv5=no])
 
 # Automake conditionals to set
 AM_CONDITIONAL(COMPILE_AS_C, test x$compile_as_c = xyes)
+AM_CONDITIONAL(GCC_ARMV5, test x$gcc_armv5 = xyes)
 
 # Checks for programs.
 AC_PROG_CXX

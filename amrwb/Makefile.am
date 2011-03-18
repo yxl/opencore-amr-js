@@ -10,6 +10,10 @@ OSCL = $(top_srcdir)/oscl
 AM_CFLAGS = -I$(OSCL) -I$(DEC_SRC_DIR) -I$(DEC_DIR)/include \
     -I$(AMR_BASE)/common/dec/include
 
+if GCC_ARMV5
+    AM_CFLAGS += -DPV_CPU_ARCH_VERSION=5 -DPV_COMPILER=1
+endif
+
 if COMPILE_AS_C
     AM_CFLAGS += -x c -std=c99
 endif
