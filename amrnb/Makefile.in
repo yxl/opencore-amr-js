@@ -36,7 +36,8 @@ PRE_UNINSTALL = :
 POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
-@COMPILE_AS_C_TRUE@am__append_1 = -x c -std=c99
+@GCC_ARMV5_TRUE@am__append_1 = -DPV_CPU_ARCH_VERSION=5 -DPV_COMPILER=1
+@COMPILE_AS_C_TRUE@am__append_2 = -x c -std=c99
 subdir = amrnb
 DIST_COMMON = $(amrnbinclude_HEADERS) $(srcdir)/Makefile.am \
 	$(srcdir)/Makefile.in $(srcdir)/opencore-amrnb.pc.in
@@ -266,7 +267,7 @@ COMMON_SRC_DIR = $(COMMON_DIR)/src
 OSCL = $(top_srcdir)/oscl
 AM_CFLAGS = -I$(OSCL) -I$(DEC_SRC_DIR) -I$(COMMON_DIR)/include \
 	-I$(DEC_DIR)/include -I$(AMR_BASE)/common/dec/include \
-	-I$(ENC_SRC_DIR) $(am__append_1)
+	-I$(ENC_SRC_DIR) $(am__append_1) $(am__append_2)
 AM_CXXFLAGS = $(AM_CFLAGS)
 amrnbincludedir = $(includedir)/opencore-amrnb
 amrnbinclude_HEADERS = interf_dec.h interf_enc.h

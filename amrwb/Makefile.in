@@ -36,7 +36,8 @@ PRE_UNINSTALL = :
 POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
-@COMPILE_AS_C_TRUE@am__append_1 = -x c -std=c99
+@GCC_ARMV5_TRUE@am__append_1 = -DPV_CPU_ARCH_VERSION=5 -DPV_COMPILER=1
+@COMPILE_AS_C_TRUE@am__append_2 = -x c -std=c99
 subdir = amrwb
 DIST_COMMON = $(amrwbinclude_HEADERS) $(srcdir)/Makefile.am \
 	$(srcdir)/Makefile.in $(srcdir)/opencore-amrwb.pc.in
@@ -243,7 +244,8 @@ DEC_DIR = $(AMR_BASE)/amr_wb/dec
 DEC_SRC_DIR = $(DEC_DIR)/src
 OSCL = $(top_srcdir)/oscl
 AM_CFLAGS = -I$(OSCL) -I$(DEC_SRC_DIR) -I$(DEC_DIR)/include \
-	-I$(AMR_BASE)/common/dec/include $(am__append_1)
+	-I$(AMR_BASE)/common/dec/include $(am__append_1) \
+	$(am__append_2)
 AM_CXXFLAGS = $(AM_CFLAGS)
 amrwbincludedir = $(includedir)/opencore-amrwb
 amrwbinclude_HEADERS = dec_if.h if_rom.h
