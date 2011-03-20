@@ -24,11 +24,15 @@
 #include <dec_if.h>
 
 int main(int argc, char *argv[]) {
+#ifndef DISABLE_AMRNB_DECODER
 	void* amrnb = Decoder_Interface_init();
-	void* amrnb_enc = Encoder_Interface_init(0);
-	void* amrwb = D_IF_init();
 	Decoder_Interface_exit(amrnb);
+#endif
+#ifndef DISABLE_AMRNB_ENCODER
+	void* amrnb_enc = Encoder_Interface_init(0);
 	Encoder_Interface_exit(amrnb_enc);
+#endif
+	void* amrwb = D_IF_init();
 	D_IF_exit(amrwb);
 	return 0;
 }

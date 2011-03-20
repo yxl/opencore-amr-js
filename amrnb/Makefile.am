@@ -25,7 +25,7 @@ endif
 AM_CXXFLAGS = $(AM_CFLAGS)
 
 amrnbincludedir = $(includedir)/opencore-amrnb
-amrnbinclude_HEADERS = interf_dec.h interf_enc.h
+amrnbinclude_HEADERS =
 
 pkgconfigdir = $(libdir)/pkgconfig
 pkgconfig_DATA = opencore-amrnb.pc
@@ -46,7 +46,10 @@ libopencore_amrnb_la_LDFLAGS = -version-info @OPENCORE_AMRNB_VERSION@ -no-undefi
 # $(COMMON_SRC_DIR)/vad1.cpp
 # $(COMMON_SRC_DIR)/vad2.cpp
 libopencore_amrnb_la_SOURCES = \
-    wrapper.cpp \
+    wrapper.cpp
+
+if AMRNB_DECODER
+    libopencore_amrnb_la_SOURCES += \
     $(DEC_SRC_DIR)/agc.cpp \
         $(DEC_SRC_DIR)/amrdecode.cpp \
         $(DEC_SRC_DIR)/a_refl.cpp \
@@ -81,7 +84,14 @@ libopencore_amrnb_la_SOURCES = \
         $(DEC_SRC_DIR)/pstfilt.cpp \
         $(DEC_SRC_DIR)/qgain475_tab.cpp \
         $(DEC_SRC_DIR)/sp_dec.cpp \
-        $(DEC_SRC_DIR)/wmf_to_ets.cpp \
+        $(DEC_SRC_DIR)/wmf_to_ets.cpp
+    amrnbinclude_HEADERS += interf_dec.h
+else
+    AM_CFLAGS += -DDISABLE_AMRNB_DECODER
+endif
+
+if AMRNB_ENCODER
+    libopencore_amrnb_la_SOURCES += \
     $(ENC_SRC_DIR)/amrencode.cpp \
         $(ENC_SRC_DIR)/autocorr.cpp \
         $(ENC_SRC_DIR)/c1035pf.cpp \
@@ -142,7 +152,13 @@ libopencore_amrnb_la_SOURCES = \
         $(ENC_SRC_DIR)/spreproc.cpp \
         $(ENC_SRC_DIR)/spstproc.cpp \
         $(ENC_SRC_DIR)/ton_stab.cpp \
-        $(ENC_SRC_DIR)/vad1.cpp \
+        $(ENC_SRC_DIR)/vad1.cpp
+    amrnbinclude_HEADERS += interf_enc.h
+else
+    AM_CFLAGS += -DDISABLE_AMRNB_ENCODER
+endif
+
+libopencore_amrnb_la_SOURCES += \
     $(COMMON_SRC_DIR)/add.cpp \
         $(COMMON_SRC_DIR)/az_lsp.cpp \
         $(COMMON_SRC_DIR)/bitno_tab.cpp \

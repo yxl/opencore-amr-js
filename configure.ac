@@ -23,10 +23,20 @@ AC_ARG_ENABLE([gcc-armv5],
             [AS_HELP_STRING([--enable-gcc-armv5],
                [enable GCC specific ARMv5 assembler (default is no)])],
             [gcc_armv5=$enableval], [gcc_armv5=no])
+AC_ARG_ENABLE([amrnb-encoder],
+            [AS_HELP_STRING([--enable-amrnb-encoder],
+               [enable AMR-NB encoder (default is yes)])],
+            [amrnb_encoder=$enableval], [amrnb_encoder=yes])
+AC_ARG_ENABLE([amrnb-decoder],
+            [AS_HELP_STRING([--enable-amrnb-decoder],
+               [enable AMR-NB decoder (default is yes)])],
+            [amrnb_decoder=$enableval], [amrnb_decoder=yes])
 
 # Automake conditionals to set
 AM_CONDITIONAL(COMPILE_AS_C, test x$compile_as_c = xyes)
 AM_CONDITIONAL(GCC_ARMV5, test x$gcc_armv5 = xyes)
+AM_CONDITIONAL(AMRNB_ENCODER, test x$amrnb_encoder = xyes)
+AM_CONDITIONAL(AMRNB_DECODER, test x$amrnb_decoder = xyes)
 
 # Checks for programs.
 AC_PROG_CXX

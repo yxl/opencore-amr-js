@@ -1,6 +1,19 @@
 
-bin_PROGRAMS = amrnb-dec$(EXEEXT) amrnb-enc$(EXEEXT) amrwb-dec$(EXEEXT)
-noinst_PROGRAMS = amrnb-enc-sine$(EXEEXT) linkboth$(EXEEXT)
+bin_PROGRAMS = amrwb-dec$(EXEEXT)
+noinst_PROGRAMS = linkboth$(EXEEXT)
+AM_CFLAGS =
+
+if AMRNB_DECODER
+    bin_PROGRAMS += amrnb-dec$(EXEEXT)
+else
+    AM_CFLAGS += -DDISABLE_AMRNB_DECODER
+endif
+if AMRNB_ENCODER
+    bin_PROGRAMS += amrnb-enc$(EXEEXT)
+    noinst_PROGRAMS += amrnb-enc-sine$(EXEEXT)
+else
+    AM_CFLAGS += -DDISABLE_AMRNB_ENCODER
+endif
 
 INCLUDES = -I$(top_srcdir)/amrnb -I$(top_srcdir)/amrwb
 
