@@ -2,8 +2,6 @@
 bin_PROGRAMS = amrnb-dec$(EXEEXT) amrnb-enc$(EXEEXT) amrwb-dec$(EXEEXT)
 noinst_PROGRAMS = amrnb-enc-sine$(EXEEXT) linkboth$(EXEEXT)
 
-EXTRA_DIST = Makefile.alt
-
 INCLUDES = -I$(top_srcdir)/amrnb -I$(top_srcdir)/amrwb
 
 amrnb_dec_LDADD = $(top_builddir)/amrnb/libopencore-amrnb.la

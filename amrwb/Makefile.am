@@ -74,4 +74,3 @@ libopencore_amrwb_la_SOURCES = \
         $(DEC_SRC_DIR)/wb_syn_filt.cpp \
         $(DEC_SRC_DIR)/weight_amrwb_lpc.cpp
 
-EXTRA_DIST = Makefile.alt

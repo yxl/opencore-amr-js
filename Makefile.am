@@ -4,7 +4,7 @@ ACLOCAL_AMFLAGS = -I m4
 
 noinst_HEADERS = oscl/oscl_base.h oscl/oscl_mem.h
 
-EXTRA_DIST = LICENSE Makefile.alt \
+EXTRA_DIST = LICENSE \
              opencore/README opencore/NOTICE opencore/ChangeLog \
              opencore/codecs_v2/audio/gsm_amr/patent_disclaimer.txt \
              opencore/codecs_v2/audio/gsm_amr/common/dec/include \
