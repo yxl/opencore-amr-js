@@ -92,22 +92,39 @@ am_libopencore_amrwb_la_OBJECTS = wrapper.lo agc2_amr_wb.lo \
 	synthesis_amr_wb.lo voice_factor.lo wb_syn_filt.lo \
 	weight_amrwb_lpc.lo
 libopencore_amrwb_la_OBJECTS = $(am_libopencore_amrwb_la_OBJECTS)
-libopencore_amrwb_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
-	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
-	$(CXXFLAGS) $(libopencore_amrwb_la_LDFLAGS) $(LDFLAGS) -o $@
+AM_V_lt = $(am__v_lt_$(V))
+am__v_lt_ = $(am__v_lt_$(AM_DEFAULT_VERBOSITY))
+am__v_lt_0 = --silent
+libopencore_amrwb_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CXX \
+	$(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=link $(CXXLD) \
+	$(AM_CXXFLAGS) $(CXXFLAGS) $(libopencore_amrwb_la_LDFLAGS) \
+	$(LDFLAGS) -o $@
 DEFAULT_INCLUDES = -I.@am__isrc@ -I$(top_builddir)
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
 am__mv = mv -f
 CXXCOMPILE = $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
 	$(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS)
-LTCXXCOMPILE = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) \
-	--mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
-	$(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS)
+LTCXXCOMPILE = $(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) \
+	$(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) \
+	$(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) \
+	$(AM_CXXFLAGS) $(CXXFLAGS)
+AM_V_CXX = $(am__v_CXX_$(V))
+am__v_CXX_ = $(am__v_CXX_$(AM_DEFAULT_VERBOSITY))
+am__v_CXX_0 = @echo "  CXX   " $@;
+AM_V_at = $(am__v_at_$(V))
+am__v_at_ = $(am__v_at_$(AM_DEFAULT_VERBOSITY))
+am__v_at_0 = @
 CXXLD = $(CXX)
-CXXLINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) \
-	--mode=link $(CXXLD) $(AM_CXXFLAGS) $(CXXFLAGS) $(AM_LDFLAGS) \
-	$(LDFLAGS) -o $@
+CXXLINK = $(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) \
+	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
+	$(CXXFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
+AM_V_CXXLD = $(am__v_CXXLD_$(V))
+am__v_CXXLD_ = $(am__v_CXXLD_$(AM_DEFAULT_VERBOSITY))
+am__v_CXXLD_0 = @echo "  CXXLD " $@;
+AM_V_GEN = $(am__v_GEN_$(V))
+am__v_GEN_ = $(am__v_GEN_$(AM_DEFAULT_VERBOSITY))
+am__v_GEN_0 = @echo "  GEN   " $@;
 SOURCES = $(libopencore_amrwb_la_SOURCES)
 DIST_SOURCES = $(libopencore_amrwb_la_SOURCES)
 DATA = $(pkgconfig_DATA)
@@ -117,6 +134,7 @@ CTAGS = ctags
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
 ACLOCAL = @ACLOCAL@
 AMTAR = @AMTAR@
+AM_DEFAULT_VERBOSITY = @AM_DEFAULT_VERBOSITY@
 AR = @AR@
 AUTOCONF = @AUTOCONF@
 AUTOHEADER = @AUTOHEADER@
@@ -298,7 +316,6 @@ libopencore_amrwb_la_SOURCES = \
         $(DEC_SRC_DIR)/wb_syn_filt.cpp \
         $(DEC_SRC_DIR)/weight_amrwb_lpc.cpp
 
-EXTRA_DIST = Makefile.alt
 all: all-am
 
 .SUFFIXES:
@@ -367,7 +384,7 @@ clean-libLTLIBRARIES:
 	  rm -f "$${dir}/so_locations"; \
 	done
 libopencore-amrwb.la: $(libopencore_amrwb_la_OBJECTS) $(libopencore_amrwb_la_DEPENDENCIES) 
-	$(libopencore_amrwb_la_LINK) -rpath $(libdir) $(libopencore_amrwb_la_OBJECTS) $(libopencore_amrwb_la_LIBADD) $(LIBS)
+	$(AM_V_CXXLD)$(libopencore_amrwb_la_LINK) -rpath $(libdir) $(libopencore_amrwb_la_OBJECTS) $(libopencore_amrwb_la_LIBADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
@@ -417,298 +434,340 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/wrapper.Plo@am__quote@
 
 .cpp.o:
-@am__fastdepCXX_TRUE@	$(CXXCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/$*.Tpo $(DEPDIR)/$*.Po
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXXCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/$*.Tpo $(DEPDIR)/$*.Po
+@am__fastdepCXX_FALSE@	$(AM_V_CXX) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='$<' object='$@' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXXCOMPILE) -c -o $@ $<
 
 .cpp.obj:
-@am__fastdepCXX_TRUE@	$(CXXCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ `$(CYGPATH_W) '$<'`
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/$*.Tpo $(DEPDIR)/$*.Po
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXXCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ `$(CYGPATH_W) '$<'`
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/$*.Tpo $(DEPDIR)/$*.Po
+@am__fastdepCXX_FALSE@	$(AM_V_CXX) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='$<' object='$@' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXXCOMPILE) -c -o $@ `$(CYGPATH_W) '$<'`
 
 .cpp.lo:
-@am__fastdepCXX_TRUE@	$(LTCXXCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/$*.Tpo $(DEPDIR)/$*.Plo
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LTCXXCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/$*.Tpo $(DEPDIR)/$*.Plo
+@am__fastdepCXX_FALSE@	$(AM_V_CXX) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='$<' object='$@' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(LTCXXCOMPILE) -c -o $@ $<
 
 agc2_amr_wb.lo: $(DEC_SRC_DIR)/agc2_amr_wb.cpp
-@am__fastdepCXX_TRUE@	$(LIBTOOL)  --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT agc2_amr_wb.lo -MD -MP -MF $(DEPDIR)/agc2_amr_wb.Tpo -c -o agc2_amr_wb.lo `test -f '$(DEC_SRC_DIR)/agc2_amr_wb.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/agc2_amr_wb.cpp
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/agc2_amr_wb.Tpo $(DEPDIR)/agc2_amr_wb.Plo
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT agc2_amr_wb.lo -MD -MP -MF $(DEPDIR)/agc2_amr_wb.Tpo -c -o agc2_amr_wb.lo `test -f '$(DEC_SRC_DIR)/agc2_amr_wb.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/agc2_amr_wb.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/agc2_amr_wb.Tpo $(DEPDIR)/agc2_amr_wb.Plo
+@am__fastdepCXX_FALSE@	$(AM_V_CXX) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='$(DEC_SRC_DIR)/agc2_amr_wb.cpp' object='agc2_amr_wb.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(LIBTOOL)  --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o agc2_amr_wb.lo `test -f '$(DEC_SRC_DIR)/agc2_amr_wb.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/agc2_amr_wb.cpp
+@am__fastdepCXX_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o agc2_amr_wb.lo `test -f '$(DEC_SRC_DIR)/agc2_amr_wb.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/agc2_amr_wb.cpp
 
 band_pass_6k_7k.lo: $(DEC_SRC_DIR)/band_pass_6k_7k.cpp
-@am__fastdepCXX_TRUE@	$(LIBTOOL)  --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT band_pass_6k_7k.lo -MD -MP -MF $(DEPDIR)/band_pass_6k_7k.Tpo -c -o band_pass_6k_7k.lo `test -f '$(DEC_SRC_DIR)/band_pass_6k_7k.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/band_pass_6k_7k.cpp
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/band_pass_6k_7k.Tpo $(DEPDIR)/band_pass_6k_7k.Plo
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT band_pass_6k_7k.lo -MD -MP -MF $(DEPDIR)/band_pass_6k_7k.Tpo -c -o band_pass_6k_7k.lo `test -f '$(DEC_SRC_DIR)/band_pass_6k_7k.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/band_pass_6k_7k.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/band_pass_6k_7k.Tpo $(DEPDIR)/band_pass_6k_7k.Plo
+@am__fastdepCXX_FALSE@	$(AM_V_CXX) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='$(DEC_SRC_DIR)/band_pass_6k_7k.cpp' object='band_pass_6k_7k.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(LIBTOOL)  --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o band_pass_6k_7k.lo `test -f '$(DEC_SRC_DIR)/band_pass_6k_7k.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/band_pass_6k_7k.cpp
+@am__fastdepCXX_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o band_pass_6k_7k.lo `test -f '$(DEC_SRC_DIR)/band_pass_6k_7k.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/band_pass_6k_7k.cpp
 
 dec_acelp_2p_in_64.lo: $(DEC_SRC_DIR)/dec_acelp_2p_in_64.cpp
-@am__fastdepCXX_TRUE@	$(LIBTOOL)  --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT dec_acelp_2p_in_64.lo -MD -MP -MF $(DEPDIR)/dec_acelp_2p_in_64.Tpo -c -o dec_acelp_2p_in_64.lo `test -f '$(DEC_SRC_DIR)/dec_acelp_2p_in_64.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/dec_acelp_2p_in_64.cpp
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/dec_acelp_2p_in_64.Tpo $(DEPDIR)/dec_acelp_2p_in_64.Plo
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT dec_acelp_2p_in_64.lo -MD -MP -MF $(DEPDIR)/dec_acelp_2p_in_64.Tpo -c -o dec_acelp_2p_in_64.lo `test -f '$(DEC_SRC_DIR)/dec_acelp_2p_in_64.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/dec_acelp_2p_in_64.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/dec_acelp_2p_in_64.Tpo $(DEPDIR)/dec_acelp_2p_in_64.Plo
+@am__fastdepCXX_FALSE@	$(AM_V_CXX) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='$(DEC_SRC_DIR)/dec_acelp_2p_in_64.cpp' object='dec_acelp_2p_in_64.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(LIBTOOL)  --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o dec_acelp_2p_in_64.lo `test -f '$(DEC_SRC_DIR)/dec_acelp_2p_in_64.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/dec_acelp_2p_in_64.cpp
+@am__fastdepCXX_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o dec_acelp_2p_in_64.lo `test -f '$(DEC_SRC_DIR)/dec_acelp_2p_in_64.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/dec_acelp_2p_in_64.cpp
 
 dec_acelp_4p_in_64.lo: $(DEC_SRC_DIR)/dec_acelp_4p_in_64.cpp
-@am__fastdepCXX_TRUE@	$(LIBTOOL)  --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT dec_acelp_4p_in_64.lo -MD -MP -MF $(DEPDIR)/dec_acelp_4p_in_64.Tpo -c -o dec_acelp_4p_in_64.lo `test -f '$(DEC_SRC_DIR)/dec_acelp_4p_in_64.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/dec_acelp_4p_in_64.cpp
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/dec_acelp_4p_in_64.Tpo $(DEPDIR)/dec_acelp_4p_in_64.Plo
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT dec_acelp_4p_in_64.lo -MD -MP -MF $(DEPDIR)/dec_acelp_4p_in_64.Tpo -c -o dec_acelp_4p_in_64.lo `test -f '$(DEC_SRC_DIR)/dec_acelp_4p_in_64.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/dec_acelp_4p_in_64.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/dec_acelp_4p_in_64.Tpo $(DEPDIR)/dec_acelp_4p_in_64.Plo
+@am__fastdepCXX_FALSE@	$(AM_V_CXX) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='$(DEC_SRC_DIR)/dec_acelp_4p_in_64.cpp' object='dec_acelp_4p_in_64.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(LIBTOOL)  --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o dec_acelp_4p_in_64.lo `test -f '$(DEC_SRC_DIR)/dec_acelp_4p_in_64.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/dec_acelp_4p_in_64.cpp
+@am__fastdepCXX_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o dec_acelp_4p_in_64.lo `test -f '$(DEC_SRC_DIR)/dec_acelp_4p_in_64.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/dec_acelp_4p_in_64.cpp
 
 dec_alg_codebook.lo: $(DEC_SRC_DIR)/dec_alg_codebook.cpp
-@am__fastdepCXX_TRUE@	$(LIBTOOL)  --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT dec_alg_codebook.lo -MD -MP -MF $(DEPDIR)/dec_alg_codebook.Tpo -c -o dec_alg_codebook.lo `test -f '$(DEC_SRC_DIR)/dec_alg_codebook.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/dec_alg_codebook.cpp
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/dec_alg_codebook.Tpo $(DEPDIR)/dec_alg_codebook.Plo
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT dec_alg_codebook.lo -MD -MP -MF $(DEPDIR)/dec_alg_codebook.Tpo -c -o dec_alg_codebook.lo `test -f '$(DEC_SRC_DIR)/dec_alg_codebook.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/dec_alg_codebook.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/dec_alg_codebook.Tpo $(DEPDIR)/dec_alg_codebook.Plo
+@am__fastdepCXX_FALSE@	$(AM_V_CXX) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='$(DEC_SRC_DIR)/dec_alg_codebook.cpp' object='dec_alg_codebook.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(LIBTOOL)  --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o dec_alg_codebook.lo `test -f '$(DEC_SRC_DIR)/dec_alg_codebook.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/dec_alg_codebook.cpp
+@am__fastdepCXX_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o dec_alg_codebook.lo `test -f '$(DEC_SRC_DIR)/dec_alg_codebook.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/dec_alg_codebook.cpp
 
 dec_gain2_amr_wb.lo: $(DEC_SRC_DIR)/dec_gain2_amr_wb.cpp
-@am__fastdepCXX_TRUE@	$(LIBTOOL)  --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT dec_gain2_amr_wb.lo -MD -MP -MF $(DEPDIR)/dec_gain2_amr_wb.Tpo -c -o dec_gain2_amr_wb.lo `test -f '$(DEC_SRC_DIR)/dec_gain2_amr_wb.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/dec_gain2_amr_wb.cpp
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/dec_gain2_amr_wb.Tpo $(DEPDIR)/dec_gain2_amr_wb.Plo
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT dec_gain2_amr_wb.lo -MD -MP -MF $(DEPDIR)/dec_gain2_amr_wb.Tpo -c -o dec_gain2_amr_wb.lo `test -f '$(DEC_SRC_DIR)/dec_gain2_amr_wb.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/dec_gain2_amr_wb.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/dec_gain2_amr_wb.Tpo $(DEPDIR)/dec_gain2_amr_wb.Plo
+@am__fastdepCXX_FALSE@	$(AM_V_CXX) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='$(DEC_SRC_DIR)/dec_gain2_amr_wb.cpp' object='dec_gain2_amr_wb.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(LIBTOOL)  --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o dec_gain2_amr_wb.lo `test -f '$(DEC_SRC_DIR)/dec_gain2_amr_wb.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/dec_gain2_amr_wb.cpp
+@am__fastdepCXX_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o dec_gain2_amr_wb.lo `test -f '$(DEC_SRC_DIR)/dec_gain2_amr_wb.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/dec_gain2_amr_wb.cpp
 
 deemphasis_32.lo: $(DEC_SRC_DIR)/deemphasis_32.cpp
-@am__fastdepCXX_TRUE@	$(LIBTOOL)  --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT deemphasis_32.lo -MD -MP -MF $(DEPDIR)/deemphasis_32.Tpo -c -o deemphasis_32.lo `test -f '$(DEC_SRC_DIR)/deemphasis_32.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/deemphasis_32.cpp
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/deemphasis_32.Tpo $(DEPDIR)/deemphasis_32.Plo
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT deemphasis_32.lo -MD -MP -MF $(DEPDIR)/deemphasis_32.Tpo -c -o deemphasis_32.lo `test -f '$(DEC_SRC_DIR)/deemphasis_32.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/deemphasis_32.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/deemphasis_32.Tpo $(DEPDIR)/deemphasis_32.Plo
+@am__fastdepCXX_FALSE@	$(AM_V_CXX) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='$(DEC_SRC_DIR)/deemphasis_32.cpp' object='deemphasis_32.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(LIBTOOL)  --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o deemphasis_32.lo `test -f '$(DEC_SRC_DIR)/deemphasis_32.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/deemphasis_32.cpp
+@am__fastdepCXX_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o deemphasis_32.lo `test -f '$(DEC_SRC_DIR)/deemphasis_32.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/deemphasis_32.cpp
 
 dtx_decoder_amr_wb.lo: $(DEC_SRC_DIR)/dtx_decoder_amr_wb.cpp
-@am__fastdepCXX_TRUE@	$(LIBTOOL)  --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT dtx_decoder_amr_wb.lo -MD -MP -MF $(DEPDIR)/dtx_decoder_amr_wb.Tpo -c -o dtx_decoder_amr_wb.lo `test -f '$(DEC_SRC_DIR)/dtx_decoder_amr_wb.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/dtx_decoder_amr_wb.cpp
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/dtx_decoder_amr_wb.Tpo $(DEPDIR)/dtx_decoder_amr_wb.Plo
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT dtx_decoder_amr_wb.lo -MD -MP -MF $(DEPDIR)/dtx_decoder_amr_wb.Tpo -c -o dtx_decoder_amr_wb.lo `test -f '$(DEC_SRC_DIR)/dtx_decoder_amr_wb.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/dtx_decoder_amr_wb.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/dtx_decoder_amr_wb.Tpo $(DEPDIR)/dtx_decoder_amr_wb.Plo
+@am__fastdepCXX_FALSE@	$(AM_V_CXX) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='$(DEC_SRC_DIR)/dtx_decoder_amr_wb.cpp' object='dtx_decoder_amr_wb.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(LIBTOOL)  --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o dtx_decoder_amr_wb.lo `test -f '$(DEC_SRC_DIR)/dtx_decoder_amr_wb.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/dtx_decoder_amr_wb.cpp
+@am__fastdepCXX_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o dtx_decoder_amr_wb.lo `test -f '$(DEC_SRC_DIR)/dtx_decoder_amr_wb.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/dtx_decoder_amr_wb.cpp
 
 get_amr_wb_bits.lo: $(DEC_SRC_DIR)/get_amr_wb_bits.cpp
-@am__fastdepCXX_TRUE@	$(LIBTOOL)  --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT get_amr_wb_bits.lo -MD -MP -MF $(DEPDIR)/get_amr_wb_bits.Tpo -c -o get_amr_wb_bits.lo `test -f '$(DEC_SRC_DIR)/get_amr_wb_bits.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/get_amr_wb_bits.cpp
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/get_amr_wb_bits.Tpo $(DEPDIR)/get_amr_wb_bits.Plo
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT get_amr_wb_bits.lo -MD -MP -MF $(DEPDIR)/get_amr_wb_bits.Tpo -c -o get_amr_wb_bits.lo `test -f '$(DEC_SRC_DIR)/get_amr_wb_bits.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/get_amr_wb_bits.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/get_amr_wb_bits.Tpo $(DEPDIR)/get_amr_wb_bits.Plo
+@am__fastdepCXX_FALSE@	$(AM_V_CXX) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='$(DEC_SRC_DIR)/get_amr_wb_bits.cpp' object='get_amr_wb_bits.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(LIBTOOL)  --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o get_amr_wb_bits.lo `test -f '$(DEC_SRC_DIR)/get_amr_wb_bits.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/get_amr_wb_bits.cpp
+@am__fastdepCXX_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o get_amr_wb_bits.lo `test -f '$(DEC_SRC_DIR)/get_amr_wb_bits.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/get_amr_wb_bits.cpp
 
 highpass_400hz_at_12k8.lo: $(DEC_SRC_DIR)/highpass_400hz_at_12k8.cpp
-@am__fastdepCXX_TRUE@	$(LIBTOOL)  --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT highpass_400hz_at_12k8.lo -MD -MP -MF $(DEPDIR)/highpass_400hz_at_12k8.Tpo -c -o highpass_400hz_at_12k8.lo `test -f '$(DEC_SRC_DIR)/highpass_400hz_at_12k8.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/highpass_400hz_at_12k8.cpp
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/highpass_400hz_at_12k8.Tpo $(DEPDIR)/highpass_400hz_at_12k8.Plo
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT highpass_400hz_at_12k8.lo -MD -MP -MF $(DEPDIR)/highpass_400hz_at_12k8.Tpo -c -o highpass_400hz_at_12k8.lo `test -f '$(DEC_SRC_DIR)/highpass_400hz_at_12k8.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/highpass_400hz_at_12k8.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/highpass_400hz_at_12k8.Tpo $(DEPDIR)/highpass_400hz_at_12k8.Plo
+@am__fastdepCXX_FALSE@	$(AM_V_CXX) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='$(DEC_SRC_DIR)/highpass_400hz_at_12k8.cpp' object='highpass_400hz_at_12k8.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(LIBTOOL)  --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o highpass_400hz_at_12k8.lo `test -f '$(DEC_SRC_DIR)/highpass_400hz_at_12k8.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/highpass_400hz_at_12k8.cpp
+@am__fastdepCXX_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o highpass_400hz_at_12k8.lo `test -f '$(DEC_SRC_DIR)/highpass_400hz_at_12k8.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/highpass_400hz_at_12k8.cpp
 
 highpass_50hz_at_12k8.lo: $(DEC_SRC_DIR)/highpass_50hz_at_12k8.cpp
-@am__fastdepCXX_TRUE@	$(LIBTOOL)  --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT highpass_50hz_at_12k8.lo -MD -MP -MF $(DEPDIR)/highpass_50hz_at_12k8.Tpo -c -o highpass_50hz_at_12k8.lo `test -f '$(DEC_SRC_DIR)/highpass_50hz_at_12k8.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/highpass_50hz_at_12k8.cpp
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/highpass_50hz_at_12k8.Tpo $(DEPDIR)/highpass_50hz_at_12k8.Plo
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT highpass_50hz_at_12k8.lo -MD -MP -MF $(DEPDIR)/highpass_50hz_at_12k8.Tpo -c -o highpass_50hz_at_12k8.lo `test -f '$(DEC_SRC_DIR)/highpass_50hz_at_12k8.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/highpass_50hz_at_12k8.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/highpass_50hz_at_12k8.Tpo $(DEPDIR)/highpass_50hz_at_12k8.Plo
+@am__fastdepCXX_FALSE@	$(AM_V_CXX) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='$(DEC_SRC_DIR)/highpass_50hz_at_12k8.cpp' object='highpass_50hz_at_12k8.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(LIBTOOL)  --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o highpass_50hz_at_12k8.lo `test -f '$(DEC_SRC_DIR)/highpass_50hz_at_12k8.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/highpass_50hz_at_12k8.cpp
+@am__fastdepCXX_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o highpass_50hz_at_12k8.lo `test -f '$(DEC_SRC_DIR)/highpass_50hz_at_12k8.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/highpass_50hz_at_12k8.cpp
 
 homing_amr_wb_dec.lo: $(DEC_SRC_DIR)/homing_amr_wb_dec.cpp
-@am__fastdepCXX_TRUE@	$(LIBTOOL)  --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT homing_amr_wb_dec.lo -MD -MP -MF $(DEPDIR)/homing_amr_wb_dec.Tpo -c -o homing_amr_wb_dec.lo `test -f '$(DEC_SRC_DIR)/homing_amr_wb_dec.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/homing_amr_wb_dec.cpp
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/homing_amr_wb_dec.Tpo $(DEPDIR)/homing_amr_wb_dec.Plo
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT homing_amr_wb_dec.lo -MD -MP -MF $(DEPDIR)/homing_amr_wb_dec.Tpo -c -o homing_amr_wb_dec.lo `test -f '$(DEC_SRC_DIR)/homing_amr_wb_dec.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/homing_amr_wb_dec.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/homing_amr_wb_dec.Tpo $(DEPDIR)/homing_amr_wb_dec.Plo
+@am__fastdepCXX_FALSE@	$(AM_V_CXX) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='$(DEC_SRC_DIR)/homing_amr_wb_dec.cpp' object='homing_amr_wb_dec.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(LIBTOOL)  --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o homing_amr_wb_dec.lo `test -f '$(DEC_SRC_DIR)/homing_amr_wb_dec.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/homing_amr_wb_dec.cpp
+@am__fastdepCXX_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o homing_amr_wb_dec.lo `test -f '$(DEC_SRC_DIR)/homing_amr_wb_dec.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/homing_amr_wb_dec.cpp
 
 interpolate_isp.lo: $(DEC_SRC_DIR)/interpolate_isp.cpp
-@am__fastdepCXX_TRUE@	$(LIBTOOL)  --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT interpolate_isp.lo -MD -MP -MF $(DEPDIR)/interpolate_isp.Tpo -c -o interpolate_isp.lo `test -f '$(DEC_SRC_DIR)/interpolate_isp.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/interpolate_isp.cpp
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/interpolate_isp.Tpo $(DEPDIR)/interpolate_isp.Plo
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT interpolate_isp.lo -MD -MP -MF $(DEPDIR)/interpolate_isp.Tpo -c -o interpolate_isp.lo `test -f '$(DEC_SRC_DIR)/interpolate_isp.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/interpolate_isp.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/interpolate_isp.Tpo $(DEPDIR)/interpolate_isp.Plo
+@am__fastdepCXX_FALSE@	$(AM_V_CXX) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='$(DEC_SRC_DIR)/interpolate_isp.cpp' object='interpolate_isp.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(LIBTOOL)  --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o interpolate_isp.lo `test -f '$(DEC_SRC_DIR)/interpolate_isp.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/interpolate_isp.cpp
+@am__fastdepCXX_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o interpolate_isp.lo `test -f '$(DEC_SRC_DIR)/interpolate_isp.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/interpolate_isp.cpp
 
 isf_extrapolation.lo: $(DEC_SRC_DIR)/isf_extrapolation.cpp
-@am__fastdepCXX_TRUE@	$(LIBTOOL)  --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT isf_extrapolation.lo -MD -MP -MF $(DEPDIR)/isf_extrapolation.Tpo -c -o isf_extrapolation.lo `test -f '$(DEC_SRC_DIR)/isf_extrapolation.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/isf_extrapolation.cpp
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/isf_extrapolation.Tpo $(DEPDIR)/isf_extrapolation.Plo
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT isf_extrapolation.lo -MD -MP -MF $(DEPDIR)/isf_extrapolation.Tpo -c -o isf_extrapolation.lo `test -f '$(DEC_SRC_DIR)/isf_extrapolation.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/isf_extrapolation.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/isf_extrapolation.Tpo $(DEPDIR)/isf_extrapolation.Plo
+@am__fastdepCXX_FALSE@	$(AM_V_CXX) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='$(DEC_SRC_DIR)/isf_extrapolation.cpp' object='isf_extrapolation.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(LIBTOOL)  --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o isf_extrapolation.lo `test -f '$(DEC_SRC_DIR)/isf_extrapolation.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/isf_extrapolation.cpp
+@am__fastdepCXX_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o isf_extrapolation.lo `test -f '$(DEC_SRC_DIR)/isf_extrapolation.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/isf_extrapolation.cpp
 
 isp_az.lo: $(DEC_SRC_DIR)/isp_az.cpp
-@am__fastdepCXX_TRUE@	$(LIBTOOL)  --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT isp_az.lo -MD -MP -MF $(DEPDIR)/isp_az.Tpo -c -o isp_az.lo `test -f '$(DEC_SRC_DIR)/isp_az.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/isp_az.cpp
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/isp_az.Tpo $(DEPDIR)/isp_az.Plo
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT isp_az.lo -MD -MP -MF $(DEPDIR)/isp_az.Tpo -c -o isp_az.lo `test -f '$(DEC_SRC_DIR)/isp_az.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/isp_az.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/isp_az.Tpo $(DEPDIR)/isp_az.Plo
+@am__fastdepCXX_FALSE@	$(AM_V_CXX) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='$(DEC_SRC_DIR)/isp_az.cpp' object='isp_az.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(LIBTOOL)  --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o isp_az.lo `test -f '$(DEC_SRC_DIR)/isp_az.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/isp_az.cpp
+@am__fastdepCXX_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o isp_az.lo `test -f '$(DEC_SRC_DIR)/isp_az.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/isp_az.cpp
 
 isp_isf.lo: $(DEC_SRC_DIR)/isp_isf.cpp
-@am__fastdepCXX_TRUE@	$(LIBTOOL)  --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT isp_isf.lo -MD -MP -MF $(DEPDIR)/isp_isf.Tpo -c -o isp_isf.lo `test -f '$(DEC_SRC_DIR)/isp_isf.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/isp_isf.cpp
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/isp_isf.Tpo $(DEPDIR)/isp_isf.Plo
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT isp_isf.lo -MD -MP -MF $(DEPDIR)/isp_isf.Tpo -c -o isp_isf.lo `test -f '$(DEC_SRC_DIR)/isp_isf.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/isp_isf.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/isp_isf.Tpo $(DEPDIR)/isp_isf.Plo
+@am__fastdepCXX_FALSE@	$(AM_V_CXX) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='$(DEC_SRC_DIR)/isp_isf.cpp' object='isp_isf.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(LIBTOOL)  --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o isp_isf.lo `test -f '$(DEC_SRC_DIR)/isp_isf.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/isp_isf.cpp
+@am__fastdepCXX_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o isp_isf.lo `test -f '$(DEC_SRC_DIR)/isp_isf.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/isp_isf.cpp
 
 lagconceal.lo: $(DEC_SRC_DIR)/lagconceal.cpp
-@am__fastdepCXX_TRUE@	$(LIBTOOL)  --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT lagconceal.lo -MD -MP -MF $(DEPDIR)/lagconceal.Tpo -c -o lagconceal.lo `test -f '$(DEC_SRC_DIR)/lagconceal.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/lagconceal.cpp
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/lagconceal.Tpo $(DEPDIR)/lagconceal.Plo
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT lagconceal.lo -MD -MP -MF $(DEPDIR)/lagconceal.Tpo -c -o lagconceal.lo `test -f '$(DEC_SRC_DIR)/lagconceal.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/lagconceal.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/lagconceal.Tpo $(DEPDIR)/lagconceal.Plo
+@am__fastdepCXX_FALSE@	$(AM_V_CXX) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='$(DEC_SRC_DIR)/lagconceal.cpp' object='lagconceal.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(LIBTOOL)  --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o lagconceal.lo `test -f '$(DEC_SRC_DIR)/lagconceal.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/lagconceal.cpp
+@am__fastdepCXX_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o lagconceal.lo `test -f '$(DEC_SRC_DIR)/lagconceal.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/lagconceal.cpp
 
 low_pass_filt_7k.lo: $(DEC_SRC_DIR)/low_pass_filt_7k.cpp
-@am__fastdepCXX_TRUE@	$(LIBTOOL)  --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT low_pass_filt_7k.lo -MD -MP -MF $(DEPDIR)/low_pass_filt_7k.Tpo -c -o low_pass_filt_7k.lo `test -f '$(DEC_SRC_DIR)/low_pass_filt_7k.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/low_pass_filt_7k.cpp
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/low_pass_filt_7k.Tpo $(DEPDIR)/low_pass_filt_7k.Plo
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT low_pass_filt_7k.lo -MD -MP -MF $(DEPDIR)/low_pass_filt_7k.Tpo -c -o low_pass_filt_7k.lo `test -f '$(DEC_SRC_DIR)/low_pass_filt_7k.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/low_pass_filt_7k.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/low_pass_filt_7k.Tpo $(DEPDIR)/low_pass_filt_7k.Plo
+@am__fastdepCXX_FALSE@	$(AM_V_CXX) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='$(DEC_SRC_DIR)/low_pass_filt_7k.cpp' object='low_pass_filt_7k.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(LIBTOOL)  --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o low_pass_filt_7k.lo `test -f '$(DEC_SRC_DIR)/low_pass_filt_7k.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/low_pass_filt_7k.cpp
+@am__fastdepCXX_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o low_pass_filt_7k.lo `test -f '$(DEC_SRC_DIR)/low_pass_filt_7k.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/low_pass_filt_7k.cpp
 
 median5.lo: $(DEC_SRC_DIR)/median5.cpp
-@am__fastdepCXX_TRUE@	$(LIBTOOL)  --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT median5.lo -MD -MP -MF $(DEPDIR)/median5.Tpo -c -o median5.lo `test -f '$(DEC_SRC_DIR)/median5.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/median5.cpp
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/median5.Tpo $(DEPDIR)/median5.Plo
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT median5.lo -MD -MP -MF $(DEPDIR)/median5.Tpo -c -o median5.lo `test -f '$(DEC_SRC_DIR)/median5.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/median5.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/median5.Tpo $(DEPDIR)/median5.Plo
+@am__fastdepCXX_FALSE@	$(AM_V_CXX) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='$(DEC_SRC_DIR)/median5.cpp' object='median5.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(LIBTOOL)  --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o median5.lo `test -f '$(DEC_SRC_DIR)/median5.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/median5.cpp
+@am__fastdepCXX_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o median5.lo `test -f '$(DEC_SRC_DIR)/median5.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/median5.cpp
 
 mime_io.lo: $(DEC_SRC_DIR)/mime_io.cpp
-@am__fastdepCXX_TRUE@	$(LIBTOOL)  --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT mime_io.lo -MD -MP -MF $(DEPDIR)/mime_io.Tpo -c -o mime_io.lo `test -f '$(DEC_SRC_DIR)/mime_io.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/mime_io.cpp
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/mime_io.Tpo $(DEPDIR)/mime_io.Plo
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT mime_io.lo -MD -MP -MF $(DEPDIR)/mime_io.Tpo -c -o mime_io.lo `test -f '$(DEC_SRC_DIR)/mime_io.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/mime_io.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/mime_io.Tpo $(DEPDIR)/mime_io.Plo
+@am__fastdepCXX_FALSE@	$(AM_V_CXX) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='$(DEC_SRC_DIR)/mime_io.cpp' object='mime_io.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(LIBTOOL)  --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o mime_io.lo `test -f '$(DEC_SRC_DIR)/mime_io.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/mime_io.cpp
+@am__fastdepCXX_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o mime_io.lo `test -f '$(DEC_SRC_DIR)/mime_io.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/mime_io.cpp
 
 noise_gen_amrwb.lo: $(DEC_SRC_DIR)/noise_gen_amrwb.cpp
-@am__fastdepCXX_TRUE@	$(LIBTOOL)  --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT noise_gen_amrwb.lo -MD -MP -MF $(DEPDIR)/noise_gen_amrwb.Tpo -c -o noise_gen_amrwb.lo `test -f '$(DEC_SRC_DIR)/noise_gen_amrwb.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/noise_gen_amrwb.cpp
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/noise_gen_amrwb.Tpo $(DEPDIR)/noise_gen_amrwb.Plo
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT noise_gen_amrwb.lo -MD -MP -MF $(DEPDIR)/noise_gen_amrwb.Tpo -c -o noise_gen_amrwb.lo `test -f '$(DEC_SRC_DIR)/noise_gen_amrwb.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/noise_gen_amrwb.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/noise_gen_amrwb.Tpo $(DEPDIR)/noise_gen_amrwb.Plo
+@am__fastdepCXX_FALSE@	$(AM_V_CXX) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='$(DEC_SRC_DIR)/noise_gen_amrwb.cpp' object='noise_gen_amrwb.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(LIBTOOL)  --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o noise_gen_amrwb.lo `test -f '$(DEC_SRC_DIR)/noise_gen_amrwb.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/noise_gen_amrwb.cpp
+@am__fastdepCXX_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o noise_gen_amrwb.lo `test -f '$(DEC_SRC_DIR)/noise_gen_amrwb.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/noise_gen_amrwb.cpp
 
 normalize_amr_wb.lo: $(DEC_SRC_DIR)/normalize_amr_wb.cpp
-@am__fastdepCXX_TRUE@	$(LIBTOOL)  --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT normalize_amr_wb.lo -MD -MP -MF $(DEPDIR)/normalize_amr_wb.Tpo -c -o normalize_amr_wb.lo `test -f '$(DEC_SRC_DIR)/normalize_amr_wb.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/normalize_amr_wb.cpp
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/normalize_amr_wb.Tpo $(DEPDIR)/normalize_amr_wb.Plo
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT normalize_amr_wb.lo -MD -MP -MF $(DEPDIR)/normalize_amr_wb.Tpo -c -o normalize_amr_wb.lo `test -f '$(DEC_SRC_DIR)/normalize_amr_wb.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/normalize_amr_wb.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/normalize_amr_wb.Tpo $(DEPDIR)/normalize_amr_wb.Plo
+@am__fastdepCXX_FALSE@	$(AM_V_CXX) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='$(DEC_SRC_DIR)/normalize_amr_wb.cpp' object='normalize_amr_wb.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(LIBTOOL)  --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o normalize_amr_wb.lo `test -f '$(DEC_SRC_DIR)/normalize_amr_wb.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/normalize_amr_wb.cpp
+@am__fastdepCXX_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o normalize_amr_wb.lo `test -f '$(DEC_SRC_DIR)/normalize_amr_wb.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/normalize_amr_wb.cpp
 
 oversamp_12k8_to_16k.lo: $(DEC_SRC_DIR)/oversamp_12k8_to_16k.cpp
-@am__fastdepCXX_TRUE@	$(LIBTOOL)  --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT oversamp_12k8_to_16k.lo -MD -MP -MF $(DEPDIR)/oversamp_12k8_to_16k.Tpo -c -o oversamp_12k8_to_16k.lo `test -f '$(DEC_SRC_DIR)/oversamp_12k8_to_16k.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/oversamp_12k8_to_16k.cpp
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/oversamp_12k8_to_16k.Tpo $(DEPDIR)/oversamp_12k8_to_16k.Plo
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT oversamp_12k8_to_16k.lo -MD -MP -MF $(DEPDIR)/oversamp_12k8_to_16k.Tpo -c -o oversamp_12k8_to_16k.lo `test -f '$(DEC_SRC_DIR)/oversamp_12k8_to_16k.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/oversamp_12k8_to_16k.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/oversamp_12k8_to_16k.Tpo $(DEPDIR)/oversamp_12k8_to_16k.Plo
+@am__fastdepCXX_FALSE@	$(AM_V_CXX) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='$(DEC_SRC_DIR)/oversamp_12k8_to_16k.cpp' object='oversamp_12k8_to_16k.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(LIBTOOL)  --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o oversamp_12k8_to_16k.lo `test -f '$(DEC_SRC_DIR)/oversamp_12k8_to_16k.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/oversamp_12k8_to_16k.cpp
+@am__fastdepCXX_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o oversamp_12k8_to_16k.lo `test -f '$(DEC_SRC_DIR)/oversamp_12k8_to_16k.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/oversamp_12k8_to_16k.cpp
 
 phase_dispersion.lo: $(DEC_SRC_DIR)/phase_dispersion.cpp
-@am__fastdepCXX_TRUE@	$(LIBTOOL)  --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT phase_dispersion.lo -MD -MP -MF $(DEPDIR)/phase_dispersion.Tpo -c -o phase_dispersion.lo `test -f '$(DEC_SRC_DIR)/phase_dispersion.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/phase_dispersion.cpp
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/phase_dispersion.Tpo $(DEPDIR)/phase_dispersion.Plo
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT phase_dispersion.lo -MD -MP -MF $(DEPDIR)/phase_dispersion.Tpo -c -o phase_dispersion.lo `test -f '$(DEC_SRC_DIR)/phase_dispersion.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/phase_dispersion.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/phase_dispersion.Tpo $(DEPDIR)/phase_dispersion.Plo
+@am__fastdepCXX_FALSE@	$(AM_V_CXX) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='$(DEC_SRC_DIR)/phase_dispersion.cpp' object='phase_dispersion.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(LIBTOOL)  --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o phase_dispersion.lo `test -f '$(DEC_SRC_DIR)/phase_dispersion.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/phase_dispersion.cpp
+@am__fastdepCXX_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o phase_dispersion.lo `test -f '$(DEC_SRC_DIR)/phase_dispersion.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/phase_dispersion.cpp
 
 pit_shrp.lo: $(DEC_SRC_DIR)/pit_shrp.cpp
-@am__fastdepCXX_TRUE@	$(LIBTOOL)  --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT pit_shrp.lo -MD -MP -MF $(DEPDIR)/pit_shrp.Tpo -c -o pit_shrp.lo `test -f '$(DEC_SRC_DIR)/pit_shrp.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/pit_shrp.cpp
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/pit_shrp.Tpo $(DEPDIR)/pit_shrp.Plo
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT pit_shrp.lo -MD -MP -MF $(DEPDIR)/pit_shrp.Tpo -c -o pit_shrp.lo `test -f '$(DEC_SRC_DIR)/pit_shrp.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/pit_shrp.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/pit_shrp.Tpo $(DEPDIR)/pit_shrp.Plo
+@am__fastdepCXX_FALSE@	$(AM_V_CXX) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='$(DEC_SRC_DIR)/pit_shrp.cpp' object='pit_shrp.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(LIBTOOL)  --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o pit_shrp.lo `test -f '$(DEC_SRC_DIR)/pit_shrp.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/pit_shrp.cpp
+@am__fastdepCXX_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o pit_shrp.lo `test -f '$(DEC_SRC_DIR)/pit_shrp.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/pit_shrp.cpp
 
 pred_lt4.lo: $(DEC_SRC_DIR)/pred_lt4.cpp
-@am__fastdepCXX_TRUE@	$(LIBTOOL)  --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT pred_lt4.lo -MD -MP -MF $(DEPDIR)/pred_lt4.Tpo -c -o pred_lt4.lo `test -f '$(DEC_SRC_DIR)/pred_lt4.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/pred_lt4.cpp
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/pred_lt4.Tpo $(DEPDIR)/pred_lt4.Plo
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT pred_lt4.lo -MD -MP -MF $(DEPDIR)/pred_lt4.Tpo -c -o pred_lt4.lo `test -f '$(DEC_SRC_DIR)/pred_lt4.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/pred_lt4.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/pred_lt4.Tpo $(DEPDIR)/pred_lt4.Plo
+@am__fastdepCXX_FALSE@	$(AM_V_CXX) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='$(DEC_SRC_DIR)/pred_lt4.cpp' object='pred_lt4.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(LIBTOOL)  --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o pred_lt4.lo `test -f '$(DEC_SRC_DIR)/pred_lt4.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/pred_lt4.cpp
+@am__fastdepCXX_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o pred_lt4.lo `test -f '$(DEC_SRC_DIR)/pred_lt4.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/pred_lt4.cpp
 
 preemph_amrwb_dec.lo: $(DEC_SRC_DIR)/preemph_amrwb_dec.cpp
-@am__fastdepCXX_TRUE@	$(LIBTOOL)  --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT preemph_amrwb_dec.lo -MD -MP -MF $(DEPDIR)/preemph_amrwb_dec.Tpo -c -o preemph_amrwb_dec.lo `test -f '$(DEC_SRC_DIR)/preemph_amrwb_dec.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/preemph_amrwb_dec.cpp
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/preemph_amrwb_dec.Tpo $(DEPDIR)/preemph_amrwb_dec.Plo
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT preemph_amrwb_dec.lo -MD -MP -MF $(DEPDIR)/preemph_amrwb_dec.Tpo -c -o preemph_amrwb_dec.lo `test -f '$(DEC_SRC_DIR)/preemph_amrwb_dec.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/preemph_amrwb_dec.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/preemph_amrwb_dec.Tpo $(DEPDIR)/preemph_amrwb_dec.Plo
+@am__fastdepCXX_FALSE@	$(AM_V_CXX) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='$(DEC_SRC_DIR)/preemph_amrwb_dec.cpp' object='preemph_amrwb_dec.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(LIBTOOL)  --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o preemph_amrwb_dec.lo `test -f '$(DEC_SRC_DIR)/preemph_amrwb_dec.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/preemph_amrwb_dec.cpp
+@am__fastdepCXX_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o preemph_amrwb_dec.lo `test -f '$(DEC_SRC_DIR)/preemph_amrwb_dec.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/preemph_amrwb_dec.cpp
 
 pvamrwbdecoder.lo: $(DEC_SRC_DIR)/pvamrwbdecoder.cpp
-@am__fastdepCXX_TRUE@	$(LIBTOOL)  --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT pvamrwbdecoder.lo -MD -MP -MF $(DEPDIR)/pvamrwbdecoder.Tpo -c -o pvamrwbdecoder.lo `test -f '$(DEC_SRC_DIR)/pvamrwbdecoder.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/pvamrwbdecoder.cpp
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/pvamrwbdecoder.Tpo $(DEPDIR)/pvamrwbdecoder.Plo
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT pvamrwbdecoder.lo -MD -MP -MF $(DEPDIR)/pvamrwbdecoder.Tpo -c -o pvamrwbdecoder.lo `test -f '$(DEC_SRC_DIR)/pvamrwbdecoder.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/pvamrwbdecoder.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/pvamrwbdecoder.Tpo $(DEPDIR)/pvamrwbdecoder.Plo
+@am__fastdepCXX_FALSE@	$(AM_V_CXX) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='$(DEC_SRC_DIR)/pvamrwbdecoder.cpp' object='pvamrwbdecoder.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(LIBTOOL)  --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o pvamrwbdecoder.lo `test -f '$(DEC_SRC_DIR)/pvamrwbdecoder.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/pvamrwbdecoder.cpp
+@am__fastdepCXX_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o pvamrwbdecoder.lo `test -f '$(DEC_SRC_DIR)/pvamrwbdecoder.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/pvamrwbdecoder.cpp
 
 pvamrwb_math_op.lo: $(DEC_SRC_DIR)/pvamrwb_math_op.cpp
-@am__fastdepCXX_TRUE@	$(LIBTOOL)  --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT pvamrwb_math_op.lo -MD -MP -MF $(DEPDIR)/pvamrwb_math_op.Tpo -c -o pvamrwb_math_op.lo `test -f '$(DEC_SRC_DIR)/pvamrwb_math_op.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/pvamrwb_math_op.cpp
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/pvamrwb_math_op.Tpo $(DEPDIR)/pvamrwb_math_op.Plo
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT pvamrwb_math_op.lo -MD -MP -MF $(DEPDIR)/pvamrwb_math_op.Tpo -c -o pvamrwb_math_op.lo `test -f '$(DEC_SRC_DIR)/pvamrwb_math_op.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/pvamrwb_math_op.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/pvamrwb_math_op.Tpo $(DEPDIR)/pvamrwb_math_op.Plo
+@am__fastdepCXX_FALSE@	$(AM_V_CXX) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='$(DEC_SRC_DIR)/pvamrwb_math_op.cpp' object='pvamrwb_math_op.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(LIBTOOL)  --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o pvamrwb_math_op.lo `test -f '$(DEC_SRC_DIR)/pvamrwb_math_op.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/pvamrwb_math_op.cpp
+@am__fastdepCXX_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o pvamrwb_math_op.lo `test -f '$(DEC_SRC_DIR)/pvamrwb_math_op.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/pvamrwb_math_op.cpp
 
 q_gain2_tab.lo: $(DEC_SRC_DIR)/q_gain2_tab.cpp
-@am__fastdepCXX_TRUE@	$(LIBTOOL)  --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT q_gain2_tab.lo -MD -MP -MF $(DEPDIR)/q_gain2_tab.Tpo -c -o q_gain2_tab.lo `test -f '$(DEC_SRC_DIR)/q_gain2_tab.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/q_gain2_tab.cpp
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/q_gain2_tab.Tpo $(DEPDIR)/q_gain2_tab.Plo
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT q_gain2_tab.lo -MD -MP -MF $(DEPDIR)/q_gain2_tab.Tpo -c -o q_gain2_tab.lo `test -f '$(DEC_SRC_DIR)/q_gain2_tab.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/q_gain2_tab.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/q_gain2_tab.Tpo $(DEPDIR)/q_gain2_tab.Plo
+@am__fastdepCXX_FALSE@	$(AM_V_CXX) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='$(DEC_SRC_DIR)/q_gain2_tab.cpp' object='q_gain2_tab.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(LIBTOOL)  --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o q_gain2_tab.lo `test -f '$(DEC_SRC_DIR)/q_gain2_tab.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/q_gain2_tab.cpp
+@am__fastdepCXX_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o q_gain2_tab.lo `test -f '$(DEC_SRC_DIR)/q_gain2_tab.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/q_gain2_tab.cpp
 
 qisf_ns.lo: $(DEC_SRC_DIR)/qisf_ns.cpp
-@am__fastdepCXX_TRUE@	$(LIBTOOL)  --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT qisf_ns.lo -MD -MP -MF $(DEPDIR)/qisf_ns.Tpo -c -o qisf_ns.lo `test -f '$(DEC_SRC_DIR)/qisf_ns.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/qisf_ns.cpp
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/qisf_ns.Tpo $(DEPDIR)/qisf_ns.Plo
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT qisf_ns.lo -MD -MP -MF $(DEPDIR)/qisf_ns.Tpo -c -o qisf_ns.lo `test -f '$(DEC_SRC_DIR)/qisf_ns.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/qisf_ns.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/qisf_ns.Tpo $(DEPDIR)/qisf_ns.Plo
+@am__fastdepCXX_FALSE@	$(AM_V_CXX) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='$(DEC_SRC_DIR)/qisf_ns.cpp' object='qisf_ns.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(LIBTOOL)  --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o qisf_ns.lo `test -f '$(DEC_SRC_DIR)/qisf_ns.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/qisf_ns.cpp
+@am__fastdepCXX_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o qisf_ns.lo `test -f '$(DEC_SRC_DIR)/qisf_ns.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/qisf_ns.cpp
 
 qisf_ns_tab.lo: $(DEC_SRC_DIR)/qisf_ns_tab.cpp
-@am__fastdepCXX_TRUE@	$(LIBTOOL)  --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT qisf_ns_tab.lo -MD -MP -MF $(DEPDIR)/qisf_ns_tab.Tpo -c -o qisf_ns_tab.lo `test -f '$(DEC_SRC_DIR)/qisf_ns_tab.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/qisf_ns_tab.cpp
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/qisf_ns_tab.Tpo $(DEPDIR)/qisf_ns_tab.Plo
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT qisf_ns_tab.lo -MD -MP -MF $(DEPDIR)/qisf_ns_tab.Tpo -c -o qisf_ns_tab.lo `test -f '$(DEC_SRC_DIR)/qisf_ns_tab.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/qisf_ns_tab.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/qisf_ns_tab.Tpo $(DEPDIR)/qisf_ns_tab.Plo
+@am__fastdepCXX_FALSE@	$(AM_V_CXX) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='$(DEC_SRC_DIR)/qisf_ns_tab.cpp' object='qisf_ns_tab.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(LIBTOOL)  --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o qisf_ns_tab.lo `test -f '$(DEC_SRC_DIR)/qisf_ns_tab.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/qisf_ns_tab.cpp
+@am__fastdepCXX_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o qisf_ns_tab.lo `test -f '$(DEC_SRC_DIR)/qisf_ns_tab.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/qisf_ns_tab.cpp
 
 qpisf_2s.lo: $(DEC_SRC_DIR)/qpisf_2s.cpp
-@am__fastdepCXX_TRUE@	$(LIBTOOL)  --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT qpisf_2s.lo -MD -MP -MF $(DEPDIR)/qpisf_2s.Tpo -c -o qpisf_2s.lo `test -f '$(DEC_SRC_DIR)/qpisf_2s.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/qpisf_2s.cpp
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/qpisf_2s.Tpo $(DEPDIR)/qpisf_2s.Plo
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT qpisf_2s.lo -MD -MP -MF $(DEPDIR)/qpisf_2s.Tpo -c -o qpisf_2s.lo `test -f '$(DEC_SRC_DIR)/qpisf_2s.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/qpisf_2s.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/qpisf_2s.Tpo $(DEPDIR)/qpisf_2s.Plo
+@am__fastdepCXX_FALSE@	$(AM_V_CXX) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='$(DEC_SRC_DIR)/qpisf_2s.cpp' object='qpisf_2s.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(LIBTOOL)  --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o qpisf_2s.lo `test -f '$(DEC_SRC_DIR)/qpisf_2s.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/qpisf_2s.cpp
+@am__fastdepCXX_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o qpisf_2s.lo `test -f '$(DEC_SRC_DIR)/qpisf_2s.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/qpisf_2s.cpp
 
 qpisf_2s_tab.lo: $(DEC_SRC_DIR)/qpisf_2s_tab.cpp
-@am__fastdepCXX_TRUE@	$(LIBTOOL)  --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT qpisf_2s_tab.lo -MD -MP -MF $(DEPDIR)/qpisf_2s_tab.Tpo -c -o qpisf_2s_tab.lo `test -f '$(DEC_SRC_DIR)/qpisf_2s_tab.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/qpisf_2s_tab.cpp
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/qpisf_2s_tab.Tpo $(DEPDIR)/qpisf_2s_tab.Plo
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT qpisf_2s_tab.lo -MD -MP -MF $(DEPDIR)/qpisf_2s_tab.Tpo -c -o qpisf_2s_tab.lo `test -f '$(DEC_SRC_DIR)/qpisf_2s_tab.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/qpisf_2s_tab.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/qpisf_2s_tab.Tpo $(DEPDIR)/qpisf_2s_tab.Plo
+@am__fastdepCXX_FALSE@	$(AM_V_CXX) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='$(DEC_SRC_DIR)/qpisf_2s_tab.cpp' object='qpisf_2s_tab.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(LIBTOOL)  --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o qpisf_2s_tab.lo `test -f '$(DEC_SRC_DIR)/qpisf_2s_tab.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/qpisf_2s_tab.cpp
+@am__fastdepCXX_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o qpisf_2s_tab.lo `test -f '$(DEC_SRC_DIR)/qpisf_2s_tab.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/qpisf_2s_tab.cpp
 
 scale_signal.lo: $(DEC_SRC_DIR)/scale_signal.cpp
-@am__fastdepCXX_TRUE@	$(LIBTOOL)  --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT scale_signal.lo -MD -MP -MF $(DEPDIR)/scale_signal.Tpo -c -o scale_signal.lo `test -f '$(DEC_SRC_DIR)/scale_signal.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/scale_signal.cpp
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/scale_signal.Tpo $(DEPDIR)/scale_signal.Plo
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT scale_signal.lo -MD -MP -MF $(DEPDIR)/scale_signal.Tpo -c -o scale_signal.lo `test -f '$(DEC_SRC_DIR)/scale_signal.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/scale_signal.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/scale_signal.Tpo $(DEPDIR)/scale_signal.Plo
+@am__fastdepCXX_FALSE@	$(AM_V_CXX) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='$(DEC_SRC_DIR)/scale_signal.cpp' object='scale_signal.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(LIBTOOL)  --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o scale_signal.lo `test -f '$(DEC_SRC_DIR)/scale_signal.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/scale_signal.cpp
+@am__fastdepCXX_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o scale_signal.lo `test -f '$(DEC_SRC_DIR)/scale_signal.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/scale_signal.cpp
 
 synthesis_amr_wb.lo: $(DEC_SRC_DIR)/synthesis_amr_wb.cpp
-@am__fastdepCXX_TRUE@	$(LIBTOOL)  --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT synthesis_amr_wb.lo -MD -MP -MF $(DEPDIR)/synthesis_amr_wb.Tpo -c -o synthesis_amr_wb.lo `test -f '$(DEC_SRC_DIR)/synthesis_amr_wb.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/synthesis_amr_wb.cpp
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/synthesis_amr_wb.Tpo $(DEPDIR)/synthesis_amr_wb.Plo
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT synthesis_amr_wb.lo -MD -MP -MF $(DEPDIR)/synthesis_amr_wb.Tpo -c -o synthesis_amr_wb.lo `test -f '$(DEC_SRC_DIR)/synthesis_amr_wb.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/synthesis_amr_wb.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/synthesis_amr_wb.Tpo $(DEPDIR)/synthesis_amr_wb.Plo
+@am__fastdepCXX_FALSE@	$(AM_V_CXX) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='$(DEC_SRC_DIR)/synthesis_amr_wb.cpp' object='synthesis_amr_wb.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(LIBTOOL)  --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o synthesis_amr_wb.lo `test -f '$(DEC_SRC_DIR)/synthesis_amr_wb.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/synthesis_amr_wb.cpp
+@am__fastdepCXX_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o synthesis_amr_wb.lo `test -f '$(DEC_SRC_DIR)/synthesis_amr_wb.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/synthesis_amr_wb.cpp
 
 voice_factor.lo: $(DEC_SRC_DIR)/voice_factor.cpp
-@am__fastdepCXX_TRUE@	$(LIBTOOL)  --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT voice_factor.lo -MD -MP -MF $(DEPDIR)/voice_factor.Tpo -c -o voice_factor.lo `test -f '$(DEC_SRC_DIR)/voice_factor.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/voice_factor.cpp
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/voice_factor.Tpo $(DEPDIR)/voice_factor.Plo
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT voice_factor.lo -MD -MP -MF $(DEPDIR)/voice_factor.Tpo -c -o voice_factor.lo `test -f '$(DEC_SRC_DIR)/voice_factor.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/voice_factor.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/voice_factor.Tpo $(DEPDIR)/voice_factor.Plo
+@am__fastdepCXX_FALSE@	$(AM_V_CXX) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='$(DEC_SRC_DIR)/voice_factor.cpp' object='voice_factor.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(LIBTOOL)  --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o voice_factor.lo `test -f '$(DEC_SRC_DIR)/voice_factor.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/voice_factor.cpp
+@am__fastdepCXX_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o voice_factor.lo `test -f '$(DEC_SRC_DIR)/voice_factor.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/voice_factor.cpp
 
 wb_syn_filt.lo: $(DEC_SRC_DIR)/wb_syn_filt.cpp
-@am__fastdepCXX_TRUE@	$(LIBTOOL)  --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT wb_syn_filt.lo -MD -MP -MF $(DEPDIR)/wb_syn_filt.Tpo -c -o wb_syn_filt.lo `test -f '$(DEC_SRC_DIR)/wb_syn_filt.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/wb_syn_filt.cpp
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/wb_syn_filt.Tpo $(DEPDIR)/wb_syn_filt.Plo
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT wb_syn_filt.lo -MD -MP -MF $(DEPDIR)/wb_syn_filt.Tpo -c -o wb_syn_filt.lo `test -f '$(DEC_SRC_DIR)/wb_syn_filt.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/wb_syn_filt.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/wb_syn_filt.Tpo $(DEPDIR)/wb_syn_filt.Plo
+@am__fastdepCXX_FALSE@	$(AM_V_CXX) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='$(DEC_SRC_DIR)/wb_syn_filt.cpp' object='wb_syn_filt.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(LIBTOOL)  --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o wb_syn_filt.lo `test -f '$(DEC_SRC_DIR)/wb_syn_filt.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/wb_syn_filt.cpp
+@am__fastdepCXX_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o wb_syn_filt.lo `test -f '$(DEC_SRC_DIR)/wb_syn_filt.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/wb_syn_filt.cpp
 
 weight_amrwb_lpc.lo: $(DEC_SRC_DIR)/weight_amrwb_lpc.cpp
-@am__fastdepCXX_TRUE@	$(LIBTOOL)  --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT weight_amrwb_lpc.lo -MD -MP -MF $(DEPDIR)/weight_amrwb_lpc.Tpo -c -o weight_amrwb_lpc.lo `test -f '$(DEC_SRC_DIR)/weight_amrwb_lpc.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/weight_amrwb_lpc.cpp
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/weight_amrwb_lpc.Tpo $(DEPDIR)/weight_amrwb_lpc.Plo
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT weight_amrwb_lpc.lo -MD -MP -MF $(DEPDIR)/weight_amrwb_lpc.Tpo -c -o weight_amrwb_lpc.lo `test -f '$(DEC_SRC_DIR)/weight_amrwb_lpc.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/weight_amrwb_lpc.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/weight_amrwb_lpc.Tpo $(DEPDIR)/weight_amrwb_lpc.Plo
+@am__fastdepCXX_FALSE@	$(AM_V_CXX) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='$(DEC_SRC_DIR)/weight_amrwb_lpc.cpp' object='weight_amrwb_lpc.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(LIBTOOL)  --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o weight_amrwb_lpc.lo `test -f '$(DEC_SRC_DIR)/weight_amrwb_lpc.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/weight_amrwb_lpc.cpp
+@am__fastdepCXX_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o weight_amrwb_lpc.lo `test -f '$(DEC_SRC_DIR)/weight_amrwb_lpc.cpp' || echo '$(srcdir)/'`$(DEC_SRC_DIR)/weight_amrwb_lpc.cpp
 
 mostlyclean-libtool:
 	-rm -f *.lo

@@ -792,6 +792,10 @@ CPPFLAGS
 LDFLAGS
 CXXFLAGS
 CXX
+AMRNB_DECODER_FALSE
+AMRNB_DECODER_TRUE
+AMRNB_ENCODER_FALSE
+AMRNB_ENCODER_TRUE
 GCC_ARMV5_FALSE
 GCC_ARMV5_TRUE
 COMPILE_AS_C_FALSE
@@ -807,6 +811,8 @@ build
 MAINT
 MAINTAINER_MODE_FALSE
 MAINTAINER_MODE_TRUE
+AM_BACKSLASH
+AM_DEFAULT_VERBOSITY
 am__untar
 am__tar
 AMTAR
@@ -871,9 +877,12 @@ SHELL'
 ac_subst_files=''
 ac_user_opts='
 enable_option_checking
+enable_silent_rules
 enable_maintainer_mode
 enable_compile_c
 enable_gcc_armv5
+enable_amrnb_encoder
+enable_amrnb_decoder
 enable_dependency_tracking
 enable_shared
 enable_static
@@ -1515,10 +1524,14 @@ Optional Features:
   --disable-option-checking  ignore unrecognized --enable/--with options
   --disable-FEATURE       do not include FEATURE (same as --enable-FEATURE=no)
   --enable-FEATURE[=ARG]  include FEATURE [ARG=yes]
+  --enable-silent-rules          less verbose build output (undo: `make V=1')
+  --disable-silent-rules         verbose build output (undo: `make V=0')
   --enable-maintainer-mode  enable make rules and dependencies not useful
 			  (and sometimes confusing) to the casual installer
   --enable-compile-c      enable compiling as C program (default is yes)
   --enable-gcc-armv5      enable GCC specific ARMv5 assembler (default is no)
+  --enable-amrnb-encoder  enable AMR-NB encoder (default is yes)
+  --enable-amrnb-decoder  enable AMR-NB decoder (default is yes)
   --disable-dependency-tracking  speeds up one-time build
   --enable-dependency-tracking   do not reject slow dependency extractors
   --enable-shared[=PKGS]  build shared libraries [default=yes]
@@ -3221,6 +3234,18 @@ $as_echo "$am_cv_prog_tar_ustar" >&6; }
 
 
 
+# Check whether --enable-silent-rules was given.
+if test "${enable_silent_rules+set}" = set; then :
+  enableval=$enable_silent_rules;
+fi
+
+case $enable_silent_rules in
+yes) AM_DEFAULT_VERBOSITY=0;;
+no)  AM_DEFAULT_VERBOSITY=1;;
+*)   AM_DEFAULT_VERBOSITY=0;;
+esac
+AM_BACKSLASH='\'
+
 ac_config_headers="$ac_config_headers config.h"
 
 
@@ -3335,6 +3360,20 @@ else
   gcc_armv5=no
 fi
 
+# Check whether --enable-amrnb-encoder was given.
+if test "${enable_amrnb_encoder+set}" = set; then :
+  enableval=$enable_amrnb_encoder; amrnb_encoder=$enableval
+else
+  amrnb_encoder=yes
+fi
+
+# Check whether --enable-amrnb-decoder was given.
+if test "${enable_amrnb_decoder+set}" = set; then :
+  enableval=$enable_amrnb_decoder; amrnb_decoder=$enableval
+else
+  amrnb_decoder=yes
+fi
+
 
 # Automake conditionals to set
  if test x$compile_as_c = xyes; then
@@ -3351,6 +3390,22 @@ fi
 else
   GCC_ARMV5_TRUE='#'
   GCC_ARMV5_FALSE=
+fi
+
+ if test x$amrnb_encoder = xyes; then
+  AMRNB_ENCODER_TRUE=
+  AMRNB_ENCODER_FALSE='#'
+else
+  AMRNB_ENCODER_TRUE='#'
+  AMRNB_ENCODER_FALSE=
+fi
+
+ if test x$amrnb_decoder = xyes; then
+  AMRNB_DECODER_TRUE=
+  AMRNB_DECODER_FALSE='#'
+else
+  AMRNB_DECODER_TRUE='#'
+  AMRNB_DECODER_FALSE=
 fi
 
 
@@ -5372,13 +5427,13 @@ if test "${lt_cv_nm_interface+set}" = set; then :
 else
   lt_cv_nm_interface="BSD nm"
   echo "int some_variable = 0;" > conftest.$ac_ext
-  (eval echo "\"\$as_me:5375: $ac_compile\"" >&5)
+  (eval echo "\"\$as_me:5430: $ac_compile\"" >&5)
   (eval "$ac_compile" 2>conftest.err)
   cat conftest.err >&5
-  (eval echo "\"\$as_me:5378: $NM \\\"conftest.$ac_objext\\\"\"" >&5)
+  (eval echo "\"\$as_me:5433: $NM \\\"conftest.$ac_objext\\\"\"" >&5)
   (eval "$NM \"conftest.$ac_objext\"" 2>conftest.err > conftest.out)
   cat conftest.err >&5
-  (eval echo "\"\$as_me:5381: output\"" >&5)
+  (eval echo "\"\$as_me:5436: output\"" >&5)
   cat conftest.out >&5
   if $GREP 'External.*some_variable' conftest.out > /dev/null; then
     lt_cv_nm_interface="MS dumpbin"
@@ -6573,7 +6628,7 @@ ia64-*-hpux*)
   ;;
 *-*-irix6*)
   # Find out which ABI we are using.
-  echo '#line 6576 "configure"' > conftest.$ac_ext
+  echo '#line 6631 "configure"' > conftest.$ac_ext
   if { { eval echo "\"\$as_me\":${as_lineno-$LINENO}: \"$ac_compile\""; } >&5
   (eval $ac_compile) 2>&5
   ac_status=$?
@@ -8629,11 +8684,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:8632: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:8687: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:8636: \$? = $ac_status" >&5
+   echo "$as_me:8691: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings other than the usual output.
@@ -8968,11 +9023,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:8971: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:9026: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:8975: \$? = $ac_status" >&5
+   echo "$as_me:9030: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings other than the usual output.
@@ -9073,11 +9128,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:9076: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:9131: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:9080: \$? = $ac_status" >&5
+   echo "$as_me:9135: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -9128,11 +9183,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:9131: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:9186: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:9135: \$? = $ac_status" >&5
+   echo "$as_me:9190: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -11511,7 +11566,7 @@ else
   lt_dlunknown=0; lt_dlno_uscore=1; lt_dlneed_uscore=2
   lt_status=$lt_dlunknown
   cat > conftest.$ac_ext <<_LT_EOF
-#line 11514 "configure"
+#line 11569 "configure"
 #include "confdefs.h"
 
 #if HAVE_DLFCN_H
@@ -11607,7 +11662,7 @@ else
   lt_dlunknown=0; lt_dlno_uscore=1; lt_dlneed_uscore=2
   lt_status=$lt_dlunknown
   cat > conftest.$ac_ext <<_LT_EOF
-#line 11610 "configure"
+#line 11665 "configure"
 #include "confdefs.h"
 
 #if HAVE_DLFCN_H
@@ -13563,11 +13618,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:13566: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:13621: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:13570: \$? = $ac_status" >&5
+   echo "$as_me:13625: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings other than the usual output.
@@ -13662,11 +13717,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:13665: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:13720: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:13669: \$? = $ac_status" >&5
+   echo "$as_me:13724: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -13714,11 +13769,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:13717: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:13772: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:13721: \$? = $ac_status" >&5
+   echo "$as_me:13776: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -15197,6 +15252,14 @@ Usually this means the macro was only invoked conditionally." "$LINENO" 5
 fi
 if test -z "${GCC_ARMV5_TRUE}" && test -z "${GCC_ARMV5_FALSE}"; then
   as_fn_error $? "conditional \"GCC_ARMV5\" was never defined.
+Usually this means the macro was only invoked conditionally." "$LINENO" 5
+fi
+if test -z "${AMRNB_ENCODER_TRUE}" && test -z "${AMRNB_ENCODER_FALSE}"; then
+  as_fn_error $? "conditional \"AMRNB_ENCODER\" was never defined.
+Usually this means the macro was only invoked conditionally." "$LINENO" 5
+fi
+if test -z "${AMRNB_DECODER_TRUE}" && test -z "${AMRNB_DECODER_FALSE}"; then
+  as_fn_error $? "conditional \"AMRNB_DECODER\" was never defined.
 Usually this means the macro was only invoked conditionally." "$LINENO" 5
 fi
 if test -z "${AMDEP_TRUE}" && test -z "${AMDEP_FALSE}"; then
