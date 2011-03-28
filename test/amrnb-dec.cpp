@@ -20,9 +20,7 @@
 #include <stdint.h>
 #include <string.h>
 #include "wavwriter.h"
-extern "C" {
 #include <interf_dec.h>
-}
 
 /* From WmfDecBytesPerFrame in dec_input_format_tab.cpp */
 const int sizes[] = { 12, 13, 15, 17, 19, 20, 26, 31, 5, 6, 5, 5, 0, 0, 0, 0 };

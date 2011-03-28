@@ -20,9 +20,7 @@
 #include <stdint.h>
 #include <string.h>
 #include "wavwriter.h"
-extern "C" {
 #include <dec_if.h>
-}
 
 /* From pvamrwbdecoder_api.h, by dividing by 8 and rounding up */
 const int sizes[] = { 17, 23, 32, 36, 40, 46, 50, 58, 60, 5, -1, -1, -1, -1, -1, -1 };
