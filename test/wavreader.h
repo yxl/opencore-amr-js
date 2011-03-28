@@ -19,32 +19,19 @@
 #ifndef WAVREADER_H
 #define WAVREADER_H
 
-#include <stdio.h>
-#include <stdint.h>
+#ifdef __cplusplus
+extern "C" {
+#endif
 
-class WavReader {
-public:
-	WavReader(const char *filename);
-	~WavReader();
+void* wav_read_open(const char *filename);
+void wav_read_close(void* obj);
 
-	bool getHeader(int* format, int* channels, int* sampleRate, int* bitsPerSample, unsigned int* dataLength);
-	int readData(unsigned char* data, unsigned int length);
+int wav_get_header(void* obj, int* format, int* channels, int* sample_rate, int* bits_per_sample, unsigned int* data_length);
+int wav_read_data(void* obj, unsigned char* data, unsigned int length);
 
-private:
-	uint32_t readTag();
-	uint32_t readInt32();
-	uint16_t readInt16();
-
-	FILE *wav;
-	uint32_t dataLength;
-
-	int format;
-	int sampleRate;
-	int bitsPerSample;
-	int channels;
-	int byteRate;
-	int blockAlign;
-};
+#ifdef __cplusplus
+}
+#endif
 
 #endif
 
