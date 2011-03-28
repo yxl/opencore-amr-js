@@ -106,22 +106,6 @@ LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
 AM_V_CCLD = $(am__v_CCLD_$(V))
 am__v_CCLD_ = $(am__v_CCLD_$(AM_DEFAULT_VERBOSITY))
 am__v_CCLD_0 = @echo "  CCLD  " $@;
-CXXCOMPILE = $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
-	$(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS)
-LTCXXCOMPILE = $(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) \
-	$(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) \
-	$(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) \
-	$(AM_CXXFLAGS) $(CXXFLAGS)
-AM_V_CXX = $(am__v_CXX_$(V))
-am__v_CXX_ = $(am__v_CXX_$(AM_DEFAULT_VERBOSITY))
-am__v_CXX_0 = @echo "  CXX   " $@;
-CXXLD = $(CXX)
-CXXLINK = $(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) \
-	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
-	$(CXXFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
-AM_V_CXXLD = $(am__v_CXXLD_$(V))
-am__v_CXXLD_ = $(am__v_CXXLD_$(AM_DEFAULT_VERBOSITY))
-am__v_CXXLD_0 = @echo "  CXXLD " $@;
 AM_V_GEN = $(am__v_GEN_$(V))
 am__v_GEN_ = $(am__v_GEN_$(AM_DEFAULT_VERBOSITY))
 am__v_GEN_0 = @echo "  GEN   " $@;
@@ -267,16 +251,16 @@ amrnb_enc_sine_LDFLAGS = -lm
 amrwb_dec_LDADD = $(top_builddir)/amrwb/libopencore-amrwb.la
 linkboth_LDFLAGS = -static
 linkboth_LDADD = $(top_builddir)/amrnb/libopencore-amrnb.la $(top_builddir)/amrwb/libopencore-amrwb.la
-amrnb_dec_SOURCES = amrnb-dec.cpp wavwriter.cpp
-amrnb_enc_SOURCES = amrnb-enc.cpp wavreader.cpp
+amrnb_dec_SOURCES = amrnb-dec.c wavwriter.c
+amrnb_enc_SOURCES = amrnb-enc.c wavreader.c
 amrnb_enc_sine_SOURCES = amrnb-enc-sine.c
-amrwb_dec_SOURCES = amrwb-dec.cpp wavwriter.cpp
+amrwb_dec_SOURCES = amrwb-dec.c wavwriter.c
 linkboth_SOURCES = linkboth.c
 noinst_HEADERS = wavwriter.h wavreader.h
 all: all-am
 
 .SUFFIXES:
-.SUFFIXES: .c .cpp .lo .o .obj
+.SUFFIXES: .c .lo .o .obj
 $(srcdir)/Makefile.in: @MAINTAINER_MODE_TRUE@ $(srcdir)/Makefile.am  $(am__configure_deps)
 	@for dep in $?; do \
 	  case '$(am__configure_deps)' in \
@@ -361,16 +345,16 @@ clean-noinstPROGRAMS:
 	rm -f $$list
 amrnb-dec$(EXEEXT): $(amrnb_dec_OBJECTS) $(amrnb_dec_DEPENDENCIES) 
 	@rm -f amrnb-dec$(EXEEXT)
-	$(AM_V_CXXLD)$(CXXLINK) $(amrnb_dec_OBJECTS) $(amrnb_dec_LDADD) $(LIBS)
+	$(AM_V_CCLD)$(LINK) $(amrnb_dec_OBJECTS) $(amrnb_dec_LDADD) $(LIBS)
 amrnb-enc$(EXEEXT): $(amrnb_enc_OBJECTS) $(amrnb_enc_DEPENDENCIES) 
 	@rm -f amrnb-enc$(EXEEXT)
-	$(AM_V_CXXLD)$(CXXLINK) $(amrnb_enc_OBJECTS) $(amrnb_enc_LDADD) $(LIBS)
+	$(AM_V_CCLD)$(LINK) $(amrnb_enc_OBJECTS) $(amrnb_enc_LDADD) $(LIBS)
 amrnb-enc-sine$(EXEEXT): $(amrnb_enc_sine_OBJECTS) $(amrnb_enc_sine_DEPENDENCIES) 
 	@rm -f amrnb-enc-sine$(EXEEXT)
 	$(AM_V_CCLD)$(amrnb_enc_sine_LINK) $(amrnb_enc_sine_OBJECTS) $(amrnb_enc_sine_LDADD) $(LIBS)
 amrwb-dec$(EXEEXT): $(amrwb_dec_OBJECTS) $(amrwb_dec_DEPENDENCIES) 
 	@rm -f amrwb-dec$(EXEEXT)
-	$(AM_V_CXXLD)$(CXXLINK) $(amrwb_dec_OBJECTS) $(amrwb_dec_LDADD) $(LIBS)
+	$(AM_V_CCLD)$(LINK) $(amrwb_dec_OBJECTS) $(amrwb_dec_LDADD) $(LIBS)
 linkboth$(EXEEXT): $(linkboth_OBJECTS) $(linkboth_DEPENDENCIES) 
 	@rm -f linkboth$(EXEEXT)
 	$(AM_V_CCLD)$(linkboth_LINK) $(linkboth_OBJECTS) $(linkboth_LDADD) $(LIBS)
@@ -412,30 +396,6 @@ distclean-compile:
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$<' object='$@' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(LTCOMPILE) -c -o $@ $<
-
-.cpp.o:
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXXCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/$*.Tpo $(DEPDIR)/$*.Po
-@am__fastdepCXX_FALSE@	$(AM_V_CXX) @AM_BACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='$<' object='$@' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXXCOMPILE) -c -o $@ $<
-
-.cpp.obj:
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXXCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ `$(CYGPATH_W) '$<'`
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/$*.Tpo $(DEPDIR)/$*.Po
-@am__fastdepCXX_FALSE@	$(AM_V_CXX) @AM_BACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='$<' object='$@' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXXCOMPILE) -c -o $@ `$(CYGPATH_W) '$<'`
-
-.cpp.lo:
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LTCXXCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/$*.Tpo $(DEPDIR)/$*.Plo
-@am__fastdepCXX_FALSE@	$(AM_V_CXX) @AM_BACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='$<' object='$@' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(LTCXXCOMPILE) -c -o $@ $<
 
 mostlyclean-libtool:
 	-rm -f *.lo
