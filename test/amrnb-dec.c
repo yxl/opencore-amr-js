@@ -20,64 +20,67 @@
 #include <stdint.h>
 #include <string.h>
 #include "wavwriter.h"
-#include <dec_if.h>
+#include <interf_dec.h>
 
-/* From pvamrwbdecoder_api.h, by dividing by 8 and rounding up */
-const int sizes[] = { 17, 23, 32, 36, 40, 46, 50, 58, 60, 5, -1, -1, -1, -1, -1, -1 };
+/* From WmfDecBytesPerFrame in dec_input_format_tab.cpp */
+const int sizes[] = { 12, 13, 15, 17, 19, 20, 26, 31, 5, 6, 5, 5, 0, 0, 0, 0 };
+
 
 int main(int argc, char *argv[]) {
+	FILE* in;
+	char header[6];
+	int n;
+	void *wav, *amr;
 	if (argc < 3) {
 		fprintf(stderr, "%s in.amr out.wav\n", argv[0]);
 		return 1;
 	}
 
-	FILE* in = fopen(argv[1], "rb");
+	in = fopen(argv[1], "rb");
 	if (!in) {
 		perror(argv[1]);
 		return 1;
 	}
-	char header[9];
-	int n = fread(header, 1, 9, in);
-	if (n != 9 || memcmp(header, "#!AMR-WB\n", 9)) {
+	n = fread(header, 1, 6, in);
+	if (n != 6 || memcmp(header, "#!AMR\n", 6)) {
 		fprintf(stderr, "Bad header\n");
 		return 1;
 	}
 
-	void* wav = wav_write_open(argv[2], 16000, 16, 1);
+	wav = wav_write_open(argv[2], 8000, 16, 1);
 	if (!wav) {
 		fprintf(stderr, "Unable to open %s\n", argv[2]);
 		return 1;
 	}
-	void* amr = D_IF_init();
-	while (true) {
-		uint8_t buffer[500];
+
+	amr = Decoder_Interface_init();
+	while (1) {
+		uint8_t buffer[500], littleendian[320], *ptr;
+		int size, i;
+		int16_t outbuffer[160];
 		/* Read the mode byte */
 		n = fread(buffer, 1, 1, in);
 		if (n <= 0)
 			break;
 		/* Find the packet size */
-		int size = sizes[(buffer[0] >> 3) & 0x0f];
-		if (size <= 0)
-			break;
+		size = sizes[(buffer[0] >> 3) & 0x0f];
 		n = fread(buffer + 1, 1, size, in);
 		if (n != size)
 			break;
 
 		/* Decode the packet */
-		int16_t outbuffer[320];
-		D_IF_decode(amr, buffer, outbuffer, 0);
+		Decoder_Interface_Decode(amr, buffer, outbuffer, 0);
 
 		/* Convert to little endian and write to wav */
-		uint8_t littleendian[640];
-		uint8_t* ptr = littleendian;
-		for (int i = 0; i < 320; i++) {
+		ptr = littleendian;
+		for (i = 0; i < 160; i++) {
 			*ptr++ = (outbuffer[i] >> 0) & 0xff;
 			*ptr++ = (outbuffer[i] >> 8) & 0xff;
 		}
-		wav_write_data(wav, littleendian, 640);
+		wav_write_data(wav, littleendian, 320);
 	}
 	fclose(in);
-	D_IF_exit(amr);
+	Decoder_Interface_exit(amr);
 	wav_write_close(wav);
 	return 0;
 }
