@@ -19,29 +19,18 @@
 #ifndef WAVWRITER_H
 #define WAVWRITER_H
 
-#include <stdio.h>
+#ifdef __cplusplus
+extern "C" {
+#endif
 
-class WavWriter {
-public:
-	WavWriter(const char *filename, int sampleRate, int bitsPerSample, int channels);
-	~WavWriter();
+void* wav_write_open(const char *filename, int sample_rate, int bits_per_sample, int channels);
+void wav_write_close(void* obj);
 
-	void writeData(const unsigned char* data, int length);
+void wav_write_data(void* obj, const unsigned char* data, int length);
 
-private:
-	void writeString(const char *str);
-	void writeInt32(int value);
-	void writeInt16(int value);
-
-	void writeHeader(int length);
-
-	FILE *wav;
-	int dataLength;
-
-	int sampleRate;
-	int bitsPerSample;
-	int channels;
-};
+#ifdef __cplusplus
+}
+#endif
 
 #endif
 

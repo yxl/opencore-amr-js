@@ -46,7 +46,11 @@ int main(int argc, char *argv[]) {
 		return 1;
 	}
 
-	WavWriter wav(argv[2], 8000, 16, 1);
+	void* wav = wav_write_open(argv[2], 8000, 16, 1);
+	if (!wav) {
+		fprintf(stderr, "Unable to open %s\n", argv[2]);
+		return 1;
+	}
 
 	void* amr = Decoder_Interface_init();
 	while (true) {
@@ -72,10 +76,11 @@ int main(int argc, char *argv[]) {
 			*ptr++ = (outbuffer[i] >> 0) & 0xff;
 			*ptr++ = (outbuffer[i] >> 8) & 0xff;
 		}
-		wav.writeData(littleendian, 320);
+		wav_write_data(wav, littleendian, 320);
 	}
 	fclose(in);
 	Decoder_Interface_exit(amr);
+	wav_write_close(wav);
 	return 0;
 }
 

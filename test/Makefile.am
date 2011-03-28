@@ -25,10 +25,10 @@ amrwb_dec_LDADD = $(top_builddir)/amrwb/libopencore-amrwb.la
 linkboth_LDFLAGS = -static
 linkboth_LDADD = $(top_builddir)/amrnb/libopencore-amrnb.la $(top_builddir)/amrwb/libopencore-amrwb.la
 
-amrnb_dec_SOURCES = amrnb-dec.cpp wavwriter.cpp
+amrnb_dec_SOURCES = amrnb-dec.cpp wavwriter.c
 amrnb_enc_SOURCES = amrnb-enc.cpp wavreader.c
 amrnb_enc_sine_SOURCES = amrnb-enc-sine.c
-amrwb_dec_SOURCES = amrwb-dec.cpp wavwriter.cpp
+amrwb_dec_SOURCES = amrwb-dec.cpp wavwriter.c
 linkboth_SOURCES = linkboth.c
 
 noinst_HEADERS = wavwriter.h wavreader.h
