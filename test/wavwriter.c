@@ -86,6 +86,7 @@ void* wav_write_open(const char *filename, int sample_rate, int bits_per_sample,
 	ww->channels = channels;
 
 	write_header(ww, ww->data_length);
+	return ww;
 }
 
 void wav_write_close(void* obj) {
