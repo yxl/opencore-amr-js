@@ -2,7 +2,7 @@ SUBDIRS = amrnb amrwb test
 
 ACLOCAL_AMFLAGS = -I m4
 
-noinst_HEADERS = oscl/oscl_base.h oscl/oscl_mem.h
+noinst_HEADERS = oscl/oscl_base.h oscl/oscl_mem.h oscl/oscl_base_macros.h
 
 EXTRA_DIST = LICENSE \
              opencore/README opencore/NOTICE opencore/ChangeLog \
