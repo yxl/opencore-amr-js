@@ -31,12 +31,17 @@ AC_ARG_ENABLE([amrnb-decoder],
             [AS_HELP_STRING([--enable-amrnb-decoder],
                [enable AMR-NB decoder (default is yes)])],
             [amrnb_decoder=$enableval], [amrnb_decoder=yes])
+AC_ARG_ENABLE([examples],
+            [AS_HELP_STRING([--enable-examples],
+               [enable example encoding/decoding programs (default is no)])],
+            [examples=$enableval], [examples=no])
 
 # Automake conditionals to set
 AM_CONDITIONAL(COMPILE_AS_C, test x$compile_as_c = xyes)
 AM_CONDITIONAL(GCC_ARMV5, test x$gcc_armv5 = xyes)
 AM_CONDITIONAL(AMRNB_ENCODER, test x$amrnb_encoder = xyes)
 AM_CONDITIONAL(AMRNB_DECODER, test x$amrnb_decoder = xyes)
+AM_CONDITIONAL(EXAMPLES, test x$examples = xyes)
 
 # Checks for programs.
 AC_PROG_CXX

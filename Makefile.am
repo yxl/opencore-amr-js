@@ -1,4 +1,7 @@
-SUBDIRS = amrnb amrwb test
+SUBDIRS = amrnb amrwb
+if EXAMPLES
+    SUBDIRS += test
+endif
 
 ACLOCAL_AMFLAGS = -I m4
 
