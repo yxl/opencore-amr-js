@@ -23,7 +23,7 @@
 #include <dec_if.h>
 
 /* From pvamrwbdecoder_api.h, by dividing by 8 and rounding up */
-const int sizes[] = { 17, 23, 32, 36, 40, 46, 50, 58, 60, 5, -1, -1, -1, -1, -1, -1 };
+const int sizes[] = { 17, 23, 32, 36, 40, 46, 50, 58, 60, 5, -1, -1, -1, -1, -1, 0 };
 
 int main(int argc, char *argv[]) {
 	FILE* in;
@@ -62,7 +62,7 @@ int main(int argc, char *argv[]) {
 			break;
 		/* Find the packet size */
 		size = sizes[(buffer[0] >> 3) & 0x0f];
-		if (size <= 0)
+		if (size < 0)
 			break;
 		n = fread(buffer + 1, 1, size, in);
 		if (n != size)
