@@ -24,7 +24,7 @@
 #include "wavreader.h"
 
 void usage(const char* name) {
-	fprintf(stderr, "%s [-r bitrate] in.wav out.amr\n", name);
+	fprintf(stderr, "%s [-r bitrate] [-d] in.wav out.amr\n", name);
 }
 
 enum Mode findMode(const char* str) {
@@ -59,17 +59,20 @@ enum Mode findMode(const char* str) {
 
 int main(int argc, char *argv[]) {
 	enum Mode mode = MR122;
-	int ch;
+	int ch, dtx = 0;
 	const char *infile, *outfile;
 	FILE *out;
 	void *wav, *amr;
 	int format, sampleRate, channels, bitsPerSample;
 	int inputSize;
 	uint8_t* inputBuf;
-	while ((ch = getopt(argc, argv, "r:")) != -1) {
+	while ((ch = getopt(argc, argv, "r:d")) != -1) {
 		switch (ch) {
 		case 'r':
 			mode = findMode(optarg);
+			break;
+		case 'd':
+			dtx = 1;
 			break;
 		case '?':
 		default:
@@ -108,7 +111,7 @@ int main(int argc, char *argv[]) {
 	inputSize = channels*2*160;
 	inputBuf = (uint8_t*) malloc(inputSize);
 
-	amr = Encoder_Interface_init(0);
+	amr = Encoder_Interface_init(dtx);
 	out = fopen(outfile, "wb");
 	if (!out) {
 		perror(outfile);
