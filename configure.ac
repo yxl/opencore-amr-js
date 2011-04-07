@@ -1,7 +1,7 @@
 #                                               -*- Autoconf -*-
 # Process this file with autoconf to produce a configure script.
 
-AC_INIT([opencore-amr], [0.1.2], [https://sourceforge.net/apps/trac/opencore-amr/])
+AC_INIT([opencore-amr], [0.1.2], [http://sourceforge.net/projects/opencore-amr/])
 AC_CONFIG_AUX_DIR(.)
 AC_CONFIG_MACRO_DIR([m4])
 AM_INIT_AUTOMAKE([tar-ustar])
