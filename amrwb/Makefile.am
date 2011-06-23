@@ -16,6 +16,9 @@ endif
 
 if COMPILE_AS_C
     AM_CFLAGS += -x c -std=c99
+    libopencore_amrwb_la_LINK = $(LINK)
+    # Mention a dummy pure C file to trigger generation of the $(LINK) variable
+    nodist_EXTRA_libopencore_amrwb_la_SOURCES = dummy.c
 endif
 
 AM_CXXFLAGS = $(AM_CFLAGS)
