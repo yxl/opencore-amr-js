@@ -74,8 +74,8 @@ extern "C"
     ; Variable declaration - defined here and used outside this module
     ----------------------------------------------------------------------------*/
 
-    extern const Word16 table[];
-    extern const Word16 slope[];
+    extern const Word16 lsp_lsf_table[];
+    extern const Word16 lsp_lsf_slope[];
 
 
     /*--------------------------------------------------------------------------*/
@@ -178,8 +178,8 @@ OSCL_EXPORT_REF void Lsf_lsp(
 
         /* lsp[i] = table[ind]+ ((table[ind+1]-table[ind])*offset) / 256 */
 
-        L_tmp = ((Word32)(table[ind + 1] - table[ind]) * offset) >> 8;
-        lsp[i] = table[ind] + (Word16) L_tmp;
+        L_tmp = ((Word32)(lsp_lsf_table[ind + 1] - lsp_lsf_table[ind]) * offset) >> 8;
+        lsp[i] = lsp_lsf_table[ind] + (Word16) L_tmp;
 
     }
 
@@ -298,7 +298,7 @@ OSCL_EXPORT_REF void Lsp_lsf(
     {
         /* find value in table that is just greater than lsp[i] */
         temp = *(p_lsp--);
-        while (table[ind] < temp)
+        while (lsp_lsf_table[ind] < temp)
         {
             ind--;
         }
@@ -306,7 +306,7 @@ OSCL_EXPORT_REF void Lsp_lsf(
         /* acos(lsp[i])= ind*256 + ( ( lsp[i]-table[ind] ) *
            slope[ind] )/4096 */
 
-        L_tmp = (Word32)(temp - table[ind]) * slope[ind];
+        L_tmp = (Word32)(temp - lsp_lsf_table[ind]) * lsp_lsf_slope[ind];
 
         /*(lsp[i]-table[ind])*slope[ind])>>12*/
         L_tmp  = (L_tmp + 0x00000800) >> 12;
