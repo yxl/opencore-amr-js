@@ -23,6 +23,8 @@ if COMPILE_AS_C
     libopencore_amrnb_la_LINK = $(LINK) $(libopencore_amrnb_la_LDFLAGS)
     # Mention a dummy pure C file to trigger generation of the $(LINK) variable
     nodist_EXTRA_libopencore_amrnb_la_SOURCES = dummy.c
+else
+    libopencore_amrnb_la_LINK = $(CXXLINK) $(libopencore_amrnb_la_LDFLAGS)
 endif
 
 AM_CXXFLAGS = $(AM_CFLAGS)
