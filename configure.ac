@@ -10,7 +10,6 @@ AC_CONFIG_HEADERS([config.h])
 AM_MAINTAINER_MODE
 
 # Cross compiling support
-AC_CANONICAL_BUILD
 AC_CANONICAL_HOST
 
 # Various options for configure
