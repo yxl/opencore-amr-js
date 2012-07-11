@@ -46,8 +46,7 @@ AC_PROG_LN_S
 AC_PROG_MAKE_SET
 
 dnl Setup for libtool
-AC_PROG_LIBTOOL
-AC_SUBST(LIBTOOL_DEPS)
+LT_INIT
 
 dnl Checks for libraries.
 AC_CHECK_LIB([m], [main])
