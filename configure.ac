@@ -9,9 +9,6 @@ m4_ifdef([AM_SILENT_RULES], [AM_SILENT_RULES([yes])])
 AC_CONFIG_HEADERS([config.h])
 AM_MAINTAINER_MODE
 
-# Cross compiling support
-AC_CANONICAL_HOST
-
 # Various options for configure
 AC_ARG_ENABLE([compile-c],
             [AS_HELP_STRING([--enable-compile-c],
