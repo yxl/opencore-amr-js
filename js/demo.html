@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>AMR decode/encode tests</title>
+    <script src="amrnb.js" defer></script>
+</head>
+
+<body>
+<h2>Decode amr file and play</h2>
+<p id="sample-amr">
+    <button>Play</button> <a href="yuan.amr">yuan.amr</a>
+</p>
+<p>
+    Select a local file and play: <input type="file" id="amr-file" accept=".amr">
+</p>
+<h2>Encode audio to amr file and play</h2>
+<p id="sample-audio">
+    <button>Encode &amp; Play</button> <a href="hello.ogg">hello.ogg</a>
+</p>
+<p>
+    Select a local file to encode and play: <input type="file" id="audio-file" accept="audio/*">
+</p>
+<script>
+    function E(selector) {
+        return document.querySelector(selector);
+    }
+
+    E('#sample-amr > button').onclick = function() {
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', E('#sample-amr > a').href);
+        xhr.responseType = 'blob';
+        xhr.onload = function() {
+            playAmrBlob(this.response);
+        };
+        xhr.send();
+    };
+
+    E('#amr-file').onchange = function() {
+        playAmrBlob(this.files[0]);
+    };
+
+    E('#sample-audio > button').onclick = function() {
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', E('#sample-audio > a').href);
+        xhr.responseType = 'blob';
+        xhr.onload = function() {
+            convertAudioBlob(this.response);
+        };
+        xhr.send();
+    };
+
+    E('#audio-file').onchange = function() {
+        convertAudioBlob(this.files[0]);
+    };
+
+    function readBlob(blob, callback) {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+            var data = new Uint8Array(e.target.result);
+            callback(data);
+        };
+        reader.readAsArrayBuffer(blob);
+    }
+
+    function playAmrBlob( blob, callback) {
+        readBlob(blob, function(data) {
+          playAmrArray(data);
+        });
+    }
+
+    function convertAudioBlob(blob) {
+        readBlob(blob, function(data) {
+          var ctx = new AudioContext();
+          ctx.decodeAudioData(data.buffer, function(audioBuffer) {
+            var pcm = new Float32Array(audioBuffer.length);
+            audioBuffer.copyFromChannel(pcm, 0, 0);
+            var amr = AMR.encode(pcm, audioBuffer.sampleRate, 7);
+            playAmrArray(amr);
+          });
+        });
+    }
+
+    function playAmrArray(array) {
+      var samples = AMR.decode(array);
+      if (!samples) {
+          alert('Failed to decode!');
+          return;
+      }
+      playPcm(samples);
+    }
+
+    function playPcm(samples) {
+        var ctx = new AudioContext();
+        var src = ctx.createBufferSource();
+        var buffer = ctx.createBuffer(1, samples.length, 8000);
+        buffer.copyToChannel(samples, 0, 0);
+        src.buffer = buffer;
+        src.connect(ctx.destination);
+        src.start();
+    }
+</script>
+</body>
+</html>
