@@ -3,11 +3,90 @@
 var AMR = {
 
   /**
+   * Decode AMR file to the wav file with sample rate 8000, 16 bites per sample
+   * and 1 channel.
+   * @param {Uint8Array} amr The raw amr file data.
+   * @returns {Uint8Array} wav data if succeeded. Otherwise null.
+   */
+  toWAV: function(amr) {
+    var decoded= this._decode(amr);
+    if (!decoded) {
+      return null;
+    }
+
+    var raw = new Uint8Array(decoded.buffer, decoded.byteOffset, decoded.byteLength);
+
+    var out = new Uint8Array(raw.length + this.WAV_HEADER_SIZE);
+
+    var offset = 0;
+
+    var write_int16 = function(value) {
+      var a = new Uint8Array(2);
+      new Int16Array(a.buffer)[0] = value;
+      out.set(a, offset);
+      offset += 2;
+    };
+    var write_int32 = function(value) {
+      var a = new Uint8Array(4);
+      new Int32Array(a.buffer)[0] = value;
+      out.set(a, offset);
+      offset += 4;
+    };
+    var write_string = function(value) {
+      var d = new TextEncoder('utf-8').encode(value);
+      out.set(d, offset);
+      offset += d.length;
+    };
+
+    // Write WAV HEADER
+
+    write_string('RIFF');
+    write_int32(4 + 8 + 16 + 8 + raw.length);
+    write_string('WAVEfmt ');
+    write_int32(16);
+
+    var bits_per_sample = 16;
+    var sample_rate = 8000;
+    var channels = 1;
+    var bytes_per_frame = bits_per_sample / 8 * channels;
+    var bytes_per_sec = bytes_per_frame * sample_rate;
+    write_int16(1);                   // Format
+    write_int16(1);                   // Channels
+    write_int32(sample_rate);         // Samplerate
+    write_int32(bytes_per_sec);       // Bytes per sec
+    write_int16(bytes_per_frame);     // Bytes per frame
+    write_int16(bits_per_sample);     // Bits per sample
+
+    write_string('data');
+    write_int32(raw.length);
+
+    out.set(raw, offset);
+    return out;
+  },
+
+  /**
    * Decode AMR file to the PCM data with sample rate 8000.
    * @param {Uint8Array} amr The raw amr file data.
    * @returns {Float32Array} PCM data if succeeded. Otherwise null.
    */
   decode: function(amr) {
+    var raw= this._decode(amr);
+    if (!raw) {
+      return null;
+    }
+    var out = new Float32Array(raw.length);
+    for (var i = 0; i < out.length; i++) {
+      out[i] = raw[i] / 0x8000;
+    }
+    return out;
+  },
+
+  /**
+   * Decode AMR file to raw PCM data with sample rate 8000.
+   * @param {Uint8Array} amr The raw amr file data.
+   * @returns {Int16Array} PCM data if succeeded. Otherwise null.
+   */
+  _decode: function(amr) {
     // Check file header.
     if (String.fromCharCode.apply(null, amr.subarray(0, this.AMR_HEADER.length)) !== this.AMR_HEADER) {
       return null;
@@ -18,7 +97,7 @@ var AMR = {
       return null;
     }
 
-    var out = new Float32Array(Math.floor(amr.length / 6 * this.AMR_BUFFER_COUNT));
+    var out = new Int16Array(Math.floor(amr.length / 6 * this.PCM_BUFFER_COUNT));
 
     var buf = Module._malloc(this.AMR_BUFFER_COUNT);
     var decodeInBuffer = new Uint8Array(Module.HEAPU8.buffer, buf, this.AMR_BUFFER_COUNT);
@@ -40,13 +119,11 @@ var AMR = {
         decodeOutBuffer.byteOffset, 0);
 
       if (outOffset + this.PCM_BUFFER_COUNT > out.length) {
-        var newOut = new Float32Array(out.length * 2);
+        var newOut = new Int16Array(out.length * 2);
         newOut.set(out.subarray(0, outOffset));
         out = newOut;
       }
-      for (var i = 0; i < this.PCM_BUFFER_COUNT; i++) {
-        out[outOffset + i] = decodeOutBuffer[i] / 0x8000;
-      }
+      out.set(decodeOutBuffer, outOffset);
       outOffset += this.PCM_BUFFER_COUNT;
       inOffset += size + 1;
     }
@@ -208,7 +285,9 @@ var AMR = {
 
   PCM_BUFFER_COUNT: 160,
 
-  AMR_HEADER: '#!AMR\n'
+  AMR_HEADER: '#!AMR\n',
+
+  WAV_HEADER_SIZE: 44,
 };
 
 var Module = {
