@@ -7,6 +7,11 @@
 </head>
 
 <body>
+<h2>Test decoder</h2>
+<p id="test">
+    Convert <a href="yuan.amr">yuan.amr</a> to wav file and compare with <a href="yuan.wav">yuan.wav</a>:
+    <button>Test</button>
+</p>
 <h2>Decode amr file and play</h2>
 <p id="sample-amr">
     <button>Play</button> <a href="yuan.amr">yuan.amr</a>
@@ -34,6 +39,29 @@
     function E(selector) {
         return document.querySelector(selector);
     }
+
+    E('#test > button').onclick = function() {
+        fetchAndReadBlob('yuan.amr', function(amr) {
+            fetchAndReadBlob('yuan.wav', function(expected) {
+                var actual = AMR.toWAV(amr);
+                if (actual == null) {
+                    alert('Failed to decode amr file.');
+                    return;
+                }
+                if (actual.length != expected.length) {
+                    alert('The converted wav file has different size.');
+                    return;
+                }
+                for (var i = 0; i < actual.length; i++) {
+                    if (actual[i] != expected[i]) {
+                        alert('The converted wav file has different content.');
+                        return;
+                    }
+                }
+                alert('Succeeded!');
+            });
+        });
+    };
 
     E('#sample-amr > button').onclick = function() {
         fetchBlob(E('#sample-amr > a').href, function(blob) {
@@ -85,6 +113,12 @@
             callback(data);
         };
         reader.readAsArrayBuffer(blob);
+    }
+
+    function fetchAndReadBlob(url, callback) {
+        fetchBlob(url, function(blob) {
+            readBlob(blob, callback);
+        });
     }
 
     function playAmrBlob(blob, callback) {
