@@ -31,6 +31,13 @@ Demo
 
 The demo file is `js/demo.html` and could also be accessed online from <http://yxl.github.io/opencore-amr-js/>.
 
+Browser Compatibility
+-----
+
+Firefox 30+
+
+Chrome 39+
+
 License
 -----
 
