@@ -36,13 +36,9 @@
     }
 
     E('#sample-amr > button').onclick = function() {
-        var xhr = new XMLHttpRequest();
-        xhr.open('GET', E('#sample-amr > a').href);
-        xhr.responseType = 'blob';
-        xhr.onload = function() {
-            playAmrBlob(this.response);
-        };
-        xhr.send();
+        fetchBlob(E('#sample-amr > a').href, function(blob) {
+            playAmrBlob(blob);
+        });
     };
 
     E('#amr-file').onchange = function() {
@@ -50,13 +46,9 @@
     };
 
     E('#amr-to-wav > button').onclick = function() {
-        var xhr = new XMLHttpRequest();
-        xhr.open('GET', E('#amr-to-wav > a').href);
-        xhr.responseType = 'blob';
-        xhr.onload = function() {
-            convertAmrBlobToWav(this.response);
-        };
-        xhr.send();
+        fetchBlob(E('#amr-to-wav > a').href, function(blob) {
+            convertAmrBlobToWav(blob);
+        });
     };
 
     E('#amr-to-wav-file').onchange = function() {
@@ -64,18 +56,27 @@
     };
 
     E('#sample-audio > button').onclick = function() {
-        var xhr = new XMLHttpRequest();
-        xhr.open('GET', E('#sample-audio > a').href);
-        xhr.responseType = 'blob';
-        xhr.onload = function() {
-            convertAudioBlobToAmr(this.response);
-        };
-        xhr.send();
+        fetchBlob(E('#sample-audio > a').href, function(blob) {
+            convertAudioBlobToAmr(blob);
+        });
     };
 
     E('#audio-file').onchange = function() {
         convertAudioBlobToAmr(this.files[0]);
     };
+
+    function fetchBlob(url, callback) {
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', url);
+        xhr.responseType = 'blob';
+        xhr.onload = function() {
+            callback(this.response);
+        };
+        xhr.onerror = function() {
+            alert('Failed to fetch ' + url);
+        };
+        xhr.send();
+    }
 
     function readBlob(blob, callback) {
         var reader = new FileReader();
