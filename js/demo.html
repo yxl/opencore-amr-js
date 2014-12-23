@@ -21,6 +21,15 @@
 <p>
     Select a local file to encode and play: <input type="file" id="audio-file" accept="audio/*">
 </p>
+<h2>Amr to wav</h2>
+<p id="amr-to-wav">
+    <button>Convert to wav and play</button> <a href="yuan.amr">yuan.amr</a>
+</p>
+<p>
+    Select a local file, convert and play: <input type="file" id="amr-to-wav-file" accept=".amr">
+</p>
+<p>wav file content:</p>
+<pre></pre>
 <script>
     function E(selector) {
         return document.querySelector(selector);
@@ -40,18 +49,32 @@
         playAmrBlob(this.files[0]);
     };
 
+    E('#amr-to-wav > button').onclick = function() {
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', E('#amr-to-wav > a').href);
+        xhr.responseType = 'blob';
+        xhr.onload = function() {
+            convertAmrBlobToWav(this.response);
+        };
+        xhr.send();
+    };
+
+    E('#amr-to-wav-file').onchange = function() {
+        convertAmrBlobToWav(this.files[0]);
+    };
+
     E('#sample-audio > button').onclick = function() {
         var xhr = new XMLHttpRequest();
         xhr.open('GET', E('#sample-audio > a').href);
         xhr.responseType = 'blob';
         xhr.onload = function() {
-            convertAudioBlob(this.response);
+            convertAudioBlobToAmr(this.response);
         };
         xhr.send();
     };
 
     E('#audio-file').onchange = function() {
-        convertAudioBlob(this.files[0]);
+        convertAudioBlobToAmr(this.files[0]);
     };
 
     function readBlob(blob, callback) {
@@ -69,7 +92,7 @@
         });
     }
 
-    function convertAudioBlob(blob) {
+    function convertAudioBlobToAmr(blob) {
         readBlob(blob, function(data) {
             var ctx = new AudioContext();
             ctx.decodeAudioData(data.buffer, function(audioBuffer) {
@@ -98,6 +121,37 @@
         src.buffer = buffer;
         src.connect(ctx.destination);
         src.start();
+    }
+
+    function convertAmrBlobToWav(blob) {
+        readBlob(blob, function(data) {
+            var buffer = AMR.toWAV(data);
+            E('pre').textContent = toHex(buffer);
+            var url = URL.createObjectURL(new Blob([buffer]));
+            // Play wav buffer
+            var audio = new Audio(url);
+            audio.onloadedmetadata = audio.onerror = function() {
+                URL.revokeObjectURL(url);
+            };
+            audio.play();
+        });
+    }
+
+    function toHex(buffer) {
+        var str = '';
+        for (var i = 0; i < buffer.length; i++) {
+            var s = buffer[i].toString(16);
+            if (s.length == 1) {
+                s = '0' + s;
+            }
+            str += s;
+            if (i % 16 == 15) { // print 16 bytes per line
+                str += '\n'
+            } else if (i % 2 == 1) { // add a space seperator every two bytes.
+                str += ' ';
+            }
+        }
+        return str;
     }
 </script>
 </body>
