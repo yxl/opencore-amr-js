@@ -96,8 +96,13 @@
         readBlob(blob, function(data) {
             var ctx = new AudioContext();
             ctx.decodeAudioData(data.buffer, function(audioBuffer) {
-                var pcm = new Float32Array(audioBuffer.length);
-                audioBuffer.copyFromChannel(pcm, 0, 0);
+                var pcm;
+                if (audioBuffer.copyFromChannel) {
+                    pcm = new Float32Array(audioBuffer.length);
+                    audioBuffer.copyFromChannel(pcm, 0, 0);
+                } else {
+                    pcm = audioBuffer.getChannelData(0);
+                }
                 var amr = AMR.encode(pcm, audioBuffer.sampleRate, 7);
                 playAmrArray(amr);
             });
@@ -117,7 +122,13 @@
         var ctx = new AudioContext();
         var src = ctx.createBufferSource();
         var buffer = ctx.createBuffer(1, samples.length, 8000);
-        buffer.copyToChannel(samples, 0, 0);
+        if (buffer.copyToChannel) {
+            buffer.copyToChannel(samples, 0, 0)
+        } else {
+            var channelBuffer = buffer.getChannelData(0);
+            channelBuffer.set(samples);
+        }
+
         src.buffer = buffer;
         src.connect(ctx.destination);
         src.start();
