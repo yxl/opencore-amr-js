@@ -173,7 +173,7 @@
         readBlob(blob, function(data) {
             var buffer = AMR.toWAV(data);
             E('pre').textContent = toHex(buffer);
-            var url = URL.createObjectURL(new Blob([buffer]));
+            var url = URL.createObjectURL(new Blob([buffer], { type: 'audio/x-wav' }));
             // Play wav buffer
             var audio = new Audio(url);
             audio.onloadedmetadata = audio.onerror = function() {
