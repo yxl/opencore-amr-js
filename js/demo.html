@@ -93,6 +93,15 @@
         convertAudioBlobToAmr(this.files[0]);
     };
 
+    var gAudioContext = new AudioContext();
+
+    function getAudioContext() {
+        if (!gAudioContext) {
+            gAudioContext = new AudioContext();
+        }
+        return gAudioContext;
+    }
+
     function fetchBlob(url, callback) {
         var xhr = new XMLHttpRequest();
         xhr.open('GET', url);
@@ -129,7 +138,7 @@
 
     function convertAudioBlobToAmr(blob) {
         readBlob(blob, function(data) {
-            var ctx = new AudioContext();
+            var ctx = getAudioContext();
             ctx.decodeAudioData(data.buffer, function(audioBuffer) {
                 var pcm;
                 if (audioBuffer.copyFromChannel) {
@@ -154,7 +163,7 @@
     }
 
     function playPcm(samples) {
-        var ctx = new AudioContext();
+        var ctx = getAudioContext();
         var src = ctx.createBufferSource();
         var buffer = ctx.createBuffer(1, samples.length, 8000);
         if (buffer.copyToChannel) {
