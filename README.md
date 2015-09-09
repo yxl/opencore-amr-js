@@ -26,6 +26,30 @@ Install automake and autoconf tools:
 
 Run `make` under `js` directory of the project source code tree.
 
+Build under Mac OS X
+-----
+
+Install [homebrew](http://brew.sh/).
+
+Download and unzip portable emscripten SDK to a directory, say `EMSDK_PORTABLE`:
+<http://kripken.github.io/emscripten-site/docs/getting_started/downloads.html>
+
+Install and activate the emscripten SDK under `EMSDK_PORTABLE`:
+
+```
+brew install cmake nodejs python
+./emsdk update
+./emsdk install latest
+./emsdk activate latest
+source ./emsdk_env.sh
+```
+
+Install automake and autoconf tools:
+
+`brew install libtool automake autoconf`
+
+Run `make` under `js` directory of the project source code tree.
+
 Demo
 -----
 
